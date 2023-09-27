@@ -1,2 +1,3 @@
-# ThinMP_Flutter
-Music Player
+# thinmpf
+
+A new Flutter project.
