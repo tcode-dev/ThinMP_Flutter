@@ -1,3 +1,1 @@
-# thinmpf
-
-A new Flutter project.
+# ThinMP_Flutter
