@@ -10,6 +10,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'title',
       home: Scaffold(
         body: Column(
           children: ['item1', 'item2'].map((item) => Text(item)).toList()),
