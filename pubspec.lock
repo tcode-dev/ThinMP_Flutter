@@ -91,6 +91,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.0"
+  media_store_plus:
+    dependency: "direct main"
+    description:
+      name: media_store_plus
+      sha256: "8ef2d1db47a6986c15d9d20bfb3689891bd0f8648d2da65da0343ac574dd071d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.7"
   meta:
     dependency: transitive
     description:
@@ -107,6 +115,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      sha256: da3fdfeccc4d4ff2da8f8c556704c08f912542c5fb3cf2233ed75372384a034d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.6"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -178,3 +194,4 @@ packages:
     version: "0.1.4-beta"
 sdks:
   dart: ">=3.1.2 <4.0.0"
+  flutter: ">=2.5.0"
