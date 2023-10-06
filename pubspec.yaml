@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   media_store_plus: ^0.0.7
+  just_audio: ^0.9.35
 
 dev_dependencies:
   flutter_test:
