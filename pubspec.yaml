@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  provider: ^6.0.5
   media_store_plus: ^0.0.7
   just_audio: ^0.9.35
 
