@@ -12,8 +12,12 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'title',
       home: Scaffold(
-        body: Column(
-          children: ['item1', 'item2'].map((item) => Text(item)).toList()),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () {}, 
+            child: const Text("button")
+          )
+        ),
       ),
     );
   }
