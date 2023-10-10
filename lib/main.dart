@@ -9,20 +9,18 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('First Route'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          child: const Text('Open route'),
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+            child: ElevatedButton(
+          child: const Text('to SecondScreen'),
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const SecondScreen()),
             );
           },
-        ),
+        )),
       ),
     );
   }
@@ -34,9 +32,6 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Second Route'),
-      ),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
