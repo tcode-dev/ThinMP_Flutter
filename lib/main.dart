@@ -9,18 +9,28 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-            child: ElevatedButton(
-          child: const Text('to SecondScreen'),
+    return const MaterialApp(
+      home: FirstScreen()
+    );
+  }
+}
+
+class FirstScreen extends StatelessWidget {
+  const FirstScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ElevatedButton(
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const SecondScreen()),
             );
           },
-        )),
+          child: const Text('to second'),
+        ),
       ),
     );
   }
