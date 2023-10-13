@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thinmpf/view/second_page_view.dart';
+import 'package:thinmpf/view/songs_page_view.dart';
 
 class MainPageView extends StatelessWidget {
   const MainPageView({super.key});
@@ -12,7 +12,7 @@ class MainPageView extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SecondPageView()),
+              MaterialPageRoute(builder: (context) => const SongsPageView()),
             );
           },
           child: const Text('to SecondPageView'),
