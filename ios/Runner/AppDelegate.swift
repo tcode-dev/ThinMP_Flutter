@@ -8,9 +8,9 @@ import Flutter
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
-    let batteryChannel = FlutterMethodChannel(name: "dev.tcode.thinmpf/test",
+    let channel = FlutterMethodChannel(name: "dev.tcode.thinmpf/test",
                                               binaryMessenger: controller.binaryMessenger)
-    batteryChannel.setMethodCallHandler({
+    channel.setMethodCallHandler({
       (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
       result("testios")
     })
