@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:thinmpf/main.dart';
 import 'package:thinmpf/plugin/songs_plugin.dart';
 import 'package:thinmpf/view/songs_page_view.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MainPageView extends StatefulWidget {
+// class MainPageView extends StatefulWidget {
+//   const MainPageView({super.key});
+
+//   @override
+//   State<MainPageView> createState() => _MainPageViewState();
+// }
+
+class MainPageView extends ConsumerWidget {
   const MainPageView({super.key});
+  // String _test = 'test';
+
+  // void _getTest() async {
+  //   String test = await getTest();
+
+  //   setState(() {
+  //     _test = test;
+  //   });
+  // }
 
   @override
-  State<MainPageView> createState() => _MainPageViewState();
-}
-
-class _MainPageViewState extends State<MainPageView> {
-  String _test = 'test';
-
-  void _getTest() async {
-    String test = await getTest();
-
-    setState(() {
-      _test = test;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final count = ref.watch(counterProvider);
     return Scaffold(
       body: Center(
         child: ElevatedButton(
@@ -31,11 +35,13 @@ class _MainPageViewState extends State<MainPageView> {
               MaterialPageRoute(builder: (context) => const SongsPageView()),
             );
           },
-          child: Text(_test),
+          child: Text('count: $count'),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _getTest,
+        onPressed: () {
+          ref.read(counterProvider.notifier).update((state) => state + 1);
+        },
         tooltip: 'getTest',
         child: const Icon(Icons.add),
       ),
