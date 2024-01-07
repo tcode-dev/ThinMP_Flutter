@@ -10,7 +10,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 //   @override
 //   State<MainPageView> createState() => _MainPageViewState();
 // }
-
+// final counterUpdate = (state: int) {
+//   return 1;
+// };
 class MainPageView extends ConsumerWidget {
   const MainPageView({super.key});
   // String _test = 'test';
