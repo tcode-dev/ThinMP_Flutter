@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/view/main_page_view.dart';
 
-final counterProvider = StateProvider((ref) {
-  return 1;
-});
-
 void main() {
   runApp(
     const ProviderScope(

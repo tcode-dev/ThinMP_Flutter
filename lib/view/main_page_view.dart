@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:thinmpf/main.dart';
+
 import 'package:thinmpf/plugin/songs_plugin.dart';
+import 'package:thinmpf/provider/counter_provider.dart';
+import 'package:thinmpf/provider/test_provider.dart';
 import 'package:thinmpf/view/songs_page_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,6 +30,12 @@ class MainPageView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final count = ref.watch(counterProvider);
+    final testAsync = ref.watch(testProvider);
+    final test = testAsync.when(
+      loading: () => 'loading',
+      data: (data) => data,
+      error: (error, stacktrace) => 'error',
+    );
     return Scaffold(
       body: Center(
         child: ElevatedButton(
@@ -37,7 +45,7 @@ class MainPageView extends ConsumerWidget {
               MaterialPageRoute(builder: (context) => const SongsPageView()),
             );
           },
-          child: Text('count: $count'),
+          child: Text('test: $test'),
         ),
       ),
       floatingActionButton: FloatingActionButton(
