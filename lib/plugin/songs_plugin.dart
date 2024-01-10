@@ -6,7 +6,7 @@ Future<String> getTest() async {
 
     final result = await channel.invokeMethod("getTest");
 
-    return result;
+    return result as String;
   } on PlatformException {
     return "getTest PlatformException";
   }

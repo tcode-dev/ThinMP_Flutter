@@ -29,13 +29,13 @@ class MainPageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final count = ref.watch(counterProvider);
+    // final count = ref.watch(counterProvider);
     final testAsync = ref.watch(testProvider);
-    final test = testAsync.when(
-      loading: () => 'loading',
-      data: (data) => data,
-      error: (error, stacktrace) => 'error',
-    );
+    // final test = testAsync.when(
+    //   loading: () => 'loading',
+    //   data: (data) => data,
+    //   error: (error, stacktrace) => 'error',
+    // );
     return Scaffold(
       body: Center(
         child: ElevatedButton(
@@ -45,7 +45,7 @@ class MainPageView extends ConsumerWidget {
               MaterialPageRoute(builder: (context) => const SongsPageView()),
             );
           },
-          child: Text('test: $test'),
+          child: Text('test: $testAsync'),
         ),
       ),
       floatingActionButton: FloatingActionButton(
