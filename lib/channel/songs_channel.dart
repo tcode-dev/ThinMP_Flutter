@@ -1,10 +1,10 @@
 import 'package:flutter/services.dart';
 
-Future<String> getTest() async {
+Future<String> getSongs() async {
   try {
     const MethodChannel channel = MethodChannel("dev.tcode.thinmpf/test");
 
-    final result = await channel.invokeMethod("getTest");
+    final result = await channel.invokeMethod("getSongs");
 
     return result as String;
   } on PlatformException {
