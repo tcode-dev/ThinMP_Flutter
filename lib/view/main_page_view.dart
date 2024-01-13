@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:thinmpf/plugin/songs_plugin.dart';
+import 'package:thinmpf/channel/songs_channel.dart';
 import 'package:thinmpf/provider/counter_provider.dart';
-import 'package:thinmpf/provider/test_provider.dart';
+import 'package:thinmpf/provider/songs_provider.dart';
 import 'package:thinmpf/view/songs_page_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,7 +30,7 @@ class MainPageView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final count = ref.watch(counterProvider);
-    final testAsync = ref.watch(testProvider);
+    final testAsync = ref.watch(songsProvider);
     // final test = testAsync.when(
     //   loading: () => 'loading',
     //   data: (data) => data,
