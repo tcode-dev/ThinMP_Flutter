@@ -13,7 +13,7 @@ import Flutter
         channel.setMethodCallHandler({
             (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
             switch call.method {
-            case "getTest" :
+            case "getSongs" :
                 result("Hello from Swift!")
             default :
                 result(nil)
