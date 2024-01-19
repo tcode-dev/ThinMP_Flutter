@@ -15,12 +15,11 @@ class MainActivity : FlutterActivity() {
             CHANNEL
         ).setMethodCallHandler { call, result ->
             when (call.method) {
-                "getTest" ->
+                "getSongs" ->
                     result.success("Hello from Kotlin!")
                 else ->
                     result.success("")
             }
-            result.success("test")
         }
     }
 }
