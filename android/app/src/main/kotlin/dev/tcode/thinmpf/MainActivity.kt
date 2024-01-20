@@ -16,7 +16,7 @@ class MainActivity : FlutterActivity() {
         ).setMethodCallHandler { call, result ->
             when (call.method) {
                 "getSongs" ->
-                    result.success("Hello from Kotlin!")
+                    result.success(listOf("Hello from Kotlin!"))
                 else ->
                     result.success("")
             }

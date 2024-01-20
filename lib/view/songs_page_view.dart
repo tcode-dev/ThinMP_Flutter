@@ -9,11 +9,11 @@ class SongsPageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final songs = ref.watch(songsProvider).value;
+    final songs = ref.watch(songsProvider).value ?? [];
 
     return Scaffold(
       body: ListView.builder(
-        itemCount: songs!.length,
+        itemCount: songs.length,
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(songs[index]),

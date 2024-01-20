@@ -30,7 +30,7 @@ class MainPageView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final count = ref.watch(counterProvider);
-    final songs = ref.watch(songsProvider).value;
+    // final songs = ref.watch(songsProvider).value;
     // final test = testAsync.when(
     //   loading: () => 'loading',
     //   data: (data) => data,
@@ -45,7 +45,7 @@ class MainPageView extends ConsumerWidget {
               MaterialPageRoute(builder: (context) => const SongsPageView()),
             );
           },
-          child: Text('songs: $songs'),
+          child: Text('songs'),
         ),
       ),
       floatingActionButton: FloatingActionButton(

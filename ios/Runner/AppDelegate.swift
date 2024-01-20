@@ -14,9 +14,9 @@ import Flutter
             (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
             switch call.method {
             case "getSongs" :
-                result("Hello from Swift!")
+                result(["Hello from Swift!", "test"])
             default :
-                result(nil)
+                result(["default from Swift!"])
             }
         })
         GeneratedPluginRegistrant.register(with: self)

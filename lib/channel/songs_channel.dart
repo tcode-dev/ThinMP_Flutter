@@ -1,13 +1,13 @@
 import 'package:flutter/services.dart';
 
-Future<String> getSongs() async {
+Future<List<String>> getSongs() async {
   try {
     const MethodChannel channel = MethodChannel("dev.tcode.thinmpf/test");
 
-    final result = await channel.invokeMethod("getSongs");
+    final List<dynamic>? result = await channel.invokeMethod<List<dynamic>>("getSongs");
 
-    return result as String;
+    return result?.cast().map<String>((d) => d.toString()).toList() ?? <String>[];
   } on PlatformException {
-    return "getTest PlatformException";
+    return ["getTest PlatformException"];
   }
 }
