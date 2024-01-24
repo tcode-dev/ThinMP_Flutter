@@ -14,7 +14,7 @@ class SongsPageView extends ConsumerWidget {
         itemCount: songs.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(songs[index]),
+            title: Text(songs[index]!.title),
           );
         },
       ),
