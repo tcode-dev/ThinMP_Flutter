@@ -12,8 +12,9 @@ class Song {
   dartOptions: DartOptions(),
   kotlinOut: 'android/app/src/main/kotlin/dev/tcode/thinmpf/pigeon_output/Song.g.kt',
   kotlinOptions: KotlinOptions(),
-  objcHeaderOut: 'ios/Runner/PigeonOutput/Pigeon.h',
-  objcSourceOut: 'ios/Runner/PigeonOutput/Pigeon.m',
+  objcHeaderOut: 'ios/Runner/PigeonOutput/Song.h',
+  objcSourceOut: 'ios/Runner/PigeonOutput/Song.m',
+  swiftOut: 'ios/Runner/PigeonOutput/Song.g.swift',
   swiftOptions: SwiftOptions(),
 ))
 abstract class HostSongApi {
