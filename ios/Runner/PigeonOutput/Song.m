@@ -109,14 +109,14 @@ void SetUpHostSongApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<HostS
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.thinmpf.HostSongApi.getSongs"
+        initWithName:@"dev.flutter.pigeon.thinmpf.HostSongApi.findAll"
         binaryMessenger:binaryMessenger
         codec:HostSongApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(getSongsWithError:)], @"HostSongApi api (%@) doesn't respond to @selector(getSongsWithError:)", api);
+      NSCAssert([api respondsToSelector:@selector(findAllWithError:)], @"HostSongApi api (%@) doesn't respond to @selector(findAllWithError:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         FlutterError *error;
-        NSArray<Song *> *output = [api getSongsWithError:&error];
+        NSArray<Song *> *output = [api findAllWithError:&error];
         callback(wrapResult(output, error));
       }];
     } else {

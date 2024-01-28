@@ -88,7 +88,7 @@ private object HostSongApiCodec : StandardMessageCodec() {
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface HostSongApi {
-  fun getSongs(): List<Song>
+  fun findAll(): List<Song>
 
   companion object {
     /** The codec used by HostSongApi. */
@@ -99,12 +99,12 @@ interface HostSongApi {
     @Suppress("UNCHECKED_CAST")
     fun setUp(binaryMessenger: BinaryMessenger, api: HostSongApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostSongApi.getSongs", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostSongApi.findAll", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             var wrapped: List<Any?>
             try {
-              wrapped = listOf<Any?>(api.getSongs())
+              wrapped = listOf<Any?>(api.findAll())
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }

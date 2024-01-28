@@ -98,7 +98,7 @@ class HostSongApiCodec: FlutterStandardMessageCodec {
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol HostSongApi {
-  func getSongs() throws -> [Song]
+  func findAll() throws -> [Song]
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -107,18 +107,18 @@ class HostSongApiSetup {
   static var codec: FlutterStandardMessageCodec { HostSongApiCodec.shared }
   /// Sets up an instance of `HostSongApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: HostSongApi?) {
-    let getSongsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostSongApi.getSongs", binaryMessenger: binaryMessenger, codec: codec)
+    let findAllChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostSongApi.findAll", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      getSongsChannel.setMessageHandler { _, reply in
+      findAllChannel.setMessageHandler { _, reply in
         do {
-          let result = try api.getSongs()
+          let result = try api.findAll()
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      getSongsChannel.setMessageHandler(nil)
+      findAllChannel.setMessageHandler(nil)
     }
   }
 }

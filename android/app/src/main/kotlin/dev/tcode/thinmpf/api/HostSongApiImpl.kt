@@ -4,7 +4,7 @@ import HostSongApi
 import Song
 
 class HostSongApiImpl: HostSongApi {
-    override fun getSongs(): List<Song> {
+    override fun findAll(): List<Song> {
         val song1 = Song("title1", "artist1")
         val song2 = Song("title2", "artist2")
 

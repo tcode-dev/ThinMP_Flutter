@@ -74,8 +74,8 @@ class HostSongApi {
 
   static const MessageCodec<Object?> pigeonChannelCodec = _HostSongApiCodec();
 
-  Future<List<Song?>> getSongs() async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.HostSongApi.getSongs';
+  Future<List<Song?>> findAll() async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.HostSongApi.findAll';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,

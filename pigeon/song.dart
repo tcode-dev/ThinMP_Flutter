@@ -18,5 +18,5 @@ class Song {
   swiftOptions: SwiftOptions(),
 ))
 abstract class HostSongApi {
-  List<Song> getSongs();
+  List<Song> findAll();
 }
