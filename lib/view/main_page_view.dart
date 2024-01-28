@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:thinmpf/channel/songs_channel.dart';
 import 'package:thinmpf/provider/counter_provider.dart';
 import 'package:thinmpf/provider/songs_provider.dart';
 import 'package:thinmpf/view/songs_page_view.dart';
