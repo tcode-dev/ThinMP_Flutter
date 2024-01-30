@@ -11,7 +11,7 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        HostSongApi.setUp(flutterEngine.dartExecutor.binaryMessenger, HostSongApiImpl())
+        HostSongApi.setUp(flutterEngine.dartExecutor.binaryMessenger, HostSongApiImpl(this))
 //        MethodChannel(
 //            flutterEngine.dartExecutor.binaryMessenger,
 //            CHANNEL
