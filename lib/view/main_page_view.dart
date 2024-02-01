@@ -41,15 +41,8 @@ class MainPageView extends ConsumerWidget {
               MaterialPageRoute(builder: (context) => const SongsPageView()),
             );
           },
-          child: Text('songs'),
+          child: const Text('songs'),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ref.read(counterProvider.notifier).update((state) => state + 1);
-        },
-        tooltip: 'getTest',
-        child: const Icon(Icons.add),
       ),
     );
   }
