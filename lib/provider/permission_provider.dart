@@ -15,18 +15,24 @@ import 'package:permission_handler/permission_handler.dart';
 // }
 
 final permissionProvider = FutureProvider((ref) async {
-  print("permissionProvider.");
-      if (await Permission.mediaLibrary.isGranted) {
-      print("Granted.");
-    } else if (await Permission.mediaLibrary.isPermanentlyDenied) {
-      openAppSettings();
-    } else {
-      var status = await Permission.mediaLibrary.request();
-      if (status.isGranted) {
-        print("Granted.");
-      } else {
-        openAppSettings();
-      }
-    }
+  var status = await Permission.mediaLibrary.status;
+  print(status);
+    print(status.isDenied);
+  if (status.isDenied) {
+    print("isDenied.");
+  // We haven't asked for permission yet or the permission has been denied before, but not permanently.
+}
+  // if (status.isGranted) {
+  //   print("Granted.");
+  // } else if (status.isPermanentlyDenied) {
+  //   openAppSettings();
+  // } else {
+  //   status = await Permission.mediaLibrary.request();
+  //   if (status.isGranted) {
+  //     print("Granted.");
+  //   } else {
+  //     openAppSettings();
+  //   }
+  // }
   return await Permission.mediaLibrary.request();
 });
