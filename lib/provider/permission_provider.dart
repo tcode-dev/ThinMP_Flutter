@@ -15,7 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 // }
 
 final permissionProvider = FutureProvider((ref) async {
-  var status = await Permission.mediaLibrary.status;
+  var status = await Permission.mediaLibrary.request();
   print(status);
     print(status.isDenied);
   if (status.isDenied) {
