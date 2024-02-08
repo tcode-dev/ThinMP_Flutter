@@ -10,9 +10,7 @@ import 'package:pigeon/pigeon.dart';
   dartOut: 'lib/pigeon_output/permission.g.dart',
   dartOptions: DartOptions(),
   kotlinOut: 'android/app/src/main/kotlin/dev/tcode/thinmpf/pigeon_output/Permission.g.kt',
-  kotlinOptions: KotlinOptions(
-    errorClassName: 'PermissionError'
-  ),
+  kotlinOptions: KotlinOptions(errorClassName: 'PermissionFlutterError'),
   objcHeaderOut: 'ios/Runner/PigeonOutput/Permission.h',
   objcSourceOut: 'ios/Runner/PigeonOutput/Permission.m',
   swiftOut: 'ios/Runner/PigeonOutput/Permission.g.swift',

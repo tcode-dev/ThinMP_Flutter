@@ -11,7 +11,7 @@ class Song {
   dartOut: 'lib/pigeon_output/song.g.dart',
   dartOptions: DartOptions(),
   kotlinOut: 'android/app/src/main/kotlin/dev/tcode/thinmpf/pigeon_output/Song.g.kt',
-  kotlinOptions: KotlinOptions(    errorClassName: 'SongError'),
+  kotlinOptions: KotlinOptions(errorClassName: 'SongFlutterError'),
   objcHeaderOut: 'ios/Runner/PigeonOutput/Song.h',
   objcSourceOut: 'ios/Runner/PigeonOutput/Song.m',
   swiftOut: 'ios/Runner/PigeonOutput/Song.g.swift',
