@@ -15,7 +15,7 @@ private fun wrapResult(result: Any?): List<Any?> {
 }
 
 private fun wrapError(exception: Throwable): List<Any?> {
-  if (exception is SongError) {
+  if (exception is PermissionError) {
     return listOf(
       exception.code,
       exception.message,
@@ -36,75 +36,31 @@ private fun wrapError(exception: Throwable): List<Any?> {
  * @property message The error message.
  * @property details The error details. Must be a datatype supported by the api codec.
  */
-class SongError (
+class PermissionError (
   val code: String,
   override val message: String? = null,
   val details: Any? = null
 ) : Throwable()
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class Song (
-  val title: String,
-  val artist: String
-
-) {
-  companion object {
-    @Suppress("UNCHECKED_CAST")
-    fun fromList(list: List<Any?>): Song {
-      val title = list[0] as String
-      val artist = list[1] as String
-      return Song(title, artist)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf<Any?>(
-      title,
-      artist,
-    )
-  }
-}
-@Suppress("UNCHECKED_CAST")
-private object HostSongApiCodec : StandardMessageCodec() {
-  override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
-    return when (type) {
-      128.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          Song.fromList(it)
-        }
-      }
-      else -> super.readValueOfType(type, buffer)
-    }
-  }
-  override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
-    when (value) {
-      is Song -> {
-        stream.write(128)
-        writeValue(stream, value.toList())
-      }
-      else -> super.writeValue(stream, value)
-    }
-  }
-}
-
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
-interface HostSongApi {
-  fun findAll(): List<Song>
+interface HostPermissionApi {
+  fun requestPermission()
 
   companion object {
-    /** The codec used by HostSongApi. */
+    /** The codec used by HostPermissionApi. */
     val codec: MessageCodec<Any?> by lazy {
-      HostSongApiCodec
+      StandardMessageCodec()
     }
-    /** Sets up an instance of `HostSongApi` to handle messages through the `binaryMessenger`. */
+    /** Sets up an instance of `HostPermissionApi` to handle messages through the `binaryMessenger`. */
     @Suppress("UNCHECKED_CAST")
-    fun setUp(binaryMessenger: BinaryMessenger, api: HostSongApi?) {
+    fun setUp(binaryMessenger: BinaryMessenger, api: HostPermissionApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostSongApi.findAll", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostPermissionApi.requestPermission", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             var wrapped: List<Any?>
             try {
-              wrapped = listOf<Any?>(api.findAll())
+              api.requestPermission()
+              wrapped = listOf<Any?>(null)
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }
