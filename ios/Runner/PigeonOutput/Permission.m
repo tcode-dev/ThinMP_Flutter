@@ -37,15 +37,15 @@ void SetUpHostPermissionApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.thinmpf.HostPermissionApi.requestPermission"
+        initWithName:@"dev.flutter.pigeon.thinmpf.HostPermissionApi.checkPermission"
         binaryMessenger:binaryMessenger
         codec:HostPermissionApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(requestPermissionWithError:)], @"HostPermissionApi api (%@) doesn't respond to @selector(requestPermissionWithError:)", api);
+      NSCAssert([api respondsToSelector:@selector(checkPermissionWithError:)], @"HostPermissionApi api (%@) doesn't respond to @selector(checkPermissionWithError:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         FlutterError *error;
-        [api requestPermissionWithError:&error];
-        callback(wrapResult(nil, error));
+        NSNumber *output = [api checkPermissionWithError:&error];
+        callback(wrapResult(output, error));
       }];
     } else {
       [channel setMessageHandler:nil];

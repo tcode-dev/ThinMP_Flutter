@@ -16,8 +16,21 @@ import 'package:thinmpf/pigeon_output/permission.g.dart';
 // }
 
 final permissionProvider = FutureProvider((ref) async {
-    final api = HostPermissionApi();
-    await api.requestPermission();
+  final api = HostPermissionApi();
+
+  return await api.checkPermission();
+
+  // Map<Permission, PermissionStatus> statuses = await [
+  //   Permission.mediaLibrary,
+  // ].request();
+  // print(statuses[Permission.mediaLibrary]);
+
+  // PermissionStatus status = await Permission.mediaLibrary.status;
+  // print(status);
+  // if (!status.isGranted) {
+  //   status = await Permission.mediaLibrary.request();
+  // }
+  // print(status);
 //   var status = await Permission.mediaLibrary.request();
 //   print(status);
 //     print(status.isDenied);

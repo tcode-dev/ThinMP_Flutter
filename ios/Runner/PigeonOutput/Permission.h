@@ -15,7 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 NSObject<FlutterMessageCodec> *HostPermissionApiGetCodec(void);
 
 @protocol HostPermissionApi
-- (void)requestPermissionWithError:(FlutterError *_Nullable *_Nonnull)error;
+/// @return `nil` only when `error != nil`.
+- (nullable NSNumber *)checkPermissionWithError:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void SetUpHostPermissionApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<HostPermissionApi> *_Nullable api);

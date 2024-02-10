@@ -9,11 +9,11 @@ class MainPageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final status = ref.watch(permissionProvider).value?? PermissionStatus.denied;
+    final status = ref.watch(permissionProvider).value?? false;
 
     return Scaffold(
       body: Center(
-        child: status.isGranted
+        child: status
             ? ElevatedButton(
                 onPressed: () {
                   Navigator.push(

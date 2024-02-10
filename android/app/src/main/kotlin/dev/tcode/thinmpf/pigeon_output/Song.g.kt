@@ -15,7 +15,7 @@ private fun wrapResult(result: Any?): List<Any?> {
 }
 
 private fun wrapError(exception: Throwable): List<Any?> {
-  if (exception is SongError) {
+  if (exception is SongFlutterError) {
     return listOf(
       exception.code,
       exception.message,
@@ -36,7 +36,7 @@ private fun wrapError(exception: Throwable): List<Any?> {
  * @property message The error message.
  * @property details The error details. Must be a datatype supported by the api codec.
  */
-class SongError (
+class SongFlutterError (
   val code: String,
   override val message: String? = null,
   val details: Any? = null

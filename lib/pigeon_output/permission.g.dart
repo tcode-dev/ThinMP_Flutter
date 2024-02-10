@@ -25,8 +25,8 @@ class HostPermissionApi {
 
   static const MessageCodec<Object?> pigeonChannelCodec = StandardMessageCodec();
 
-  Future<void> requestPermission() async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.HostPermissionApi.requestPermission';
+  Future<bool> checkPermission() async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.HostPermissionApi.checkPermission';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
@@ -42,8 +42,13 @@ class HostPermissionApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
     } else {
-      return;
+      return (__pigeon_replyList[0] as bool?)!;
     }
   }
 }

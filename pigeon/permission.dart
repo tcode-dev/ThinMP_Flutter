@@ -17,5 +17,5 @@ import 'package:pigeon/pigeon.dart';
   swiftOptions: SwiftOptions(),
 ))
 abstract class HostPermissionApi {
-  void requestPermission();
+  bool checkPermission();
 }

@@ -15,7 +15,7 @@ private fun wrapResult(result: Any?): List<Any?> {
 }
 
 private fun wrapError(exception: Throwable): List<Any?> {
-  if (exception is PermissionError) {
+  if (exception is PermissionFlutterError) {
     return listOf(
       exception.code,
       exception.message,
@@ -36,14 +36,14 @@ private fun wrapError(exception: Throwable): List<Any?> {
  * @property message The error message.
  * @property details The error details. Must be a datatype supported by the api codec.
  */
-class PermissionError (
+class PermissionFlutterError (
   val code: String,
   override val message: String? = null,
   val details: Any? = null
 ) : Throwable()
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface HostPermissionApi {
-  fun requestPermission()
+  fun checkPermission(): Boolean
 
   companion object {
     /** The codec used by HostPermissionApi. */
@@ -54,13 +54,12 @@ interface HostPermissionApi {
     @Suppress("UNCHECKED_CAST")
     fun setUp(binaryMessenger: BinaryMessenger, api: HostPermissionApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostPermissionApi.requestPermission", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostPermissionApi.checkPermission", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             var wrapped: List<Any?>
             try {
-              api.requestPermission()
-              wrapped = listOf<Any?>(null)
+              wrapped = listOf<Any?>(api.checkPermission())
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }

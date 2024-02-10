@@ -40,7 +40,7 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol HostPermissionApi {
-  func requestPermission() throws
+  func checkPermission() throws -> Bool
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -48,18 +48,18 @@ class HostPermissionApiSetup {
   /// The codec used by HostPermissionApi.
   /// Sets up an instance of `HostPermissionApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: HostPermissionApi?) {
-    let requestPermissionChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostPermissionApi.requestPermission", binaryMessenger: binaryMessenger)
+    let checkPermissionChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostPermissionApi.checkPermission", binaryMessenger: binaryMessenger)
     if let api = api {
-      requestPermissionChannel.setMessageHandler { _, reply in
+      checkPermissionChannel.setMessageHandler { _, reply in
         do {
-          try api.requestPermission()
-          reply(wrapResult(nil))
+          let result = try api.checkPermission()
+          reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      requestPermissionChannel.setMessageHandler(nil)
+      checkPermissionChannel.setMessageHandler(nil)
     }
   }
 }
