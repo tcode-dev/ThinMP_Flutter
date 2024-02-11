@@ -47,16 +47,5 @@ class MainActivity : FlutterActivity() {
 //                    123)
 //            }
 //        }
-    //        MethodChannel(
-//            flutterEngine.dartExecutor.binaryMessenger,
-//            CHANNEL
-//        ).setMethodCallHandler { call, result ->
-//            when (call.method) {
-//                "getSongs" ->
-//                    result.success(listOf("Hello from Kotlin!","testtest"))
-//                else ->
-//                    result.success("")
-//            }
-//        }
     }
 }
