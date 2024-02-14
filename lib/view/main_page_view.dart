@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:thinmpf/provider/permission_provider.dart';
 import 'package:thinmpf/view/songs_page_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
