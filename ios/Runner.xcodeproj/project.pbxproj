@@ -16,6 +16,7 @@
 		527307212B61E42B00E65B2F /* HostSongApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527307202B61E42B00E65B2F /* HostSongApiImpl.swift */; };
 		52957A1F2B6481560019D34C /* Song.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52957A1D2B6481560019D34C /* Song.g.swift */; };
 		52957A202B6481560019D34C /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 52957A1E2B6481560019D34C /* Song.m */; };
+		52E135892B823CE1006C91B1 /* SongModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E135882B823CE1006C91B1 /* SongModel.swift */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
@@ -59,6 +60,7 @@
 		52957A1C2B6481560019D34C /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
 		52957A1D2B6481560019D34C /* Song.g.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.g.swift; sourceTree = "<group>"; };
 		52957A1E2B6481560019D34C /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
+		52E135882B823CE1006C91B1 /* SongModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongModel.swift; sourceTree = "<group>"; };
 		63C54B68ACAC3F69ABCA07E6 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		6762064C777D996CFCDFA208 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -130,6 +132,14 @@
 			path = PigeonOutput;
 			sourceTree = "<group>";
 		};
+		52E135872B823CC4006C91B1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				52E135882B823CE1006C91B1 /* SongModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		9740EEB11CF90186004384FC /* Flutter */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,11 +155,12 @@
 			isa = PBXGroup;
 			children = (
 				9740EEB11CF90186004384FC /* Flutter */,
-				97C146F01CF9000F007C117D /* Runner */,
-				97C146EF1CF9000F007C117D /* Products */,
-				331C8082294A63A400263BE5 /* RunnerTests */,
-				D959888FCAB4945567DC05DD /* Pods */,
 				BA7637F7A8AE0BF3883292B4 /* Frameworks */,
+				52E135872B823CC4006C91B1 /* Model */,
+				D959888FCAB4945567DC05DD /* Pods */,
+				97C146EF1CF9000F007C117D /* Products */,
+				97C146F01CF9000F007C117D /* Runner */,
+				331C8082294A63A400263BE5 /* RunnerTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -399,6 +410,7 @@
 				52957A202B6481560019D34C /* Song.m in Sources */,
 				527307212B61E42B00E65B2F /* HostSongApiImpl.swift in Sources */,
 				52357F7F2B80F71C00133631 /* SongRepository.swift in Sources */,
+				52E135892B823CE1006C91B1 /* SongModel.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				52957A1F2B6481560019D34C /* Song.g.swift in Sources */,

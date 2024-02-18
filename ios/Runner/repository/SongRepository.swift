@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-class SongRepository: SongRepositoryProtocol {
+class SongRepository {
     func findAll() -> [SongModel] {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.songs()
