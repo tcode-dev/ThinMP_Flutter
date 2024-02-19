@@ -18,12 +18,12 @@ struct SongModel {
 //        SongId(id: media.persistentID)
 //    }
 
-    var primaryText: String? {
-        media.representativeItem?.title
+    var primaryText: String {
+        media.representativeItem?.title ?? "undefined"
     }
 
-    var secondaryText: String? {
-        media.representativeItem?.artist
+    var secondaryText: String {
+        media.representativeItem?.artist ?? "undefined"
     }
 
     var artwork: MPMediaItemArtwork? {
