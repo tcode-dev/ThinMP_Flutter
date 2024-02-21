@@ -12,9 +12,6 @@ class HostSongApiImpl: HostSongApi {
         let repository = SongRepository()
         let songs = repository.findAll()
 
-//        let song1 = Song(title: "title swift", artist: "artist swift")
-//        let song2 = Song(title: "title swift2", artist: "artist swift2")
-
         return songs.map { song in
             return Song(title: song.primaryText, artist: song.secondaryText)
         }
