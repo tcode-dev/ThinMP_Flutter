@@ -13,8 +13,11 @@ class SongsPageView extends ConsumerWidget {
       body: ListView.builder(
         itemCount: songs.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(songs[index]!.title),
+          return Column(
+            children: [
+              Text(songs[index]!.title),
+              Text(songs[index]!.artist)
+            ],
           );
         },
       ),
