@@ -16,7 +16,8 @@ class SongsPageView extends ConsumerWidget {
           return Column(
             children: [
               Text(songs[index]!.title),
-              Text(songs[index]!.artist)
+              Text(songs[index]!.artist),
+              const Divider()
             ],
           );
         },
