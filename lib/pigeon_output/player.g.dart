@@ -15,18 +15,18 @@ PlatformException _createConnectionError(String channelName) {
   );
 }
 
-class HostPermissionApi {
-  /// Constructor for [HostPermissionApi].  The [binaryMessenger] named argument is
+class HostPlayerApi {
+  /// Constructor for [HostPlayerApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  HostPermissionApi({BinaryMessenger? binaryMessenger})
+  HostPlayerApi({BinaryMessenger? binaryMessenger})
       : __pigeon_binaryMessenger = binaryMessenger;
   final BinaryMessenger? __pigeon_binaryMessenger;
 
   static const MessageCodec<Object?> pigeonChannelCodec = StandardMessageCodec();
 
-  Future<bool> checkPermission() async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.HostPermissionApi.checkPermission';
+  Future<void> play() async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.HostPlayerApi.play';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
@@ -42,13 +42,30 @@ class HostPermissionApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
+    } else {
+      return;
+    }
+  }
+
+  Future<void> stop() async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.HostPlayerApi.stop';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(null) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
       throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
       );
     } else {
-      return (__pigeon_replyList[0] as bool?)!;
+      return;
     }
   }
 }

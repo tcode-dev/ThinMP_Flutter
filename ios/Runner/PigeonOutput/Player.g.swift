@@ -39,27 +39,41 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
   return value as! T?
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-protocol HostPermissionApi {
-  func checkPermission() throws -> Bool
+protocol HostPlayerApi {
+  func play() throws
+  func stop() throws
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-class HostPermissionApiSetup {
-  /// The codec used by HostPermissionApi.
-  /// Sets up an instance of `HostPermissionApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: HostPermissionApi?) {
-    let checkPermissionChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostPermissionApi.checkPermission", binaryMessenger: binaryMessenger)
+class HostPlayerApiSetup {
+  /// The codec used by HostPlayerApi.
+  /// Sets up an instance of `HostPlayerApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: HostPlayerApi?) {
+    let playChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostPlayerApi.play", binaryMessenger: binaryMessenger)
     if let api = api {
-      checkPermissionChannel.setMessageHandler { _, reply in
+      playChannel.setMessageHandler { _, reply in
         do {
-          let result = try api.checkPermission()
-          reply(wrapResult(result))
+          try api.play()
+          reply(wrapResult(nil))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      checkPermissionChannel.setMessageHandler(nil)
+      playChannel.setMessageHandler(nil)
+    }
+    let stopChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostPlayerApi.stop", binaryMessenger: binaryMessenger)
+    if let api = api {
+      stopChannel.setMessageHandler { _, reply in
+        do {
+          try api.stop()
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      stopChannel.setMessageHandler(nil)
     }
   }
 }

@@ -15,7 +15,7 @@ private fun wrapResult(result: Any?): List<Any?> {
 }
 
 private fun wrapError(exception: Throwable): List<Any?> {
-  if (exception is PermissionFlutterError) {
+  if (exception is PlayerFlutterError) {
     return listOf(
       exception.code,
       exception.message,
@@ -36,30 +36,49 @@ private fun wrapError(exception: Throwable): List<Any?> {
  * @property message The error message.
  * @property details The error details. Must be a datatype supported by the api codec.
  */
-class PermissionFlutterError (
+class PlayerFlutterError (
   val code: String,
   override val message: String? = null,
   val details: Any? = null
 ) : Throwable()
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
-interface HostPermissionApi {
-  fun checkPermission(): Boolean
+interface HostPlayerApi {
+  fun play()
+  fun stop()
 
   companion object {
-    /** The codec used by HostPermissionApi. */
+    /** The codec used by HostPlayerApi. */
     val codec: MessageCodec<Any?> by lazy {
       StandardMessageCodec()
     }
-    /** Sets up an instance of `HostPermissionApi` to handle messages through the `binaryMessenger`. */
+    /** Sets up an instance of `HostPlayerApi` to handle messages through the `binaryMessenger`. */
     @Suppress("UNCHECKED_CAST")
-    fun setUp(binaryMessenger: BinaryMessenger, api: HostPermissionApi?) {
+    fun setUp(binaryMessenger: BinaryMessenger, api: HostPlayerApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostPermissionApi.checkPermission", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostPlayerApi.play", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             var wrapped: List<Any?>
             try {
-              wrapped = listOf<Any?>(api.checkPermission())
+              api.play()
+              wrapped = listOf<Any?>(null)
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostPlayerApi.stop", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            var wrapped: List<Any?>
+            try {
+              api.stop()
+              wrapped = listOf<Any?>(null)
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }
