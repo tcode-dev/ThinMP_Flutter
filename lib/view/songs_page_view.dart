@@ -13,12 +13,17 @@ class SongsPageView extends ConsumerWidget {
       body: ListView.builder(
         itemCount: songs.length,
         itemBuilder: (context, index) {
-          return Column(
-            children: [
-              Text(songs[index]!.title),
-              Text(songs[index]!.artist),
-              const Divider()
-            ],
+          return GestureDetector(
+            onTap: () {
+              print("onTap called.");
+            },
+            child: Column(
+              children: [
+                Text(songs[index]!.title),
+                Text(songs[index]!.artist),
+                const Divider()
+              ],
+            ),
           );
         },
       ),
