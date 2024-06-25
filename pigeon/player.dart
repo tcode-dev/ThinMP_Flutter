@@ -17,6 +17,7 @@ class Player {
   swiftOptions: SwiftOptions(),
 ))
 abstract class HostPlayerApi {
+  void startBySongs(int index);
   void play();
   void stop();
 }

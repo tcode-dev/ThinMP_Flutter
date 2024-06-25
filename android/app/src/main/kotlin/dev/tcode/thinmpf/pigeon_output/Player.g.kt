@@ -43,6 +43,7 @@ class PlayerFlutterError (
 ) : Throwable()
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface HostPlayerApi {
+  fun startBySongs(index: Long)
   fun play()
   fun stop()
 
@@ -54,6 +55,25 @@ interface HostPlayerApi {
     /** Sets up an instance of `HostPlayerApi` to handle messages through the `binaryMessenger`. */
     @Suppress("UNCHECKED_CAST")
     fun setUp(binaryMessenger: BinaryMessenger, api: HostPlayerApi?) {
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostPlayerApi.startBySongs", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val indexArg = args[0].let { if (it is Int) it.toLong() else it as Long }
+            var wrapped: List<Any?>
+            try {
+              api.startBySongs(indexArg)
+              wrapped = listOf<Any?>(null)
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
       run {
         val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostPlayerApi.play", codec)
         if (api != null) {

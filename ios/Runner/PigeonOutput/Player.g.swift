@@ -40,6 +40,7 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol HostPlayerApi {
+  func startBySongs(index: Int64) throws
   func play() throws
   func stop() throws
 }
@@ -49,6 +50,21 @@ class HostPlayerApiSetup {
   /// The codec used by HostPlayerApi.
   /// Sets up an instance of `HostPlayerApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: HostPlayerApi?) {
+    let startBySongsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostPlayerApi.startBySongs", binaryMessenger: binaryMessenger)
+    if let api = api {
+      startBySongsChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let indexArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
+        do {
+          try api.startBySongs(index: indexArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      startBySongsChannel.setMessageHandler(nil)
+    }
     let playChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostPlayerApi.play", binaryMessenger: binaryMessenger)
     if let api = api {
       playChannel.setMessageHandler { _, reply in

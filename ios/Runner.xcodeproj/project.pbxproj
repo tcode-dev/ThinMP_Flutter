@@ -14,6 +14,11 @@
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		52212B322C2A37E0000ABB62 /* MediaPlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52212B2E2C2A37E0000ABB62 /* MediaPlayerProtocol.swift */; };
 		52212B332C2A37E0000ABB62 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52212B302C2A37E0000ABB62 /* MusicPlayer.swift */; };
+		52212B352C2A3B8E000ABB62 /* HostPlayerApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52212B342C2A3B8E000ABB62 /* HostPlayerApiImpl.swift */; };
+		522AF0CD2C2B069C00177683 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 522AF0C82C2B069C00177683 /* Player.m */; };
+		522AF0CE2C2B069C00177683 /* Permission.m in Sources */ = {isa = PBXBuildFile; fileRef = 522AF0CA2C2B069C00177683 /* Permission.m */; };
+		522AF0CF2C2B069C00177683 /* Permission.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522AF0CB2C2B069C00177683 /* Permission.g.swift */; };
+		522AF0D02C2B069C00177683 /* Player.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522AF0CC2C2B069C00177683 /* Player.g.swift */; };
 		52357F7F2B80F71C00133631 /* SongRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52357F7E2B80F71C00133631 /* SongRepository.swift */; };
 		527307212B61E42B00E65B2F /* HostSongApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527307202B61E42B00E65B2F /* HostSongApiImpl.swift */; };
 		52957A1F2B6481560019D34C /* Song.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52957A1D2B6481560019D34C /* Song.g.swift */; };
@@ -59,6 +64,13 @@
 		4355A79D2773F0AD49854DE5 /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
 		52212B2E2C2A37E0000ABB62 /* MediaPlayerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPlayerProtocol.swift; sourceTree = "<group>"; };
 		52212B302C2A37E0000ABB62 /* MusicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
+		52212B342C2A3B8E000ABB62 /* HostPlayerApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostPlayerApiImpl.swift; sourceTree = "<group>"; };
+		522AF0C72C2B069C00177683 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		522AF0C82C2B069C00177683 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		522AF0C92C2B069C00177683 /* Permission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Permission.h; sourceTree = "<group>"; };
+		522AF0CA2C2B069C00177683 /* Permission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Permission.m; sourceTree = "<group>"; };
+		522AF0CB2C2B069C00177683 /* Permission.g.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Permission.g.swift; sourceTree = "<group>"; };
+		522AF0CC2C2B069C00177683 /* Player.g.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.g.swift; sourceTree = "<group>"; };
 		52357F7E2B80F71C00133631 /* SongRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongRepository.swift; sourceTree = "<group>"; };
 		527307202B61E42B00E65B2F /* HostSongApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSongApiImpl.swift; sourceTree = "<group>"; };
 		52957A1C2B6481560019D34C /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
@@ -138,6 +150,7 @@
 		5273071F2B61E40A00E65B2F /* Api */ = {
 			isa = PBXGroup;
 			children = (
+				52212B342C2A3B8E000ABB62 /* HostPlayerApiImpl.swift */,
 				527307202B61E42B00E65B2F /* HostSongApiImpl.swift */,
 			);
 			path = Api;
@@ -146,6 +159,12 @@
 		52957A182B647FF50019D34C /* PigeonOutput */ = {
 			isa = PBXGroup;
 			children = (
+				522AF0CB2C2B069C00177683 /* Permission.g.swift */,
+				522AF0C92C2B069C00177683 /* Permission.h */,
+				522AF0CA2C2B069C00177683 /* Permission.m */,
+				522AF0CC2C2B069C00177683 /* Player.g.swift */,
+				522AF0C72C2B069C00177683 /* Player.h */,
+				522AF0C82C2B069C00177683 /* Player.m */,
 				52957A1D2B6481560019D34C /* Song.g.swift */,
 				52957A1C2B6481560019D34C /* Song.h */,
 				52957A1E2B6481560019D34C /* Song.m */,
@@ -429,13 +448,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				522AF0CE2C2B069C00177683 /* Permission.m in Sources */,
 				52957A202B6481560019D34C /* Song.m in Sources */,
 				527307212B61E42B00E65B2F /* HostSongApiImpl.swift in Sources */,
 				52212B332C2A37E0000ABB62 /* MusicPlayer.swift in Sources */,
 				52357F7F2B80F71C00133631 /* SongRepository.swift in Sources */,
 				52212B322C2A37E0000ABB62 /* MediaPlayerProtocol.swift in Sources */,
 				52E135892B823CE1006C91B1 /* SongModel.swift in Sources */,
+				522AF0CD2C2B069C00177683 /* Player.m in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
+				522AF0D02C2B069C00177683 /* Player.g.swift in Sources */,
+				52212B352C2A3B8E000ABB62 /* HostPlayerApiImpl.swift in Sources */,
+				522AF0CF2C2B069C00177683 /* Permission.g.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				52957A1F2B6481560019D34C /* Song.g.swift in Sources */,
 			);

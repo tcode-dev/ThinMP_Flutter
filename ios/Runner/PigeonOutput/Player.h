@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 NSObject<FlutterMessageCodec> *HostPlayerApiGetCodec(void);
 
 @protocol HostPlayerApi
+- (void)startBySongsIndex:(NSInteger)index error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)playWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)stopWithError:(FlutterError *_Nullable *_Nonnull)error;
 @end
