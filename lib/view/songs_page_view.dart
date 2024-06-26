@@ -20,13 +20,17 @@ class SongsPageView extends ConsumerWidget {
 
               player.startBySongs(index);
             },
-            child: Column(
+            child: Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(left: 10.0),
+              child:Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(songs[index]!.title),
                 Text(songs[index]!.artist),
                 const Divider()
               ],
-            ),
+            )),
           );
         },
       ),
