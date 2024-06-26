@@ -23,17 +23,17 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     @Published var isFavoriteArtist: Bool = false
     @Published var isFavoriteSong: Bool = false
 
-    private let playerConfig: PlayerConfig
+//    private let playerConfig: PlayerConfig
     private let player: MPMusicPlayerController
     private var timer: Timer?
     private var isBackground = false
     private var isFirst = false
 
     init() {
-        playerConfig = PlayerConfig()
+//        playerConfig = PlayerConfig()
         player = MPMusicPlayerController.applicationMusicPlayer
-        player.repeatMode = playerConfig.getRepeat()
-        player.shuffleMode = playerConfig.getShuffle()
+//        player.repeatMode = playerConfig.getRepeat()
+//        player.shuffleMode = playerConfig.getShuffle()
         setRepeat()
         setShuffle()
         player.beginGeneratingPlaybackNotifications()
@@ -110,13 +110,13 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
             : player.repeatMode == .all ? .one
             : .none
         setRepeat()
-        playerConfig.setRepeat(value: player.repeatMode)
+//        playerConfig.setRepeat(value: player.repeatMode)
     }
 
     func shuffle() {
         player.shuffleMode = player.shuffleMode == .off ? .songs : .off
         setShuffle()
-        playerConfig.setShuffle(value: player.shuffleMode)
+//        playerConfig.setShuffle(value: player.shuffleMode)
     }
 
     func songId() -> SongId {
