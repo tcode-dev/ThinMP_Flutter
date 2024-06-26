@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/provider/songs_provider.dart';
+import 'package:thinmpf/pigeon_output/player.g.dart';
 
 class SongsPageView extends ConsumerWidget {
   const SongsPageView({super.key});
@@ -15,7 +16,9 @@ class SongsPageView extends ConsumerWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              print("onTap called.");
+              final player = HostPlayerApi();
+
+              player.startBySongs(index);
             },
             child: Column(
               children: [
