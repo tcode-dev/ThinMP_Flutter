@@ -12,8 +12,6 @@ import Flutter
         HostSongApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: HostSongApiImpl())
         HostPlayerApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: HostPlayerApiImpl())
 
-        let player = MusicPlayer()
-
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }

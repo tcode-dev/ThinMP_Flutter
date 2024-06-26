@@ -10,13 +10,13 @@ import MediaPlayer
 struct SongModel {
     let media: MPMediaItemCollection
 
-//    var id: String {
-//        return String(songId.id)
-//    }
+    var id: String {
+        return String(songId.id)
+    }
 
-//    var songId: SongId {
-//        SongId(id: media.persistentID)
-//    }
+    var songId: SongId {
+        SongId(id: media.persistentID)
+    }
 
     var primaryText: String {
         media.representativeItem?.title ?? "undefined"
@@ -29,12 +29,4 @@ struct SongModel {
     var artwork: MPMediaItemArtwork? {
         media.representativeItem?.artwork
     }
-
-//    var artistId: ArtistId? {
-//        if let artistPersistentID = media.representativeItem?.artistPersistentID {
-//            return ArtistId(id: artistPersistentID)
-//        }
-//
-//        return Optional.none
-//    }
 }

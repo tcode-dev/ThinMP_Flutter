@@ -8,6 +8,7 @@
 import MediaPlayer
 
 class MusicPlayer: ObservableObject, MediaPlayerProtocol {
+    static let shared = MusicPlayer()
     private let PREV_SECOND: Double = 3
 
     @Published var isActive: Bool = false
@@ -48,7 +49,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         descriptor.startItem = song?.media.representativeItem
         player.setQueue(with: descriptor)
         doPlay()
-        setFavorite()
         addObserver()
         isFirst = true
         isActive = true
@@ -117,38 +117,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         player.shuffleMode = player.shuffleMode == .off ? .songs : .off
         setShuffle()
         playerConfig.setShuffle(value: player.shuffleMode)
-    }
-
-    func favoriteArtist() {
-        if let artistId = song?.artistId {
-            let register = FavoriteArtistRegister()
-
-            if register.exists(artistId: artistId) {
-                register.delete(artistId: artistId)
-            } else {
-                register.add(artistId: artistId)
-            }
-
-            isFavoriteArtist.toggle()
-        }
-    }
-
-    func favoriteSong() {
-        let register = FavoriteSongRegister()
-        let songId = songId()
-
-        if register.exists(songId: songId) {
-            register.delete(songId: songId)
-        } else {
-            register.add(songId: songId)
-        }
-
-        isFavoriteSong.toggle()
-    }
-
-    func setFavorite() {
-        setFavoriteArtist()
-        setFavoriteSong()
     }
 
     func songId() -> SongId {
@@ -274,20 +242,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         }
 
         isFirst = false
-    }
-
-    private func setFavoriteArtist() {
-        if let artistId = song?.artistId {
-            let favoriteArtistRegister = FavoriteArtistRegister()
-
-            isFavoriteArtist = favoriteArtistRegister.exists(artistId: artistId)
-        }
-    }
-
-    private func setFavoriteSong() {
-        let register = FavoriteSongRegister()
-
-        isFavoriteSong = register.exists(songId: songId())
     }
 
     private func resetTime() {

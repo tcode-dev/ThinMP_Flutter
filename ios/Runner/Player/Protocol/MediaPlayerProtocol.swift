@@ -31,8 +31,4 @@ protocol MediaPlayerProtocol {
     func changeRepeat()
 
     func shuffle()
-
-    func favoriteArtist()
-
-    func favoriteSong()
 }

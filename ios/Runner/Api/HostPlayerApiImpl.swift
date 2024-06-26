@@ -6,21 +6,21 @@
 //
 
 import Foundation
+import UIKit
 
 class HostPlayerApiImpl: HostPlayerApi {
-    func startBySongs(index: Int) {
+    func startBySongs(index: Int64) throws {
         let repository = SongRepository()
         let songs = repository.findAll()
-        let app = (UIApplication.sharedApplication().delegate as! AppDelegate)
 
-        app.player.start(songs, index)
+        MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
     }
     
-    func play() {
+    func play() throws {
         
     }
     
-    func stop() {
+    func stop() throws {
         
     }
 }
