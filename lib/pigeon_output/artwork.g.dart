@@ -25,7 +25,7 @@ class HostArtworkApi {
 
   static const MessageCodec<Object?> pigeonChannelCodec = StandardMessageCodec();
 
-  Future<Uint8List> queryArtwork(String id) async {
+  Future<Uint8List?> queryArtwork(String id) async {
     const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.HostArtworkApi.queryArtwork';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -42,13 +42,8 @@ class HostArtworkApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Uint8List?)!;
+      return (__pigeon_replyList[0] as Uint8List?);
     }
   }
 }

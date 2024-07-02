@@ -12,5 +12,5 @@ import 'package:pigeon/pigeon.dart';
   swiftOptions: SwiftOptions(),
 ))
 abstract class HostArtworkApi {
-  Uint8List queryArtwork(String id);
+  Uint8List? queryArtwork(String id);
 }

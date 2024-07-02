@@ -43,7 +43,7 @@ class ArtworkFlutterError (
 ) : Throwable()
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface HostArtworkApi {
-  fun queryArtwork(id: String): ByteArray
+  fun queryArtwork(id: String): ByteArray?
 
   companion object {
     /** The codec used by HostArtworkApi. */

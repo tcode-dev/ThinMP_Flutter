@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 NSObject<FlutterMessageCodec> *HostArtworkApiGetCodec(void);
 
 @protocol HostArtworkApi
-/// @return `nil` only when `error != nil`.
 - (nullable FlutterStandardTypedData *)queryArtworkId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
 @end
 

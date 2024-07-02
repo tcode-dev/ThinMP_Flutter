@@ -40,7 +40,7 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol HostArtworkApi {
-  func queryArtwork(id: String) throws -> FlutterStandardTypedData
+  func queryArtwork(id: String) throws -> FlutterStandardTypedData?
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
