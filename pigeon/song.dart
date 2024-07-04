@@ -1,9 +1,10 @@
 import 'package:pigeon/pigeon.dart';
 
 class Song {
+  String id;
   String title;
   String artist;
-  Song(this.title, this.artist);
+  Song(this.id, this.title, this.artist);
 }
 
 @HostApi()
