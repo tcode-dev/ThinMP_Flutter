@@ -27,7 +27,7 @@ class SongsPageView extends ConsumerWidget {
               child:Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ImageWidget(id: songs[index]!.id),
+                ImageWidget(id: songs[index]!.id, size: 40),
                 Text(songs[index]!.title),
                 Text(songs[index]!.artist),
                 const Divider()
