@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 // import 'package:thinmpf/provider/permission_provider.dart';
-import 'package:thinmpf/view/songs_page_view.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/view/page/songs_page_view.dart';
 
 class MainPageView extends ConsumerWidget {
   const MainPageView({super.key});

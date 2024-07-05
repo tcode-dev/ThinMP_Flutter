@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/provider/songs_provider.dart';
 import 'package:thinmpf/pigeon_output/player.g.dart';
-import 'package:thinmpf/view/widget/image_widget.dart';
+import 'package:thinmpf/view/image/image_widget.dart';
 
 class SongsPageView extends ConsumerWidget {
   const SongsPageView({super.key});

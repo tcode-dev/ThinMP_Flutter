@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/view/main_page_view.dart';
+import 'package:thinmpf/view/page/main_page_view.dart';
 
 void main() {
   runApp(
