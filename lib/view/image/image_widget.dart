@@ -27,7 +27,7 @@ class _ImageWidgetState extends State<ImageWidget> {
         if (item.data != null && item.data!.isNotEmpty) {
           return Image.memory(item.data!, width: widget.size, height: widget.size);
         }
-        return const Text('text');
+        return Image.asset('images/song_dark.png');
       },
     );
   }
