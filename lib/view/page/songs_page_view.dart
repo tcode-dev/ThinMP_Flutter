@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/provider/songs_provider.dart';
 import 'package:thinmpf/pigeon_output/player.g.dart';
-import 'package:thinmpf/view/image/image_widget.dart';
+import 'package:thinmpf/view/row/media_row_widget.dart';
 
 class SongsPageView extends ConsumerWidget {
   const SongsPageView({super.key});
@@ -15,25 +15,16 @@ class SongsPageView extends ConsumerWidget {
       body: ListView.builder(
         itemCount: songs.length,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              final player = HostPlayerApi();
+          final song = songs[index]!;
 
-              player.startBySongs(index);
-            },
-            child: Container(
-              width: double.infinity,
-              margin: const EdgeInsets.only(left: 10.0),
-              child:Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ImageWidget(id: songs[index]!.id, size: 40),
-                Text(songs[index]!.title),
-                Text(songs[index]!.artist),
-                const Divider()
-              ],
-            )),
-          );
+          return GestureDetector(
+              onTap: () {
+                final player = HostPlayerApi();
+
+                player.startBySongs(index);
+              },
+              child: MediaRowWidget(
+                  id: song.id, artist: song.artist, title: song.title));
         },
       ),
     );
