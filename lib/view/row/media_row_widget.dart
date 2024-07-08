@@ -16,16 +16,21 @@ class MediaRowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(left: 10.0),
-      child: Row(children: [
-        ImageWidget(id: id, size: 40),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [Text(title), Text(artist)],
-        ),
-        const Divider()
-      ])
-    );
+        width: double.infinity,
+        margin: const EdgeInsets.only(left: 10.0),
+        child: Column(children: [
+          Row(children: [
+            Container(
+                width: 40,
+                height: 40,
+                margin: const EdgeInsets.only(right: 10.0),
+                child: ImageWidget(id: id, size: 40)),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text(title), Text(artist)],
+            ),
+          ]),
+          const Divider()
+        ]));
   }
 }
