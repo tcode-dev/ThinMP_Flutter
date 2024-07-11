@@ -33,10 +33,14 @@ class MediaRowWidget extends StatelessWidget {
             height: 40,
             margin: const EdgeInsets.only(right: 10),
             child: ImageWidget(id: id, size: 40)),
-        Column(
+        Flexible(
+            child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [Text(title), Text(artist)],
-        ),
+          children: [
+            Text(title, overflow: TextOverflow.ellipsis),
+            Text(artist, overflow: TextOverflow.ellipsis)
+          ],
+        )),
       ]),
     );
   }
