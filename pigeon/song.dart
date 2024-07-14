@@ -4,7 +4,9 @@ class Song {
   String id;
   String title;
   String artist;
-  Song(this.id, this.title, this.artist);
+  String imageId;
+
+  Song(this.id, this.title, this.artist, this.imageId);
 }
 
 @HostApi()

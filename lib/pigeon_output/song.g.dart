@@ -20,6 +20,7 @@ class Song {
     required this.id,
     required this.title,
     required this.artist,
+    required this.imageId,
   });
 
   String id;
@@ -28,11 +29,14 @@ class Song {
 
   String artist;
 
+  String imageId;
+
   Object encode() {
     return <Object?>[
       id,
       title,
       artist,
+      imageId,
     ];
   }
 
@@ -42,6 +46,7 @@ class Song {
       id: result[0]! as String,
       title: result[1]! as String,
       artist: result[2]! as String,
+      imageId: result[3]! as String,
     );
   }
 }

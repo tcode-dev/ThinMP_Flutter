@@ -13,7 +13,7 @@ class HostSongApiImpl: HostSongApi {
         let songs = repository.findAll()
 
         return songs.map { song in
-            return Song(id: song.id, title: song.primaryText, artist: song.secondaryText)
+            return Song(id: song.id, title: song.primaryText, artist: song.secondaryText, imageId: song.id)
         }
     }
 }

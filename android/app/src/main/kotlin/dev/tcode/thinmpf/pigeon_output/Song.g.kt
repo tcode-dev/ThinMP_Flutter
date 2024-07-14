@@ -46,7 +46,8 @@ class SongFlutterError (
 data class Song (
   val id: String,
   val title: String,
-  val artist: String
+  val artist: String,
+  val imageId: String
 
 ) {
   companion object {
@@ -55,7 +56,8 @@ data class Song (
       val id = list[0] as String
       val title = list[1] as String
       val artist = list[2] as String
-      return Song(id, title, artist)
+      val imageId = list[3] as String
+      return Song(id, title, artist, imageId)
     }
   }
   fun toList(): List<Any?> {
@@ -63,6 +65,7 @@ data class Song (
       id,
       title,
       artist,
+      imageId,
     )
   }
 }

@@ -36,11 +36,13 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 @implementation Song
 + (instancetype)makeWithId:(NSString *)id
     title:(NSString *)title
-    artist:(NSString *)artist {
+    artist:(NSString *)artist
+    imageId:(NSString *)imageId {
   Song* pigeonResult = [[Song alloc] init];
   pigeonResult.id = id;
   pigeonResult.title = title;
   pigeonResult.artist = artist;
+  pigeonResult.imageId = imageId;
   return pigeonResult;
 }
 + (Song *)fromList:(NSArray *)list {
@@ -48,6 +50,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   pigeonResult.id = GetNullableObjectAtIndex(list, 0);
   pigeonResult.title = GetNullableObjectAtIndex(list, 1);
   pigeonResult.artist = GetNullableObjectAtIndex(list, 2);
+  pigeonResult.imageId = GetNullableObjectAtIndex(list, 3);
   return pigeonResult;
 }
 + (nullable Song *)nullableFromList:(NSArray *)list {
@@ -58,6 +61,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
     self.id ?: [NSNull null],
     self.title ?: [NSNull null],
     self.artist ?: [NSNull null],
+    self.imageId ?: [NSNull null],
   ];
 }
 @end

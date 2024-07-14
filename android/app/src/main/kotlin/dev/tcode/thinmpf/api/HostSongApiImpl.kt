@@ -11,7 +11,7 @@ class HostSongApiImpl(private val context: Context) : HostSongApi {
         val result = repository.findAll()
 
         return result.map {
-            Song(it.id, it.name, it.artistName)
+            Song(it.id, it.name, it.artistName, it.albumId)
         }
     }
 }

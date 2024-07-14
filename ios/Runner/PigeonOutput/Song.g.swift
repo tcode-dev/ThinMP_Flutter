@@ -44,16 +44,19 @@ struct Song {
   var id: String
   var title: String
   var artist: String
+  var imageId: String
 
   static func fromList(_ list: [Any?]) -> Song? {
     let id = list[0] as! String
     let title = list[1] as! String
     let artist = list[2] as! String
+    let imageId = list[3] as! String
 
     return Song(
       id: id,
       title: title,
-      artist: artist
+      artist: artist,
+      imageId: imageId
     )
   }
   func toList() -> [Any?] {
@@ -61,6 +64,7 @@ struct Song {
       id,
       title,
       artist,
+      imageId,
     ]
   }
 }

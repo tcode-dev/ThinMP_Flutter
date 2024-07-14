@@ -17,10 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithId:(NSString *)id
     title:(NSString *)title
-    artist:(NSString *)artist;
+    artist:(NSString *)artist
+    imageId:(NSString *)imageId;
 @property(nonatomic, copy) NSString * id;
 @property(nonatomic, copy) NSString * title;
 @property(nonatomic, copy) NSString * artist;
+@property(nonatomic, copy) NSString * imageId;
 @end
 
 /// The codec used by HostSongApi.

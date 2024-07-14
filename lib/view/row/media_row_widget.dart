@@ -5,12 +5,14 @@ class MediaRowWidget extends StatelessWidget {
   final String id;
   final String title;
   final String artist;
+  final String imageId;
 
   const MediaRowWidget({
     super.key,
     required this.id,
     required this.title,
     required this.artist,
+    required this.imageId,
   });
 
   @override
@@ -32,7 +34,7 @@ class MediaRowWidget extends StatelessWidget {
             width: 40,
             height: 40,
             margin: const EdgeInsets.only(right: 10),
-            child: ImageWidget(id: id, size: 40)),
+            child: ImageWidget(id: imageId, size: 40)),
         Flexible(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
