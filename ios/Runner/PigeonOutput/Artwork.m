@@ -41,13 +41,13 @@ void SetUpHostArtworkApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Ho
         binaryMessenger:binaryMessenger
         codec:HostArtworkApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(queryArtworkId:error:)], @"HostArtworkApi api (%@) doesn't respond to @selector(queryArtworkId:error:)", api);
+      NSCAssert([api respondsToSelector:@selector(queryArtworkId:completion:)], @"HostArtworkApi api (%@) doesn't respond to @selector(queryArtworkId:completion:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         NSArray *args = message;
         NSString *arg_id = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        FlutterStandardTypedData *output = [api queryArtworkId:arg_id error:&error];
-        callback(wrapResult(output, error));
+        [api queryArtworkId:arg_id completion:^(FlutterStandardTypedData *_Nullable output, FlutterError *_Nullable error) {
+          callback(wrapResult(output, error));
+        }];
       }];
     } else {
       [channel setMessageHandler:nil];

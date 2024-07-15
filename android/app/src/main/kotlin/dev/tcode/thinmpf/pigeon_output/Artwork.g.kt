@@ -41,9 +41,10 @@ class ArtworkFlutterError (
   override val message: String? = null,
   val details: Any? = null
 ) : Throwable()
+
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface HostArtworkApi {
-  fun queryArtwork(id: String): ByteArray?
+  fun queryArtwork(id: String, callback: (Result<ByteArray?>) -> Unit)
 
   companion object {
     /** The codec used by HostArtworkApi. */
@@ -59,13 +60,15 @@ interface HostArtworkApi {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
             val idArg = args[0] as String
-            var wrapped: List<Any?>
-            try {
-              wrapped = listOf<Any?>(api.queryArtwork(idArg))
-            } catch (exception: Throwable) {
-              wrapped = wrapError(exception)
+            api.queryArtwork(idArg) { result: Result<ByteArray?> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
             }
-            reply.reply(wrapped)
           }
         } else {
           channel.setMessageHandler(null)

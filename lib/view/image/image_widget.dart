@@ -2,6 +2,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:thinmpf/pigeon_output/artwork.g.dart';
 
+final api = HostArtworkApi();
+
 class ImageWidget extends StatefulWidget {
   final String id;
   final double size;
@@ -19,15 +21,15 @@ class ImageWidget extends StatefulWidget {
 class _ImageWidgetState extends State<ImageWidget> {
   @override
   Widget build(BuildContext context) {
-    final api = HostArtworkApi();
-
     return FutureBuilder<Uint8List?>(
       future: api.queryArtwork(widget.id),
-      builder: (context, item) {
-        if (item.data != null && item.data!.isNotEmpty) {
-          return Image.memory(item.data!, width: widget.size, height: widget.size);
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return SizedBox(width: widget.size, height: widget.size);
+        } else if (snapshot.data != null && snapshot.data!.isNotEmpty) {
+          return Image.memory(snapshot.data!, width: widget.size, height: widget.size);
         }
-        return Image.asset('images/song_dark.png');
+        return Image.asset('images/song_dark.png', width: widget.size, height: widget.size);
       },
     );
   }

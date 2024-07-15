@@ -38,9 +38,10 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
   if value is NSNull { return nil }
   return value as! T?
 }
+
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol HostArtworkApi {
-  func queryArtwork(id: String) throws -> FlutterStandardTypedData?
+  func queryArtwork(id: String, completion: @escaping (Result<FlutterStandardTypedData?, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -53,11 +54,13 @@ class HostArtworkApiSetup {
       queryArtworkChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let idArg = args[0] as! String
-        do {
-          let result = try api.queryArtwork(id: idArg)
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
+        api.queryArtwork(id: idArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
         }
       }
     } else {

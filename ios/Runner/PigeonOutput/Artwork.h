@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 NSObject<FlutterMessageCodec> *HostArtworkApiGetCodec(void);
 
 @protocol HostArtworkApi
-- (nullable FlutterStandardTypedData *)queryArtworkId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
+- (void)queryArtworkId:(NSString *)id completion:(void (^)(FlutterStandardTypedData *_Nullable, FlutterError *_Nullable))completion;
 @end
 
 extern void SetUpHostArtworkApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<HostArtworkApi> *_Nullable api);
