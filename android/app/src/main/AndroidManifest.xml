@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -7,7 +8,15 @@
     <application
         android:label="thinmpf"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true">
+
+        <service
+            android:name=".player.MusicService"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="false"
+            tools:ignore="ForegroundServicePermission" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

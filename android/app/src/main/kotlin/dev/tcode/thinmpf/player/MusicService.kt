@@ -7,8 +7,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.media.session.MediaSession
-import android.net.Uri
 import android.os.Binder
 import android.os.IBinder
 import android.os.Looper
@@ -18,12 +16,12 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
-//import dev.tcode.thinmp.config.ConfigStore
-//import dev.tcode.thinmp.config.RepeatState
-//import dev.tcode.thinmp.constant.NotificationConstant
+import androidx.media3.session.MediaSession
+import androidx.media3.session.MediaStyleNotificationHelper
+import dev.tcode.thinmpf.constant.NotificationConstant
 import dev.tcode.thinmpf.model.SongModel
-//import dev.tcode.thinmp.notification.LocalNotificationHelper
-//import dev.tcode.thinmp.receiver.HeadsetEventReceiver
+import dev.tcode.thinmpf.notification.LocalNotificationHelper
+import dev.tcode.thinmpf.receiver.HeadsetEventReceiver
 import java.io.IOException
 
 interface MusicServiceListener {
@@ -36,12 +34,13 @@ class MusicService : Service() {
     private val binder = MusicBinder()
     private lateinit var player: ExoPlayer
     private lateinit var mediaSession: androidx.media3.session.MediaSession
-//    private lateinit var mediaStyle: MediaStyleNotificationHelper.MediaStyle
-//    private lateinit var headsetEventReceiver: HeadsetEventReceiver
-//    private lateinit var playerEventListener: PlayerEventListener
+    @SuppressLint("UnsafeOptInUsageError")
+    private lateinit var mediaStyle: MediaStyleNotificationHelper.MediaStyle
+    private lateinit var headsetEventReceiver: HeadsetEventReceiver
+    private lateinit var playerEventListener: PlayerEventListener
 //    private lateinit var config: ConfigStore
 //    private lateinit var repeat: RepeatState
-//    private var listeners: MutableList<MusicServiceListener> = mutableListOf()
+    private var listeners: MutableList<MusicServiceListener> = mutableListOf()
     private var playingList: List<SongModel> = emptyList()
     private var initialized: Boolean = false
 //    private var shuffle = false
@@ -63,25 +62,25 @@ class MusicService : Service() {
 //        config = ConfigStore(baseContext)
 //        repeat = config.getRepeat()
 //        shuffle = config.getShuffle()
-//        headsetEventReceiver = HeadsetEventReceiver { player.stop() }
+        headsetEventReceiver = HeadsetEventReceiver { player.stop() }
 
-//        registerReceiver(headsetEventReceiver, IntentFilter(Intent.ACTION_HEADSET_PLUG))
+        registerReceiver(headsetEventReceiver, IntentFilter(Intent.ACTION_HEADSET_PLUG))
         initPlayer()
     }
 
-//    fun addEventListener(listener: MusicServiceListener) {
-//        listeners.add(listener)
-//    }
-//
-//    fun removeEventListener(listener: MusicServiceListener) {
-//        listeners.remove(listener)
-//    }
+    fun addEventListener(listener: MusicServiceListener) {
+        listeners.add(listener)
+    }
 
-//    fun getCurrentSong(): Song? {
-//        if (player.currentMediaItem == null) return null
-//
-//        return playingList.first { MediaItem.fromUri(it.getMediaUri()) == player.currentMediaItem }
-//    }
+    fun removeEventListener(listener: MusicServiceListener) {
+        listeners.remove(listener)
+    }
+
+    private fun getCurrentSong(): SongModel? {
+        if (player.currentMediaItem == null) return null
+
+        return playingList.first { MediaItem.fromUri(it.mediaUri) == player.currentMediaItem }
+    }
 
     fun start(songs: List<SongModel>, index: Int) {
         Log.d("MusicService", "start")
@@ -101,14 +100,14 @@ class MusicService : Service() {
         player.pause()
     }
 
-//    fun prev() {
-//        if (getCurrentPosition() <= PREV_MS) {
-//            player.seekToPrevious()
-//        } else {
-//            player.seekTo(0)
-//            onChange()
-//        }
-//    }
+    fun prev() {
+        if (getCurrentPosition() <= PREV_MS) {
+            player.seekToPrevious()
+        } else {
+            player.seekTo(0)
+            onChange()
+        }
+    }
 
     fun next() {
         player.seekToNext()
@@ -159,8 +158,8 @@ class MusicService : Service() {
     @SuppressLint("UnsafeOptInUsageError")
     private fun initPlayer() {
         player = ExoPlayer.Builder(applicationContext).setLooper(Looper.getMainLooper()).build()
-//        mediaSession = MediaSession.Builder(applicationContext, player).build()
-//        mediaStyle = MediaStyleNotificationHelper.MediaStyle(mediaSession)
+        mediaSession = MediaSession.Builder(applicationContext, player).build()
+        mediaStyle = MediaStyleNotificationHelper.MediaStyle(mediaSession)
 //        setRepeat()
 //        setShuffle()
     }
@@ -177,19 +176,19 @@ class MusicService : Service() {
         player.setMediaItems(mediaItems)
         player.prepare()
         player.seekTo(index, 0)
-//        playerEventListener = PlayerEventListener()
-//        player.addListener(playerEventListener)
+        playerEventListener = PlayerEventListener()
+        player.addListener(playerEventListener)
     }
 
     private fun startFirstService() {
-//        if (initialized) return
-//
-//        val notification = createNotification()
-//
-//        LocalNotificationHelper.createNotificationChannel(applicationContext)
-//        startForeground(NotificationConstant.NOTIFICATION_ID, notification)
-//
-//        initialized = true
+        if (initialized) return
+
+        val notification = createNotification()
+
+        LocalNotificationHelper.createNotificationChannel(applicationContext)
+        startForeground(NotificationConstant.NOTIFICATION_ID, notification)
+
+        initialized = true
     }
 
 //    private fun setRepeat() {
@@ -204,39 +203,39 @@ class MusicService : Service() {
 //        player.shuffleModeEnabled = shuffle
 //    }
 
-//    private fun createNotification(): Notification? {
-//        val song = getCurrentSong() ?: return null
-//        var albumArtBitmap: Bitmap? = null
-//
-//        try {
-//            val source = ImageDecoder.createSource(contentResolver, song.getImageUri())
-//
-//            albumArtBitmap = ImageDecoder.decodeBitmap(source)
-//        } catch (_: IOException) {
-//        }
-//
-//        return LocalNotificationHelper.createNotification(applicationContext, mediaStyle, song.name, song.artistName, albumArtBitmap)
-//    }
+    private fun createNotification(): Notification? {
+        val song = getCurrentSong() ?: return null
+        var albumArtBitmap: Bitmap? = null
 
-//    private fun notification() {
-//        val notification = createNotification()
-//
-//        if (notification != null) {
-//            LocalNotificationHelper.notify(notification, applicationContext)
-//        }
-//    }
+        try {
+            val source = ImageDecoder.createSource(contentResolver, song.mediaUri)
 
-//    private fun onChange() {
-//        listeners.forEach {
-//            it.onChange()
-//        }
-//    }
+            albumArtBitmap = ImageDecoder.decodeBitmap(source)
+        } catch (_: IOException) {
+        }
 
-//    private fun onError() {
-//        listeners.forEach {
-//            it.onError()
-//        }
-//    }
+        return LocalNotificationHelper.createNotification(applicationContext, mediaStyle, song.name, song.artistName, albumArtBitmap)
+    }
+
+    private fun notification() {
+        val notification = createNotification()
+
+        if (notification != null) {
+            LocalNotificationHelper.notify(notification, applicationContext)
+        }
+    }
+
+    private fun onChange() {
+        listeners.forEach {
+            it.onChange()
+        }
+    }
+
+    private fun onError() {
+        listeners.forEach {
+            it.onError()
+        }
+    }
 
     private fun retry() {
         val count = playingList.count()
@@ -265,48 +264,48 @@ class MusicService : Service() {
         return START_NOT_STICKY
     }
 
-//    @SuppressLint("ServiceCast")
-//    override fun onDestroy() {
-//        if (isPlaying) {
-//            player.stop()
-//        }
-//
-//        player.removeListener(playerEventListener)
-//        player.release()
-//        mediaSession.release()
-//        LocalNotificationHelper.cancelAll(applicationContext)
-//        unregisterReceiver(headsetEventReceiver)
-//        stopForeground(STOP_FOREGROUND_DETACH)
-//        isServiceRunning = false
-//    }
+    @SuppressLint("ServiceCast")
+    override fun onDestroy() {
+        if (isPlaying) {
+            player.stop()
+        }
 
-//    inner class PlayerEventListener : Player.Listener {
-//        override fun onEvents(player: Player, events: Player.Events) {
-//            if (events.contains(Player.EVENT_POSITION_DISCONTINUITY)) return
-//
-//            if (events.contains(Player.EVENT_MEDIA_METADATA_CHANGED) || events.contains(Player.EVENT_IS_PLAYING_CHANGED)) {
-//                isPlaying = player.isPlaying
-//                onChange()
-//                notification()
-//                isPreparing = false
-//            }
-//        }
-//
-//        override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-//            onChange()
-//            notification()
-//        }
-//
-//        override fun onPlayerError(error: PlaybackException) {
-//            // 曲が削除されている場合
-//            if (error.errorCode == PlaybackException.ERROR_CODE_IO_FILE_NOT_FOUND) {
-//                retry()
-//                onError()
-//            } else {
-//                isPreparing = false
-//            }
-//        }
-//    }
+        player.removeListener(playerEventListener)
+        player.release()
+        mediaSession.release()
+        LocalNotificationHelper.cancelAll(applicationContext)
+        unregisterReceiver(headsetEventReceiver)
+        stopForeground(STOP_FOREGROUND_DETACH)
+        isServiceRunning = false
+    }
+
+    inner class PlayerEventListener : Player.Listener {
+        override fun onEvents(player: Player, events: Player.Events) {
+            if (events.contains(Player.EVENT_POSITION_DISCONTINUITY)) return
+
+            if (events.contains(Player.EVENT_MEDIA_METADATA_CHANGED) || events.contains(Player.EVENT_IS_PLAYING_CHANGED)) {
+                isPlaying = player.isPlaying
+                onChange()
+                notification()
+                isPreparing = false
+            }
+        }
+
+        override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+            onChange()
+            notification()
+        }
+
+        override fun onPlayerError(error: PlaybackException) {
+            // 曲が削除されている場合
+            if (error.errorCode == PlaybackException.ERROR_CODE_IO_FILE_NOT_FOUND) {
+                retry()
+                onError()
+            } else {
+                isPreparing = false
+            }
+        }
+    }
 
     inner class MusicBinder : Binder() {
         fun getService(): MusicService = this@MusicService
