@@ -1,5 +1,8 @@
 package dev.tcode.thinmpf.model
 
+import android.net.Uri
+import android.provider.MediaStore
+
 class SongModel(
     val songId: String,
     public override var name: String,
@@ -18,9 +21,8 @@ class SongModel(
 //        return Uri.parse("${MediaConstant.ALBUM_ART}/${albumId.id}")
 //    }
 
-//    fun getMediaUri(): Uri {
-//        return Uri.parse("${MediaStore.Audio.Media.EXTERNAL_CONTENT_URI}/${id}")
-//    }
+    val mediaUri
+        get() = Uri.parse("${MediaStore.Audio.Media.EXTERNAL_CONTENT_URI}/${id}")
 
 //    fun getTrackNumber(): Int {
 //        // "15"、"15/30" → 15
