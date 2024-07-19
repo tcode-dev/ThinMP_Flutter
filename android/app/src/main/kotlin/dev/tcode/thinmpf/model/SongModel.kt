@@ -2,6 +2,7 @@ package dev.tcode.thinmpf.model
 
 import android.net.Uri
 import android.provider.MediaStore
+import dev.tcode.thinmpf.constant.MediaConstant
 
 class SongModel(
     val songId: String,
@@ -17,11 +18,10 @@ class SongModel(
 //        get() = songId.id
         get() = songId
 
-//    fun getImageUri(): Uri {
-//        return Uri.parse("${MediaConstant.ALBUM_ART}/${albumId.id}")
-//    }
+    val imageUri: Uri
+        get() =  Uri.parse("${MediaConstant.ALBUM_ART}/${albumId}")
 
-    val mediaUri
+    val mediaUri: Uri
         get() = Uri.parse("${MediaStore.Audio.Media.EXTERNAL_CONTENT_URI}/${id}")
 
 //    fun getTrackNumber(): Int {

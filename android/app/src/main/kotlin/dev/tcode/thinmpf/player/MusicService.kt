@@ -207,7 +207,7 @@ class MusicService : Service() {
         var albumArtBitmap: Bitmap? = null
 
         try {
-            val source = ImageDecoder.createSource(contentResolver, song.mediaUri)
+            val source = ImageDecoder.createSource(contentResolver, song.imageUri)
 
             albumArtBitmap = ImageDecoder.decodeBitmap(source)
         } catch (_: IOException) {
