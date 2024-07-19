@@ -37,10 +37,7 @@ class MusicPlayer() {
 
         if (!isServiceRunning()) {
             context.startForegroundService(Intent(context, MusicService::class.java))
-            bindService(context) {
-                Log.d("MusicPlayer", "callback")
-                musicService?.start(songs, index)
-            }
+            bindService(context) { musicService?.start(songs, index) }
             return
         }
 
@@ -104,9 +101,8 @@ class MusicPlayer() {
 //    }
 
     private fun bindService(context: Context, callback: () -> Unit? = {}) {
-        Log.d("MusicPlayer", "bindService1")
         if (isConnecting || bound) return
-        Log.d("MusicPlayer", "bindService2")
+
         isConnecting = true
         connection = createConnection(callback)
         context.bindService(
@@ -129,7 +125,6 @@ class MusicPlayer() {
     private fun createConnection(callback: () -> Unit? = {}): ServiceConnection {
         return object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName, service: IBinder) {
-                Log.d("MusicPlayer", "onServiceConnected")
                 val binder: MusicService.MusicBinder = service as MusicService.MusicBinder
                 musicService = binder.getService()
 //                musicService!!.addEventListener(listener)

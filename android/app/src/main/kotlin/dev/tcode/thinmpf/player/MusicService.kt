@@ -83,7 +83,6 @@ class MusicService : Service() {
     }
 
     fun start(songs: List<SongModel>, index: Int) {
-        Log.d("MusicService", "start")
         isPreparing = true
         playingList = songs
 
