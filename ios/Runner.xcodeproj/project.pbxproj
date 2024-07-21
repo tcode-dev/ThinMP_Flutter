@@ -17,8 +17,6 @@
 		52212B332C2A37E0000ABB62 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52212B302C2A37E0000ABB62 /* MusicPlayer.swift */; };
 		52212B352C2A3B8E000ABB62 /* HostPlayerApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52212B342C2A3B8E000ABB62 /* HostPlayerApiImpl.swift */; };
 		522AF0CD2C2B069C00177683 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 522AF0C82C2B069C00177683 /* Player.m */; };
-		522AF0CE2C2B069C00177683 /* Permission.m in Sources */ = {isa = PBXBuildFile; fileRef = 522AF0CA2C2B069C00177683 /* Permission.m */; };
-		522AF0CF2C2B069C00177683 /* Permission.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522AF0CB2C2B069C00177683 /* Permission.g.swift */; };
 		522AF0D02C2B069C00177683 /* Player.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522AF0CC2C2B069C00177683 /* Player.g.swift */; };
 		52357F7F2B80F71C00133631 /* SongRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52357F7E2B80F71C00133631 /* SongRepository.swift */; };
 		52384F922C32205C00013C69 /* HostArtworkApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52384F912C32205C00013C69 /* HostArtworkApiImpl.swift */; };
@@ -72,9 +70,6 @@
 		52212B342C2A3B8E000ABB62 /* HostPlayerApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostPlayerApiImpl.swift; sourceTree = "<group>"; };
 		522AF0C72C2B069C00177683 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		522AF0C82C2B069C00177683 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
-		522AF0C92C2B069C00177683 /* Permission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Permission.h; sourceTree = "<group>"; };
-		522AF0CA2C2B069C00177683 /* Permission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Permission.m; sourceTree = "<group>"; };
-		522AF0CB2C2B069C00177683 /* Permission.g.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Permission.g.swift; sourceTree = "<group>"; };
 		522AF0CC2C2B069C00177683 /* Player.g.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.g.swift; sourceTree = "<group>"; };
 		52357F7E2B80F71C00133631 /* SongRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongRepository.swift; sourceTree = "<group>"; };
 		52384F912C32205C00013C69 /* HostArtworkApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostArtworkApiImpl.swift; sourceTree = "<group>"; };
@@ -180,9 +175,6 @@
 				52384F942C3220F300013C69 /* Artwork.g.swift */,
 				52384F932C3220F300013C69 /* Artwork.h */,
 				52384F952C3220F300013C69 /* Artwork.m */,
-				522AF0CB2C2B069C00177683 /* Permission.g.swift */,
-				522AF0C92C2B069C00177683 /* Permission.h */,
-				522AF0CA2C2B069C00177683 /* Permission.m */,
 				522AF0CC2C2B069C00177683 /* Player.g.swift */,
 				522AF0C72C2B069C00177683 /* Player.h */,
 				522AF0C82C2B069C00177683 /* Player.m */,
@@ -488,7 +480,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				522AF0CE2C2B069C00177683 /* Permission.m in Sources */,
 				52957A202B6481560019D34C /* Song.m in Sources */,
 				52384F972C3220F300013C69 /* Artwork.m in Sources */,
 				527307212B61E42B00E65B2F /* HostSongApiImpl.swift in Sources */,
@@ -502,7 +493,6 @@
 				522AF0D02C2B069C00177683 /* Player.g.swift in Sources */,
 				520B9A742C2B85510057A02B /* SongId.swift in Sources */,
 				52212B352C2A3B8E000ABB62 /* HostPlayerApiImpl.swift in Sources */,
-				522AF0CF2C2B069C00177683 /* Permission.g.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				52384F962C3220F300013C69 /* Artwork.g.swift in Sources */,
 				52957A1F2B6481560019D34C /* Song.g.swift in Sources */,
