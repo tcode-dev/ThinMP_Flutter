@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/view/page/main_page_view.dart';
+import 'package:thinmpf/view/permission/permission_widget.dart';
 
 void main() {
   runApp(
@@ -16,7 +17,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: MainPageView()
+      home: PermissionWidget(child: MainPageView())
     );
   }
 }
