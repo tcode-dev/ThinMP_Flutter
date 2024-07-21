@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:thinmpf/provider/permission_provider.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/view/page/songs_page_view.dart';
 
@@ -9,8 +7,6 @@ class MainPageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final status = ref.watch(permissionProvider).value?? false;
-
     return Scaffold(
       body: Center(
           child: ElevatedButton(
