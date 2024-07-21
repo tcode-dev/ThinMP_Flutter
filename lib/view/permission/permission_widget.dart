@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:thinmpf/constant/permission_constant.dart';
+import 'package:thinmpf/util/platform_select.dart';
 
 class PermissionWidget extends StatefulWidget {
   final Widget child;
@@ -14,40 +16,16 @@ class PermissionWidget extends StatefulWidget {
 }
 
 class _PermissionWidgetState extends State<PermissionWidget> {
-  Future<PermissionStatus> _permission() async {
-    final status = await Permission.mediaLibrary
-   .onDeniedCallback(() {
-    print( 'onDeniedCallback');
-  })
-  .onGrantedCallback(() {
-    print( 'onGrantedCallback');
-  })
-  .onPermanentlyDeniedCallback(() {
-    print( 'onPermanentlyDeniedCallback');
-  })
-  // .onRestrictedCallback(() {
-  //   print( Permission.mediaLibrary.status);
-  // })
-  // .onLimitedCallback(() {
-  //   print( Permission.mediaLibrary.status);
-  // })
-  // .onProvisionalCallback(() {
-  //   print( Permission.mediaLibrary.status);
-  // })
-  .request();
-// print(status);
-  return status;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<PermissionStatus>(
-      future: _permission(),
+    return FutureBuilder<Map<Permission, PermissionStatus>>(
+      future: platformSelect(permissionConstant).request(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting || snapshot.data == null) {
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            snapshot.data == null) {
           return Container();
         }
-        if (snapshot.data!.isGranted) {
+        if (snapshot.data!.values.every((status) => status.isGranted)) {
           return widget.child;
         }
         return Container();
