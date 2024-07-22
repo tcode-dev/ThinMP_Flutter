@@ -1,8 +1,11 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/pigeon_output/song.g.dart';
 
-final songsProvider = FutureProvider((ref) async {
+part 'songs_provider.g.dart';
+
+@riverpod
+Future<List<Song?>> songs (SongsRef ref) async {
   final api = HostSongApi();
 
   return await api.findAll();
-});
+}
