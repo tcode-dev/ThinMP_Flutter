@@ -27,21 +27,21 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   return (result == [NSNull null]) ? nil : result;
 }
 
-NSObject<FlutterMessageCodec> *HostArtworkApiGetCodec(void) {
+NSObject<FlutterMessageCodec> *ArtworkHostApiGetCodec(void) {
   static FlutterStandardMessageCodec *sSharedObject = nil;
   sSharedObject = [FlutterStandardMessageCodec sharedInstance];
   return sSharedObject;
 }
 
-void SetUpHostArtworkApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<HostArtworkApi> *api) {
+void SetUpArtworkHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<ArtworkHostApi> *api) {
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.thinmpf.HostArtworkApi.queryArtwork"
+        initWithName:@"dev.flutter.pigeon.thinmpf.ArtworkHostApi.queryArtwork"
         binaryMessenger:binaryMessenger
-        codec:HostArtworkApiGetCodec()];
+        codec:ArtworkHostApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(queryArtworkId:completion:)], @"HostArtworkApi api (%@) doesn't respond to @selector(queryArtworkId:completion:)", api);
+      NSCAssert([api respondsToSelector:@selector(queryArtworkId:completion:)], @"ArtworkHostApi api (%@) doesn't respond to @selector(queryArtworkId:completion:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         NSArray *args = message;
         NSString *arg_id = GetNullableObjectAtIndex(args, 0);

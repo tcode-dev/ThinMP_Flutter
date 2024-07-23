@@ -43,19 +43,19 @@ class ArtworkFlutterError (
 ) : Throwable()
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
-interface HostArtworkApi {
+interface ArtworkHostApi {
   fun queryArtwork(id: String, callback: (Result<ByteArray?>) -> Unit)
 
   companion object {
-    /** The codec used by HostArtworkApi. */
+    /** The codec used by ArtworkHostApi. */
     val codec: MessageCodec<Any?> by lazy {
       StandardMessageCodec()
     }
-    /** Sets up an instance of `HostArtworkApi` to handle messages through the `binaryMessenger`. */
+    /** Sets up an instance of `ArtworkHostApi` to handle messages through the `binaryMessenger`. */
     @Suppress("UNCHECKED_CAST")
-    fun setUp(binaryMessenger: BinaryMessenger, api: HostArtworkApi?) {
+    fun setUp(binaryMessenger: BinaryMessenger, api: ArtworkHostApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostArtworkApi.queryArtwork", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.ArtworkHostApi.queryArtwork", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>

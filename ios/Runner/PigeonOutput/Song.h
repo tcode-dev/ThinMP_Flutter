@@ -25,14 +25,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString * imageId;
 @end
 
-/// The codec used by HostSongApi.
-NSObject<FlutterMessageCodec> *HostSongApiGetCodec(void);
+/// The codec used by SongHostApi.
+NSObject<FlutterMessageCodec> *SongHostApiGetCodec(void);
 
-@protocol HostSongApi
+@protocol SongHostApi
 /// @return `nil` only when `error != nil`.
 - (nullable NSArray<Song *> *)findAllWithError:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
-extern void SetUpHostSongApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<HostSongApi> *_Nullable api);
+extern void SetUpSongHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<SongHostApi> *_Nullable api);
 
 NS_ASSUME_NONNULL_END

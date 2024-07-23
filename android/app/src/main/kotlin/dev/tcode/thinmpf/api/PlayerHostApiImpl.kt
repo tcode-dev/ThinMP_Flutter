@@ -1,14 +1,11 @@
 package dev.tcode.thinmpf.api
 
-import HostPlayerApi
+import PlayerHostApi
 import android.content.Context
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import dev.tcode.thinmpf.player.MusicPlayer
 import dev.tcode.thinmpf.repository.SongRepository
 
-class HostPlayerApiImpl(private val context: Context): HostPlayerApi {
+class PlayerHostApiImpl(private val context: Context): PlayerHostApi {
     override fun startBySongs(index: Long) {
         val repository = SongRepository(context)
         val songs = repository.findAll()

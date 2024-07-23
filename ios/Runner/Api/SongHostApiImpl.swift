@@ -1,5 +1,5 @@
 //
-//  HostSongApiImpl.swift
+//  SongHostApiImpl.swift
 //  Runner
 //
 //  Created by tk on 2024/01/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HostSongApiImpl: HostSongApi {
+class SongHostApiImpl: SongHostApi {
     func findAll() throws -> [Song] {
         let repository = SongRepository()
         let songs = repository.findAll()

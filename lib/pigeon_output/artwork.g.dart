@@ -15,18 +15,18 @@ PlatformException _createConnectionError(String channelName) {
   );
 }
 
-class HostArtworkApi {
-  /// Constructor for [HostArtworkApi].  The [binaryMessenger] named argument is
+class ArtworkHostApi {
+  /// Constructor for [ArtworkHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  HostArtworkApi({BinaryMessenger? binaryMessenger})
+  ArtworkHostApi({BinaryMessenger? binaryMessenger})
       : __pigeon_binaryMessenger = binaryMessenger;
   final BinaryMessenger? __pigeon_binaryMessenger;
 
   static const MessageCodec<Object?> pigeonChannelCodec = StandardMessageCodec();
 
   Future<Uint8List?> queryArtwork(String id) async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.HostArtworkApi.queryArtwork';
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.ArtworkHostApi.queryArtwork';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,

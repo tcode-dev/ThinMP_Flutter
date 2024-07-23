@@ -15,18 +15,18 @@ PlatformException _createConnectionError(String channelName) {
   );
 }
 
-class HostPlayerApi {
-  /// Constructor for [HostPlayerApi].  The [binaryMessenger] named argument is
+class PlayerHostApi {
+  /// Constructor for [PlayerHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  HostPlayerApi({BinaryMessenger? binaryMessenger})
+  PlayerHostApi({BinaryMessenger? binaryMessenger})
       : __pigeon_binaryMessenger = binaryMessenger;
   final BinaryMessenger? __pigeon_binaryMessenger;
 
   static const MessageCodec<Object?> pigeonChannelCodec = StandardMessageCodec();
 
   Future<void> startBySongs(int index) async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.HostPlayerApi.startBySongs';
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.PlayerHostApi.startBySongs';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
@@ -48,7 +48,7 @@ class HostPlayerApi {
   }
 
   Future<void> play() async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.HostPlayerApi.play';
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.PlayerHostApi.play';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
@@ -70,7 +70,7 @@ class HostPlayerApi {
   }
 
   Future<void> stop() async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.HostPlayerApi.stop';
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.PlayerHostApi.stop';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,

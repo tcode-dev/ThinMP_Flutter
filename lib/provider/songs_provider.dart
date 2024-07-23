@@ -5,7 +5,7 @@ part 'songs_provider.g.dart';
 
 @riverpod
 Future<List<Song?>> songs (SongsRef ref) async {
-  final api = HostSongApi();
+  final api = SongHostApi();
 
   return await api.findAll();
 }

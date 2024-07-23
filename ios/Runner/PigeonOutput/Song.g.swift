@@ -68,7 +68,7 @@ struct Song {
     ]
   }
 }
-private class HostSongApiCodecReader: FlutterStandardReader {
+private class SongHostApiCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
     case 128:
@@ -79,7 +79,7 @@ private class HostSongApiCodecReader: FlutterStandardReader {
   }
 }
 
-private class HostSongApiCodecWriter: FlutterStandardWriter {
+private class SongHostApiCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
     if let value = value as? Song {
       super.writeByte(128)
@@ -90,32 +90,32 @@ private class HostSongApiCodecWriter: FlutterStandardWriter {
   }
 }
 
-private class HostSongApiCodecReaderWriter: FlutterStandardReaderWriter {
+private class SongHostApiCodecReaderWriter: FlutterStandardReaderWriter {
   override func reader(with data: Data) -> FlutterStandardReader {
-    return HostSongApiCodecReader(data: data)
+    return SongHostApiCodecReader(data: data)
   }
 
   override func writer(with data: NSMutableData) -> FlutterStandardWriter {
-    return HostSongApiCodecWriter(data: data)
+    return SongHostApiCodecWriter(data: data)
   }
 }
 
-class HostSongApiCodec: FlutterStandardMessageCodec {
-  static let shared = HostSongApiCodec(readerWriter: HostSongApiCodecReaderWriter())
+class SongHostApiCodec: FlutterStandardMessageCodec {
+  static let shared = SongHostApiCodec(readerWriter: SongHostApiCodecReaderWriter())
 }
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-protocol HostSongApi {
+protocol SongHostApi {
   func findAll() throws -> [Song]
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-class HostSongApiSetup {
-  /// The codec used by HostSongApi.
-  static var codec: FlutterStandardMessageCodec { HostSongApiCodec.shared }
-  /// Sets up an instance of `HostSongApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: HostSongApi?) {
-    let findAllChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostSongApi.findAll", binaryMessenger: binaryMessenger, codec: codec)
+class SongHostApiSetup {
+  /// The codec used by SongHostApi.
+  static var codec: FlutterStandardMessageCodec { SongHostApiCodec.shared }
+  /// Sets up an instance of `SongHostApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: SongHostApi?) {
+    let findAllChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.SongHostApi.findAll", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       findAllChannel.setMessageHandler { _, reply in
         do {

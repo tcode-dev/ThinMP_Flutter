@@ -20,6 +20,6 @@ class Song {
   swiftOut: 'ios/Runner/PigeonOutput/Song.g.swift',
   swiftOptions: SwiftOptions(),
 ))
-abstract class HostSongApi {
+abstract class SongHostApi {
   List<Song> findAll();
 }

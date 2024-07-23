@@ -70,7 +70,7 @@ data class Song (
   }
 }
 @Suppress("UNCHECKED_CAST")
-private object HostSongApiCodec : StandardMessageCodec() {
+private object SongHostApiCodec : StandardMessageCodec() {
   override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
     return when (type) {
       128.toByte() -> {
@@ -93,19 +93,19 @@ private object HostSongApiCodec : StandardMessageCodec() {
 }
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
-interface HostSongApi {
+interface SongHostApi {
   fun findAll(): List<Song>
 
   companion object {
-    /** The codec used by HostSongApi. */
+    /** The codec used by SongHostApi. */
     val codec: MessageCodec<Any?> by lazy {
-      HostSongApiCodec
+      SongHostApiCodec
     }
-    /** Sets up an instance of `HostSongApi` to handle messages through the `binaryMessenger`. */
+    /** Sets up an instance of `SongHostApi` to handle messages through the `binaryMessenger`. */
     @Suppress("UNCHECKED_CAST")
-    fun setUp(binaryMessenger: BinaryMessenger, api: HostSongApi?) {
+    fun setUp(binaryMessenger: BinaryMessenger, api: SongHostApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostSongApi.findAll", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.SongHostApi.findAll", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             var wrapped: List<Any?>

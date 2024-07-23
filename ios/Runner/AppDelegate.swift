@@ -9,9 +9,9 @@ import Flutter
     ) -> Bool {
         let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
 
-        HostSongApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: HostSongApiImpl())
-        HostPlayerApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: HostPlayerApiImpl())
-        HostArtworkApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: HostArtworkApiImpl())
+        ArtworkHostApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: ArtworkHostApiImpl())
+        PlayerHostApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: PlayerHostApiImpl())
+        SongHostApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: SongHostApiImpl())
 
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)

@@ -11,13 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-/// The codec used by HostArtworkApi.
-NSObject<FlutterMessageCodec> *HostArtworkApiGetCodec(void);
+/// The codec used by ArtworkHostApi.
+NSObject<FlutterMessageCodec> *ArtworkHostApiGetCodec(void);
 
-@protocol HostArtworkApi
+@protocol ArtworkHostApi
 - (void)queryArtworkId:(NSString *)id completion:(void (^)(FlutterStandardTypedData *_Nullable, FlutterError *_Nullable))completion;
 @end
 
-extern void SetUpHostArtworkApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<HostArtworkApi> *_Nullable api);
+extern void SetUpArtworkHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<ArtworkHostApi> *_Nullable api);
 
 NS_ASSUME_NONNULL_END

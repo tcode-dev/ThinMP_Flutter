@@ -11,15 +11,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-/// The codec used by HostPlayerApi.
-NSObject<FlutterMessageCodec> *HostPlayerApiGetCodec(void);
+/// The codec used by PlayerHostApi.
+NSObject<FlutterMessageCodec> *PlayerHostApiGetCodec(void);
 
-@protocol HostPlayerApi
+@protocol PlayerHostApi
 - (void)startBySongsIndex:(NSInteger)index error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)playWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)stopWithError:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
-extern void SetUpHostPlayerApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<HostPlayerApi> *_Nullable api);
+extern void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<PlayerHostApi> *_Nullable api);
 
 NS_ASSUME_NONNULL_END

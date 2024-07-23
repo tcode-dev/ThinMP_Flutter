@@ -1,6 +1,6 @@
 package dev.tcode.thinmpf.api
 
-import HostArtworkApi
+import ArtworkHostApi
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -11,7 +11,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
-class HostArtworkApiImpl(private val context: Context) : HostArtworkApi {
+class ArtworkHostApiImpl(private val context: Context) : ArtworkHostApi {
     @OptIn(DelicateCoroutinesApi::class)
     override fun queryArtwork(id: String, callback: (Result<ByteArray?>) -> Unit) {
         GlobalScope.launch {

@@ -1,11 +1,11 @@
 package dev.tcode.thinmpf.api
 
-import HostSongApi
 import Song
+import SongHostApi
 import android.content.Context
 import dev.tcode.thinmpf.repository.SongRepository
 
-class HostSongApiImpl(private val context: Context) : HostSongApi {
+class SongHostApiImpl(private val context: Context) : SongHostApi {
     override fun findAll(): List<Song> {
         val repository = SongRepository(context)
         val result = repository.findAll()

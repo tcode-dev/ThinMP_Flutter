@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:thinmpf/pigeon_output/artwork.g.dart';
 
-final api = HostArtworkApi();
+final api = ArtworkHostApi();
 
 class ImageWidget extends StatefulWidget {
   final String id;

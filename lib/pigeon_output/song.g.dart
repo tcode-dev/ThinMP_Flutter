@@ -51,8 +51,8 @@ class Song {
   }
 }
 
-class _HostSongApiCodec extends StandardMessageCodec {
-  const _HostSongApiCodec();
+class _SongHostApiCodec extends StandardMessageCodec {
+  const _SongHostApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
     if (value is Song) {
@@ -74,18 +74,18 @@ class _HostSongApiCodec extends StandardMessageCodec {
   }
 }
 
-class HostSongApi {
-  /// Constructor for [HostSongApi].  The [binaryMessenger] named argument is
+class SongHostApi {
+  /// Constructor for [SongHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  HostSongApi({BinaryMessenger? binaryMessenger})
+  SongHostApi({BinaryMessenger? binaryMessenger})
       : __pigeon_binaryMessenger = binaryMessenger;
   final BinaryMessenger? __pigeon_binaryMessenger;
 
-  static const MessageCodec<Object?> pigeonChannelCodec = _HostSongApiCodec();
+  static const MessageCodec<Object?> pigeonChannelCodec = _SongHostApiCodec();
 
   Future<List<Song?>> findAll() async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.HostSongApi.findAll';
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.SongHostApi.findAll';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,

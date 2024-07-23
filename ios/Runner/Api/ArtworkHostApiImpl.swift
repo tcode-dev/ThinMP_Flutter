@@ -1,5 +1,5 @@
 //
-//  HostArtworkApiImpl.swift
+//  ArtworkHostApiImpl.swift
 //  Runner
 //
 //  Created by tk on 2024/07/01.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HostArtworkApiImpl: HostArtworkApi {
+class ArtworkHostApiImpl: ArtworkHostApi {
     func queryArtwork(id: String, completion: @escaping (Result<FlutterStandardTypedData?, Error>) -> Void) {
         let repository = SongRepository()
         let song = repository.findById(id: id)

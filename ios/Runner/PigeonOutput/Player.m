@@ -27,21 +27,21 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   return (result == [NSNull null]) ? nil : result;
 }
 
-NSObject<FlutterMessageCodec> *HostPlayerApiGetCodec(void) {
+NSObject<FlutterMessageCodec> *PlayerHostApiGetCodec(void) {
   static FlutterStandardMessageCodec *sSharedObject = nil;
   sSharedObject = [FlutterStandardMessageCodec sharedInstance];
   return sSharedObject;
 }
 
-void SetUpHostPlayerApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<HostPlayerApi> *api) {
+void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<PlayerHostApi> *api) {
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.thinmpf.HostPlayerApi.startBySongs"
+        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.startBySongs"
         binaryMessenger:binaryMessenger
-        codec:HostPlayerApiGetCodec()];
+        codec:PlayerHostApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(startBySongsIndex:error:)], @"HostPlayerApi api (%@) doesn't respond to @selector(startBySongsIndex:error:)", api);
+      NSCAssert([api respondsToSelector:@selector(startBySongsIndex:error:)], @"PlayerHostApi api (%@) doesn't respond to @selector(startBySongsIndex:error:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         NSArray *args = message;
         NSInteger arg_index = [GetNullableObjectAtIndex(args, 0) integerValue];
@@ -56,11 +56,11 @@ void SetUpHostPlayerApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Hos
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.thinmpf.HostPlayerApi.play"
+        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.play"
         binaryMessenger:binaryMessenger
-        codec:HostPlayerApiGetCodec()];
+        codec:PlayerHostApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(playWithError:)], @"HostPlayerApi api (%@) doesn't respond to @selector(playWithError:)", api);
+      NSCAssert([api respondsToSelector:@selector(playWithError:)], @"PlayerHostApi api (%@) doesn't respond to @selector(playWithError:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         FlutterError *error;
         [api playWithError:&error];
@@ -73,11 +73,11 @@ void SetUpHostPlayerApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Hos
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.thinmpf.HostPlayerApi.stop"
+        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.stop"
         binaryMessenger:binaryMessenger
-        codec:HostPlayerApiGetCodec()];
+        codec:PlayerHostApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(stopWithError:)], @"HostPlayerApi api (%@) doesn't respond to @selector(stopWithError:)", api);
+      NSCAssert([api respondsToSelector:@selector(stopWithError:)], @"PlayerHostApi api (%@) doesn't respond to @selector(stopWithError:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         FlutterError *error;
         [api stopWithError:&error];

@@ -16,7 +16,7 @@ class Player {
   swiftOut: 'ios/Runner/PigeonOutput/Player.g.swift',
   swiftOptions: SwiftOptions(),
 ))
-abstract class HostPlayerApi {
+abstract class PlayerHostApi {
   void startBySongs(int index);
   void play();
   void stop();

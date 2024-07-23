@@ -66,9 +66,9 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 }
 @end
 
-@interface HostSongApiCodecReader : FlutterStandardReader
+@interface SongHostApiCodecReader : FlutterStandardReader
 @end
-@implementation HostSongApiCodecReader
+@implementation SongHostApiCodecReader
 - (nullable id)readValueOfType:(UInt8)type {
   switch (type) {
     case 128: 
@@ -79,9 +79,9 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 }
 @end
 
-@interface HostSongApiCodecWriter : FlutterStandardWriter
+@interface SongHostApiCodecWriter : FlutterStandardWriter
 @end
-@implementation HostSongApiCodecWriter
+@implementation SongHostApiCodecWriter
 - (void)writeValue:(id)value {
   if ([value isKindOfClass:[Song class]]) {
     [self writeByte:128];
@@ -92,36 +92,36 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 }
 @end
 
-@interface HostSongApiCodecReaderWriter : FlutterStandardReaderWriter
+@interface SongHostApiCodecReaderWriter : FlutterStandardReaderWriter
 @end
-@implementation HostSongApiCodecReaderWriter
+@implementation SongHostApiCodecReaderWriter
 - (FlutterStandardWriter *)writerWithData:(NSMutableData *)data {
-  return [[HostSongApiCodecWriter alloc] initWithData:data];
+  return [[SongHostApiCodecWriter alloc] initWithData:data];
 }
 - (FlutterStandardReader *)readerWithData:(NSData *)data {
-  return [[HostSongApiCodecReader alloc] initWithData:data];
+  return [[SongHostApiCodecReader alloc] initWithData:data];
 }
 @end
 
-NSObject<FlutterMessageCodec> *HostSongApiGetCodec(void) {
+NSObject<FlutterMessageCodec> *SongHostApiGetCodec(void) {
   static FlutterStandardMessageCodec *sSharedObject = nil;
   static dispatch_once_t sPred = 0;
   dispatch_once(&sPred, ^{
-    HostSongApiCodecReaderWriter *readerWriter = [[HostSongApiCodecReaderWriter alloc] init];
+    SongHostApiCodecReaderWriter *readerWriter = [[SongHostApiCodecReaderWriter alloc] init];
     sSharedObject = [FlutterStandardMessageCodec codecWithReaderWriter:readerWriter];
   });
   return sSharedObject;
 }
 
-void SetUpHostSongApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<HostSongApi> *api) {
+void SetUpSongHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<SongHostApi> *api) {
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.thinmpf.HostSongApi.findAll"
+        initWithName:@"dev.flutter.pigeon.thinmpf.SongHostApi.findAll"
         binaryMessenger:binaryMessenger
-        codec:HostSongApiGetCodec()];
+        codec:SongHostApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(findAllWithError:)], @"HostSongApi api (%@) doesn't respond to @selector(findAllWithError:)", api);
+      NSCAssert([api respondsToSelector:@selector(findAllWithError:)], @"SongHostApi api (%@) doesn't respond to @selector(findAllWithError:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         FlutterError *error;
         NSArray<Song *> *output = [api findAllWithError:&error];

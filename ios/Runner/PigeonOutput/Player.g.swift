@@ -39,18 +39,18 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
   return value as! T?
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-protocol HostPlayerApi {
+protocol PlayerHostApi {
   func startBySongs(index: Int64) throws
   func play() throws
   func stop() throws
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-class HostPlayerApiSetup {
-  /// The codec used by HostPlayerApi.
-  /// Sets up an instance of `HostPlayerApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: HostPlayerApi?) {
-    let startBySongsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostPlayerApi.startBySongs", binaryMessenger: binaryMessenger)
+class PlayerHostApiSetup {
+  /// The codec used by PlayerHostApi.
+  /// Sets up an instance of `PlayerHostApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: PlayerHostApi?) {
+    let startBySongsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.startBySongs", binaryMessenger: binaryMessenger)
     if let api = api {
       startBySongsChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
@@ -65,7 +65,7 @@ class HostPlayerApiSetup {
     } else {
       startBySongsChannel.setMessageHandler(nil)
     }
-    let playChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostPlayerApi.play", binaryMessenger: binaryMessenger)
+    let playChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.play", binaryMessenger: binaryMessenger)
     if let api = api {
       playChannel.setMessageHandler { _, reply in
         do {
@@ -78,7 +78,7 @@ class HostPlayerApiSetup {
     } else {
       playChannel.setMessageHandler(nil)
     }
-    let stopChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostPlayerApi.stop", binaryMessenger: binaryMessenger)
+    let stopChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.stop", binaryMessenger: binaryMessenger)
     if let api = api {
       stopChannel.setMessageHandler { _, reply in
         do {

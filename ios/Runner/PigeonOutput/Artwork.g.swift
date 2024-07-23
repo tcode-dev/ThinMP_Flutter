@@ -40,16 +40,16 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 }
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-protocol HostArtworkApi {
+protocol ArtworkHostApi {
   func queryArtwork(id: String, completion: @escaping (Result<FlutterStandardTypedData?, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-class HostArtworkApiSetup {
-  /// The codec used by HostArtworkApi.
-  /// Sets up an instance of `HostArtworkApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: HostArtworkApi?) {
-    let queryArtworkChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.HostArtworkApi.queryArtwork", binaryMessenger: binaryMessenger)
+class ArtworkHostApiSetup {
+  /// The codec used by ArtworkHostApi.
+  /// Sets up an instance of `ArtworkHostApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: ArtworkHostApi?) {
+    let queryArtworkChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.ArtworkHostApi.queryArtwork", binaryMessenger: binaryMessenger)
     if let api = api {
       queryArtworkChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]

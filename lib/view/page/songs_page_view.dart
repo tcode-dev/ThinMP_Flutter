@@ -19,7 +19,7 @@ class SongsPageView extends ConsumerWidget {
 
           return GestureDetector(
               onTap: () {
-                final player = HostPlayerApi();
+                final player = PlayerHostApi();
 
                 player.startBySongs(index);
               },

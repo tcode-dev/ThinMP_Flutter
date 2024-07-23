@@ -42,21 +42,21 @@ class PlayerFlutterError (
   val details: Any? = null
 ) : Throwable()
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
-interface HostPlayerApi {
+interface PlayerHostApi {
   fun startBySongs(index: Long)
   fun play()
   fun stop()
 
   companion object {
-    /** The codec used by HostPlayerApi. */
+    /** The codec used by PlayerHostApi. */
     val codec: MessageCodec<Any?> by lazy {
       StandardMessageCodec()
     }
-    /** Sets up an instance of `HostPlayerApi` to handle messages through the `binaryMessenger`. */
+    /** Sets up an instance of `PlayerHostApi` to handle messages through the `binaryMessenger`. */
     @Suppress("UNCHECKED_CAST")
-    fun setUp(binaryMessenger: BinaryMessenger, api: HostPlayerApi?) {
+    fun setUp(binaryMessenger: BinaryMessenger, api: PlayerHostApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostPlayerApi.startBySongs", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.startBySongs", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
@@ -75,7 +75,7 @@ interface HostPlayerApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostPlayerApi.play", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.play", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             var wrapped: List<Any?>
@@ -92,7 +92,7 @@ interface HostPlayerApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.HostPlayerApi.stop", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.stop", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             var wrapped: List<Any?>
