@@ -9,7 +9,6 @@ class Song {
   Song(this.id, this.title, this.artist, this.imageId);
 }
 
-@HostApi()
 @ConfigurePigeon(PigeonOptions(
   dartOut: 'lib/pigeon_output/song.g.dart',
   dartOptions: DartOptions(),
@@ -20,6 +19,8 @@ class Song {
   swiftOut: 'ios/Runner/PigeonOutput/Song.g.swift',
   swiftOptions: SwiftOptions(),
 ))
+
+@HostApi()
 abstract class SongHostApi {
   List<Song> findAll();
 }

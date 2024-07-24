@@ -22,14 +22,98 @@ static NSArray *wrapResult(id result, FlutterError *error) {
   return @[ result ?: [NSNull null] ];
 }
 
+static FlutterError *createConnectionError(NSString *channelName) {
+  return [FlutterError errorWithCode:@"channel-error" message:[NSString stringWithFormat:@"%@/%@/%@", @"Unable to establish connection on channel: '", channelName, @"'."] details:@""];
+}
+
 static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   id result = array[key];
   return (result == [NSNull null]) ? nil : result;
 }
 
+@interface Song ()
++ (Song *)fromList:(NSArray *)list;
++ (nullable Song *)nullableFromList:(NSArray *)list;
+- (NSArray *)toList;
+@end
+
+@implementation Song
++ (instancetype)makeWithId:(NSString *)id
+    title:(NSString *)title
+    artist:(NSString *)artist
+    imageId:(NSString *)imageId {
+  Song* pigeonResult = [[Song alloc] init];
+  pigeonResult.id = id;
+  pigeonResult.title = title;
+  pigeonResult.artist = artist;
+  pigeonResult.imageId = imageId;
+  return pigeonResult;
+}
++ (Song *)fromList:(NSArray *)list {
+  Song *pigeonResult = [[Song alloc] init];
+  pigeonResult.id = GetNullableObjectAtIndex(list, 0);
+  pigeonResult.title = GetNullableObjectAtIndex(list, 1);
+  pigeonResult.artist = GetNullableObjectAtIndex(list, 2);
+  pigeonResult.imageId = GetNullableObjectAtIndex(list, 3);
+  return pigeonResult;
+}
++ (nullable Song *)nullableFromList:(NSArray *)list {
+  return (list) ? [Song fromList:list] : nil;
+}
+- (NSArray *)toList {
+  return @[
+    self.id ?: [NSNull null],
+    self.title ?: [NSNull null],
+    self.artist ?: [NSNull null],
+    self.imageId ?: [NSNull null],
+  ];
+}
+@end
+
+@interface PlayerHostApiCodecReader : FlutterStandardReader
+@end
+@implementation PlayerHostApiCodecReader
+- (nullable id)readValueOfType:(UInt8)type {
+  switch (type) {
+    case 128: 
+      return [Song fromList:[self readValue]];
+    default:
+      return [super readValueOfType:type];
+  }
+}
+@end
+
+@interface PlayerHostApiCodecWriter : FlutterStandardWriter
+@end
+@implementation PlayerHostApiCodecWriter
+- (void)writeValue:(id)value {
+  if ([value isKindOfClass:[Song class]]) {
+    [self writeByte:128];
+    [self writeValue:[value toList]];
+  } else {
+    [super writeValue:value];
+  }
+}
+@end
+
+@interface PlayerHostApiCodecReaderWriter : FlutterStandardReaderWriter
+@end
+@implementation PlayerHostApiCodecReaderWriter
+- (FlutterStandardWriter *)writerWithData:(NSMutableData *)data {
+  return [[PlayerHostApiCodecWriter alloc] initWithData:data];
+}
+- (FlutterStandardReader *)readerWithData:(NSData *)data {
+  return [[PlayerHostApiCodecReader alloc] initWithData:data];
+}
+@end
+
 NSObject<FlutterMessageCodec> *PlayerHostApiGetCodec(void) {
   static FlutterStandardMessageCodec *sSharedObject = nil;
-  sSharedObject = [FlutterStandardMessageCodec sharedInstance];
+  static dispatch_once_t sPred = 0;
+  dispatch_once(&sPred, ^{
+    PlayerHostApiCodecReaderWriter *readerWriter = [[PlayerHostApiCodecReaderWriter alloc] init];
+    sSharedObject = [FlutterStandardMessageCodec codecWithReaderWriter:readerWriter];
+  });
   return sSharedObject;
 }
 
@@ -87,4 +171,121 @@ void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Pla
       [channel setMessageHandler:nil];
     }
   }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.getCurrentSong"
+        binaryMessenger:binaryMessenger
+        codec:PlayerHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(getCurrentSongWithError:)], @"PlayerHostApi api (%@) doesn't respond to @selector(getCurrentSongWithError:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        FlutterError *error;
+        Song *output = [api getCurrentSongWithError:&error];
+        callback(wrapResult(output, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
 }
+@interface PlayerFlutterApiCodecReader : FlutterStandardReader
+@end
+@implementation PlayerFlutterApiCodecReader
+- (nullable id)readValueOfType:(UInt8)type {
+  switch (type) {
+    case 128: 
+      return [Song fromList:[self readValue]];
+    default:
+      return [super readValueOfType:type];
+  }
+}
+@end
+
+@interface PlayerFlutterApiCodecWriter : FlutterStandardWriter
+@end
+@implementation PlayerFlutterApiCodecWriter
+- (void)writeValue:(id)value {
+  if ([value isKindOfClass:[Song class]]) {
+    [self writeByte:128];
+    [self writeValue:[value toList]];
+  } else {
+    [super writeValue:value];
+  }
+}
+@end
+
+@interface PlayerFlutterApiCodecReaderWriter : FlutterStandardReaderWriter
+@end
+@implementation PlayerFlutterApiCodecReaderWriter
+- (FlutterStandardWriter *)writerWithData:(NSMutableData *)data {
+  return [[PlayerFlutterApiCodecWriter alloc] initWithData:data];
+}
+- (FlutterStandardReader *)readerWithData:(NSData *)data {
+  return [[PlayerFlutterApiCodecReader alloc] initWithData:data];
+}
+@end
+
+NSObject<FlutterMessageCodec> *PlayerFlutterApiGetCodec(void) {
+  static FlutterStandardMessageCodec *sSharedObject = nil;
+  static dispatch_once_t sPred = 0;
+  dispatch_once(&sPred, ^{
+    PlayerFlutterApiCodecReaderWriter *readerWriter = [[PlayerFlutterApiCodecReaderWriter alloc] init];
+    sSharedObject = [FlutterStandardMessageCodec codecWithReaderWriter:readerWriter];
+  });
+  return sSharedObject;
+}
+
+@interface PlayerFlutterApi ()
+@property(nonatomic, strong) NSObject<FlutterBinaryMessenger> *binaryMessenger;
+@end
+
+@implementation PlayerFlutterApi
+
+- (instancetype)initWithBinaryMessenger:(NSObject<FlutterBinaryMessenger> *)binaryMessenger {
+  self = [super init];
+  if (self) {
+    _binaryMessenger = binaryMessenger;
+  }
+  return self;
+}
+- (void)onSongChangeSong:(Song *)arg_song completion:(void (^)(FlutterError *_Nullable))completion {
+  NSString *channelName = @"dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onSongChange";
+  FlutterBasicMessageChannel *channel =
+    [FlutterBasicMessageChannel
+      messageChannelWithName:channelName
+      binaryMessenger:self.binaryMessenger
+      codec:PlayerFlutterApiGetCodec()];
+  [channel sendMessage:@[arg_song ?: [NSNull null]] reply:^(NSArray<id> *reply) {
+    if (reply != nil) {
+      if (reply.count > 1) {
+        completion([FlutterError errorWithCode:reply[0] message:reply[1] details:reply[2]]);
+      } else {
+        completion(nil);
+      }
+    } else {
+      completion(createConnectionError(channelName));
+    } 
+  }];
+}
+- (void)onPlaybackStateChangeIsPlaying:(BOOL)arg_isPlaying completion:(void (^)(FlutterError *_Nullable))completion {
+  NSString *channelName = @"dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange";
+  FlutterBasicMessageChannel *channel =
+    [FlutterBasicMessageChannel
+      messageChannelWithName:channelName
+      binaryMessenger:self.binaryMessenger
+      codec:PlayerFlutterApiGetCodec()];
+  [channel sendMessage:@[@(arg_isPlaying)] reply:^(NSArray<id> *reply) {
+    if (reply != nil) {
+      if (reply.count > 1) {
+        completion([FlutterError errorWithCode:reply[0] message:reply[1] details:reply[2]]);
+      } else {
+        completion(nil);
+      }
+    } else {
+      completion(createConnectionError(channelName));
+    } 
+  }];
+}
+@end
+

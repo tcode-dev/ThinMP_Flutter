@@ -1,11 +1,19 @@
 import 'package:pigeon/pigeon.dart';
 
+class Song {
+  String id;
+  String title;
+  String artist;
+  String imageId;
+
+  Song(this.id, this.title, this.artist, this.imageId);
+}
+
 class Player {
   int index;
   Player(this.index);
 }
 
-@HostApi()
 @ConfigurePigeon(PigeonOptions(
   dartOut: 'lib/pigeon_output/player.g.dart',
   dartOptions: DartOptions(),
@@ -16,8 +24,17 @@ class Player {
   swiftOut: 'ios/Runner/PigeonOutput/Player.g.swift',
   swiftOptions: SwiftOptions(),
 ))
+
+@HostApi()
 abstract class PlayerHostApi {
   void startBySongs(int index);
   void play();
   void stop();
+  Song getCurrentSong();
+}
+
+@FlutterApi()
+abstract class PlayerFlutterApi {
+  void onSongChange(Song song);
+  void onPlaybackStateChange(bool isPlaying);
 }
