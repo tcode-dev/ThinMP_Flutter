@@ -18,13 +18,18 @@ class SongsPageView extends ConsumerWidget {
           final song = songs[index]!;
 
           return GestureDetector(
-              onTap: () {
-                final player = PlayerHostApi();
+            onTap: () {
+              final player = PlayerHostApi();
 
-                player.startBySongs(index);
-              },
-              child: MediaRowWidget(
-                  id: song.id, artist: song.artist, title: song.title, imageId: song.imageId));
+              player.startBySongs(index);
+            },
+            child: MediaRowWidget(
+              id: song.id,
+              artist: song.artist,
+              title: song.title,
+              imageId: song.imageId,
+            ),
+          );
         },
       ),
     );

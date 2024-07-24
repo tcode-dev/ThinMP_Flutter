@@ -9,13 +9,16 @@ class MainPageView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Center(
-          child: ElevatedButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const SongsPageView()));
-        },
-        child: const Text('songs'),
-      )),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SongsPageView()),
+            );
+          },
+          child: const Text('songs'),
+        ),
+      ),
     );
   }
 }

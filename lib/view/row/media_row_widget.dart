@@ -29,21 +29,17 @@ class MediaRowWidget extends StatelessWidget {
           ),
         ),
       ),
-      child: Row(children: [
-        Container(
-            width: 40,
-            height: 40,
-            margin: const EdgeInsets.only(right: 10),
-            child: ImageWidget(id: imageId, size: 40)),
-        Flexible(
+      child: Row(
+        children: [
+          Container(width: 40, height: 40, margin: const EdgeInsets.only(right: 10), child: ImageWidget(id: imageId, size: 40)),
+          Flexible(
             child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, overflow: TextOverflow.ellipsis),
-            Text(artist, overflow: TextOverflow.ellipsis)
-          ],
-        )),
-      ]),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text(title, overflow: TextOverflow.ellipsis), Text(artist, overflow: TextOverflow.ellipsis)],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

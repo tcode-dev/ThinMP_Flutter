@@ -25,11 +25,22 @@ class _ImageWidgetState extends State<ImageWidget> {
       future: api.queryArtwork(widget.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return SizedBox(width: widget.size, height: widget.size);
+          return SizedBox(
+            width: widget.size,
+            height: widget.size,
+          );
         } else if (snapshot.data != null && snapshot.data!.isNotEmpty) {
-          return Image.memory(snapshot.data!, width: widget.size, height: widget.size);
+          return Image.memory(
+            snapshot.data!,
+            width: widget.size,
+            height: widget.size,
+          );
         }
-        return Image.asset('images/song_dark.png', width: widget.size, height: widget.size);
+        return Image.asset(
+          'images/song_dark.png',
+          width: widget.size,
+          height: widget.size,
+        );
       },
     );
   }

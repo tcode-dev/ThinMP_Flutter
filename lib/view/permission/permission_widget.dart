@@ -21,8 +21,7 @@ class _PermissionWidgetState extends State<PermissionWidget> {
     return FutureBuilder<Map<Permission, PermissionStatus>>(
       future: platformSelect(permissionConstant).request(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting ||
-            snapshot.data == null) {
+        if (snapshot.connectionState == ConnectionState.waiting || snapshot.data == null) {
           return Container();
         }
         if (snapshot.data!.values.every((status) => status.isGranted)) {
