@@ -37,7 +37,7 @@ NSObject<FlutterMessageCodec> *PlayerFlutterApiGetCodec(void);
 
 @interface PlayerFlutterApi : NSObject
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger;
-- (void)playbackStateChangeStr:(NSString *)str completion:(void (^)(FlutterError *_Nullable))completion;
+- (void)onPlaybackStateChangePlaybackState:(PlaybackState *)playbackState completion:(void (^)(FlutterError *_Nullable))completion;
 @end
 
 NS_ASSUME_NONNULL_END

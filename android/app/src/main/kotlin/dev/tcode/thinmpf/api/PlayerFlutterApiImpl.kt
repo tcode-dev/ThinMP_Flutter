@@ -1,5 +1,6 @@
 package dev.tcode.thinmpf.api
 
+import PlaybackState
 import PlayerFlutterApi
 import io.flutter.plugin.common.BinaryMessenger
 
@@ -11,7 +12,7 @@ class PlayerFlutterApiImpl {
         }
     }
 
-    fun playbackStateChange(aString: String) {
-        api.playbackStateChange(aString) { }
+    fun onPlaybackStateChange(state: PlaybackState) {
+        api.onPlaybackStateChange(state) { }
     }
 }

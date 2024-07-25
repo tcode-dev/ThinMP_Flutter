@@ -6,13 +6,15 @@ import 'package:thinmpf/view/page/main_page_view.dart';
 import 'package:thinmpf/view/permission/permission_widget.dart';
 
 void main() {
+  final container = ProviderContainer();
+
+  PlayerFlutterApi.setup(PlayerFlutterApiImpl(container));
+
   runApp(
     const ProviderScope(
       child: MainApp(),
     ),
   );
-
-  PlayerFlutterApi.setup(PlayerFlutterApiImpl());
 }
 
 class MainApp extends StatelessWidget {

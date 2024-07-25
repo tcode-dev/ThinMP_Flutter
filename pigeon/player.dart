@@ -42,5 +42,5 @@ abstract class PlayerHostApi {
 
 @FlutterApi()
 abstract class PlayerFlutterApi {
-  void playbackStateChange(String str);
+  void onPlaybackStateChange(PlaybackState playbackState);
 }

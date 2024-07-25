@@ -1,5 +1,6 @@
 package dev.tcode.thinmpf.player
 
+import PlaybackState
 import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.Service
@@ -229,7 +230,7 @@ class MusicService : Service() {
 
     private fun onChange() {
         val playerFlutterApi = PlayerFlutterApiImpl()
-        playerFlutterApi.playbackStateChange("playerFlutterApi.playbackStateChange!!!!")
+        playerFlutterApi.onPlaybackStateChange(PlaybackState(player.isPlaying))
         listeners.forEach {
             it.onChange()
         }

@@ -166,19 +166,58 @@ class PlayerHostApiSetup {
     }
   }
 }
+private class PlayerFlutterApiCodecReader: FlutterStandardReader {
+  override func readValue(ofType type: UInt8) -> Any? {
+    switch type {
+    case 128:
+      return PlaybackState.fromList(self.readValue() as! [Any?])
+    default:
+      return super.readValue(ofType: type)
+    }
+  }
+}
+
+private class PlayerFlutterApiCodecWriter: FlutterStandardWriter {
+  override func writeValue(_ value: Any) {
+    if let value = value as? PlaybackState {
+      super.writeByte(128)
+      super.writeValue(value.toList())
+    } else {
+      super.writeValue(value)
+    }
+  }
+}
+
+private class PlayerFlutterApiCodecReaderWriter: FlutterStandardReaderWriter {
+  override func reader(with data: Data) -> FlutterStandardReader {
+    return PlayerFlutterApiCodecReader(data: data)
+  }
+
+  override func writer(with data: NSMutableData) -> FlutterStandardWriter {
+    return PlayerFlutterApiCodecWriter(data: data)
+  }
+}
+
+class PlayerFlutterApiCodec: FlutterStandardMessageCodec {
+  static let shared = PlayerFlutterApiCodec(readerWriter: PlayerFlutterApiCodecReaderWriter())
+}
+
 /// Generated protocol from Pigeon that represents Flutter messages that can be called from Swift.
 protocol PlayerFlutterApiProtocol {
-  func playbackStateChange(str strArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void)
+  func onPlaybackStateChange(playbackState playbackStateArg: PlaybackState, completion: @escaping (Result<Void, FlutterError>) -> Void)
 }
 class PlayerFlutterApi: PlayerFlutterApiProtocol {
   private let binaryMessenger: FlutterBinaryMessenger
   init(binaryMessenger: FlutterBinaryMessenger) {
     self.binaryMessenger = binaryMessenger
   }
-  func playbackStateChange(str strArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void) {
-    let channelName: String = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.playbackStateChange"
-    let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger)
-    channel.sendMessage([strArg] as [Any?]) { response in
+  var codec: FlutterStandardMessageCodec {
+    return PlayerFlutterApiCodec.shared
+  }
+  func onPlaybackStateChange(playbackState playbackStateArg: PlaybackState, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channelName: String = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange"
+    let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger, codec: codec)
+    channel.sendMessage([playbackStateArg] as [Any?]) { response in
       guard let listResponse = response as? [Any?] else {
         completion(.failure(createConnectionError(withChannelName: channelName)))
         return

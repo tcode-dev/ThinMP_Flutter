@@ -173,28 +173,51 @@ class PlayerHostApi {
   }
 }
 
-abstract class PlayerFlutterApi {
-  static const MessageCodec<Object?> pigeonChannelCodec = StandardMessageCodec();
+class _PlayerFlutterApiCodec extends StandardMessageCodec {
+  const _PlayerFlutterApiCodec();
+  @override
+  void writeValue(WriteBuffer buffer, Object? value) {
+    if (value is PlaybackState) {
+      buffer.putUint8(128);
+      writeValue(buffer, value.encode());
+    } else {
+      super.writeValue(buffer, value);
+    }
+  }
 
-  void playbackStateChange(String str);
+  @override
+  Object? readValueOfType(int type, ReadBuffer buffer) {
+    switch (type) {
+      case 128: 
+        return PlaybackState.decode(readValue(buffer)!);
+      default:
+        return super.readValueOfType(type, buffer);
+    }
+  }
+}
+
+abstract class PlayerFlutterApi {
+  static const MessageCodec<Object?> pigeonChannelCodec = _PlayerFlutterApiCodec();
+
+  void onPlaybackStateChange(PlaybackState playbackState);
 
   static void setup(PlayerFlutterApi? api, {BinaryMessenger? binaryMessenger}) {
     {
       final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.thinmpf.PlayerFlutterApi.playbackStateChange', pigeonChannelCodec,
+          'dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange', pigeonChannelCodec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
         __pigeon_channel.setMessageHandler(null);
       } else {
         __pigeon_channel.setMessageHandler((Object? message) async {
           assert(message != null,
-          'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.playbackStateChange was null.');
+          'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange was null.');
           final List<Object?> args = (message as List<Object?>?)!;
-          final String? arg_str = (args[0] as String?);
-          assert(arg_str != null,
-              'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.playbackStateChange was null, expected non-null String.');
+          final PlaybackState? arg_playbackState = (args[0] as PlaybackState?);
+          assert(arg_playbackState != null,
+              'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange was null, expected non-null PlaybackState.');
           try {
-            api.playbackStateChange(arg_str!);
+            api.onPlaybackStateChange(arg_playbackState!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);

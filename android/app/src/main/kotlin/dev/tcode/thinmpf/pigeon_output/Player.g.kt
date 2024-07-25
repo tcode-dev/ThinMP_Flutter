@@ -173,20 +173,43 @@ interface PlayerHostApi {
     }
   }
 }
+@Suppress("UNCHECKED_CAST")
+private object PlayerFlutterApiCodec : StandardMessageCodec() {
+  override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
+    return when (type) {
+      128.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          PlaybackState.fromList(it)
+        }
+      }
+      else -> super.readValueOfType(type, buffer)
+    }
+  }
+  override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
+    when (value) {
+      is PlaybackState -> {
+        stream.write(128)
+        writeValue(stream, value.toList())
+      }
+      else -> super.writeValue(stream, value)
+    }
+  }
+}
+
 /** Generated class from Pigeon that represents Flutter messages that can be called from Kotlin. */
 @Suppress("UNCHECKED_CAST")
 class PlayerFlutterApi(private val binaryMessenger: BinaryMessenger) {
   companion object {
     /** The codec used by PlayerFlutterApi. */
     val codec: MessageCodec<Any?> by lazy {
-      StandardMessageCodec()
+      PlayerFlutterApiCodec
     }
   }
-  fun playbackStateChange(strArg: String, callback: (Result<Unit>) -> Unit)
+  fun onPlaybackStateChange(playbackStateArg: PlaybackState, callback: (Result<Unit>) -> Unit)
 {
-    val channelName = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.playbackStateChange"
+    val channelName = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange"
     val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
-    channel.send(listOf(strArg)) {
+    channel.send(listOf(playbackStateArg)) {
       if (it is List<*>) {
         if (it.size > 1) {
           callback(Result.failure(PlayerFlutterError(it[0] as String, it[1] as String, it[2] as String?)))

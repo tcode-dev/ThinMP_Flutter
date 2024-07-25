@@ -177,9 +177,50 @@ void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Pla
     }
   }
 }
+@interface PlayerFlutterApiCodecReader : FlutterStandardReader
+@end
+@implementation PlayerFlutterApiCodecReader
+- (nullable id)readValueOfType:(UInt8)type {
+  switch (type) {
+    case 128: 
+      return [PlaybackState fromList:[self readValue]];
+    default:
+      return [super readValueOfType:type];
+  }
+}
+@end
+
+@interface PlayerFlutterApiCodecWriter : FlutterStandardWriter
+@end
+@implementation PlayerFlutterApiCodecWriter
+- (void)writeValue:(id)value {
+  if ([value isKindOfClass:[PlaybackState class]]) {
+    [self writeByte:128];
+    [self writeValue:[value toList]];
+  } else {
+    [super writeValue:value];
+  }
+}
+@end
+
+@interface PlayerFlutterApiCodecReaderWriter : FlutterStandardReaderWriter
+@end
+@implementation PlayerFlutterApiCodecReaderWriter
+- (FlutterStandardWriter *)writerWithData:(NSMutableData *)data {
+  return [[PlayerFlutterApiCodecWriter alloc] initWithData:data];
+}
+- (FlutterStandardReader *)readerWithData:(NSData *)data {
+  return [[PlayerFlutterApiCodecReader alloc] initWithData:data];
+}
+@end
+
 NSObject<FlutterMessageCodec> *PlayerFlutterApiGetCodec(void) {
   static FlutterStandardMessageCodec *sSharedObject = nil;
-  sSharedObject = [FlutterStandardMessageCodec sharedInstance];
+  static dispatch_once_t sPred = 0;
+  dispatch_once(&sPred, ^{
+    PlayerFlutterApiCodecReaderWriter *readerWriter = [[PlayerFlutterApiCodecReaderWriter alloc] init];
+    sSharedObject = [FlutterStandardMessageCodec codecWithReaderWriter:readerWriter];
+  });
   return sSharedObject;
 }
 
@@ -196,14 +237,14 @@ NSObject<FlutterMessageCodec> *PlayerFlutterApiGetCodec(void) {
   }
   return self;
 }
-- (void)playbackStateChangeStr:(NSString *)arg_str completion:(void (^)(FlutterError *_Nullable))completion {
-  NSString *channelName = @"dev.flutter.pigeon.thinmpf.PlayerFlutterApi.playbackStateChange";
+- (void)onPlaybackStateChangePlaybackState:(PlaybackState *)arg_playbackState completion:(void (^)(FlutterError *_Nullable))completion {
+  NSString *channelName = @"dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange";
   FlutterBasicMessageChannel *channel =
     [FlutterBasicMessageChannel
       messageChannelWithName:channelName
       binaryMessenger:self.binaryMessenger
       codec:PlayerFlutterApiGetCodec()];
-  [channel sendMessage:@[arg_str ?: [NSNull null]] reply:^(NSArray<id> *reply) {
+  [channel sendMessage:@[arg_playbackState ?: [NSNull null]] reply:^(NSArray<id> *reply) {
     if (reply != nil) {
       if (reply.count > 1) {
         completion([FlutterError errorWithCode:reply[0] message:reply[1] details:reply[2]]);
