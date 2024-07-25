@@ -1,5 +1,6 @@
 package dev.tcode.thinmpf.api
 
+import PlaybackState
 import PlayerHostApi
 import android.content.Context
 import dev.tcode.thinmpf.player.MusicPlayer
@@ -19,6 +20,10 @@ class PlayerHostApiImpl(private val context: Context): PlayerHostApi {
     }
 
     override fun stop() {
+        TODO("Not yet implemented")
+    }
+
+    override fun getPlaybackState(): PlaybackState {
         TODO("Not yet implemented")
     }
 }

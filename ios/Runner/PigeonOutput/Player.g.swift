@@ -44,31 +44,19 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct Song {
-  var id: String
-  var title: String
-  var artist: String
-  var imageId: String
+struct PlaybackState {
+  var isPlaying: Bool
 
-  static func fromList(_ list: [Any?]) -> Song? {
-    let id = list[0] as! String
-    let title = list[1] as! String
-    let artist = list[2] as! String
-    let imageId = list[3] as! String
+  static func fromList(_ list: [Any?]) -> PlaybackState? {
+    let isPlaying = list[0] as! Bool
 
-    return Song(
-      id: id,
-      title: title,
-      artist: artist,
-      imageId: imageId
+    return PlaybackState(
+      isPlaying: isPlaying
     )
   }
   func toList() -> [Any?] {
     return [
-      id,
-      title,
-      artist,
-      imageId,
+      isPlaying
     ]
   }
 }
@@ -76,7 +64,7 @@ private class PlayerHostApiCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
     case 128:
-      return Song.fromList(self.readValue() as! [Any?])
+      return PlaybackState.fromList(self.readValue() as! [Any?])
     default:
       return super.readValue(ofType: type)
     }
@@ -85,7 +73,7 @@ private class PlayerHostApiCodecReader: FlutterStandardReader {
 
 private class PlayerHostApiCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
-    if let value = value as? Song {
+    if let value = value as? PlaybackState {
       super.writeByte(128)
       super.writeValue(value.toList())
     } else {
@@ -113,7 +101,7 @@ protocol PlayerHostApi {
   func startBySongs(index: Int64) throws
   func play() throws
   func stop() throws
-  func getCurrentSong() throws -> Song
+  func getPlaybackState() throws -> PlaybackState
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -163,92 +151,34 @@ class PlayerHostApiSetup {
     } else {
       stopChannel.setMessageHandler(nil)
     }
-    let getCurrentSongChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.getCurrentSong", binaryMessenger: binaryMessenger, codec: codec)
+    let getPlaybackStateChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.getPlaybackState", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      getCurrentSongChannel.setMessageHandler { _, reply in
+      getPlaybackStateChannel.setMessageHandler { _, reply in
         do {
-          let result = try api.getCurrentSong()
+          let result = try api.getPlaybackState()
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      getCurrentSongChannel.setMessageHandler(nil)
+      getPlaybackStateChannel.setMessageHandler(nil)
     }
   }
 }
-private class PlayerFlutterApiCodecReader: FlutterStandardReader {
-  override func readValue(ofType type: UInt8) -> Any? {
-    switch type {
-    case 128:
-      return Song.fromList(self.readValue() as! [Any?])
-    default:
-      return super.readValue(ofType: type)
-    }
-  }
-}
-
-private class PlayerFlutterApiCodecWriter: FlutterStandardWriter {
-  override func writeValue(_ value: Any) {
-    if let value = value as? Song {
-      super.writeByte(128)
-      super.writeValue(value.toList())
-    } else {
-      super.writeValue(value)
-    }
-  }
-}
-
-private class PlayerFlutterApiCodecReaderWriter: FlutterStandardReaderWriter {
-  override func reader(with data: Data) -> FlutterStandardReader {
-    return PlayerFlutterApiCodecReader(data: data)
-  }
-
-  override func writer(with data: NSMutableData) -> FlutterStandardWriter {
-    return PlayerFlutterApiCodecWriter(data: data)
-  }
-}
-
-class PlayerFlutterApiCodec: FlutterStandardMessageCodec {
-  static let shared = PlayerFlutterApiCodec(readerWriter: PlayerFlutterApiCodecReaderWriter())
-}
-
 /// Generated protocol from Pigeon that represents Flutter messages that can be called from Swift.
 protocol PlayerFlutterApiProtocol {
-  func onSongChange(song songArg: Song, completion: @escaping (Result<Void, FlutterError>) -> Void)
-  func onPlaybackStateChange(isPlaying isPlayingArg: Bool, completion: @escaping (Result<Void, FlutterError>) -> Void)
+  func playbackStateChange(str strArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void)
 }
 class PlayerFlutterApi: PlayerFlutterApiProtocol {
   private let binaryMessenger: FlutterBinaryMessenger
   init(binaryMessenger: FlutterBinaryMessenger) {
     self.binaryMessenger = binaryMessenger
   }
-  var codec: FlutterStandardMessageCodec {
-    return PlayerFlutterApiCodec.shared
-  }
-  func onSongChange(song songArg: Song, completion: @escaping (Result<Void, FlutterError>) -> Void) {
-    let channelName: String = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onSongChange"
-    let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger, codec: codec)
-    channel.sendMessage([songArg] as [Any?]) { response in
-      guard let listResponse = response as? [Any?] else {
-        completion(.failure(createConnectionError(withChannelName: channelName)))
-        return
-      }
-      if listResponse.count > 1 {
-        let code: String = listResponse[0] as! String
-        let message: String? = nilOrValue(listResponse[1])
-        let details: String? = nilOrValue(listResponse[2])
-        completion(.failure(FlutterError(code: code, message: message, details: details)))
-      } else {
-        completion(.success(Void()))
-      }
-    }
-  }
-  func onPlaybackStateChange(isPlaying isPlayingArg: Bool, completion: @escaping (Result<Void, FlutterError>) -> Void) {
-    let channelName: String = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange"
-    let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger, codec: codec)
-    channel.sendMessage([isPlayingArg] as [Any?]) { response in
+  func playbackStateChange(str strArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channelName: String = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.playbackStateChange"
+    let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger)
+    channel.sendMessage([strArg] as [Any?]) { response in
       guard let listResponse = response as? [Any?] else {
         completion(.failure(createConnectionError(withChannelName: channelName)))
         return

@@ -18,10 +18,13 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaStyleNotificationHelper
+import dev.tcode.thinmpf.api.PlayerFlutterApiImpl
 import dev.tcode.thinmpf.constant.NotificationConstant
 import dev.tcode.thinmpf.model.SongModel
 import dev.tcode.thinmpf.notification.LocalNotificationHelper
 import dev.tcode.thinmpf.receiver.HeadsetEventReceiver
+import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.plugin.common.BinaryMessenger
 import java.io.IOException
 
 interface MusicServiceListener {
@@ -225,6 +228,8 @@ class MusicService : Service() {
     }
 
     private fun onChange() {
+        val playerFlutterApi = PlayerFlutterApiImpl()
+        playerFlutterApi.playbackStateChange("playerFlutterApi.playbackStateChange!!!!")
         listeners.forEach {
             it.onChange()
         }

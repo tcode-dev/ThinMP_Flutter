@@ -1,12 +1,19 @@
 import 'package:pigeon/pigeon.dart';
 
-class Song {
-  String id;
-  String title;
-  String artist;
-  String imageId;
+// class Song {
+//   String id;
+//   String title;
+//   String artist;
+//   String imageId;
 
-  Song(this.id, this.title, this.artist, this.imageId);
+//   Song(this.id, this.title, this.artist, this.imageId);
+// }
+
+class PlaybackState {
+  // Song song;
+  bool isPlaying;
+
+  PlaybackState(this.isPlaying);
 }
 
 class Player {
@@ -30,11 +37,10 @@ abstract class PlayerHostApi {
   void startBySongs(int index);
   void play();
   void stop();
-  Song getCurrentSong();
+  PlaybackState getPlaybackState();
 }
 
 @FlutterApi()
 abstract class PlayerFlutterApi {
-  void onSongChange(Song song);
-  void onPlaybackStateChange(bool isPlaying);
+  void playbackStateChange(String str);
 }

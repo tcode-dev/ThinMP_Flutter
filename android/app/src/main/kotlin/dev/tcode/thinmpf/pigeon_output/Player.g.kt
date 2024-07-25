@@ -46,29 +46,20 @@ class PlayerFlutterError (
 ) : Throwable()
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class Song (
-  val id: String,
-  val title: String,
-  val artist: String,
-  val imageId: String
+data class PlaybackState (
+  val isPlaying: Boolean
 
 ) {
   companion object {
     @Suppress("UNCHECKED_CAST")
-    fun fromList(list: List<Any?>): Song {
-      val id = list[0] as String
-      val title = list[1] as String
-      val artist = list[2] as String
-      val imageId = list[3] as String
-      return Song(id, title, artist, imageId)
+    fun fromList(list: List<Any?>): PlaybackState {
+      val isPlaying = list[0] as Boolean
+      return PlaybackState(isPlaying)
     }
   }
   fun toList(): List<Any?> {
     return listOf<Any?>(
-      id,
-      title,
-      artist,
-      imageId,
+      isPlaying,
     )
   }
 }
@@ -78,7 +69,7 @@ private object PlayerHostApiCodec : StandardMessageCodec() {
     return when (type) {
       128.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          Song.fromList(it)
+          PlaybackState.fromList(it)
         }
       }
       else -> super.readValueOfType(type, buffer)
@@ -86,7 +77,7 @@ private object PlayerHostApiCodec : StandardMessageCodec() {
   }
   override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
     when (value) {
-      is Song -> {
+      is PlaybackState -> {
         stream.write(128)
         writeValue(stream, value.toList())
       }
@@ -100,7 +91,7 @@ interface PlayerHostApi {
   fun startBySongs(index: Long)
   fun play()
   fun stop()
-  fun getCurrentSong(): Song
+  fun getPlaybackState(): PlaybackState
 
   companion object {
     /** The codec used by PlayerHostApi. */
@@ -164,12 +155,12 @@ interface PlayerHostApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.getCurrentSong", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.getPlaybackState", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             var wrapped: List<Any?>
             try {
-              wrapped = listOf<Any?>(api.getCurrentSong())
+              wrapped = listOf<Any?>(api.getPlaybackState())
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }
@@ -182,59 +173,20 @@ interface PlayerHostApi {
     }
   }
 }
-@Suppress("UNCHECKED_CAST")
-private object PlayerFlutterApiCodec : StandardMessageCodec() {
-  override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
-    return when (type) {
-      128.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          Song.fromList(it)
-        }
-      }
-      else -> super.readValueOfType(type, buffer)
-    }
-  }
-  override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
-    when (value) {
-      is Song -> {
-        stream.write(128)
-        writeValue(stream, value.toList())
-      }
-      else -> super.writeValue(stream, value)
-    }
-  }
-}
-
 /** Generated class from Pigeon that represents Flutter messages that can be called from Kotlin. */
 @Suppress("UNCHECKED_CAST")
 class PlayerFlutterApi(private val binaryMessenger: BinaryMessenger) {
   companion object {
     /** The codec used by PlayerFlutterApi. */
     val codec: MessageCodec<Any?> by lazy {
-      PlayerFlutterApiCodec
+      StandardMessageCodec()
     }
   }
-  fun onSongChange(songArg: Song, callback: (Result<Unit>) -> Unit)
+  fun playbackStateChange(strArg: String, callback: (Result<Unit>) -> Unit)
 {
-    val channelName = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onSongChange"
+    val channelName = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.playbackStateChange"
     val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
-    channel.send(listOf(songArg)) {
-      if (it is List<*>) {
-        if (it.size > 1) {
-          callback(Result.failure(PlayerFlutterError(it[0] as String, it[1] as String, it[2] as String?)))
-        } else {
-          callback(Result.success(Unit))
-        }
-      } else {
-        callback(Result.failure(createConnectionError(channelName)))
-      } 
-    }
-  }
-  fun onPlaybackStateChange(isPlayingArg: Boolean, callback: (Result<Unit>) -> Unit)
-{
-    val channelName = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange"
-    val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
-    channel.send(listOf(isPlayingArg)) {
+    channel.send(listOf(strArg)) {
       if (it is List<*>) {
         if (it.size > 1) {
           callback(Result.failure(PlayerFlutterError(it[0] as String, it[1] as String, it[2] as String?)))

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/api/player_flutter_api_impl.dart';
+import 'package:thinmpf/pigeon_output/player.g.dart';
 import 'package:thinmpf/view/page/main_page_view.dart';
 import 'package:thinmpf/view/permission/permission_widget.dart';
 
@@ -9,6 +11,8 @@ void main() {
       child: MainApp(),
     ),
   );
+
+  PlayerFlutterApi.setup(PlayerFlutterApiImpl());
 }
 
 class MainApp extends StatelessWidget {
