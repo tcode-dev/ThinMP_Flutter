@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/view/page/songs_page_view.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 
-class MainPageView extends ConsumerWidget {
+class MainPageView extends StatelessWidget {
   const MainPageView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: <Widget>[
