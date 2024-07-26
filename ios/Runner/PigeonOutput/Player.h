@@ -10,13 +10,29 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class CurrentSong;
 @class PlaybackState;
+
+@interface CurrentSong : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithId:(NSString *)id
+    title:(NSString *)title
+    artist:(NSString *)artist
+    imageId:(NSString *)imageId;
+@property(nonatomic, copy) NSString * id;
+@property(nonatomic, copy) NSString * title;
+@property(nonatomic, copy) NSString * artist;
+@property(nonatomic, copy) NSString * imageId;
+@end
 
 @interface PlaybackState : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)makeWithIsPlaying:(BOOL )isPlaying;
++ (instancetype)makeWithIsPlaying:(BOOL )isPlaying
+    song:(nullable CurrentSong *)song;
 @property(nonatomic, assign) BOOL  isPlaying;
+@property(nonatomic, strong, nullable) CurrentSong * song;
 @end
 
 /// The codec used by PlayerHostApi.

@@ -46,20 +46,53 @@ class PlayerFlutterError (
 ) : Throwable()
 
 /** Generated class from Pigeon that represents data sent in messages. */
+data class CurrentSong (
+  val id: String,
+  val title: String,
+  val artist: String,
+  val imageId: String
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): CurrentSong {
+      val id = list[0] as String
+      val title = list[1] as String
+      val artist = list[2] as String
+      val imageId = list[3] as String
+      return CurrentSong(id, title, artist, imageId)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      id,
+      title,
+      artist,
+      imageId,
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
 data class PlaybackState (
-  val isPlaying: Boolean
+  val isPlaying: Boolean,
+  val song: CurrentSong? = null
 
 ) {
   companion object {
     @Suppress("UNCHECKED_CAST")
     fun fromList(list: List<Any?>): PlaybackState {
       val isPlaying = list[0] as Boolean
-      return PlaybackState(isPlaying)
+      val song: CurrentSong? = (list[1] as List<Any?>?)?.let {
+        CurrentSong.fromList(it)
+      }
+      return PlaybackState(isPlaying, song)
     }
   }
   fun toList(): List<Any?> {
     return listOf<Any?>(
       isPlaying,
+      song?.toList(),
     )
   }
 }
@@ -69,6 +102,11 @@ private object PlayerHostApiCodec : StandardMessageCodec() {
     return when (type) {
       128.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
+          CurrentSong.fromList(it)
+        }
+      }
+      129.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
           PlaybackState.fromList(it)
         }
       }
@@ -77,8 +115,12 @@ private object PlayerHostApiCodec : StandardMessageCodec() {
   }
   override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
     when (value) {
-      is PlaybackState -> {
+      is CurrentSong -> {
         stream.write(128)
+        writeValue(stream, value.toList())
+      }
+      is PlaybackState -> {
+        stream.write(129)
         writeValue(stream, value.toList())
       }
       else -> super.writeValue(stream, value)
@@ -179,6 +221,11 @@ private object PlayerFlutterApiCodec : StandardMessageCodec() {
     return when (type) {
       128.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
+          CurrentSong.fromList(it)
+        }
+      }
+      129.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
           PlaybackState.fromList(it)
         }
       }
@@ -187,8 +234,12 @@ private object PlayerFlutterApiCodec : StandardMessageCodec() {
   }
   override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
     when (value) {
-      is PlaybackState -> {
+      is CurrentSong -> {
         stream.write(128)
+        writeValue(stream, value.toList())
+      }
+      is PlaybackState -> {
+        stream.write(129)
         writeValue(stream, value.toList())
       }
       else -> super.writeValue(stream, value)

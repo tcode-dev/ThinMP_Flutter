@@ -230,7 +230,9 @@ class MusicService : Service() {
 
     private fun onChange() {
         val playerFlutterApi = PlayerFlutterApiImpl()
-        playerFlutterApi.onPlaybackStateChange(PlaybackState(player.isPlaying))
+
+        playerFlutterApi.onPlaybackStateChange(player.isPlaying, getCurrentSong())
+
         listeners.forEach {
             it.onChange()
         }

@@ -31,21 +31,63 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   return (result == [NSNull null]) ? nil : result;
 }
 
+@interface CurrentSong ()
++ (CurrentSong *)fromList:(NSArray *)list;
++ (nullable CurrentSong *)nullableFromList:(NSArray *)list;
+- (NSArray *)toList;
+@end
+
 @interface PlaybackState ()
 + (PlaybackState *)fromList:(NSArray *)list;
 + (nullable PlaybackState *)nullableFromList:(NSArray *)list;
 - (NSArray *)toList;
 @end
 
+@implementation CurrentSong
++ (instancetype)makeWithId:(NSString *)id
+    title:(NSString *)title
+    artist:(NSString *)artist
+    imageId:(NSString *)imageId {
+  CurrentSong* pigeonResult = [[CurrentSong alloc] init];
+  pigeonResult.id = id;
+  pigeonResult.title = title;
+  pigeonResult.artist = artist;
+  pigeonResult.imageId = imageId;
+  return pigeonResult;
+}
++ (CurrentSong *)fromList:(NSArray *)list {
+  CurrentSong *pigeonResult = [[CurrentSong alloc] init];
+  pigeonResult.id = GetNullableObjectAtIndex(list, 0);
+  pigeonResult.title = GetNullableObjectAtIndex(list, 1);
+  pigeonResult.artist = GetNullableObjectAtIndex(list, 2);
+  pigeonResult.imageId = GetNullableObjectAtIndex(list, 3);
+  return pigeonResult;
+}
++ (nullable CurrentSong *)nullableFromList:(NSArray *)list {
+  return (list) ? [CurrentSong fromList:list] : nil;
+}
+- (NSArray *)toList {
+  return @[
+    self.id ?: [NSNull null],
+    self.title ?: [NSNull null],
+    self.artist ?: [NSNull null],
+    self.imageId ?: [NSNull null],
+  ];
+}
+@end
+
 @implementation PlaybackState
-+ (instancetype)makeWithIsPlaying:(BOOL )isPlaying {
++ (instancetype)makeWithIsPlaying:(BOOL )isPlaying
+    song:(nullable CurrentSong *)song {
   PlaybackState* pigeonResult = [[PlaybackState alloc] init];
   pigeonResult.isPlaying = isPlaying;
+  pigeonResult.song = song;
   return pigeonResult;
 }
 + (PlaybackState *)fromList:(NSArray *)list {
   PlaybackState *pigeonResult = [[PlaybackState alloc] init];
   pigeonResult.isPlaying = [GetNullableObjectAtIndex(list, 0) boolValue];
+  pigeonResult.song = [CurrentSong nullableFromList:(GetNullableObjectAtIndex(list, 1))];
   return pigeonResult;
 }
 + (nullable PlaybackState *)nullableFromList:(NSArray *)list {
@@ -54,6 +96,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 - (NSArray *)toList {
   return @[
     @(self.isPlaying),
+    (self.song ? [self.song toList] : [NSNull null]),
   ];
 }
 @end
@@ -64,6 +107,8 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 - (nullable id)readValueOfType:(UInt8)type {
   switch (type) {
     case 128: 
+      return [CurrentSong fromList:[self readValue]];
+    case 129: 
       return [PlaybackState fromList:[self readValue]];
     default:
       return [super readValueOfType:type];
@@ -75,8 +120,11 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 @end
 @implementation PlayerHostApiCodecWriter
 - (void)writeValue:(id)value {
-  if ([value isKindOfClass:[PlaybackState class]]) {
+  if ([value isKindOfClass:[CurrentSong class]]) {
     [self writeByte:128];
+    [self writeValue:[value toList]];
+  } else if ([value isKindOfClass:[PlaybackState class]]) {
+    [self writeByte:129];
     [self writeValue:[value toList]];
   } else {
     [super writeValue:value];
@@ -183,6 +231,8 @@ void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Pla
 - (nullable id)readValueOfType:(UInt8)type {
   switch (type) {
     case 128: 
+      return [CurrentSong fromList:[self readValue]];
+    case 129: 
       return [PlaybackState fromList:[self readValue]];
     default:
       return [super readValueOfType:type];
@@ -194,8 +244,11 @@ void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Pla
 @end
 @implementation PlayerFlutterApiCodecWriter
 - (void)writeValue:(id)value {
-  if ([value isKindOfClass:[PlaybackState class]]) {
+  if ([value isKindOfClass:[CurrentSong class]]) {
     [self writeByte:128];
+    [self writeValue:[value toList]];
+  } else if ([value isKindOfClass:[PlaybackState class]]) {
+    [self writeByte:129];
     [self writeValue:[value toList]];
   } else {
     [super writeValue:value];

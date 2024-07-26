@@ -25,16 +25,56 @@ List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty
   return <Object?>[error.code, error.message, error.details];
 }
 
+class CurrentSong {
+  CurrentSong({
+    required this.id,
+    required this.title,
+    required this.artist,
+    required this.imageId,
+  });
+
+  String id;
+
+  String title;
+
+  String artist;
+
+  String imageId;
+
+  Object encode() {
+    return <Object?>[
+      id,
+      title,
+      artist,
+      imageId,
+    ];
+  }
+
+  static CurrentSong decode(Object result) {
+    result as List<Object?>;
+    return CurrentSong(
+      id: result[0]! as String,
+      title: result[1]! as String,
+      artist: result[2]! as String,
+      imageId: result[3]! as String,
+    );
+  }
+}
+
 class PlaybackState {
   PlaybackState({
     required this.isPlaying,
+    this.song,
   });
 
   bool isPlaying;
 
+  CurrentSong? song;
+
   Object encode() {
     return <Object?>[
       isPlaying,
+      song?.encode(),
     ];
   }
 
@@ -42,6 +82,9 @@ class PlaybackState {
     result as List<Object?>;
     return PlaybackState(
       isPlaying: result[0]! as bool,
+      song: result[1] != null
+          ? CurrentSong.decode(result[1]! as List<Object?>)
+          : null,
     );
   }
 }
@@ -50,8 +93,11 @@ class _PlayerHostApiCodec extends StandardMessageCodec {
   const _PlayerHostApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is PlaybackState) {
+    if (value is CurrentSong) {
       buffer.putUint8(128);
+      writeValue(buffer, value.encode());
+    } else if (value is PlaybackState) {
+      buffer.putUint8(129);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -62,6 +108,8 @@ class _PlayerHostApiCodec extends StandardMessageCodec {
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
       case 128: 
+        return CurrentSong.decode(readValue(buffer)!);
+      case 129: 
         return PlaybackState.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -177,8 +225,11 @@ class _PlayerFlutterApiCodec extends StandardMessageCodec {
   const _PlayerFlutterApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is PlaybackState) {
+    if (value is CurrentSong) {
       buffer.putUint8(128);
+      writeValue(buffer, value.encode());
+    } else if (value is PlaybackState) {
+      buffer.putUint8(129);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -189,6 +240,8 @@ class _PlayerFlutterApiCodec extends StandardMessageCodec {
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
       case 128: 
+        return CurrentSong.decode(readValue(buffer)!);
+      case 129: 
         return PlaybackState.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);

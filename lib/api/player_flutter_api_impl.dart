@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/pigeon_output/player.g.dart';
-import 'package:thinmpf/provider/playback_state_provider.dart';
+import 'package:thinmpf/provider/playback_provider.dart';
 
 class PlayerFlutterApiImpl implements PlayerFlutterApi {
-  final ProviderContainer container;
+  final WidgetRef ref;
 
-  PlayerFlutterApiImpl(this.container);
+  PlayerFlutterApiImpl(this.ref);
 
   @override
   void onPlaybackStateChange(PlaybackState playbackState) {
-    container.read(playbackStateProvider.notifier).state = playbackState;
+    ref.read(playbackProvider.notifier).updateState(playbackState);
   }
 }

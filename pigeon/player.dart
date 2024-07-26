@@ -1,19 +1,19 @@
 import 'package:pigeon/pigeon.dart';
 
-// class Song {
-//   String id;
-//   String title;
-//   String artist;
-//   String imageId;
+class CurrentSong {
+  String id;
+  String title;
+  String artist;
+  String imageId;
 
-//   Song(this.id, this.title, this.artist, this.imageId);
-// }
+  CurrentSong(this.id, this.title, this.artist, this.imageId);
+}
 
 class PlaybackState {
-  // Song song;
   bool isPlaying;
+  CurrentSong? song;
 
-  PlaybackState(this.isPlaying);
+  PlaybackState(this.song, this.isPlaying);
 }
 
 class Player {

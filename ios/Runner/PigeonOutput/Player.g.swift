@@ -44,19 +44,56 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct PlaybackState {
-  var isPlaying: Bool
+struct CurrentSong {
+  var id: String
+  var title: String
+  var artist: String
+  var imageId: String
 
-  static func fromList(_ list: [Any?]) -> PlaybackState? {
-    let isPlaying = list[0] as! Bool
+  static func fromList(_ list: [Any?]) -> CurrentSong? {
+    let id = list[0] as! String
+    let title = list[1] as! String
+    let artist = list[2] as! String
+    let imageId = list[3] as! String
 
-    return PlaybackState(
-      isPlaying: isPlaying
+    return CurrentSong(
+      id: id,
+      title: title,
+      artist: artist,
+      imageId: imageId
     )
   }
   func toList() -> [Any?] {
     return [
-      isPlaying
+      id,
+      title,
+      artist,
+      imageId,
+    ]
+  }
+}
+
+/// Generated class from Pigeon that represents data sent in messages.
+struct PlaybackState {
+  var isPlaying: Bool
+  var song: CurrentSong? = nil
+
+  static func fromList(_ list: [Any?]) -> PlaybackState? {
+    let isPlaying = list[0] as! Bool
+    var song: CurrentSong? = nil
+    if let songList: [Any?] = nilOrValue(list[1]) {
+      song = CurrentSong.fromList(songList)
+    }
+
+    return PlaybackState(
+      isPlaying: isPlaying,
+      song: song
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      isPlaying,
+      song?.toList(),
     ]
   }
 }
@@ -64,6 +101,8 @@ private class PlayerHostApiCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
     case 128:
+      return CurrentSong.fromList(self.readValue() as! [Any?])
+    case 129:
       return PlaybackState.fromList(self.readValue() as! [Any?])
     default:
       return super.readValue(ofType: type)
@@ -73,8 +112,11 @@ private class PlayerHostApiCodecReader: FlutterStandardReader {
 
 private class PlayerHostApiCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
-    if let value = value as? PlaybackState {
+    if let value = value as? CurrentSong {
       super.writeByte(128)
+      super.writeValue(value.toList())
+    } else if let value = value as? PlaybackState {
+      super.writeByte(129)
       super.writeValue(value.toList())
     } else {
       super.writeValue(value)
@@ -170,6 +212,8 @@ private class PlayerFlutterApiCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
     case 128:
+      return CurrentSong.fromList(self.readValue() as! [Any?])
+    case 129:
       return PlaybackState.fromList(self.readValue() as! [Any?])
     default:
       return super.readValue(ofType: type)
@@ -179,8 +223,11 @@ private class PlayerFlutterApiCodecReader: FlutterStandardReader {
 
 private class PlayerFlutterApiCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
-    if let value = value as? PlaybackState {
+    if let value = value as? CurrentSong {
       super.writeByte(128)
+      super.writeValue(value.toList())
+    } else if let value = value as? PlaybackState {
+      super.writeByte(129)
       super.writeValue(value.toList())
     } else {
       super.writeValue(value)

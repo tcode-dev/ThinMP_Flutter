@@ -1,34 +1,41 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:thinmpf/pigeon_output/player.g.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/provider/playback_provider.dart';
+import 'package:thinmpf/view/image/image_widget.dart';
 
-final player = PlayerHostApi();
-
-class MiniPlayerWidget extends StatefulWidget {
-  const MiniPlayerWidget({
-    super.key,
-  });
+class MiniPlayerWidget extends ConsumerWidget {
+  const MiniPlayerWidget({super.key});
 
   @override
-  State<MiniPlayerWidget> createState() => _MiniPlayerWidgetState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final playbackState = ref.watch(playbackProvider);
+    final song = playbackState.song!;
 
-class _MiniPlayerWidgetState extends State<MiniPlayerWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Text("test");
-    // return FutureBuilder<Uint8List?>(
-    //   future: api.queryArtwork(widget.id),
-    //   builder: (context, snapshot) {
-    //     if (snapshot.connectionState == ConnectionState.waiting) {
-    //       return SizedBox(width: widget.size, height: widget.size);
-    //     } else if (snapshot.data != null && snapshot.data!.isNotEmpty) {
-    //       return Image.memory(snapshot.data!,
-    //           width: widget.size, height: widget.size);
-    //     }
-    //     return Image.asset('images/song_dark.png',
-    //         width: widget.size, height: widget.size);
-    //   },
-    // );
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(left: 10),
+      padding: const EdgeInsets.only(top: 5, right: 10, bottom: 5),
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Color(0x1F000000),
+            width: 1,
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(width: 40, height: 40, margin: const EdgeInsets.only(right: 10), child: ImageWidget(id: song.imageId, size: 40)),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(song.title, overflow: TextOverflow.ellipsis),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

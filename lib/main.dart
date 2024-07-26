@@ -6,10 +6,6 @@ import 'package:thinmpf/view/page/main_page_view.dart';
 import 'package:thinmpf/view/permission/permission_widget.dart';
 
 void main() {
-  final container = ProviderContainer();
-
-  PlayerFlutterApi.setup(PlayerFlutterApiImpl(container));
-
   runApp(
     const ProviderScope(
       child: MainApp(),
@@ -17,8 +13,19 @@ void main() {
   );
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends ConsumerStatefulWidget {
   const MainApp({super.key});
+
+  @override
+  MainAppState createState() => MainAppState();
+}
+
+class MainAppState extends ConsumerState<MainApp> {
+  @override
+  void initState() {
+    super.initState();
+    PlayerFlutterApi.setup(PlayerFlutterApiImpl(ref));
+  }
 
   @override
   Widget build(BuildContext context) {
