@@ -20,6 +20,7 @@ class MiniPlayerWidget extends ConsumerWidget {
       margin: const EdgeInsets.only(left: 10),
       padding: const EdgeInsets.only(top: 5, right: 10, bottom: 5),
       decoration: const BoxDecoration(
+        color: Colors.white,
         border: Border(
           bottom: BorderSide(
             color: Color(0x1F000000),
