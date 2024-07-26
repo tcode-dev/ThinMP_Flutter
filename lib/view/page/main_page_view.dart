@@ -9,10 +9,12 @@ class MainPageView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: Column(
-        children: [
-          const SizedBox(height: 100),
-          Center(
+      body: Stack(
+        children: <Widget>[
+          Positioned(
+            top: 100.0,
+            right: 0.0,
+            left: 0.0,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -23,7 +25,12 @@ class MainPageView extends ConsumerWidget {
               child: const Text('songs'),
             ),
           ),
-          const MiniPlayerWidget(),
+          const Positioned(
+            right: 0.0,
+            bottom: 0.0,
+            left: 0.0,
+            child: MiniPlayerWidget(),
+          ),
         ],
       ),
     );
