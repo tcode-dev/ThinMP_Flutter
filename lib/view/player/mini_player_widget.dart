@@ -9,7 +9,11 @@ class MiniPlayerWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final playbackState = ref.watch(playbackProvider);
-    final song = playbackState.song!;
+    final song = playbackState.song;
+
+    if (song == null) {
+      return Container();
+    }
 
     return Container(
       width: double.infinity,
