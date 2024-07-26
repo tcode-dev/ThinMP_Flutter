@@ -26,12 +26,7 @@ class SongsPageView extends ConsumerWidget {
 
                   player.startBySongs(index);
                 },
-                child: MediaRowWidget(
-                  id: song.id,
-                  artist: song.artist,
-                  title: song.title,
-                  imageId: song.imageId,
-                ),
+                child: MediaRowWidget(song: song),
               );
             },
           ),

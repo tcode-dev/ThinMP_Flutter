@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:thinmpf/pigeon_output/song.g.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 
 class MediaRowWidget extends StatelessWidget {
-  final String id;
-  final String title;
-  final String artist;
-  final String imageId;
+  final Song song;
 
   const MediaRowWidget({
     super.key,
-    required this.id,
-    required this.title,
-    required this.artist,
-    required this.imageId,
+    required this.song,
   });
 
   @override
@@ -31,11 +26,11 @@ class MediaRowWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(width: 40, height: 40, margin: const EdgeInsets.only(right: 10), child: ImageWidget(id: imageId, size: 40)),
+          Container(width: 40, height: 40, margin: const EdgeInsets.only(right: 10), child: ImageWidget(id: song.imageId, size: 40)),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Text(title, overflow: TextOverflow.ellipsis), Text(artist, overflow: TextOverflow.ellipsis)],
+              children: [Text(song.title, overflow: TextOverflow.ellipsis), Text(song.artist, overflow: TextOverflow.ellipsis)],
             ),
           ),
         ],
