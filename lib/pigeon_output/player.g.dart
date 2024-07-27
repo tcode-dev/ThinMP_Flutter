@@ -25,8 +25,8 @@ List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty
   return <Object?>[error.code, error.message, error.details];
 }
 
-class CurrentSong {
-  CurrentSong({
+class Song2 {
+  Song2({
     required this.id,
     required this.title,
     required this.artist,
@@ -50,9 +50,9 @@ class CurrentSong {
     ];
   }
 
-  static CurrentSong decode(Object result) {
+  static Song2 decode(Object result) {
     result as List<Object?>;
-    return CurrentSong(
+    return Song2(
       id: result[0]! as String,
       title: result[1]! as String,
       artist: result[2]! as String,
@@ -69,7 +69,7 @@ class PlaybackState {
 
   bool isPlaying;
 
-  CurrentSong? song;
+  Song2? song;
 
   Object encode() {
     return <Object?>[
@@ -83,7 +83,7 @@ class PlaybackState {
     return PlaybackState(
       isPlaying: result[0]! as bool,
       song: result[1] != null
-          ? CurrentSong.decode(result[1]! as List<Object?>)
+          ? Song2.decode(result[1]! as List<Object?>)
           : null,
     );
   }
@@ -93,10 +93,10 @@ class _PlayerHostApiCodec extends StandardMessageCodec {
   const _PlayerHostApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is CurrentSong) {
+    if (value is PlaybackState) {
       buffer.putUint8(128);
       writeValue(buffer, value.encode());
-    } else if (value is PlaybackState) {
+    } else if (value is Song2) {
       buffer.putUint8(129);
       writeValue(buffer, value.encode());
     } else {
@@ -108,9 +108,9 @@ class _PlayerHostApiCodec extends StandardMessageCodec {
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
       case 128: 
-        return CurrentSong.decode(readValue(buffer)!);
-      case 129: 
         return PlaybackState.decode(readValue(buffer)!);
+      case 129: 
+        return Song2.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
     }
@@ -269,11 +269,8 @@ class _PlayerFlutterApiCodec extends StandardMessageCodec {
   const _PlayerFlutterApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is CurrentSong) {
+    if (value is Song2) {
       buffer.putUint8(128);
-      writeValue(buffer, value.encode());
-    } else if (value is PlaybackState) {
-      buffer.putUint8(129);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -284,9 +281,7 @@ class _PlayerFlutterApiCodec extends StandardMessageCodec {
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
       case 128: 
-        return CurrentSong.decode(readValue(buffer)!);
-      case 129: 
-        return PlaybackState.decode(readValue(buffer)!);
+        return Song2.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
     }
@@ -296,25 +291,52 @@ class _PlayerFlutterApiCodec extends StandardMessageCodec {
 abstract class PlayerFlutterApi {
   static const MessageCodec<Object?> pigeonChannelCodec = _PlayerFlutterApiCodec();
 
-  void onPlaybackStateChange(PlaybackState playbackState);
+  void onIsPlayingChange(bool isPlaying);
+
+  void onPlaybackSongChange(Song2 song);
 
   static void setup(PlayerFlutterApi? api, {BinaryMessenger? binaryMessenger}) {
     {
       final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange', pigeonChannelCodec,
+          'dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onIsPlayingChange', pigeonChannelCodec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
         __pigeon_channel.setMessageHandler(null);
       } else {
         __pigeon_channel.setMessageHandler((Object? message) async {
           assert(message != null,
-          'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange was null.');
+          'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onIsPlayingChange was null.');
           final List<Object?> args = (message as List<Object?>?)!;
-          final PlaybackState? arg_playbackState = (args[0] as PlaybackState?);
-          assert(arg_playbackState != null,
-              'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange was null, expected non-null PlaybackState.');
+          final bool? arg_isPlaying = (args[0] as bool?);
+          assert(arg_isPlaying != null,
+              'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onIsPlayingChange was null, expected non-null bool.');
           try {
-            api.onPlaybackStateChange(arg_playbackState!);
+            api.onIsPlayingChange(arg_isPlaying!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final Song2? arg_song = (args[0] as Song2?);
+          assert(arg_song != null,
+              'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange was null, expected non-null Song2.');
+          try {
+            api.onPlaybackSongChange(arg_song!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);

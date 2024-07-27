@@ -46,7 +46,7 @@ class PlayerFlutterError (
 ) : Throwable()
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class CurrentSong (
+data class Song2 (
   val id: String,
   val title: String,
   val artist: String,
@@ -55,12 +55,12 @@ data class CurrentSong (
 ) {
   companion object {
     @Suppress("UNCHECKED_CAST")
-    fun fromList(list: List<Any?>): CurrentSong {
+    fun fromList(list: List<Any?>): Song2 {
       val id = list[0] as String
       val title = list[1] as String
       val artist = list[2] as String
       val imageId = list[3] as String
-      return CurrentSong(id, title, artist, imageId)
+      return Song2(id, title, artist, imageId)
     }
   }
   fun toList(): List<Any?> {
@@ -76,15 +76,15 @@ data class CurrentSong (
 /** Generated class from Pigeon that represents data sent in messages. */
 data class PlaybackState (
   val isPlaying: Boolean,
-  val song: CurrentSong? = null
+  val song: Song2? = null
 
 ) {
   companion object {
     @Suppress("UNCHECKED_CAST")
     fun fromList(list: List<Any?>): PlaybackState {
       val isPlaying = list[0] as Boolean
-      val song: CurrentSong? = (list[1] as List<Any?>?)?.let {
-        CurrentSong.fromList(it)
+      val song: Song2? = (list[1] as List<Any?>?)?.let {
+        Song2.fromList(it)
       }
       return PlaybackState(isPlaying, song)
     }
@@ -102,12 +102,12 @@ private object PlayerHostApiCodec : StandardMessageCodec() {
     return when (type) {
       128.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          CurrentSong.fromList(it)
+          PlaybackState.fromList(it)
         }
       }
       129.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          PlaybackState.fromList(it)
+          Song2.fromList(it)
         }
       }
       else -> super.readValueOfType(type, buffer)
@@ -115,11 +115,11 @@ private object PlayerHostApiCodec : StandardMessageCodec() {
   }
   override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
     when (value) {
-      is CurrentSong -> {
+      is PlaybackState -> {
         stream.write(128)
         writeValue(stream, value.toList())
       }
-      is PlaybackState -> {
+      is Song2 -> {
         stream.write(129)
         writeValue(stream, value.toList())
       }
@@ -257,12 +257,7 @@ private object PlayerFlutterApiCodec : StandardMessageCodec() {
     return when (type) {
       128.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          CurrentSong.fromList(it)
-        }
-      }
-      129.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          PlaybackState.fromList(it)
+          Song2.fromList(it)
         }
       }
       else -> super.readValueOfType(type, buffer)
@@ -270,12 +265,8 @@ private object PlayerFlutterApiCodec : StandardMessageCodec() {
   }
   override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
     when (value) {
-      is CurrentSong -> {
+      is Song2 -> {
         stream.write(128)
-        writeValue(stream, value.toList())
-      }
-      is PlaybackState -> {
-        stream.write(129)
         writeValue(stream, value.toList())
       }
       else -> super.writeValue(stream, value)
@@ -292,11 +283,27 @@ class PlayerFlutterApi(private val binaryMessenger: BinaryMessenger) {
       PlayerFlutterApiCodec
     }
   }
-  fun onPlaybackStateChange(playbackStateArg: PlaybackState, callback: (Result<Unit>) -> Unit)
+  fun onIsPlayingChange(isPlayingArg: Boolean, callback: (Result<Unit>) -> Unit)
 {
-    val channelName = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange"
+    val channelName = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onIsPlayingChange"
     val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
-    channel.send(listOf(playbackStateArg)) {
+    channel.send(listOf(isPlayingArg)) {
+      if (it is List<*>) {
+        if (it.size > 1) {
+          callback(Result.failure(PlayerFlutterError(it[0] as String, it[1] as String, it[2] as String?)))
+        } else {
+          callback(Result.success(Unit))
+        }
+      } else {
+        callback(Result.failure(createConnectionError(channelName)))
+      } 
+    }
+  }
+  fun onPlaybackSongChange(songArg: Song2, callback: (Result<Unit>) -> Unit)
+{
+    val channelName = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange"
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
+    channel.send(listOf(songArg)) {
       if (it is List<*>) {
         if (it.size > 1) {
           callback(Result.failure(PlayerFlutterError(it[0] as String, it[1] as String, it[2] as String?)))

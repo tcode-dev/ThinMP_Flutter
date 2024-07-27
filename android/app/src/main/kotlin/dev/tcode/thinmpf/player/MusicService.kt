@@ -82,7 +82,6 @@ class MusicService : Service() {
     }
 
     fun pause() {
-        Log.d("MusicService", "pause")
         player.pause()
     }
 
@@ -91,7 +90,7 @@ class MusicService : Service() {
             player.seekToPrevious()
         } else {
             player.seekTo(0)
-            onChange()
+            onPlaybackSongChange()
         }
     }
 
@@ -211,10 +210,16 @@ class MusicService : Service() {
         }
     }
 
-    private fun onChange() {
+    private fun onIsPlayingChange() {
         val playerFlutterApi = PlayerFlutterApiImpl()
 
-        playerFlutterApi.onPlaybackStateChange(player.isPlaying, getCurrentSong())
+        playerFlutterApi.onIsPlayingChange(player.isPlaying)
+    }
+
+    private fun onPlaybackSongChange() {
+        val playerFlutterApi = PlayerFlutterApiImpl()
+
+        playerFlutterApi.onPlaybackSongChange(getCurrentSong()!!)
     }
 
     private fun onError() {
@@ -269,16 +274,19 @@ class MusicService : Service() {
         override fun onEvents(player: Player, events: Player.Events) {
             if (events.contains(Player.EVENT_POSITION_DISCONTINUITY)) return
 
-            if (events.contains(Player.EVENT_MEDIA_METADATA_CHANGED) || events.contains(Player.EVENT_IS_PLAYING_CHANGED)) {
-                isPlaying = player.isPlaying
-                onChange()
+            if (events.contains(Player.EVENT_MEDIA_METADATA_CHANGED)) {
+                onPlaybackSongChange()
                 notification()
                 isPreparing = false
+            }
+            if (events.contains(Player.EVENT_IS_PLAYING_CHANGED)) {
+                isPlaying = player.isPlaying
+                onIsPlayingChange()
             }
         }
 
         override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-            onChange()
+            onPlaybackSongChange()
             notification()
         }
 

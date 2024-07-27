@@ -31,9 +31,9 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   return (result == [NSNull null]) ? nil : result;
 }
 
-@interface CurrentSong ()
-+ (CurrentSong *)fromList:(NSArray *)list;
-+ (nullable CurrentSong *)nullableFromList:(NSArray *)list;
+@interface Song2 ()
++ (Song2 *)fromList:(NSArray *)list;
++ (nullable Song2 *)nullableFromList:(NSArray *)list;
 - (NSArray *)toList;
 @end
 
@@ -43,28 +43,28 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 - (NSArray *)toList;
 @end
 
-@implementation CurrentSong
+@implementation Song2
 + (instancetype)makeWithId:(NSString *)id
     title:(NSString *)title
     artist:(NSString *)artist
     imageId:(NSString *)imageId {
-  CurrentSong* pigeonResult = [[CurrentSong alloc] init];
+  Song2* pigeonResult = [[Song2 alloc] init];
   pigeonResult.id = id;
   pigeonResult.title = title;
   pigeonResult.artist = artist;
   pigeonResult.imageId = imageId;
   return pigeonResult;
 }
-+ (CurrentSong *)fromList:(NSArray *)list {
-  CurrentSong *pigeonResult = [[CurrentSong alloc] init];
++ (Song2 *)fromList:(NSArray *)list {
+  Song2 *pigeonResult = [[Song2 alloc] init];
   pigeonResult.id = GetNullableObjectAtIndex(list, 0);
   pigeonResult.title = GetNullableObjectAtIndex(list, 1);
   pigeonResult.artist = GetNullableObjectAtIndex(list, 2);
   pigeonResult.imageId = GetNullableObjectAtIndex(list, 3);
   return pigeonResult;
 }
-+ (nullable CurrentSong *)nullableFromList:(NSArray *)list {
-  return (list) ? [CurrentSong fromList:list] : nil;
++ (nullable Song2 *)nullableFromList:(NSArray *)list {
+  return (list) ? [Song2 fromList:list] : nil;
 }
 - (NSArray *)toList {
   return @[
@@ -78,7 +78,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 
 @implementation PlaybackState
 + (instancetype)makeWithIsPlaying:(BOOL )isPlaying
-    song:(nullable CurrentSong *)song {
+    song:(nullable Song2 *)song {
   PlaybackState* pigeonResult = [[PlaybackState alloc] init];
   pigeonResult.isPlaying = isPlaying;
   pigeonResult.song = song;
@@ -87,7 +87,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 + (PlaybackState *)fromList:(NSArray *)list {
   PlaybackState *pigeonResult = [[PlaybackState alloc] init];
   pigeonResult.isPlaying = [GetNullableObjectAtIndex(list, 0) boolValue];
-  pigeonResult.song = [CurrentSong nullableFromList:(GetNullableObjectAtIndex(list, 1))];
+  pigeonResult.song = [Song2 nullableFromList:(GetNullableObjectAtIndex(list, 1))];
   return pigeonResult;
 }
 + (nullable PlaybackState *)nullableFromList:(NSArray *)list {
@@ -107,9 +107,9 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 - (nullable id)readValueOfType:(UInt8)type {
   switch (type) {
     case 128: 
-      return [CurrentSong fromList:[self readValue]];
-    case 129: 
       return [PlaybackState fromList:[self readValue]];
+    case 129: 
+      return [Song2 fromList:[self readValue]];
     default:
       return [super readValueOfType:type];
   }
@@ -120,10 +120,10 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 @end
 @implementation PlayerHostApiCodecWriter
 - (void)writeValue:(id)value {
-  if ([value isKindOfClass:[CurrentSong class]]) {
+  if ([value isKindOfClass:[PlaybackState class]]) {
     [self writeByte:128];
     [self writeValue:[value toList]];
-  } else if ([value isKindOfClass:[PlaybackState class]]) {
+  } else if ([value isKindOfClass:[Song2 class]]) {
     [self writeByte:129];
     [self writeValue:[value toList]];
   } else {
@@ -265,9 +265,7 @@ void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Pla
 - (nullable id)readValueOfType:(UInt8)type {
   switch (type) {
     case 128: 
-      return [CurrentSong fromList:[self readValue]];
-    case 129: 
-      return [PlaybackState fromList:[self readValue]];
+      return [Song2 fromList:[self readValue]];
     default:
       return [super readValueOfType:type];
   }
@@ -278,11 +276,8 @@ void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Pla
 @end
 @implementation PlayerFlutterApiCodecWriter
 - (void)writeValue:(id)value {
-  if ([value isKindOfClass:[CurrentSong class]]) {
+  if ([value isKindOfClass:[Song2 class]]) {
     [self writeByte:128];
-    [self writeValue:[value toList]];
-  } else if ([value isKindOfClass:[PlaybackState class]]) {
-    [self writeByte:129];
     [self writeValue:[value toList]];
   } else {
     [super writeValue:value];
@@ -324,14 +319,33 @@ NSObject<FlutterMessageCodec> *PlayerFlutterApiGetCodec(void) {
   }
   return self;
 }
-- (void)onPlaybackStateChangePlaybackState:(PlaybackState *)arg_playbackState completion:(void (^)(FlutterError *_Nullable))completion {
-  NSString *channelName = @"dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackStateChange";
+- (void)onIsPlayingChangeIsPlaying:(BOOL)arg_isPlaying completion:(void (^)(FlutterError *_Nullable))completion {
+  NSString *channelName = @"dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onIsPlayingChange";
   FlutterBasicMessageChannel *channel =
     [FlutterBasicMessageChannel
       messageChannelWithName:channelName
       binaryMessenger:self.binaryMessenger
       codec:PlayerFlutterApiGetCodec()];
-  [channel sendMessage:@[arg_playbackState ?: [NSNull null]] reply:^(NSArray<id> *reply) {
+  [channel sendMessage:@[@(arg_isPlaying)] reply:^(NSArray<id> *reply) {
+    if (reply != nil) {
+      if (reply.count > 1) {
+        completion([FlutterError errorWithCode:reply[0] message:reply[1] details:reply[2]]);
+      } else {
+        completion(nil);
+      }
+    } else {
+      completion(createConnectionError(channelName));
+    } 
+  }];
+}
+- (void)onPlaybackSongChangeSong:(Song2 *)arg_song completion:(void (^)(FlutterError *_Nullable))completion {
+  NSString *channelName = @"dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange";
+  FlutterBasicMessageChannel *channel =
+    [FlutterBasicMessageChannel
+      messageChannelWithName:channelName
+      binaryMessenger:self.binaryMessenger
+      codec:PlayerFlutterApiGetCodec()];
+  [channel sendMessage:@[arg_song ?: [NSNull null]] reply:^(NSArray<id> *reply) {
     if (reply != nil) {
       if (reply.count > 1) {
         completion([FlutterError errorWithCode:reply[0] message:reply[1] details:reply[2]]);

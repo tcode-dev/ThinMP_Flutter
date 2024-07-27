@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/pigeon_output/player.g.dart';
-import 'package:thinmpf/provider/playback_provider.dart';
+import 'package:thinmpf/provider/is_playing_provider.dart';
+import 'package:thinmpf/provider/playback_song_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 
@@ -18,10 +19,10 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final playbackState = ref.watch(playbackProvider);
-    final song = playbackState.song;
+    final isPlaying = ref.watch(isPlayingProvider);
+    final playbackSong = ref.watch(playbackSongProvider);
 
-    if (song == null) {
+    if (playbackSong == null) {
       return Container();
     }
 
@@ -40,17 +41,17 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
       ),
       child: Row(
         children: [
-          Container(width: 40, height: 40, margin: const EdgeInsets.only(right: 10), child: ImageWidget(id: song.imageId, size: 40)),
+          Container(width: 40, height: 40, margin: const EdgeInsets.only(right: 10), child: ImageWidget(id: playbackSong.imageId, size: 40)),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(song.title, overflow: TextOverflow.ellipsis),
+                Text(playbackSong.title, overflow: TextOverflow.ellipsis),
               ],
             ),
           ),
           const Expanded(child: SizedBox()),
-          playbackState.isPlaying
+          isPlaying
               ? ButtonWidget(icon: Icons.pause_rounded, buttonSize: 50, imageSize: 44.0, callback: () => player.pause())
               : ButtonWidget(icon: Icons.play_arrow_rounded, buttonSize: 50, imageSize: 44.0, callback: () => player.play()),
           ButtonWidget(icon: Icons.skip_next_rounded, buttonSize: 50, imageSize: 44.0, callback: () => player.next()),
