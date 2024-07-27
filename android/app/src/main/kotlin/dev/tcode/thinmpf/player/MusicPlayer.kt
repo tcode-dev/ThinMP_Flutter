@@ -55,6 +55,7 @@ class MusicPlayer() {
     }
 
     fun pause() {
+        Log.d("MusicPlayer", "pause")
         musicService?.pause()
     }
 
@@ -86,9 +87,9 @@ class MusicPlayer() {
 //        musicService?.changeShuffle()
 //    }
 //
-//    fun getCurrentSong(): SongModel? {
-//        return musicService?.getCurrentSong()
-//    }
+    fun getCurrentSong(): SongModel? {
+        return musicService?.getCurrentSong()
+    }
 //
 //    fun getCurrentPosition(): Long {
 //        return musicService?.getCurrentPosition() ?: 0

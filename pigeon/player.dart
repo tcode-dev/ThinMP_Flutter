@@ -36,7 +36,9 @@ class Player {
 abstract class PlayerHostApi {
   void startBySongs(int index);
   void play();
-  void stop();
+  void pause();
+  void prev();
+  void next();
   PlaybackState getPlaybackState();
 }
 

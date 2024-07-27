@@ -193,14 +193,48 @@ void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Pla
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.stop"
+        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.pause"
         binaryMessenger:binaryMessenger
         codec:PlayerHostApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(stopWithError:)], @"PlayerHostApi api (%@) doesn't respond to @selector(stopWithError:)", api);
+      NSCAssert([api respondsToSelector:@selector(pauseWithError:)], @"PlayerHostApi api (%@) doesn't respond to @selector(pauseWithError:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         FlutterError *error;
-        [api stopWithError:&error];
+        [api pauseWithError:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.prev"
+        binaryMessenger:binaryMessenger
+        codec:PlayerHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(prevWithError:)], @"PlayerHostApi api (%@) doesn't respond to @selector(prevWithError:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        FlutterError *error;
+        [api prevWithError:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.next"
+        binaryMessenger:binaryMessenger
+        codec:PlayerHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(nextWithError:)], @"PlayerHostApi api (%@) doesn't respond to @selector(nextWithError:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        FlutterError *error;
+        [api nextWithError:&error];
         callback(wrapResult(nil, error));
       }];
     } else {

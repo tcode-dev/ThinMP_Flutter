@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/pigeon_output/player.g.dart';
 import 'package:thinmpf/provider/playback_provider.dart';
+import 'package:thinmpf/view/button/button_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
+
+final PlayerHostApi player = PlayerHostApi();
 
 class MiniPlayerWidget extends ConsumerWidget {
   const MiniPlayerWidget({super.key});
@@ -17,8 +21,8 @@ class MiniPlayerWidget extends ConsumerWidget {
 
     return Container(
       width: double.infinity,
+      height: 50,
       margin: const EdgeInsets.only(left: 10),
-      padding: const EdgeInsets.only(top: 5, right: 10, bottom: 5),
       decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
@@ -39,6 +43,11 @@ class MiniPlayerWidget extends ConsumerWidget {
               ],
             ),
           ),
+          const Expanded(child: SizedBox()),
+          playbackState.isPlaying
+              ? ButtonWidget(icon: Icons.pause_rounded, buttonSize: 50, imageSize: 44.0, callback: () => player.pause())
+              : ButtonWidget(icon: Icons.play_arrow_rounded, buttonSize: 50, imageSize: 44.0, callback: () => player.play()),
+          ButtonWidget(icon: Icons.skip_next_rounded, buttonSize: 50, imageSize: 44.0, callback: () => player.next()),
         ],
       ),
     );

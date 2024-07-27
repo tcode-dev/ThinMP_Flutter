@@ -18,7 +18,7 @@ class MainPageView extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SongsPageView()),
+                  MaterialPageRoute(builder: (context) => SongsPageView()),
                 );
               },
               child: const Text('songs'),

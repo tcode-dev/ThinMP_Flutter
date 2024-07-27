@@ -80,7 +80,7 @@ class MusicService : Service() {
         listeners.remove(listener)
     }
 
-    private fun getCurrentSong(): SongModel? {
+    fun getCurrentSong(): SongModel? {
         if (player.currentMediaItem == null) return null
 
         return playingList.first { MediaItem.fromUri(it.mediaUri) == player.currentMediaItem }
@@ -100,6 +100,7 @@ class MusicService : Service() {
     }
 
     fun pause() {
+        Log.d("MusicService", "pause")
         player.pause()
     }
 

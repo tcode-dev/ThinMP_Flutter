@@ -142,7 +142,9 @@ class PlayerHostApiCodec: FlutterStandardMessageCodec {
 protocol PlayerHostApi {
   func startBySongs(index: Int64) throws
   func play() throws
-  func stop() throws
+  func pause() throws
+  func prev() throws
+  func next() throws
   func getPlaybackState() throws -> PlaybackState
 }
 
@@ -180,18 +182,44 @@ class PlayerHostApiSetup {
     } else {
       playChannel.setMessageHandler(nil)
     }
-    let stopChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.stop", binaryMessenger: binaryMessenger, codec: codec)
+    let pauseChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.pause", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      stopChannel.setMessageHandler { _, reply in
+      pauseChannel.setMessageHandler { _, reply in
         do {
-          try api.stop()
+          try api.pause()
           reply(wrapResult(nil))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      stopChannel.setMessageHandler(nil)
+      pauseChannel.setMessageHandler(nil)
+    }
+    let prevChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.prev", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      prevChannel.setMessageHandler { _, reply in
+        do {
+          try api.prev()
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      prevChannel.setMessageHandler(nil)
+    }
+    let nextChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.next", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      nextChannel.setMessageHandler { _, reply in
+        do {
+          try api.next()
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      nextChannel.setMessageHandler(nil)
     }
     let getPlaybackStateChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.getPlaybackState", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {

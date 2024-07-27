@@ -41,7 +41,9 @@ NSObject<FlutterMessageCodec> *PlayerHostApiGetCodec(void);
 @protocol PlayerHostApi
 - (void)startBySongsIndex:(NSInteger)index error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)playWithError:(FlutterError *_Nullable *_Nonnull)error;
-- (void)stopWithError:(FlutterError *_Nullable *_Nonnull)error;
+- (void)pauseWithError:(FlutterError *_Nullable *_Nonnull)error;
+- (void)prevWithError:(FlutterError *_Nullable *_Nonnull)error;
+- (void)nextWithError:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
 - (nullable PlaybackState *)getPlaybackStateWithError:(FlutterError *_Nullable *_Nonnull)error;
 @end
