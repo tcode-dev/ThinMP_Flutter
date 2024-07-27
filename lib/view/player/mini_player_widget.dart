@@ -5,13 +5,19 @@ import 'package:thinmpf/provider/playback_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 
-final PlayerHostApi player = PlayerHostApi();
+class MiniPlayerWidget extends ConsumerStatefulWidget {
 
-class MiniPlayerWidget extends ConsumerWidget {
   const MiniPlayerWidget({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  MiniPlayerWidgetState createState() => MiniPlayerWidgetState();
+}
+
+class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
+  final PlayerHostApi player = PlayerHostApi();
+
+  @override
+  Widget build(BuildContext context) {
     final playbackState = ref.watch(playbackProvider);
     final song = playbackState.song;
 

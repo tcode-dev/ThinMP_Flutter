@@ -17,11 +17,15 @@ interface MusicPlayerListener : MusicServiceListener {
     fun onBind() {}
 }
 
-class MusicPlayer() {
+class MusicPlayer(context: Context) {
     private var musicService: MusicService? = null
     private lateinit var connection: ServiceConnection
-    private var isConnecting = false
-    private var bound = false
+//    private var isConnecting = false
+//    private var bound = false
+
+    init {
+        bindService(context)
+    }
 
     fun isServiceRunning(): Boolean {
         return MusicService.isServiceRunning
@@ -31,21 +35,21 @@ class MusicPlayer() {
         return musicService?.isPlaying() == true
     }
 
-    fun start(context: Context, songs: List<SongModel>, index: Int) {
-        if (isConnecting) return
-        if (isPreparing()) return
+    fun start(songs: List<SongModel>, index: Int) {
+//        if (isConnecting) return
+//        if (isPreparing()) return
 
-        if (!isServiceRunning()) {
-            context.startForegroundService(Intent(context, MusicService::class.java))
-            bindService(context) { musicService?.start(songs, index) }
-            return
-        }
+//        if (!isServiceRunning()) {
+//            context.startForegroundService(Intent(context, MusicService::class.java))
+//            bindService(context) { musicService?.start(songs, index) }
+//            return
+//        }
 
-        if (!bound) {
-            bindService(context)
-
-            return
-        }
+//        if (!bound) {
+//            bindService(context)
+//
+//            return
+//        }
 
         musicService?.start(songs, index)
     }
@@ -95,17 +99,16 @@ class MusicPlayer() {
 //        return musicService?.getCurrentPosition() ?: 0
 //    }
 //
-//    fun destroy(context: Context) {
-//        musicService?.removeEventListener(listener)
-//
-//        unbindService(context)
-//    }
+    fun destroy(context: Context) {
+        unbindService(context)
+    }
 
-    private fun bindService(context: Context, callback: () -> Unit? = {}) {
-        if (isConnecting || bound) return
+    private fun bindService(context: Context) {
+//        if (isConnecting || bound) return
 
-        isConnecting = true
-        connection = createConnection(callback)
+//        isConnecting = true
+        context.startForegroundService(Intent(context, MusicService::class.java))
+        connection = createConnection()
         context.bindService(
             Intent(context, MusicService::class.java), connection, Context.BIND_AUTO_CREATE
         )
@@ -115,24 +118,24 @@ class MusicPlayer() {
         return musicService?.isPreparing() == true
     }
 
-    private fun unbindService(context: Context) {
-        if (!bound) return
+    fun unbindService(context: Context) {
+//        if (!bound) return
 
         context.unbindService(connection)
         musicService = null
-        bound = false
+//        bound = false
     }
 
-    private fun createConnection(callback: () -> Unit? = {}): ServiceConnection {
+    private fun createConnection(): ServiceConnection {
         return object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName, service: IBinder) {
                 val binder: MusicService.MusicBinder = service as MusicService.MusicBinder
                 musicService = binder.getService()
 //                musicService!!.addEventListener(listener)
-                callback()
+//                callback()
 //                listener.onBind()
-                isConnecting = false
-                bound = true
+//                isConnecting = false
+//                bound = true
             }
 
             override fun onServiceDisconnected(name: ComponentName) {}
