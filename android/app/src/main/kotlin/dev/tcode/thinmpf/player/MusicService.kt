@@ -1,6 +1,5 @@
 package dev.tcode.thinmpf.player
 
-import PlaybackState
 import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.Service
@@ -11,7 +10,6 @@ import android.graphics.ImageDecoder
 import android.os.Binder
 import android.os.IBinder
 import android.os.Looper
-import android.provider.MediaStore
 import android.util.Log
 import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
@@ -24,27 +22,19 @@ import dev.tcode.thinmpf.constant.NotificationConstant
 import dev.tcode.thinmpf.model.SongModel
 import dev.tcode.thinmpf.notification.LocalNotificationHelper
 import dev.tcode.thinmpf.receiver.HeadsetEventReceiver
-import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.plugin.common.BinaryMessenger
 import java.io.IOException
-
-interface MusicServiceListener {
-    fun onChange() {}
-    fun onError() {}
-}
 
 class MusicService : Service() {
     private val PREV_MS = 3000
     private val binder = MusicBinder()
     private lateinit var player: ExoPlayer
-    private lateinit var mediaSession: androidx.media3.session.MediaSession
+    private lateinit var mediaSession: MediaSession
     @SuppressLint("UnsafeOptInUsageError")
     private lateinit var mediaStyle: MediaStyleNotificationHelper.MediaStyle
     private lateinit var headsetEventReceiver: HeadsetEventReceiver
     private lateinit var playerEventListener: PlayerEventListener
 //    private lateinit var config: ConfigStore
 //    private lateinit var repeat: RepeatState
-    private var listeners: MutableList<MusicServiceListener> = mutableListOf()
     private var playingList: List<SongModel> = emptyList()
     private var initialized: Boolean = false
 //    private var shuffle = false
@@ -70,14 +60,6 @@ class MusicService : Service() {
 
         registerReceiver(headsetEventReceiver, IntentFilter(Intent.ACTION_HEADSET_PLUG))
         initPlayer()
-    }
-
-    fun addEventListener(listener: MusicServiceListener) {
-        listeners.add(listener)
-    }
-
-    fun removeEventListener(listener: MusicServiceListener) {
-        listeners.remove(listener)
     }
 
     fun getCurrentSong(): SongModel? {
@@ -233,16 +215,12 @@ class MusicService : Service() {
         val playerFlutterApi = PlayerFlutterApiImpl()
 
         playerFlutterApi.onPlaybackStateChange(player.isPlaying, getCurrentSong())
-
-        listeners.forEach {
-            it.onChange()
-        }
     }
 
     private fun onError() {
-        listeners.forEach {
-            it.onError()
-        }
+//        val playerFlutterApi = PlayerFlutterApiImpl()
+//
+//        playerFlutterApi.onError()
     }
 
     private fun retry() {
