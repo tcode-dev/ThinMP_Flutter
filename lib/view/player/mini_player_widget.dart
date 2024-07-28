@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/pigeon_output/player.g.dart';
-import 'package:thinmpf/provider/is_playing_provider.dart';
 import 'package:thinmpf/provider/playback_song_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
+import 'package:thinmpf/view/button/play_pause_button_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 
 class MiniPlayerWidget extends ConsumerStatefulWidget {
-
   const MiniPlayerWidget({super.key});
 
   @override
@@ -19,7 +18,6 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final isPlaying = ref.watch(isPlayingProvider);
     final playbackSong = ref.watch(playbackSongProvider);
 
     if (playbackSong == null) {
@@ -29,9 +27,9 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
     return Container(
       width: double.infinity,
       height: 50,
-      margin: const EdgeInsets.only(left: 10),
+      padding: const EdgeInsets.only(left: 10),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: Colors.white10,
         border: Border(
           bottom: BorderSide(
             color: Color(0x1F000000),
@@ -41,19 +39,9 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
       ),
       child: Row(
         children: [
-          Container(width: 40, height: 40, margin: const EdgeInsets.only(right: 10), child: ImageWidget(id: playbackSong.imageId, size: 40)),
-          Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(playbackSong.title, overflow: TextOverflow.ellipsis),
-              ],
-            ),
-          ),
-          const Expanded(child: SizedBox()),
-          isPlaying
-              ? ButtonWidget(icon: Icons.pause_rounded, buttonSize: 50, imageSize: 44.0, callback: () => player.pause())
-              : ButtonWidget(icon: Icons.play_arrow_rounded, buttonSize: 50, imageSize: 44.0, callback: () => player.play()),
+          Container(margin: const EdgeInsets.only(right: 10), child: ImageWidget(id: playbackSong.imageId, size: 40)),
+          Expanded(child: Text(playbackSong.title, overflow: TextOverflow.ellipsis)),
+          PlayPauseButtonWidget(),
           ButtonWidget(icon: Icons.skip_next_rounded, buttonSize: 50, imageSize: 44.0, callback: () => player.next()),
         ],
       ),
