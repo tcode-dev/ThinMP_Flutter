@@ -20,7 +20,19 @@ class PlayerHostApiImpl: PlayerHostApi {
         
     }
     
-    func stop() throws {
+    func pause() throws {
         
+    }
+    
+    func prev() throws {
+        
+    }
+
+    func next() throws {
+        
+    }
+
+    func getPlaybackState() throws -> PlaybackState {
+        return PlaybackState(isPlaying: false, song: nil)
     }
 }

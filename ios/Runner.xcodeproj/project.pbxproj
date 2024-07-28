@@ -22,6 +22,7 @@
 		52384F922C32205C00013C69 /* ArtworkHostApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52384F912C32205C00013C69 /* ArtworkHostApiImpl.swift */; };
 		52384F962C3220F300013C69 /* Artwork.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52384F942C3220F300013C69 /* Artwork.g.swift */; };
 		52384F972C3220F300013C69 /* Artwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 52384F952C3220F300013C69 /* Artwork.m */; };
+		5242234E2C56087700B03E00 /* PlayerFlutterApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242234D2C56087700B03E00 /* PlayerFlutterApiImpl.swift */; };
 		527307212B61E42B00E65B2F /* SongHostApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527307202B61E42B00E65B2F /* SongHostApiImpl.swift */; };
 		52957A1F2B6481560019D34C /* Song.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52957A1D2B6481560019D34C /* Song.g.swift */; };
 		52957A202B6481560019D34C /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 52957A1E2B6481560019D34C /* Song.m */; };
@@ -76,6 +77,7 @@
 		52384F932C3220F300013C69 /* Artwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Artwork.h; sourceTree = "<group>"; };
 		52384F942C3220F300013C69 /* Artwork.g.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Artwork.g.swift; sourceTree = "<group>"; };
 		52384F952C3220F300013C69 /* Artwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Artwork.m; sourceTree = "<group>"; };
+		5242234D2C56087700B03E00 /* PlayerFlutterApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFlutterApiImpl.swift; sourceTree = "<group>"; };
 		527307202B61E42B00E65B2F /* SongHostApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongHostApiImpl.swift; sourceTree = "<group>"; };
 		52957A1C2B6481560019D34C /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
 		52957A1D2B6481560019D34C /* Song.g.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.g.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				52384F912C32205C00013C69 /* ArtworkHostApiImpl.swift */,
+				5242234D2C56087700B03E00 /* PlayerFlutterApiImpl.swift */,
 				52212B342C2A3B8E000ABB62 /* PlayerHostApiImpl.swift */,
 				527307202B61E42B00E65B2F /* SongHostApiImpl.swift */,
 			);
@@ -492,6 +495,7 @@
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				522AF0D02C2B069C00177683 /* Player.g.swift in Sources */,
 				520B9A742C2B85510057A02B /* SongId.swift in Sources */,
+				5242234E2C56087700B03E00 /* PlayerFlutterApiImpl.swift in Sources */,
 				52212B352C2A3B8E000ABB62 /* PlayerHostApiImpl.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				52384F962C3220F300013C69 /* Artwork.g.swift in Sources */,
