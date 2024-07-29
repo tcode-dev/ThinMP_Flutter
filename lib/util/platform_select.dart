@@ -1,9 +1,15 @@
 import 'dart:io';
 
-T platformSelect<T>(Map<String, T> map) {
+import 'package:thinmpf/constant/target_platform_constant.dart';
+
+T platformSelect<T>(Map<TargetPlatform, T> map) {
   if (Platform.isAndroid) {
-    return map['android']!;
-  } else {
-    return map['ios']!;
+    return map[TargetPlatform.android] as T;
   }
+
+  if (Platform.isIOS) {
+    return map[TargetPlatform.ios] as T;
+  }
+
+  throw UnsupportedError('Unsupported platform');
 }
