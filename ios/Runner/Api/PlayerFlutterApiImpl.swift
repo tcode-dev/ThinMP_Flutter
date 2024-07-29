@@ -11,16 +11,16 @@ class PlayerFlutterApiImpl {
     static var api: PlayerFlutterApi!
 
     static func setup(binaryMessenger: FlutterBinaryMessenger) {
-//        api = PlayerFlutterApi(binaryMessenger: binaryMessenger)
+        api = PlayerFlutterApi(binaryMessenger: binaryMessenger)
     }
 
-    func onIsPlayingChange(isPlaying: Bool) {
-//        api.onIsPlayingChange(isPlaying: isPlaying) { }
+    func onIsPlayingChange(isPlaying: Bool, completion: @escaping (Result<Void, FlutterError>) -> Void = { _ in }) {
+        PlayerFlutterApiImpl.api.onIsPlayingChange(isPlaying: isPlaying, completion: completion)
     }
 
-    func onPlaybackSongChange(song: SongModel) {
-//        let playbackSong = Song2(id: song.id, name: song.name, artistName: song.artistName, albumId: song.albumId)
-//
-//        api.onPlaybackSongChange(song: playbackSong) { }
+    func onPlaybackSongChange(song: SongModel, completion: @escaping (Result<Void, FlutterError>) -> Void = { _ in }) {
+        let playbackSong = Song2(id: song.id, title: song.primaryText, artist: song.secondaryText, imageId: song.id)
+
+        PlayerFlutterApiImpl.api.onPlaybackSongChange(song: playbackSong, completion: completion)
     }
 }

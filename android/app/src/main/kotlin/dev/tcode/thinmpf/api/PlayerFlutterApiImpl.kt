@@ -13,13 +13,13 @@ class PlayerFlutterApiImpl {
         }
     }
 
-//    fun onIsPlayingChange(isPlaying: Boolean) {
-//        api.onIsPlayingChange(isPlaying) { }
-//    }
-//
-//    fun onPlaybackSongChange(song: SongModel) {
-//        val playbackSong = Song2(song.id, song.name, song.artistName, song.albumId)
-//
-//        api.onPlaybackSongChange(playbackSong) { }
-//    }
+    fun onIsPlayingChange(isPlaying: Boolean) {
+        api.onIsPlayingChange(isPlaying) { }
+    }
+
+    fun onPlaybackSongChange(song: SongModel) {
+        val playbackSong = Song2(song.id, song.name, song.artistName, song.albumId)
+
+        api.onPlaybackSongChange(playbackSong) { }
+    }
 }
