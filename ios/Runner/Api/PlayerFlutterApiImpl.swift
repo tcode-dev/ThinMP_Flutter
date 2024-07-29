@@ -8,19 +8,19 @@
 import Foundation
 
 class PlayerFlutterApiImpl {
-    static private var api: PlayerFlutterApi?
+    static var api: PlayerFlutterApi!
 
     static func setup(binaryMessenger: FlutterBinaryMessenger) {
-        api = PlayerFlutterApi(binaryMessenger: binaryMessenger)
+//        api = PlayerFlutterApi(binaryMessenger: binaryMessenger)
     }
 
     func onIsPlayingChange(isPlaying: Bool) {
-        PlayerFlutterApiImpl?.api.onIsPlayingChange(isPlaying: isPlaying) { }
+//        api.onIsPlayingChange(isPlaying: isPlaying) { }
     }
 
     func onPlaybackSongChange(song: SongModel) {
-        var song2 = Song2(id: song.id, title: song.primaryText, artist: song.secondaryText, imageId: song.id)
-
-        PlayerFlutterApiImpl?.api.onPlaybackSongChange(songArg: song2) { }
+//        let playbackSong = Song2(id: song.id, name: song.name, artistName: song.artistName, albumId: song.albumId)
+//
+//        api.onPlaybackSongChange(song: playbackSong) { }
     }
 }
