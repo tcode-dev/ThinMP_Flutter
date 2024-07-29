@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/pigeon_output/player.g.dart';
 import 'package:thinmpf/provider/songs_provider.dart';
+import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';
 
 class SongsPageView extends ConsumerWidget {
@@ -14,18 +15,28 @@ class SongsPageView extends ConsumerWidget {
     final songs = ref.watch(songsProvider).value ?? [];
 
     return Scaffold(
-      body: ListView.builder(
-        itemCount: songs.length,
-        itemBuilder: (context, index) {
-          final song = songs[index]!;
+      body: Stack(
+        children: [
+          ListView.builder(
+            itemCount: songs.length,
+            itemBuilder: (context, index) {
+              final song = songs[index]!;
 
-          return GestureDetector(
-            onTap: () {
-              player.startBySongs(index);
+              return GestureDetector(
+                onTap: () {
+                  player.startBySongs(index);
+                },
+                child: MediaRowWidget(song: song),
+              );
             },
-            child: MediaRowWidget(song: song),
-          );
-        },
+          ),
+          const Positioned(
+            right: 0.0,
+            bottom: 0.0,
+            left: 0.0,
+            child: MiniPlayerWidget(),
+          ),
+        ],
       ),
     );
   }

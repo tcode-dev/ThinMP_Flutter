@@ -205,6 +205,8 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     }
 
     private func MPMusicPlayerControllerPlaybackStateDidChangeCallback() {
+        let api = PlayerFlutterApiImpl()
+
         if isPlaying, !isBackground {
             return
         }
@@ -215,10 +217,14 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
             break
         case MPMusicPlaybackState.playing:
             isPlaying = true
+            api.onIsPlayingChange(isPlaying: isPlaying)
 
+            break
         case MPMusicPlaybackState.paused:
             isPlaying = false
+            api.onIsPlayingChange(isPlaying: isPlaying)
 
+            break
         case MPMusicPlaybackState.interrupted:
 
             break
@@ -242,6 +248,9 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         }
 
         isFirst = false
+
+        let api = PlayerFlutterApiImpl()
+        api.onPlaybackSongChange(song: song!)
     }
 
     private func resetTime() {
