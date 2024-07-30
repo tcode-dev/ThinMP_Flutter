@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/player.g.dart';
 import 'package:thinmpf/provider/playback_song_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
@@ -41,8 +42,8 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
         children: [
           Container(margin: const EdgeInsets.only(right: 10), child: ImageWidget(id: playbackSong.imageId, size: 40)),
           Expanded(child: Text(playbackSong.title, overflow: TextOverflow.ellipsis)),
-          PlayPauseButtonWidget(),
-          ButtonWidget(icon: Icons.skip_next_rounded, buttonSize: 50, imageSize: 44.0, callback: () => player.next()),
+          PlayPauseButtonWidget(size: SizeConstant.small),
+          ButtonWidget(icon: Icons.skip_next_rounded, size: SizeConstant.small, callback: () => player.next()),
         ],
       ),
     );

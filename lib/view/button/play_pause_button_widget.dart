@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/player.g.dart';
 import 'package:thinmpf/provider/is_playing_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 
 class PlayPauseButtonWidget extends ConsumerStatefulWidget {
-  const PlayPauseButtonWidget({super.key});
+  final SizeConstant size;
+
+  const PlayPauseButtonWidget({Key? key, required this.size}) : super(key: key);
 
   @override
   MiniPlayerWidgetState createState() => MiniPlayerWidgetState();
@@ -19,9 +22,9 @@ class MiniPlayerWidgetState extends ConsumerState<PlayPauseButtonWidget> {
     final isPlaying = ref.watch(isPlayingProvider);
 
     if (isPlaying) {
-      return ButtonWidget(icon: Icons.pause_rounded, buttonSize: 50, imageSize: 44.0, callback: () => player.pause());
+      return ButtonWidget(icon: Icons.pause_rounded, size: widget.size, callback: () => player.pause());
     } else {
-      return ButtonWidget(icon: Icons.play_arrow_rounded, buttonSize: 50, imageSize: 44.0, callback: () => player.play());
+      return ButtonWidget(icon: Icons.play_arrow_rounded, size: widget.size, callback: () => player.play());
     }
   }
 }
