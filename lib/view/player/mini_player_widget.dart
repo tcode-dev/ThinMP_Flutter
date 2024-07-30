@@ -29,7 +29,7 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
       height: 50,
       padding: const EdgeInsets.only(left: 10),
       decoration: const BoxDecoration(
-        color: Colors.white10,
+        color: Colors.white,
         border: Border(
           bottom: BorderSide(
             color: Color(0x1F000000),
