@@ -1,0 +1,1 @@
+enum TargetPlatform { android, ios }
