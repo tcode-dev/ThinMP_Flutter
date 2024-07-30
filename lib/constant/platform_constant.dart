@@ -1,0 +1,1 @@
+enum PlatformConstant { android, ios }
