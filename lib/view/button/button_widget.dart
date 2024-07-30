@@ -10,8 +10,8 @@ class ButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double buttonSize = styleConstant[StyleType.button][size];
-    double imageSize = styleConstant[StyleType.image][size];
+    final buttonSize = styleConstant[StyleType.button][size];
+    final imageSize = styleConstant[StyleType.image][size];
 
     return GestureDetector(
       onTap: callback,

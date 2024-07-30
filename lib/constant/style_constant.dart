@@ -4,20 +4,20 @@ enum StyleType { button, image, padding, radius }
 
 const Map<StyleType, dynamic> styleConstant = {
   StyleType.button: {
-    SizeConstant.small: 50,
-    SizeConstant.medium: 75,
-    SizeConstant.large: 100,
+    SizeConstant.small: 50.0,
+    SizeConstant.medium: 75.0,
+    SizeConstant.large: 100.0,
   },
   StyleType.image: {
-    SizeConstant.small: 20,
-    SizeConstant.medium: 30,
-    SizeConstant.large: 40,
+    SizeConstant.small: 40.0,
+    SizeConstant.medium: 70.0,
+    SizeConstant.large: 90.0,
   },
   StyleType.padding: {
-    SizeConstant.tiny: 5,
-    SizeConstant.small: 10,
-    SizeConstant.medium: 15,
-    SizeConstant.large: 20,
+    SizeConstant.tiny: 5.0,
+    SizeConstant.small: 10.0,
+    SizeConstant.medium: 15.0,
+    SizeConstant.large: 20.0,
   },
-  StyleType.radius: 4,
+  StyleType.radius: 4.0,
 };
