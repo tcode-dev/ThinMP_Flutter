@@ -7,21 +7,21 @@
 
 import MediaPlayer
 
-class MusicPlayer: ObservableObject, MediaPlayerProtocol {
+class MusicPlayer: MediaPlayerProtocol {
     static let shared = MusicPlayer()
     private let PREV_SECOND: Double = 3
 
-    @Published var isActive: Bool = false
-    @Published var isPlaying: Bool = false
-    @Published var song: SongModel?
-    @Published var currentSecond: Double = 0
-    @Published var durationSecond: Double = 1
-    @Published var isRepeatOff: Bool = true
-    @Published var isRepeatOne: Bool = false
-    @Published var isRepeatAll: Bool = false
-    @Published var shuffleMode: Bool = false
-    @Published var isFavoriteArtist: Bool = false
-    @Published var isFavoriteSong: Bool = false
+    var isActive: Bool = false
+    var isPlaying: Bool = false
+    var song: SongModel?
+    var currentSecond: Double = 0
+    var durationSecond: Double = 1
+    var isRepeatOff: Bool = true
+    var isRepeatOne: Bool = false
+    var isRepeatAll: Bool = false
+    var shuffleMode: Bool = false
+    var isFavoriteArtist: Bool = false
+    var isFavoriteSong: Bool = false
 
 //    private let playerConfig: PlayerConfig
     private let player: MPMusicPlayerController
@@ -37,6 +37,10 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         setRepeat()
         setShuffle()
         player.beginGeneratingPlaybackNotifications()
+    }
+
+    func getCurrentSong() -> SongModel? {
+        return song
     }
 
     func start(list: [SongModel], currentIndex: Int) {
