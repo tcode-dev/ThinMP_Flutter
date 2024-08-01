@@ -36,6 +36,7 @@ class MusicPlayer: MediaPlayerProtocol {
 //        player.shuffleMode = playerConfig.getShuffle()
         setRepeat()
         setShuffle()
+        addObserver()
         player.beginGeneratingPlaybackNotifications()
     }
 
@@ -53,7 +54,6 @@ class MusicPlayer: MediaPlayerProtocol {
         descriptor.startItem = song?.media.representativeItem
         player.setQueue(with: descriptor)
         doPlay()
-        addObserver()
         isFirst = true
         isActive = true
     }
@@ -191,6 +191,7 @@ class MusicPlayer: MediaPlayerProtocol {
     }
 
     private func addObserver() {
+        print("addObserver")
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
             object: player,
@@ -204,8 +205,23 @@ class MusicPlayer: MediaPlayerProtocol {
             object: player,
             queue: OperationQueue.main
         ) { _ in
+            print("NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange")
             self.MPMusicPlayerControllerPlaybackStateDidChangeCallback()
         }
+    }
+
+    private func removeObserver() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
+            object: player
+        )
+
+        NotificationCenter.default.removeObserver(
+            self,
+            name: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
+            object: player
+        )
     }
 
     private func MPMusicPlayerControllerPlaybackStateDidChangeCallback() {
@@ -276,4 +292,10 @@ class MusicPlayer: MediaPlayerProtocol {
     private func setShuffle() {
         shuffleMode = player.shuffleMode == .songs
     }
+    
+    deinit {
+        removeObserver()
+
+        player.endGeneratingPlaybackNotifications()
+     }
 }
