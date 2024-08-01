@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:thinmpf/view/page/songs_page_view.dart';
+import 'package:thinmpf/view/page/songs_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 
-class MainPageView extends StatelessWidget {
-  const MainPageView({super.key});
+class MainPageWidget extends StatelessWidget {
+  const MainPageWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class MainPageView extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SongsPageView()),
+                  MaterialPageRoute(builder: (context) => SongsPageWidget()),
                 );
               },
               child: const Text('songs'),
