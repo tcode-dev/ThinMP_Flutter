@@ -15,7 +15,7 @@ struct SongModel {
     }
 
     var songId: SongId {
-        SongId(id: media.persistentID)
+        SongId(id: media.representativeItem?.persistentID ?? 0)
     }
 
     var primaryText: String {
