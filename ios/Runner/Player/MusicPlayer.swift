@@ -31,6 +31,7 @@ class MusicPlayer: MediaPlayerProtocol {
     private var nowPlayingItemDidChangeDebounceTimer: Timer?
     private var playbackStateDidChangeDebounceTimer: Timer?
     private let debounceTimeInterval = 0.1
+
     init() {
 //        playerConfig = PlayerConfig()
         player = MPMusicPlayerController.applicationMusicPlayer
@@ -132,7 +133,6 @@ class MusicPlayer: MediaPlayerProtocol {
     private func setSong() {
         if player.nowPlayingItem != nil {
             song = SongModel(media: MPMediaItemCollection(items: [player.nowPlayingItem! as MPMediaItem]))
-            player.skipToBeginning()
             resetTime()
             isActive = true
         } else {
@@ -198,8 +198,8 @@ class MusicPlayer: MediaPlayerProtocol {
             object: player,
             queue: OperationQueue.main
         ) { _ in
-            self.nowPlayingItemDidChangeDebounceNotification {
-                self.MPMusicPlayerControllerNowPlayingItemDidChangeCallback()
+            self.nowPlayingItemDidChangeDebounce {
+                self.nowPlayingItemDidChangeCallback()
             }
         }
 
@@ -297,7 +297,7 @@ class MusicPlayer: MediaPlayerProtocol {
         shuffleMode = player.shuffleMode == .songs
     }
     
-    // 再生開始時にMPMusicPlayerControllerNowPlayingItemDidChangeが20回くらい呼ばれる
+    // ios17以降MPMusicPlayerControllerNowPlayingItemDidChangeが複数回呼ばれる
     // debounceを使用して一定時間内に複数回発生した通知を1回にまとめる
     private func nowPlayingItemDidChangeDebounce(action: @escaping () -> Void) {
         nowPlayingItemDidChangeDebounceTimer?.invalidate()
