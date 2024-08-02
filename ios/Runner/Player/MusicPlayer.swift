@@ -28,7 +28,9 @@ class MusicPlayer: MediaPlayerProtocol {
     private var timer: Timer?
     private var isBackground = false
     private var isFirst = false
-
+    private var nowPlayingItemDidChangeDebounceTimer: Timer?
+    private var playbackStateDidChangeDebounceTimer: Timer?
+    private let debounceTimeInterval = 0.1
     init() {
 //        playerConfig = PlayerConfig()
         player = MPMusicPlayerController.applicationMusicPlayer
@@ -191,13 +193,14 @@ class MusicPlayer: MediaPlayerProtocol {
     }
 
     private func addObserver() {
-        print("addObserver")
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
             object: player,
             queue: OperationQueue.main
         ) { _ in
-            self.MPMusicPlayerControllerNowPlayingItemDidChangeCallback()
+            self.nowPlayingItemDidChangeDebounceNotification {
+                self.MPMusicPlayerControllerNowPlayingItemDidChangeCallback()
+            }
         }
 
         NotificationCenter.default.addObserver(
@@ -205,8 +208,9 @@ class MusicPlayer: MediaPlayerProtocol {
             object: player,
             queue: OperationQueue.main
         ) { _ in
-            print("NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange")
-            self.MPMusicPlayerControllerPlaybackStateDidChangeCallback()
+            self.playbackStateDidChangeDebounce {
+                self.playbackStateDidChangeCallback()
+            }
         }
     }
 
@@ -224,7 +228,20 @@ class MusicPlayer: MediaPlayerProtocol {
         )
     }
 
-    private func MPMusicPlayerControllerPlaybackStateDidChangeCallback() {
+    private func nowPlayingItemDidChangeCallback() {
+        setSong()
+
+        if player.repeatMode == .none, player.indexOfNowPlayingItem == 0, !isFirst {
+            isPlaying = false
+        }
+
+        isFirst = false
+
+        let api = PlayerFlutterApiImpl()
+        api.onPlaybackSongChange(song: song!)
+    }
+
+    private func playbackStateDidChangeCallback() {
         let api = PlayerFlutterApiImpl()
 
         if isPlaying, !isBackground {
@@ -260,19 +277,6 @@ class MusicPlayer: MediaPlayerProtocol {
         }
     }
 
-    private func MPMusicPlayerControllerNowPlayingItemDidChangeCallback() {
-        setSong()
-
-        if player.repeatMode == .none, player.indexOfNowPlayingItem == 0, !isFirst {
-            isPlaying = false
-        }
-
-        isFirst = false
-
-        let api = PlayerFlutterApiImpl()
-        api.onPlaybackSongChange(song: song!)
-    }
-
     private func resetTime() {
         let second = player.nowPlayingItem?.playbackDuration ?? 0
         durationSecond = second > 0 ? second : 1
@@ -293,6 +297,22 @@ class MusicPlayer: MediaPlayerProtocol {
         shuffleMode = player.shuffleMode == .songs
     }
     
+    // 再生開始時にMPMusicPlayerControllerNowPlayingItemDidChangeが20回くらい呼ばれる
+    // debounceを使用して一定時間内に複数回発生した通知を1回にまとめる
+    private func nowPlayingItemDidChangeDebounce(action: @escaping () -> Void) {
+        nowPlayingItemDidChangeDebounceTimer?.invalidate()
+        nowPlayingItemDidChangeDebounceTimer = Timer.scheduledTimer(withTimeInterval: debounceTimeInterval, repeats: false) { _ in
+            action()
+        }
+    }
+
+    private func playbackStateDidChangeDebounce(action: @escaping () -> Void) {
+        playbackStateDidChangeDebounceTimer?.invalidate()
+        playbackStateDidChangeDebounceTimer = Timer.scheduledTimer(withTimeInterval: debounceTimeInterval, repeats: false) { _ in
+            action()
+        }
+    }
+
     deinit {
         removeObserver()
 
