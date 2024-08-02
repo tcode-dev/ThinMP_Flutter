@@ -25,10 +25,12 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
       return Container();
     }
 
+    final bottom = MediaQuery.of(context).padding.bottom;
+
     return Container(
       width: double.infinity,
-      height: 50,
-      padding: const EdgeInsets.only(left: 10),
+      height: styleConstant[StyleType.height][SizeConstant.small] + bottom,
+      padding: EdgeInsets.only(bottom: bottom, left: 10),
       decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(

@@ -1,6 +1,6 @@
 enum SizeConstant { tiny, small, medium, large }
 
-enum StyleType { button, image, padding, radius }
+enum StyleType { button, height, image, padding, radius }
 
 const Map<StyleType, dynamic> styleConstant = {
   StyleType.button: {
@@ -8,7 +8,10 @@ const Map<StyleType, dynamic> styleConstant = {
     SizeConstant.medium: 75.0,
     SizeConstant.large: 100.0,
   },
-  StyleType.image: {
+  StyleType.height: {
+    SizeConstant.small: 50.0,
+  },
+    StyleType.image: {
     SizeConstant.small: 40.0,
     SizeConstant.medium: 70.0,
     SizeConstant.large: 90.0,
