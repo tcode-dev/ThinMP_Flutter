@@ -102,10 +102,6 @@ class MusicPlayer: MediaPlayerProtocol {
         timer?.invalidate()
     }
 
-    func setBackground(background: Bool) {
-        isBackground = background
-    }
-
     func changeRepeat() {
 //        player.repeatMode = player.repeatMode == .none ? .all
 //            : player.repeatMode == .all ? .one
@@ -119,15 +115,6 @@ class MusicPlayer: MediaPlayerProtocol {
 //        setShuffle()
 //        playerConfig.setShuffle(value: player.shuffleMode)
     }
-
-//    private func setSong() {
-//        if player.nowPlayingItem != nil {
-//            resetTime()
-//        } else {
-//            currentSecond = 0
-//            durationSecond = 1
-//        }
-//    }
 
     private func addObserver() {
         NotificationCenter.default.addObserver(
@@ -166,7 +153,6 @@ class MusicPlayer: MediaPlayerProtocol {
     }
 
     private func nowPlayingItemDidChangeCallback() {
-//        setSong()
         flutterApi.onPlaybackSongChange(song: getCurrentSong()!)
     }
 
