@@ -11,9 +11,6 @@ class MusicPlayer: MediaPlayerProtocol {
     static let shared = MusicPlayer()
     private let PREV_SECOND: Double = 3
 
-    var isActive: Bool = false
-    var isPlaying: Bool = false
-    var song: SongModel?
     var currentSecond: Double = 0
     var durationSecond: Double = 1
     var isRepeatOff: Bool = true
@@ -24,51 +21,52 @@ class MusicPlayer: MediaPlayerProtocol {
     var isFavoriteSong: Bool = false
 
 //    private let playerConfig: PlayerConfig
+    private let flutterApi: PlayerFlutterApiImpl
     private let player: MPMusicPlayerController
     private var timer: Timer?
     private var isBackground = false
-    private var isFirst = false
     private var nowPlayingItemDidChangeDebounceTimer: Timer?
     private var playbackStateDidChangeDebounceTimer: Timer?
     private let debounceTimeInterval = 0.1
 
     init() {
 //        playerConfig = PlayerConfig()
+        flutterApi = PlayerFlutterApiImpl()
         player = MPMusicPlayerController.applicationMusicPlayer
 //        player.repeatMode = playerConfig.getRepeat()
 //        player.shuffleMode = playerConfig.getShuffle()
-        setRepeat()
-        setShuffle()
+//        setRepeat()
+//        setShuffle()
         addObserver()
         player.beginGeneratingPlaybackNotifications()
     }
 
     func getCurrentSong() -> SongModel? {
-        return song
+        if (player.nowPlayingItem == nil) {
+            return nil
+        }
+        return SongModel(media: MPMediaItemCollection(items: [player.nowPlayingItem! as MPMediaItem]))
     }
 
     func start(list: [SongModel], currentIndex: Int) {
-        stop()
-        song = list[currentIndex]
+        if (player.playbackState == MPMusicPlaybackState.playing) {
+            player.stop()
+        }
 
         let items = MPMediaItemCollection(items: list.map { $0.media.representativeItem! as MPMediaItem })
         let descriptor = MPMusicPlayerMediaItemQueueDescriptor(itemCollection: items)
 
-        descriptor.startItem = song?.media.representativeItem
+        descriptor.startItem = list[currentIndex].media.representativeItem
         player.setQueue(with: descriptor)
-        doPlay()
-        isFirst = true
-        isActive = true
+        play()
     }
 
     func play() {
-        doPlay()
-        startProgress()
+        player.play()
     }
 
     func pause() {
-        doPause()
-        stopProgress()
+        player.pause()
     }
 
     func prev() {
@@ -77,11 +75,6 @@ class MusicPlayer: MediaPlayerProtocol {
         } else {
             player.skipToBeginning()
         }
-//        if isPlaying {
-//            playPrev()
-//        } else {
-//            doPrev()
-//        }
     }
 
     func next() {
@@ -114,83 +107,26 @@ class MusicPlayer: MediaPlayerProtocol {
     }
 
     func changeRepeat() {
-        player.repeatMode = player.repeatMode == .none ? .all
-            : player.repeatMode == .all ? .one
-            : .none
-        setRepeat()
+//        player.repeatMode = player.repeatMode == .none ? .all
+//            : player.repeatMode == .all ? .one
+//            : .none
+//        setRepeat()
 //        playerConfig.setRepeat(value: player.repeatMode)
     }
 
     func shuffle() {
-        player.shuffleMode = player.shuffleMode == .off ? .songs : .off
-        setShuffle()
+//        player.shuffleMode = player.shuffleMode == .off ? .songs : .off
+//        setShuffle()
 //        playerConfig.setShuffle(value: player.shuffleMode)
     }
 
-    func songId() -> SongId {
-        return SongId(id: player.nowPlayingItem!.persistentID)
-    }
-
-    private func setSong() {
-        if player.nowPlayingItem != nil {
-            song = SongModel(media: MPMediaItemCollection(items: [player.nowPlayingItem! as MPMediaItem]))
-            resetTime()
-            isActive = true
-        } else {
-            currentSecond = 0
-            durationSecond = 1
-            isActive = false
-        }
-    }
-
-    private func doPlay() {
-        isPlaying = true
-
-        player.prepareToPlay()
-        player.play()
-    }
-
-    private func doPause() {
-        isPlaying = false
-        player.pause()
-    }
-
-    private func stop() {
-        if !isPlaying {
-            return
-        }
-
-        isPlaying = false
-        player.stop()
-    }
-
-//    private func doPrev() {
-//        stop()
-//
-//        if currentSecond <= PREV_SECOND {
-//            player.skipToPreviousItem()
-//            setSong()
-//        } else {
-//            player.skipToBeginning()
+//    private func setSong() {
+//        if player.nowPlayingItem != nil {
 //            resetTime()
+//        } else {
+//            currentSecond = 0
+//            durationSecond = 1
 //        }
-//    }
-
-//    private func playPrev() {
-//        doPrev()
-//        doPlay()
-//    }
-
-//    private func doNext() {
-//        stop()
-//        player.skipToNextItem()
-//        setSong()
-//        resetTime()
-//    }
-
-//    private func playNext() {
-//        doNext()
-//        doPlay()
 //    }
 
     private func addObserver() {
@@ -230,33 +166,21 @@ class MusicPlayer: MediaPlayerProtocol {
     }
 
     private func nowPlayingItemDidChangeCallback() {
-        setSong()
-
-        if player.repeatMode == .none, player.indexOfNowPlayingItem == 0, !isFirst {
-            isPlaying = false
-        }
-
-        isFirst = false
-
-        let api = PlayerFlutterApiImpl()
-        api.onPlaybackSongChange(song: song!)
+//        setSong()
+        flutterApi.onPlaybackSongChange(song: getCurrentSong()!)
     }
 
     private func playbackStateDidChangeCallback() {
-        let api = PlayerFlutterApiImpl()
-
         switch player.playbackState {
         case MPMusicPlaybackState.stopped:
 
             break
         case MPMusicPlaybackState.playing:
-            isPlaying = true
-            api.onIsPlayingChange(isPlaying: isPlaying)
+            flutterApi.onIsPlayingChange(isPlaying: true)
 
             break
         case MPMusicPlaybackState.paused:
-            isPlaying = false
-            api.onIsPlayingChange(isPlaying: isPlaying)
+            flutterApi.onIsPlayingChange(isPlaying: false)
 
             break
         case MPMusicPlaybackState.interrupted:
