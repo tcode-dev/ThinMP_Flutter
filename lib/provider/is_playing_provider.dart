@@ -5,7 +5,7 @@ part 'is_playing_provider.g.dart';
 @riverpod
 class IsPlaying extends _$IsPlaying {
   @override
-  bool build() => false;
+  bool build() => true;
 
   void updateState(bool isPlaying) {
     state = isPlaying;
