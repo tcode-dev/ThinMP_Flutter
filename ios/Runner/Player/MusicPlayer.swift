@@ -72,19 +72,20 @@ class MusicPlayer: MediaPlayerProtocol {
     }
 
     func prev() {
-        if isPlaying {
-            playPrev()
+        if currentSecond <= PREV_SECOND {
+            player.skipToPreviousItem()
         } else {
-            doPrev()
+            player.skipToBeginning()
         }
+//        if isPlaying {
+//            playPrev()
+//        } else {
+//            doPrev()
+//        }
     }
 
     func next() {
-        if isPlaying {
-            playNext()
-        } else {
-            doNext()
-        }
+        player.skipToNextItem()
     }
 
     func seek(time: TimeInterval) {
@@ -163,34 +164,34 @@ class MusicPlayer: MediaPlayerProtocol {
         player.stop()
     }
 
-    private func doPrev() {
-        stop()
+//    private func doPrev() {
+//        stop()
+//
+//        if currentSecond <= PREV_SECOND {
+//            player.skipToPreviousItem()
+//            setSong()
+//        } else {
+//            player.skipToBeginning()
+//            resetTime()
+//        }
+//    }
 
-        if currentSecond <= PREV_SECOND {
-            player.skipToPreviousItem()
-            setSong()
-        } else {
-            player.skipToBeginning()
-            resetTime()
-        }
-    }
+//    private func playPrev() {
+//        doPrev()
+//        doPlay()
+//    }
 
-    private func playPrev() {
-        doPrev()
-        doPlay()
-    }
+//    private func doNext() {
+//        stop()
+//        player.skipToNextItem()
+//        setSong()
+//        resetTime()
+//    }
 
-    private func doNext() {
-        stop()
-        player.skipToNextItem()
-        setSong()
-        resetTime()
-    }
-
-    private func playNext() {
-        doNext()
-        doPlay()
-    }
+//    private func playNext() {
+//        doNext()
+//        doPlay()
+//    }
 
     private func addObserver() {
         NotificationCenter.default.addObserver(
@@ -243,10 +244,6 @@ class MusicPlayer: MediaPlayerProtocol {
 
     private func playbackStateDidChangeCallback() {
         let api = PlayerFlutterApiImpl()
-
-        if isPlaying, !isBackground {
-            return
-        }
 
         switch player.playbackState {
         case MPMusicPlaybackState.stopped:
