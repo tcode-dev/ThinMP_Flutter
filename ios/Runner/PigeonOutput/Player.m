@@ -37,12 +37,6 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 - (NSArray *)toList;
 @end
 
-@interface PlaybackState ()
-+ (PlaybackState *)fromList:(NSArray *)list;
-+ (nullable PlaybackState *)nullableFromList:(NSArray *)list;
-- (NSArray *)toList;
-@end
-
 @implementation Song2
 + (instancetype)makeWithId:(NSString *)id
     title:(NSString *)title
@@ -76,80 +70,9 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 }
 @end
 
-@implementation PlaybackState
-+ (instancetype)makeWithIsPlaying:(BOOL )isPlaying
-    song:(nullable Song2 *)song {
-  PlaybackState* pigeonResult = [[PlaybackState alloc] init];
-  pigeonResult.isPlaying = isPlaying;
-  pigeonResult.song = song;
-  return pigeonResult;
-}
-+ (PlaybackState *)fromList:(NSArray *)list {
-  PlaybackState *pigeonResult = [[PlaybackState alloc] init];
-  pigeonResult.isPlaying = [GetNullableObjectAtIndex(list, 0) boolValue];
-  pigeonResult.song = [Song2 nullableFromList:(GetNullableObjectAtIndex(list, 1))];
-  return pigeonResult;
-}
-+ (nullable PlaybackState *)nullableFromList:(NSArray *)list {
-  return (list) ? [PlaybackState fromList:list] : nil;
-}
-- (NSArray *)toList {
-  return @[
-    @(self.isPlaying),
-    (self.song ? [self.song toList] : [NSNull null]),
-  ];
-}
-@end
-
-@interface PlayerHostApiCodecReader : FlutterStandardReader
-@end
-@implementation PlayerHostApiCodecReader
-- (nullable id)readValueOfType:(UInt8)type {
-  switch (type) {
-    case 128: 
-      return [PlaybackState fromList:[self readValue]];
-    case 129: 
-      return [Song2 fromList:[self readValue]];
-    default:
-      return [super readValueOfType:type];
-  }
-}
-@end
-
-@interface PlayerHostApiCodecWriter : FlutterStandardWriter
-@end
-@implementation PlayerHostApiCodecWriter
-- (void)writeValue:(id)value {
-  if ([value isKindOfClass:[PlaybackState class]]) {
-    [self writeByte:128];
-    [self writeValue:[value toList]];
-  } else if ([value isKindOfClass:[Song2 class]]) {
-    [self writeByte:129];
-    [self writeValue:[value toList]];
-  } else {
-    [super writeValue:value];
-  }
-}
-@end
-
-@interface PlayerHostApiCodecReaderWriter : FlutterStandardReaderWriter
-@end
-@implementation PlayerHostApiCodecReaderWriter
-- (FlutterStandardWriter *)writerWithData:(NSMutableData *)data {
-  return [[PlayerHostApiCodecWriter alloc] initWithData:data];
-}
-- (FlutterStandardReader *)readerWithData:(NSData *)data {
-  return [[PlayerHostApiCodecReader alloc] initWithData:data];
-}
-@end
-
 NSObject<FlutterMessageCodec> *PlayerHostApiGetCodec(void) {
   static FlutterStandardMessageCodec *sSharedObject = nil;
-  static dispatch_once_t sPred = 0;
-  dispatch_once(&sPred, ^{
-    PlayerHostApiCodecReaderWriter *readerWriter = [[PlayerHostApiCodecReaderWriter alloc] init];
-    sSharedObject = [FlutterStandardMessageCodec codecWithReaderWriter:readerWriter];
-  });
+  sSharedObject = [FlutterStandardMessageCodec sharedInstance];
   return sSharedObject;
 }
 
@@ -236,23 +159,6 @@ void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Pla
         FlutterError *error;
         [api nextWithError:&error];
         callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
-    }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.getPlaybackState"
-        binaryMessenger:binaryMessenger
-        codec:PlayerHostApiGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(getPlaybackStateWithError:)], @"PlayerHostApi api (%@) doesn't respond to @selector(getPlaybackStateWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        PlaybackState *output = [api getPlaybackStateWithError:&error];
-        callback(wrapResult(output, error));
       }];
     } else {
       [channel setMessageHandler:nil];

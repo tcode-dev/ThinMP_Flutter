@@ -61,62 +61,6 @@ class Song2 {
   }
 }
 
-class PlaybackState {
-  PlaybackState({
-    required this.isPlaying,
-    this.song,
-  });
-
-  bool isPlaying;
-
-  Song2? song;
-
-  Object encode() {
-    return <Object?>[
-      isPlaying,
-      song?.encode(),
-    ];
-  }
-
-  static PlaybackState decode(Object result) {
-    result as List<Object?>;
-    return PlaybackState(
-      isPlaying: result[0]! as bool,
-      song: result[1] != null
-          ? Song2.decode(result[1]! as List<Object?>)
-          : null,
-    );
-  }
-}
-
-class _PlayerHostApiCodec extends StandardMessageCodec {
-  const _PlayerHostApiCodec();
-  @override
-  void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is PlaybackState) {
-      buffer.putUint8(128);
-      writeValue(buffer, value.encode());
-    } else if (value is Song2) {
-      buffer.putUint8(129);
-      writeValue(buffer, value.encode());
-    } else {
-      super.writeValue(buffer, value);
-    }
-  }
-
-  @override
-  Object? readValueOfType(int type, ReadBuffer buffer) {
-    switch (type) {
-      case 128: 
-        return PlaybackState.decode(readValue(buffer)!);
-      case 129: 
-        return Song2.decode(readValue(buffer)!);
-      default:
-        return super.readValueOfType(type, buffer);
-    }
-  }
-}
-
 class PlayerHostApi {
   /// Constructor for [PlayerHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
@@ -125,7 +69,7 @@ class PlayerHostApi {
       : __pigeon_binaryMessenger = binaryMessenger;
   final BinaryMessenger? __pigeon_binaryMessenger;
 
-  static const MessageCodec<Object?> pigeonChannelCodec = _PlayerHostApiCodec();
+  static const MessageCodec<Object?> pigeonChannelCodec = StandardMessageCodec();
 
   Future<void> startBySongs(int index) async {
     const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.PlayerHostApi.startBySongs';
@@ -234,33 +178,6 @@ class PlayerHostApi {
       );
     } else {
       return;
-    }
-  }
-
-  Future<PlaybackState> getPlaybackState() async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.PlayerHostApi.getPlaybackState';
-    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
-      __pigeon_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: __pigeon_binaryMessenger,
-    );
-    final List<Object?>? __pigeon_replyList =
-        await __pigeon_channel.send(null) as List<Object?>?;
-    if (__pigeon_replyList == null) {
-      throw _createConnectionError(__pigeon_channelName);
-    } else if (__pigeon_replyList.length > 1) {
-      throw PlatformException(
-        code: __pigeon_replyList[0]! as String,
-        message: __pigeon_replyList[1] as String?,
-        details: __pigeon_replyList[2],
-      );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
-    } else {
-      return (__pigeon_replyList[0] as PlaybackState?)!;
     }
   }
 }

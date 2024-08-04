@@ -11,7 +11,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class Song2;
-@class PlaybackState;
 
 @interface Song2 : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
@@ -26,15 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString * imageId;
 @end
 
-@interface PlaybackState : NSObject
-/// `init` unavailable to enforce nonnull fields, see the `make` class method.
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)makeWithIsPlaying:(BOOL )isPlaying
-    song:(nullable Song2 *)song;
-@property(nonatomic, assign) BOOL  isPlaying;
-@property(nonatomic, strong, nullable) Song2 * song;
-@end
-
 /// The codec used by PlayerHostApi.
 NSObject<FlutterMessageCodec> *PlayerHostApiGetCodec(void);
 
@@ -44,8 +34,6 @@ NSObject<FlutterMessageCodec> *PlayerHostApiGetCodec(void);
 - (void)pauseWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)prevWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)nextWithError:(FlutterError *_Nullable *_Nonnull)error;
-/// @return `nil` only when `error != nil`.
-- (nullable PlaybackState *)getPlaybackStateWithError:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<PlayerHostApi> *_Nullable api);

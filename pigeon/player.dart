@@ -9,13 +9,6 @@ class Song2 {
   Song2(this.id, this.title, this.artist, this.imageId);
 }
 
-class PlaybackState {
-  bool isPlaying;
-  Song2? song;
-
-  PlaybackState(this.song, this.isPlaying);
-}
-
 class Player {
   int index;
   Player(this.index);
@@ -39,7 +32,6 @@ abstract class PlayerHostApi {
   void pause();
   void prev();
   void next();
-  PlaybackState getPlaybackState();
 }
 
 @FlutterApi()

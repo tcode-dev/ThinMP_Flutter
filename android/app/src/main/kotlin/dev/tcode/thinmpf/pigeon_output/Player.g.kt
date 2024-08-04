@@ -72,62 +72,6 @@ data class Song2 (
     )
   }
 }
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class PlaybackState (
-  val isPlaying: Boolean,
-  val song: Song2? = null
-
-) {
-  companion object {
-    @Suppress("UNCHECKED_CAST")
-    fun fromList(list: List<Any?>): PlaybackState {
-      val isPlaying = list[0] as Boolean
-      val song: Song2? = (list[1] as List<Any?>?)?.let {
-        Song2.fromList(it)
-      }
-      return PlaybackState(isPlaying, song)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf<Any?>(
-      isPlaying,
-      song?.toList(),
-    )
-  }
-}
-@Suppress("UNCHECKED_CAST")
-private object PlayerHostApiCodec : StandardMessageCodec() {
-  override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
-    return when (type) {
-      128.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          PlaybackState.fromList(it)
-        }
-      }
-      129.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          Song2.fromList(it)
-        }
-      }
-      else -> super.readValueOfType(type, buffer)
-    }
-  }
-  override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
-    when (value) {
-      is PlaybackState -> {
-        stream.write(128)
-        writeValue(stream, value.toList())
-      }
-      is Song2 -> {
-        stream.write(129)
-        writeValue(stream, value.toList())
-      }
-      else -> super.writeValue(stream, value)
-    }
-  }
-}
-
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface PlayerHostApi {
   fun startBySongs(index: Long)
@@ -135,12 +79,11 @@ interface PlayerHostApi {
   fun pause()
   fun prev()
   fun next()
-  fun getPlaybackState(): PlaybackState
 
   companion object {
     /** The codec used by PlayerHostApi. */
     val codec: MessageCodec<Any?> by lazy {
-      PlayerHostApiCodec
+      StandardMessageCodec()
     }
     /** Sets up an instance of `PlayerHostApi` to handle messages through the `binaryMessenger`. */
     @Suppress("UNCHECKED_CAST")
@@ -223,22 +166,6 @@ interface PlayerHostApi {
             try {
               api.next()
               wrapped = listOf<Any?>(null)
-            } catch (exception: Throwable) {
-              wrapped = wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.getPlaybackState", codec)
-        if (api != null) {
-          channel.setMessageHandler { _, reply ->
-            var wrapped: List<Any?>
-            try {
-              wrapped = listOf<Any?>(api.getPlaybackState())
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }

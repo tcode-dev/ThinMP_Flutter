@@ -31,13 +31,4 @@ class PlayerHostApiImpl: PlayerHostApi {
     func next() throws {
         MusicPlayer.shared.next()
     }
-
-    func getPlaybackState() throws -> PlaybackState {
-        if let song = MusicPlayer.shared.getCurrentSong() {
-            let song2 = Song2(id: song.id, title: song.primaryText, artist: song.secondaryText, imageId: song.id)
-            return PlaybackState(isPlaying: false, song: song2)
-        } else {
-            return PlaybackState(isPlaying: false, song: nil)
-        }
-    }
 }
