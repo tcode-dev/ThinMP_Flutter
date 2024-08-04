@@ -108,7 +108,7 @@ class ArtworkHostApiSetup {
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol PlayerHostApi {
-  func startBySongs(index: Int64) throws
+  func startAllSongs(index: Int64) throws
   func play() throws
   func pause() throws
   func prev() throws
@@ -120,20 +120,20 @@ class PlayerHostApiSetup {
   /// The codec used by PlayerHostApi.
   /// Sets up an instance of `PlayerHostApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: PlayerHostApi?) {
-    let startBySongsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.startBySongs", binaryMessenger: binaryMessenger)
+    let startAllSongsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.startAllSongs", binaryMessenger: binaryMessenger)
     if let api = api {
-      startBySongsChannel.setMessageHandler { message, reply in
+      startAllSongsChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let indexArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
         do {
-          try api.startBySongs(index: indexArg)
+          try api.startAllSongs(index: indexArg)
           reply(wrapResult(nil))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      startBySongsChannel.setMessageHandler(nil)
+      startAllSongsChannel.setMessageHandler(nil)
     }
     let playChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.play", binaryMessenger: binaryMessenger)
     if let api = api {
@@ -227,7 +227,7 @@ class SongHostApiCodec: FlutterStandardMessageCodec {
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol SongHostApi {
-  func findAll() throws -> [Song]
+  func getAllSongs() throws -> [Song]
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -236,18 +236,18 @@ class SongHostApiSetup {
   static var codec: FlutterStandardMessageCodec { SongHostApiCodec.shared }
   /// Sets up an instance of `SongHostApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: SongHostApi?) {
-    let findAllChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.SongHostApi.findAll", binaryMessenger: binaryMessenger, codec: codec)
+    let getAllSongsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.SongHostApi.getAllSongs", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      findAllChannel.setMessageHandler { _, reply in
+      getAllSongsChannel.setMessageHandler { _, reply in
         do {
-          let result = try api.findAll()
+          let result = try api.getAllSongs()
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      findAllChannel.setMessageHandler(nil)
+      getAllSongsChannel.setMessageHandler(nil)
     }
   }
 }

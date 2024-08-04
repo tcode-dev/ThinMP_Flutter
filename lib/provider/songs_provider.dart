@@ -7,5 +7,5 @@ part 'songs_provider.g.dart';
 Future<List<Song?>> songs(SongsRef ref) async {
   final api = SongHostApi();
 
-  return await api.findAll();
+  return await api.getAllSongs();
 }

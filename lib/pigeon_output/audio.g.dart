@@ -105,8 +105,8 @@ class PlayerHostApi {
 
   static const MessageCodec<Object?> pigeonChannelCodec = StandardMessageCodec();
 
-  Future<void> startBySongs(int index) async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.PlayerHostApi.startBySongs';
+  Future<void> startAllSongs(int index) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.PlayerHostApi.startAllSongs';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
@@ -249,8 +249,8 @@ class SongHostApi {
 
   static const MessageCodec<Object?> pigeonChannelCodec = _SongHostApiCodec();
 
-  Future<List<Song?>> findAll() async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.SongHostApi.findAll';
+  Future<List<Song?>> getAllSongs() async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.SongHostApi.getAllSongs';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,

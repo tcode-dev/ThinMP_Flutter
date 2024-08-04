@@ -8,7 +8,7 @@ import dev.tcode.thinmpf.repository.SongRepository
 class PlayerHostApiImpl(private val context: Context): PlayerHostApi {
     private var player = MusicPlayer(context)
 
-    override fun startBySongs(index: Long) {
+    override fun startAllSongs(index: Long) {
         val repository = SongRepository(context)
         val songs = repository.findAll()
 

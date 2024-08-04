@@ -29,7 +29,10 @@ abstract class ArtworkHostApi {
 
 @HostApi()
 abstract class PlayerHostApi {
-  void startBySongs(int index);
+  // void start(int index, List<String> ids);
+  void startAllSongs(int index);
+  // void startAlbumSongs(int index, String albumId);
+  // void startArtistSongs(int index, String artistId);
   void play();
   void pause();
   void prev();
@@ -38,7 +41,10 @@ abstract class PlayerHostApi {
 
 @HostApi()
 abstract class SongHostApi {
-  List<Song> findAll();
+  List<Song> getAllSongs();
+  // List<Song> getSongsByIds(List<String> ids);
+  // List<Song> getSongsByAlbumId(String albumId);
+  // List<Song> getSongsByArtistId(String artistId);
 }
 
 /// FlutterApi

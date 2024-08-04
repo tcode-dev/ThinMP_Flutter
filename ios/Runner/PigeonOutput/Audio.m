@@ -107,16 +107,16 @@ void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Pla
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.startBySongs"
+        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.startAllSongs"
         binaryMessenger:binaryMessenger
         codec:PlayerHostApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(startBySongsIndex:error:)], @"PlayerHostApi api (%@) doesn't respond to @selector(startBySongsIndex:error:)", api);
+      NSCAssert([api respondsToSelector:@selector(startAllSongsIndex:error:)], @"PlayerHostApi api (%@) doesn't respond to @selector(startAllSongsIndex:error:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         NSArray *args = message;
         NSInteger arg_index = [GetNullableObjectAtIndex(args, 0) integerValue];
         FlutterError *error;
-        [api startBySongsIndex:arg_index error:&error];
+        [api startAllSongsIndex:arg_index error:&error];
         callback(wrapResult(nil, error));
       }];
     } else {
@@ -243,14 +243,14 @@ void SetUpSongHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<SongH
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.thinmpf.SongHostApi.findAll"
+        initWithName:@"dev.flutter.pigeon.thinmpf.SongHostApi.getAllSongs"
         binaryMessenger:binaryMessenger
         codec:SongHostApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(findAllWithError:)], @"SongHostApi api (%@) doesn't respond to @selector(findAllWithError:)", api);
+      NSCAssert([api respondsToSelector:@selector(getAllSongsWithError:)], @"SongHostApi api (%@) doesn't respond to @selector(getAllSongsWithError:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         FlutterError *error;
-        NSArray<Song *> *output = [api findAllWithError:&error];
+        NSArray<Song *> *output = [api getAllSongsWithError:&error];
         callback(wrapResult(output, error));
       }];
     } else {

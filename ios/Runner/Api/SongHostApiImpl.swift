@@ -8,7 +8,7 @@
 import Foundation
 
 class SongHostApiImpl: SongHostApi {
-    func findAll() throws -> [Song] {
+    func getAllSongs() throws -> [Song] {
         let repository = SongRepository()
         let songs = repository.findAll()
 

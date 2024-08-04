@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class PlayerHostApiImpl: PlayerHostApi {
-    func startBySongs(index: Int64) throws {
+    func startAllSongs(index: Int64) throws {
         let repository = SongRepository()
         let songs = repository.findAll()
 

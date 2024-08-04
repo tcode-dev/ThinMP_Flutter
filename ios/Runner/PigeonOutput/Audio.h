@@ -39,7 +39,7 @@ extern void SetUpArtworkHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSOb
 NSObject<FlutterMessageCodec> *PlayerHostApiGetCodec(void);
 
 @protocol PlayerHostApi
-- (void)startBySongsIndex:(NSInteger)index error:(FlutterError *_Nullable *_Nonnull)error;
+- (void)startAllSongsIndex:(NSInteger)index error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)playWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)pauseWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)prevWithError:(FlutterError *_Nullable *_Nonnull)error;
@@ -53,7 +53,7 @@ NSObject<FlutterMessageCodec> *SongHostApiGetCodec(void);
 
 @protocol SongHostApi
 /// @return `nil` only when `error != nil`.
-- (nullable NSArray<Song *> *)findAllWithError:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable NSArray<Song *> *)getAllSongsWithError:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void SetUpSongHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<SongHostApi> *_Nullable api);

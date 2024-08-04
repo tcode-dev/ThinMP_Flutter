@@ -24,7 +24,7 @@ class SongsPageWidget extends ConsumerWidget {
 
               return GestureDetector(
                 onTap: () {
-                  player.startBySongs(index);
+                  player.startAllSongs(index);
                 },
                 child: MediaRowWidget(song: song),
               );

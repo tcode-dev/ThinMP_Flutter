@@ -114,7 +114,7 @@ interface ArtworkHostApi {
 }
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface PlayerHostApi {
-  fun startBySongs(index: Long)
+  fun startAllSongs(index: Long)
   fun play()
   fun pause()
   fun prev()
@@ -129,14 +129,14 @@ interface PlayerHostApi {
     @Suppress("UNCHECKED_CAST")
     fun setUp(binaryMessenger: BinaryMessenger, api: PlayerHostApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.startBySongs", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.startAllSongs", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
             val indexArg = args[0].let { if (it is Int) it.toLong() else it as Long }
             var wrapped: List<Any?>
             try {
-              api.startBySongs(indexArg)
+              api.startAllSongs(indexArg)
               wrapped = listOf<Any?>(null)
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
@@ -243,7 +243,7 @@ private object SongHostApiCodec : StandardMessageCodec() {
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface SongHostApi {
-  fun findAll(): List<Song>
+  fun getAllSongs(): List<Song>
 
   companion object {
     /** The codec used by SongHostApi. */
@@ -254,12 +254,12 @@ interface SongHostApi {
     @Suppress("UNCHECKED_CAST")
     fun setUp(binaryMessenger: BinaryMessenger, api: SongHostApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.SongHostApi.findAll", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.SongHostApi.getAllSongs", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             var wrapped: List<Any?>
             try {
-              wrapped = listOf<Any?>(api.findAll())
+              wrapped = listOf<Any?>(api.getAllSongs())
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }
