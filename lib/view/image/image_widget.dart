@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:thinmpf/pigeon_output/artwork.g.dart';
+import 'package:thinmpf/pigeon_output/audio.g.dart';
 
 final api = ArtworkHostApi();
 

@@ -1,14 +1,14 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:thinmpf/pigeon_output/player.g.dart';
+import 'package:thinmpf/pigeon_output/audio.g.dart';
 
 part 'playback_song_provider.g.dart';
 
 @riverpod
 class PlaybackSong extends _$PlaybackSong {
   @override
-  Song2? build() => null;
+  Song? build() => null;
 
-  void updateState(Song2 song) {
+  void updateState(Song song) {
     state = song;
   }
 }

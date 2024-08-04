@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thinmpf/pigeon_output/song.g.dart';
+import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 
 class MediaRowWidget extends StatelessWidget {

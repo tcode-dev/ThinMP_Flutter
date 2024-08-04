@@ -16,17 +16,13 @@
 		52212B322C2A37E0000ABB62 /* MediaPlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52212B2E2C2A37E0000ABB62 /* MediaPlayerProtocol.swift */; };
 		52212B332C2A37E0000ABB62 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52212B302C2A37E0000ABB62 /* MusicPlayer.swift */; };
 		52212B352C2A3B8E000ABB62 /* PlayerHostApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52212B342C2A3B8E000ABB62 /* PlayerHostApiImpl.swift */; };
-		522AF0CD2C2B069C00177683 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 522AF0C82C2B069C00177683 /* Player.m */; };
-		522AF0D02C2B069C00177683 /* Player.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522AF0CC2C2B069C00177683 /* Player.g.swift */; };
 		52357F7F2B80F71C00133631 /* SongRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52357F7E2B80F71C00133631 /* SongRepository.swift */; };
 		52384F922C32205C00013C69 /* ArtworkHostApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52384F912C32205C00013C69 /* ArtworkHostApiImpl.swift */; };
-		52384F962C3220F300013C69 /* Artwork.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52384F942C3220F300013C69 /* Artwork.g.swift */; };
-		52384F972C3220F300013C69 /* Artwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 52384F952C3220F300013C69 /* Artwork.m */; };
 		5242234E2C56087700B03E00 /* PlayerFlutterApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242234D2C56087700B03E00 /* PlayerFlutterApiImpl.swift */; };
 		527307212B61E42B00E65B2F /* SongHostApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527307202B61E42B00E65B2F /* SongHostApiImpl.swift */; };
-		52957A1F2B6481560019D34C /* Song.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52957A1D2B6481560019D34C /* Song.g.swift */; };
-		52957A202B6481560019D34C /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 52957A1E2B6481560019D34C /* Song.m */; };
 		52E135892B823CE1006C91B1 /* SongModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E135882B823CE1006C91B1 /* SongModel.swift */; };
+		52F5A0C12C5F077F00F4446C /* Audio.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F5A0BE2C5F077F00F4446C /* Audio.g.swift */; };
+		52F5A0C22C5F077F00F4446C /* Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F5A0C02C5F077F00F4446C /* Audio.m */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
@@ -69,20 +65,14 @@
 		52212B2E2C2A37E0000ABB62 /* MediaPlayerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPlayerProtocol.swift; sourceTree = "<group>"; };
 		52212B302C2A37E0000ABB62 /* MusicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
 		52212B342C2A3B8E000ABB62 /* PlayerHostApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHostApiImpl.swift; sourceTree = "<group>"; };
-		522AF0C72C2B069C00177683 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
-		522AF0C82C2B069C00177683 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
-		522AF0CC2C2B069C00177683 /* Player.g.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.g.swift; sourceTree = "<group>"; };
 		52357F7E2B80F71C00133631 /* SongRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongRepository.swift; sourceTree = "<group>"; };
 		52384F912C32205C00013C69 /* ArtworkHostApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkHostApiImpl.swift; sourceTree = "<group>"; };
-		52384F932C3220F300013C69 /* Artwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Artwork.h; sourceTree = "<group>"; };
-		52384F942C3220F300013C69 /* Artwork.g.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Artwork.g.swift; sourceTree = "<group>"; };
-		52384F952C3220F300013C69 /* Artwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Artwork.m; sourceTree = "<group>"; };
 		5242234D2C56087700B03E00 /* PlayerFlutterApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFlutterApiImpl.swift; sourceTree = "<group>"; };
 		527307202B61E42B00E65B2F /* SongHostApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongHostApiImpl.swift; sourceTree = "<group>"; };
-		52957A1C2B6481560019D34C /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
-		52957A1D2B6481560019D34C /* Song.g.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.g.swift; sourceTree = "<group>"; };
-		52957A1E2B6481560019D34C /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		52E135882B823CE1006C91B1 /* SongModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongModel.swift; sourceTree = "<group>"; };
+		52F5A0BE2C5F077F00F4446C /* Audio.g.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.g.swift; sourceTree = "<group>"; };
+		52F5A0BF2C5F077F00F4446C /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
+		52F5A0C02C5F077F00F4446C /* Audio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Audio.m; sourceTree = "<group>"; };
 		63C54B68ACAC3F69ABCA07E6 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		6762064C777D996CFCDFA208 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -175,15 +165,9 @@
 		52957A182B647FF50019D34C /* PigeonOutput */ = {
 			isa = PBXGroup;
 			children = (
-				52384F942C3220F300013C69 /* Artwork.g.swift */,
-				52384F932C3220F300013C69 /* Artwork.h */,
-				52384F952C3220F300013C69 /* Artwork.m */,
-				522AF0CC2C2B069C00177683 /* Player.g.swift */,
-				522AF0C72C2B069C00177683 /* Player.h */,
-				522AF0C82C2B069C00177683 /* Player.m */,
-				52957A1D2B6481560019D34C /* Song.g.swift */,
-				52957A1C2B6481560019D34C /* Song.h */,
-				52957A1E2B6481560019D34C /* Song.m */,
+				52F5A0BE2C5F077F00F4446C /* Audio.g.swift */,
+				52F5A0BF2C5F077F00F4446C /* Audio.h */,
+				52F5A0C02C5F077F00F4446C /* Audio.m */,
 			);
 			path = PigeonOutput;
 			sourceTree = "<group>";
@@ -483,23 +467,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52957A202B6481560019D34C /* Song.m in Sources */,
-				52384F972C3220F300013C69 /* Artwork.m in Sources */,
 				527307212B61E42B00E65B2F /* SongHostApiImpl.swift in Sources */,
 				52212B332C2A37E0000ABB62 /* MusicPlayer.swift in Sources */,
 				52357F7F2B80F71C00133631 /* SongRepository.swift in Sources */,
 				52212B322C2A37E0000ABB62 /* MediaPlayerProtocol.swift in Sources */,
 				52E135892B823CE1006C91B1 /* SongModel.swift in Sources */,
+				52F5A0C22C5F077F00F4446C /* Audio.m in Sources */,
 				52384F922C32205C00013C69 /* ArtworkHostApiImpl.swift in Sources */,
-				522AF0CD2C2B069C00177683 /* Player.m in Sources */,
+				52F5A0C12C5F077F00F4446C /* Audio.g.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
-				522AF0D02C2B069C00177683 /* Player.g.swift in Sources */,
 				520B9A742C2B85510057A02B /* SongId.swift in Sources */,
 				5242234E2C56087700B03E00 /* PlayerFlutterApiImpl.swift in Sources */,
 				52212B352C2A3B8E000ABB62 /* PlayerHostApiImpl.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
-				52384F962C3220F300013C69 /* Artwork.g.swift in Sources */,
-				52957A1F2B6481560019D34C /* Song.g.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

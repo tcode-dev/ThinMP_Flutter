@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:thinmpf/pigeon_output/song.g.dart';
+import 'package:thinmpf/pigeon_output/audio.g.dart';
 
 part 'songs_provider.g.dart';
 

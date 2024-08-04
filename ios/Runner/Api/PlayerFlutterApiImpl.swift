@@ -19,7 +19,7 @@ class PlayerFlutterApiImpl {
     }
 
     func onPlaybackSongChange(song: SongModel, completion: @escaping (Result<Void, FlutterError>) -> Void = { _ in }) {
-        let playbackSong = Song2(id: song.id, title: song.primaryText, artist: song.secondaryText, imageId: song.id)
+        let playbackSong = Song(id: song.id, title: song.primaryText, artist: song.secondaryText, imageId: song.id)
 
         PlayerFlutterApiImpl.api.onPlaybackSongChange(song: playbackSong, completion: completion)
     }

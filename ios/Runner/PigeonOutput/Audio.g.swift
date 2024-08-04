@@ -46,19 +46,19 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct Song2 {
+struct Song {
   var id: String
   var title: String
   var artist: String
   var imageId: String
 
-  static func fromList(_ list: [Any?]) -> Song2? {
+  static func fromList(_ list: [Any?]) -> Song? {
     let id = list[0] as! String
     let title = list[1] as! String
     let artist = list[2] as! String
     let imageId = list[3] as! String
 
-    return Song2(
+    return Song(
       id: id,
       title: title,
       artist: artist,
@@ -72,6 +72,38 @@ struct Song2 {
       artist,
       imageId,
     ]
+  }
+}
+
+/// HostApi
+///
+/// Generated protocol from Pigeon that represents a handler of messages from Flutter.
+protocol ArtworkHostApi {
+  func queryArtwork(id: String, completion: @escaping (Result<FlutterStandardTypedData?, Error>) -> Void)
+}
+
+/// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
+class ArtworkHostApiSetup {
+  /// The codec used by ArtworkHostApi.
+  /// Sets up an instance of `ArtworkHostApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: ArtworkHostApi?) {
+    let queryArtworkChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.ArtworkHostApi.queryArtwork", binaryMessenger: binaryMessenger)
+    if let api = api {
+      queryArtworkChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let idArg = args[0] as! String
+        api.queryArtwork(id: idArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      queryArtworkChannel.setMessageHandler(nil)
+    }
   }
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
@@ -157,11 +189,73 @@ class PlayerHostApiSetup {
     }
   }
 }
+private class SongHostApiCodecReader: FlutterStandardReader {
+  override func readValue(ofType type: UInt8) -> Any? {
+    switch type {
+    case 128:
+      return Song.fromList(self.readValue() as! [Any?])
+    default:
+      return super.readValue(ofType: type)
+    }
+  }
+}
+
+private class SongHostApiCodecWriter: FlutterStandardWriter {
+  override func writeValue(_ value: Any) {
+    if let value = value as? Song {
+      super.writeByte(128)
+      super.writeValue(value.toList())
+    } else {
+      super.writeValue(value)
+    }
+  }
+}
+
+private class SongHostApiCodecReaderWriter: FlutterStandardReaderWriter {
+  override func reader(with data: Data) -> FlutterStandardReader {
+    return SongHostApiCodecReader(data: data)
+  }
+
+  override func writer(with data: NSMutableData) -> FlutterStandardWriter {
+    return SongHostApiCodecWriter(data: data)
+  }
+}
+
+class SongHostApiCodec: FlutterStandardMessageCodec {
+  static let shared = SongHostApiCodec(readerWriter: SongHostApiCodecReaderWriter())
+}
+
+/// Generated protocol from Pigeon that represents a handler of messages from Flutter.
+protocol SongHostApi {
+  func findAll() throws -> [Song]
+}
+
+/// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
+class SongHostApiSetup {
+  /// The codec used by SongHostApi.
+  static var codec: FlutterStandardMessageCodec { SongHostApiCodec.shared }
+  /// Sets up an instance of `SongHostApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: SongHostApi?) {
+    let findAllChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.SongHostApi.findAll", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      findAllChannel.setMessageHandler { _, reply in
+        do {
+          let result = try api.findAll()
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      findAllChannel.setMessageHandler(nil)
+    }
+  }
+}
 private class PlayerFlutterApiCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
     case 128:
-      return Song2.fromList(self.readValue() as! [Any?])
+      return Song.fromList(self.readValue() as! [Any?])
     default:
       return super.readValue(ofType: type)
     }
@@ -170,7 +264,7 @@ private class PlayerFlutterApiCodecReader: FlutterStandardReader {
 
 private class PlayerFlutterApiCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
-    if let value = value as? Song2 {
+    if let value = value as? Song {
       super.writeByte(128)
       super.writeValue(value.toList())
     } else {
@@ -193,10 +287,12 @@ class PlayerFlutterApiCodec: FlutterStandardMessageCodec {
   static let shared = PlayerFlutterApiCodec(readerWriter: PlayerFlutterApiCodecReaderWriter())
 }
 
+/// FlutterApi
+///
 /// Generated protocol from Pigeon that represents Flutter messages that can be called from Swift.
 protocol PlayerFlutterApiProtocol {
   func onIsPlayingChange(isPlaying isPlayingArg: Bool, completion: @escaping (Result<Void, FlutterError>) -> Void)
-  func onPlaybackSongChange(song songArg: Song2, completion: @escaping (Result<Void, FlutterError>) -> Void)
+  func onPlaybackSongChange(song songArg: Song, completion: @escaping (Result<Void, FlutterError>) -> Void)
 }
 class PlayerFlutterApi: PlayerFlutterApiProtocol {
   private let binaryMessenger: FlutterBinaryMessenger
@@ -224,7 +320,7 @@ class PlayerFlutterApi: PlayerFlutterApiProtocol {
       }
     }
   }
-  func onPlaybackSongChange(song songArg: Song2, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+  func onPlaybackSongChange(song songArg: Song, completion: @escaping (Result<Void, FlutterError>) -> Void) {
     let channelName: String = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange"
     let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger, codec: codec)
     channel.sendMessage([songArg] as [Any?]) { response in

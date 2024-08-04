@@ -1,7 +1,7 @@
 package dev.tcode.thinmpf.api
 
 import PlayerFlutterApi
-import Song2
+import Song
 import dev.tcode.thinmpf.model.SongModel
 import io.flutter.plugin.common.BinaryMessenger
 
@@ -18,7 +18,7 @@ class PlayerFlutterApiImpl {
     }
 
     fun onPlaybackSongChange(song: SongModel) {
-        val playbackSong = Song2(song.id, song.name, song.artistName, song.albumId)
+        val playbackSong = Song(song.id, song.name, song.artistName, song.albumId)
 
         api.onPlaybackSongChange(playbackSong) { }
     }

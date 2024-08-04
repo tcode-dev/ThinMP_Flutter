@@ -10,9 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class Song2;
+@class Song;
 
-@interface Song2 : NSObject
+@interface Song : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithId:(NSString *)id
@@ -24,6 +24,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString * artist;
 @property(nonatomic, copy) NSString * imageId;
 @end
+
+/// The codec used by ArtworkHostApi.
+NSObject<FlutterMessageCodec> *ArtworkHostApiGetCodec(void);
+
+/// HostApi
+@protocol ArtworkHostApi
+- (void)queryArtworkId:(NSString *)id completion:(void (^)(FlutterStandardTypedData *_Nullable, FlutterError *_Nullable))completion;
+@end
+
+extern void SetUpArtworkHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<ArtworkHostApi> *_Nullable api);
 
 /// The codec used by PlayerHostApi.
 NSObject<FlutterMessageCodec> *PlayerHostApiGetCodec(void);
@@ -38,13 +48,24 @@ NSObject<FlutterMessageCodec> *PlayerHostApiGetCodec(void);
 
 extern void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<PlayerHostApi> *_Nullable api);
 
+/// The codec used by SongHostApi.
+NSObject<FlutterMessageCodec> *SongHostApiGetCodec(void);
+
+@protocol SongHostApi
+/// @return `nil` only when `error != nil`.
+- (nullable NSArray<Song *> *)findAllWithError:(FlutterError *_Nullable *_Nonnull)error;
+@end
+
+extern void SetUpSongHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<SongHostApi> *_Nullable api);
+
 /// The codec used by PlayerFlutterApi.
 NSObject<FlutterMessageCodec> *PlayerFlutterApiGetCodec(void);
 
+/// FlutterApi
 @interface PlayerFlutterApi : NSObject
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger;
 - (void)onIsPlayingChangeIsPlaying:(BOOL)isPlaying completion:(void (^)(FlutterError *_Nullable))completion;
-- (void)onPlaybackSongChangeSong:(Song2 *)song completion:(void (^)(FlutterError *_Nullable))completion;
+- (void)onPlaybackSongChangeSong:(Song *)song completion:(void (^)(FlutterError *_Nullable))completion;
 @end
 
 NS_ASSUME_NONNULL_END

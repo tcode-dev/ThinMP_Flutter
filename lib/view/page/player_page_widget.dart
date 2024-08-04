@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/pigeon_output/player.g.dart';
+import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/playback_song_provider.dart';
 
 class PlayerPageWidget extends ConsumerStatefulWidget {

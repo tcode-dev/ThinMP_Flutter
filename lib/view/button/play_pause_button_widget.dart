@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
-import 'package:thinmpf/pigeon_output/player.g.dart';
+import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/is_playing_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 

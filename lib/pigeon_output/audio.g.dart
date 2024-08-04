@@ -25,8 +25,8 @@ List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty
   return <Object?>[error.code, error.message, error.details];
 }
 
-class Song2 {
-  Song2({
+class Song {
+  Song({
     required this.id,
     required this.title,
     required this.artist,
@@ -50,14 +50,48 @@ class Song2 {
     ];
   }
 
-  static Song2 decode(Object result) {
+  static Song decode(Object result) {
     result as List<Object?>;
-    return Song2(
+    return Song(
       id: result[0]! as String,
       title: result[1]! as String,
       artist: result[2]! as String,
       imageId: result[3]! as String,
     );
+  }
+}
+
+/// HostApi
+class ArtworkHostApi {
+  /// Constructor for [ArtworkHostApi].  The [binaryMessenger] named argument is
+  /// available for dependency injection.  If it is left null, the default
+  /// BinaryMessenger will be used which routes to the host platform.
+  ArtworkHostApi({BinaryMessenger? binaryMessenger})
+      : __pigeon_binaryMessenger = binaryMessenger;
+  final BinaryMessenger? __pigeon_binaryMessenger;
+
+  static const MessageCodec<Object?> pigeonChannelCodec = StandardMessageCodec();
+
+  Future<Uint8List?> queryArtwork(String id) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.ArtworkHostApi.queryArtwork';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[id]) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else {
+      return (__pigeon_replyList[0] as Uint8List?);
+    }
   }
 }
 
@@ -182,11 +216,11 @@ class PlayerHostApi {
   }
 }
 
-class _PlayerFlutterApiCodec extends StandardMessageCodec {
-  const _PlayerFlutterApiCodec();
+class _SongHostApiCodec extends StandardMessageCodec {
+  const _SongHostApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is Song2) {
+    if (value is Song) {
       buffer.putUint8(128);
       writeValue(buffer, value.encode());
     } else {
@@ -198,19 +232,81 @@ class _PlayerFlutterApiCodec extends StandardMessageCodec {
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
       case 128: 
-        return Song2.decode(readValue(buffer)!);
+        return Song.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
     }
   }
 }
 
+class SongHostApi {
+  /// Constructor for [SongHostApi].  The [binaryMessenger] named argument is
+  /// available for dependency injection.  If it is left null, the default
+  /// BinaryMessenger will be used which routes to the host platform.
+  SongHostApi({BinaryMessenger? binaryMessenger})
+      : __pigeon_binaryMessenger = binaryMessenger;
+  final BinaryMessenger? __pigeon_binaryMessenger;
+
+  static const MessageCodec<Object?> pigeonChannelCodec = _SongHostApiCodec();
+
+  Future<List<Song?>> findAll() async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.SongHostApi.findAll';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(null) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<Song?>();
+    }
+  }
+}
+
+class _PlayerFlutterApiCodec extends StandardMessageCodec {
+  const _PlayerFlutterApiCodec();
+  @override
+  void writeValue(WriteBuffer buffer, Object? value) {
+    if (value is Song) {
+      buffer.putUint8(128);
+      writeValue(buffer, value.encode());
+    } else {
+      super.writeValue(buffer, value);
+    }
+  }
+
+  @override
+  Object? readValueOfType(int type, ReadBuffer buffer) {
+    switch (type) {
+      case 128: 
+        return Song.decode(readValue(buffer)!);
+      default:
+        return super.readValueOfType(type, buffer);
+    }
+  }
+}
+
+/// FlutterApi
 abstract class PlayerFlutterApi {
   static const MessageCodec<Object?> pigeonChannelCodec = _PlayerFlutterApiCodec();
 
   void onIsPlayingChange(bool isPlaying);
 
-  void onPlaybackSongChange(Song2 song);
+  void onPlaybackSongChange(Song song);
 
   static void setup(PlayerFlutterApi? api, {BinaryMessenger? binaryMessenger}) {
     {
@@ -249,9 +345,9 @@ abstract class PlayerFlutterApi {
           assert(message != null,
           'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange was null.');
           final List<Object?> args = (message as List<Object?>?)!;
-          final Song2? arg_song = (args[0] as Song2?);
+          final Song? arg_song = (args[0] as Song?);
           assert(arg_song != null,
-              'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange was null, expected non-null Song2.');
+              'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange was null, expected non-null Song.');
           try {
             api.onPlaybackSongChange(arg_song!);
             return wrapResponse(empty: true);
