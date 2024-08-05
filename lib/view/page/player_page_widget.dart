@@ -1,9 +1,11 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/playback_song_provider.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
+import 'package:thinmpf/view/text/text_widget.dart';
 
 class PlayerPageWidget extends ConsumerStatefulWidget {
   const PlayerPageWidget({super.key});
@@ -42,6 +44,16 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
             top: screenSize.width * 0.15,
             left: screenSize.width * 0.15,
             child: ImageWidget(id: playbackSong.imageId, size: screenSize.width * 0.7),
+          ),
+          Positioned(
+            top: screenSize.height * 0.48,
+            width: screenSize.width,
+            child: TextWidget(text: playbackSong.title, textAlign: TextAlign.center),
+          ),
+          Positioned(
+            top: screenSize.height * 0.51,
+            width: screenSize.width,
+            child: TextWidget(text: playbackSong.artist, textAlign: TextAlign.center),
           ),
         ],
       ),
