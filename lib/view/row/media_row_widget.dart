@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
-import 'package:thinmpf/view/image/image_widget.dart';
+import 'package:thinmpf/view/image/square_image_widget.dart';
 
 class MediaRowWidget extends StatelessWidget {
   final Song song;
@@ -26,7 +27,7 @@ class MediaRowWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(width: 40, height: 40, margin: const EdgeInsets.only(right: 10), child: ImageWidget(id: song.imageId, size: 40)),
+          Container(margin: const EdgeInsets.only(right: 10), child: SquareImageWidget(id: song.imageId, size: styleConstant[StyleType.image][SizeConstant.small])),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
