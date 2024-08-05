@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/view/image/square_image_widget.dart';
+import 'package:thinmpf/view/text/text_widget.dart';
 
 class MediaRowWidget extends StatelessWidget {
   final Song song;
@@ -31,7 +32,7 @@ class MediaRowWidget extends StatelessWidget {
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Text(song.title, overflow: TextOverflow.ellipsis), Text(song.artist, overflow: TextOverflow.ellipsis)],
+              children: [TextWidget(text: song.title), TextWidget(text: song.artist)],
             ),
           ),
         ],
