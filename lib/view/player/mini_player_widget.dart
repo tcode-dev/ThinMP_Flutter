@@ -5,7 +5,7 @@ import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/playback_song_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 import 'package:thinmpf/view/button/play_pause_button_widget.dart';
-import 'package:thinmpf/view/image/image_widget.dart';
+import 'package:thinmpf/view/image/square_image_widget.dart';
 import 'package:thinmpf/view/page/player_page_widget.dart';
 
 class MiniPlayerWidget extends ConsumerStatefulWidget {
@@ -50,7 +50,7 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
         },
         child: Row(
           children: [
-            Container(margin: const EdgeInsets.only(right: 10), child: ImageWidget(id: playbackSong.imageId, size: 40)),
+            Container(margin: const EdgeInsets.only(right: 10), child: SquareImageWidget(id: playbackSong.imageId, size: styleConstant[StyleType.image][SizeConstant.small])),
             Expanded(child: Text(playbackSong.title, overflow: TextOverflow.ellipsis)),
             PlayPauseButtonWidget(size: SizeConstant.small),
             ButtonWidget(icon: Icons.skip_next_rounded, size: SizeConstant.small, callback: () => player.next()),

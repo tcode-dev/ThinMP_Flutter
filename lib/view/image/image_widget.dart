@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
@@ -42,6 +41,7 @@ class _ImageWidgetState extends State<ImageWidget> {
           'images/song_dark.png',
           width: widget.size,
           height: widget.size,
+          fit: BoxFit.cover,
         );
       },
     );
