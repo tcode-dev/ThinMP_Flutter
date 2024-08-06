@@ -191,6 +191,40 @@ void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Pla
       [channel setMessageHandler:nil];
     }
   }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.getDuration"
+        binaryMessenger:binaryMessenger
+        codec:PlayerHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(getDurationWithError:)], @"PlayerHostApi api (%@) doesn't respond to @selector(getDurationWithError:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        FlutterError *error;
+        NSNumber *output = [api getDurationWithError:&error];
+        callback(wrapResult(output, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.getCurrentTime"
+        binaryMessenger:binaryMessenger
+        codec:PlayerHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(getCurrentTimeWithError:)], @"PlayerHostApi api (%@) doesn't respond to @selector(getCurrentTimeWithError:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        FlutterError *error;
+        NSNumber *output = [api getCurrentTimeWithError:&error];
+        callback(wrapResult(output, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
 }
 @interface SongHostApiCodecReader : FlutterStandardReader
 @end

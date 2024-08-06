@@ -44,6 +44,10 @@ NSObject<FlutterMessageCodec> *PlayerHostApiGetCodec(void);
 - (void)pauseWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)prevWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)nextWithError:(FlutterError *_Nullable *_Nonnull)error;
+/// @return `nil` only when `error != nil`.
+- (nullable NSNumber *)getDurationWithError:(FlutterError *_Nullable *_Nonnull)error;
+/// @return `nil` only when `error != nil`.
+- (nullable NSNumber *)getCurrentTimeWithError:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<PlayerHostApi> *_Nullable api);

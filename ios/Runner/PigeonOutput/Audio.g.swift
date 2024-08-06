@@ -113,6 +113,8 @@ protocol PlayerHostApi {
   func pause() throws
   func prev() throws
   func next() throws
+  func getDuration() throws -> Double
+  func getCurrentTime() throws -> Double
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -186,6 +188,32 @@ class PlayerHostApiSetup {
       }
     } else {
       nextChannel.setMessageHandler(nil)
+    }
+    let getDurationChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.getDuration", binaryMessenger: binaryMessenger)
+    if let api = api {
+      getDurationChannel.setMessageHandler { _, reply in
+        do {
+          let result = try api.getDuration()
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      getDurationChannel.setMessageHandler(nil)
+    }
+    let getCurrentTimeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.getCurrentTime", binaryMessenger: binaryMessenger)
+    if let api = api {
+      getCurrentTimeChannel.setMessageHandler { _, reply in
+        do {
+          let result = try api.getCurrentTime()
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      getCurrentTimeChannel.setMessageHandler(nil)
     }
   }
 }

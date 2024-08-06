@@ -37,6 +37,9 @@ abstract class PlayerHostApi {
   void pause();
   void prev();
   void next();
+  // AndroidのdurationやiosのplaybackDurationは実際の再生時間と異なる場合があるのでplayerから取得する
+  double getDuration();
+  double getCurrentTime();
 }
 
 @HostApi()
