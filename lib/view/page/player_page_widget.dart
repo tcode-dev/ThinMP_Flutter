@@ -9,6 +9,7 @@ import 'package:thinmpf/view/button/favorite_artist_button_widget.dart';
 import 'package:thinmpf/view/button/favorite_song_button_widget.dart';
 import 'package:thinmpf/view/button/next_button_widget.dart';
 import 'package:thinmpf/view/button/play_pause_button_widget.dart';
+import 'package:thinmpf/view/button/playlist_button_widget.dart';
 import 'package:thinmpf/view/button/prev_button_widget.dart';
 import 'package:thinmpf/view/button/repeat_button_widget.dart';
 import 'package:thinmpf/view/button/shuffle_button_widget.dart';
@@ -94,6 +95,8 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
               FavoriteArtistButtonWidget(),
               Spacer(),
               FavoriteSongButtonWidget(),
+              Spacer(),
+              PlaylistButtonWidget(),
               Spacer(),
             ]),
           ),
