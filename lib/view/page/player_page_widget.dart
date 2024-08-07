@@ -6,6 +6,7 @@ import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/playback_song_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 import 'package:thinmpf/view/button/favorite_artist_button_widget.dart';
+import 'package:thinmpf/view/button/favorite_song_button_widget.dart';
 import 'package:thinmpf/view/button/next_button_widget.dart';
 import 'package:thinmpf/view/button/play_pause_button_widget.dart';
 import 'package:thinmpf/view/button/prev_button_widget.dart';
@@ -91,6 +92,8 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
               ShuffleButtonWidget(),
               Spacer(),
               FavoriteArtistButtonWidget(),
+              Spacer(),
+              FavoriteSongButtonWidget(),
               Spacer(),
             ]),
           ),
