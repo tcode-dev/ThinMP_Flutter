@@ -7,6 +7,7 @@ import 'package:thinmpf/provider/playback_song_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 import 'package:thinmpf/view/button/next_button_widget.dart';
 import 'package:thinmpf/view/button/play_pause_button_widget.dart';
+import 'package:thinmpf/view/button/prev_button_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/slider/slider_widget.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
@@ -68,8 +69,13 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
             top: screenSize.height * 0.65,
             width: screenSize.width,
             child: const Row(children: [
+              Spacer(),
+              PrevButtonWidget(size: SizeConstant.medium),
+              Spacer(),
               PlayPauseButtonWidget(size: SizeConstant.large),
+              Spacer(),
               NextButtonWidget(size: SizeConstant.medium),
+              Spacer(),
             ]),
           ),
         ],
