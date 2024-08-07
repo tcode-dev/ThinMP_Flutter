@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'playback_song_provider.dart';
+part of 'current_time_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$playbackSongHash() => r'fa88d3b07c31dd5341f3dc8155691b77b684d656';
+String _$currentTimeHash() => r'3e13141e084612c882336807d6826c66a0c34ded';
 
-/// See also [PlaybackSong].
-@ProviderFor(PlaybackSong)
-final playbackSongProvider =
-    AutoDisposeNotifierProvider<PlaybackSong, Song?>.internal(
-  PlaybackSong.new,
-  name: r'playbackSongProvider',
+/// See also [CurrentTime].
+@ProviderFor(CurrentTime)
+final currentTimeProvider =
+    AutoDisposeNotifierProvider<CurrentTime, double>.internal(
+  CurrentTime.new,
+  name: r'currentTimeProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$playbackSongHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$currentTimeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$PlaybackSong = AutoDisposeNotifier<Song?>;
+typedef _$CurrentTime = AutoDisposeNotifier<double>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

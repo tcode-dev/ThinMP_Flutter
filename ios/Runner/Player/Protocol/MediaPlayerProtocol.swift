@@ -20,12 +20,6 @@ protocol MediaPlayerProtocol {
 
     func seek(time: TimeInterval)
 
-    func immediateUpdateTime()
-
-    func startProgress()
-
-    func stopProgress()
-
     func changeRepeat()
 
     func shuffle()

@@ -11,8 +11,6 @@ class MusicPlayer: MediaPlayerProtocol {
     static let shared = MusicPlayer()
     private let PREV_SECOND: Double = 3
 
-    var currentSecond: Double = 0
-    var durationSecond: Double = 1
     var isRepeatOff: Bool = true
     var isRepeatOne: Bool = false
     var isRepeatAll: Bool = false
@@ -23,7 +21,7 @@ class MusicPlayer: MediaPlayerProtocol {
 //    private let playerConfig: PlayerConfig
     private let flutterApi: PlayerFlutterApiImpl
     private let player: MPMusicPlayerController
-    private var timer: Timer?
+//    private var timer: Timer?
     private var isBackground = false
     private var nowPlayingItemDidChangeDebounceTimer: Timer?
     private var playbackStateDidChangeDebounceTimer: Timer?
@@ -70,7 +68,7 @@ class MusicPlayer: MediaPlayerProtocol {
     }
 
     func prev() {
-        if currentSecond <= PREV_SECOND {
+        if player.currentPlaybackTime <= PREV_SECOND {
             player.skipToPreviousItem()
         } else {
             player.skipToBeginning()
@@ -85,21 +83,29 @@ class MusicPlayer: MediaPlayerProtocol {
         player.currentPlaybackTime = time
     }
 
-    func immediateUpdateTime() {
-        Timer.scheduledTimer(withTimeInterval: 0, repeats: false, block: { _ in
-            self.updateTime()
-        })
+//    func immediateUpdateTime() {
+//        Timer.scheduledTimer(withTimeInterval: 0, repeats: false, block: { _ in
+//            self.updateTime()
+//        })
+//    }
+
+//    func startProgress() {
+//        timer?.invalidate()
+//        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+//            self.updateTime()
+//        })
+//    }
+
+//    func stopProgress() {
+//        timer?.invalidate()
+//    }
+
+    func getDuration() -> Double {
+        return player.nowPlayingItem?.playbackDuration ?? 0
     }
 
-    func startProgress() {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
-            self.updateTime()
-        })
-    }
-
-    func stopProgress() {
-        timer?.invalidate()
+    func getCurrentTime() -> Double {
+        return Double(player.currentPlaybackTime)
     }
 
     func changeRepeat() {
@@ -182,16 +188,6 @@ class MusicPlayer: MediaPlayerProtocol {
 
             break
         }
-    }
-
-    private func resetTime() {
-        let second = player.nowPlayingItem?.playbackDuration ?? 0
-        durationSecond = second > 0 ? second : 1
-        updateTime()
-    }
-
-    private func updateTime() {
-        currentSecond = Double(player.currentPlaybackTime)
     }
 
     private func setRepeat() {

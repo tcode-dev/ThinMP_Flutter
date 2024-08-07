@@ -18,11 +18,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)makeWithId:(NSString *)id
     title:(NSString *)title
     artist:(NSString *)artist
-    imageId:(NSString *)imageId;
+    imageId:(NSString *)imageId
+    duration:(double )duration;
 @property(nonatomic, copy) NSString * id;
 @property(nonatomic, copy) NSString * title;
 @property(nonatomic, copy) NSString * artist;
 @property(nonatomic, copy) NSString * imageId;
+@property(nonatomic, assign) double  duration;
 @end
 
 /// The codec used by ArtworkHostApi.
@@ -44,8 +46,7 @@ NSObject<FlutterMessageCodec> *PlayerHostApiGetCodec(void);
 - (void)pauseWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)prevWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)nextWithError:(FlutterError *_Nullable *_Nonnull)error;
-/// @return `nil` only when `error != nil`.
-- (nullable NSNumber *)getDurationWithError:(FlutterError *_Nullable *_Nonnull)error;
+- (void)seekTime:(double)time error:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
 - (nullable NSNumber *)getCurrentTimeWithError:(FlutterError *_Nullable *_Nonnull)error;
 @end

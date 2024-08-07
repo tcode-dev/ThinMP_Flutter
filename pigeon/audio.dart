@@ -12,12 +12,13 @@ import 'package:pigeon/pigeon.dart';
 ))
 
 class Song {
-  String id;
-  String title;
-  String artist;
-  String imageId;
+  Song(this.id, this.title, this.artist, this.imageId, this.duration);
 
-  Song(this.id, this.title, this.artist, this.imageId);
+  final String id;
+  final String title;
+  final String artist;
+  final String imageId;
+  final double duration;
 }
 
 /// HostApi
@@ -37,8 +38,7 @@ abstract class PlayerHostApi {
   void pause();
   void prev();
   void next();
-  // AndroidのdurationやiosのplaybackDurationは実際の再生時間と異なる場合があるのでplayerから取得する
-  double getDuration();
+  void seek(double time);
   double getCurrentTime();
 }
 

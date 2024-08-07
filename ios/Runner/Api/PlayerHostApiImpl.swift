@@ -31,4 +31,12 @@ class PlayerHostApiImpl: PlayerHostApi {
     func next() throws {
         MusicPlayer.shared.next()
     }
+
+    func seek(time: Double) throws {
+        MusicPlayer.shared.seek(time: time)
+    }
+
+    func getCurrentTime() throws -> Double {
+        return MusicPlayer.shared.getCurrentTime()
+    }
 }

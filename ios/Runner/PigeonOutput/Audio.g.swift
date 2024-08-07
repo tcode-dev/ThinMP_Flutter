@@ -51,18 +51,21 @@ struct Song {
   var title: String
   var artist: String
   var imageId: String
+  var duration: Double
 
   static func fromList(_ list: [Any?]) -> Song? {
     let id = list[0] as! String
     let title = list[1] as! String
     let artist = list[2] as! String
     let imageId = list[3] as! String
+    let duration = list[4] as! Double
 
     return Song(
       id: id,
       title: title,
       artist: artist,
-      imageId: imageId
+      imageId: imageId,
+      duration: duration
     )
   }
   func toList() -> [Any?] {
@@ -71,6 +74,7 @@ struct Song {
       title,
       artist,
       imageId,
+      duration,
     ]
   }
 }
@@ -113,7 +117,7 @@ protocol PlayerHostApi {
   func pause() throws
   func prev() throws
   func next() throws
-  func getDuration() throws -> Double
+  func seek(time: Double) throws
   func getCurrentTime() throws -> Double
 }
 
@@ -189,18 +193,20 @@ class PlayerHostApiSetup {
     } else {
       nextChannel.setMessageHandler(nil)
     }
-    let getDurationChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.getDuration", binaryMessenger: binaryMessenger)
+    let seekChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.seek", binaryMessenger: binaryMessenger)
     if let api = api {
-      getDurationChannel.setMessageHandler { _, reply in
+      seekChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let timeArg = args[0] as! Double
         do {
-          let result = try api.getDuration()
-          reply(wrapResult(result))
+          try api.seek(time: timeArg)
+          reply(wrapResult(nil))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      getDurationChannel.setMessageHandler(nil)
+      seekChannel.setMessageHandler(nil)
     }
     let getCurrentTimeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.getCurrentTime", binaryMessenger: binaryMessenger)
     if let api = api {

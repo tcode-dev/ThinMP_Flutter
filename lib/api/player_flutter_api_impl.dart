@@ -15,6 +15,6 @@ class PlayerFlutterApiImpl implements PlayerFlutterApi {
 
   @override
   void onPlaybackSongChange(Song song) {
-    ref.read(playbackSongProvider.notifier).updateState(song);
+    ref.read(playbackSongProvider.notifier).setSong(song);
   }
 }

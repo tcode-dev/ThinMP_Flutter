@@ -50,7 +50,8 @@ data class Song (
   val id: String,
   val title: String,
   val artist: String,
-  val imageId: String
+  val imageId: String,
+  val duration: Double
 
 ) {
   companion object {
@@ -60,7 +61,8 @@ data class Song (
       val title = list[1] as String
       val artist = list[2] as String
       val imageId = list[3] as String
-      return Song(id, title, artist, imageId)
+      val duration = list[4] as Double
+      return Song(id, title, artist, imageId, duration)
     }
   }
   fun toList(): List<Any?> {
@@ -69,6 +71,7 @@ data class Song (
       title,
       artist,
       imageId,
+      duration,
     )
   }
 }
@@ -119,7 +122,7 @@ interface PlayerHostApi {
   fun pause()
   fun prev()
   fun next()
-  fun getDuration(): Double
+  fun seek(time: Double)
   fun getCurrentTime(): Double
 
   companion object {
@@ -218,12 +221,15 @@ interface PlayerHostApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.getDuration", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.seek", codec)
         if (api != null) {
-          channel.setMessageHandler { _, reply ->
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val timeArg = args[0] as Double
             var wrapped: List<Any?>
             try {
-              wrapped = listOf<Any?>(api.getDuration())
+              api.seek(timeArg)
+              wrapped = listOf<Any?>(null)
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }

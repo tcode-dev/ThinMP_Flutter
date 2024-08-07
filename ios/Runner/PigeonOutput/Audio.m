@@ -41,12 +41,14 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 + (instancetype)makeWithId:(NSString *)id
     title:(NSString *)title
     artist:(NSString *)artist
-    imageId:(NSString *)imageId {
+    imageId:(NSString *)imageId
+    duration:(double )duration {
   Song* pigeonResult = [[Song alloc] init];
   pigeonResult.id = id;
   pigeonResult.title = title;
   pigeonResult.artist = artist;
   pigeonResult.imageId = imageId;
+  pigeonResult.duration = duration;
   return pigeonResult;
 }
 + (Song *)fromList:(NSArray *)list {
@@ -55,6 +57,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   pigeonResult.title = GetNullableObjectAtIndex(list, 1);
   pigeonResult.artist = GetNullableObjectAtIndex(list, 2);
   pigeonResult.imageId = GetNullableObjectAtIndex(list, 3);
+  pigeonResult.duration = [GetNullableObjectAtIndex(list, 4) doubleValue];
   return pigeonResult;
 }
 + (nullable Song *)nullableFromList:(NSArray *)list {
@@ -66,6 +69,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
     self.title ?: [NSNull null],
     self.artist ?: [NSNull null],
     self.imageId ?: [NSNull null],
+    @(self.duration),
   ];
 }
 @end
@@ -194,15 +198,17 @@ void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Pla
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.getDuration"
+        initWithName:@"dev.flutter.pigeon.thinmpf.PlayerHostApi.seek"
         binaryMessenger:binaryMessenger
         codec:PlayerHostApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(getDurationWithError:)], @"PlayerHostApi api (%@) doesn't respond to @selector(getDurationWithError:)", api);
+      NSCAssert([api respondsToSelector:@selector(seekTime:error:)], @"PlayerHostApi api (%@) doesn't respond to @selector(seekTime:error:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        double arg_time = [GetNullableObjectAtIndex(args, 0) doubleValue];
         FlutterError *error;
-        NSNumber *output = [api getDurationWithError:&error];
-        callback(wrapResult(output, error));
+        [api seekTime:arg_time error:&error];
+        callback(wrapResult(nil, error));
       }];
     } else {
       [channel setMessageHandler:nil];
