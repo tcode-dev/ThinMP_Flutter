@@ -5,20 +5,29 @@ import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/is_playing_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 
+final PlayerHostApi _player = PlayerHostApi();
+
 class PlayPauseButtonWidget extends ConsumerWidget {
   final SizeConstant size;
-  final PlayerHostApi player = PlayerHostApi();
+  
+  const PlayPauseButtonWidget({Key? key, required this.size}) : super(key: key);
 
-  PlayPauseButtonWidget({Key? key, required this.size}) : super(key: key);
+  void _play() {
+    _player.play();
+  }
+
+  void _pause() {
+    _player.pause();
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isPlaying = ref.watch(isPlayingProvider);
 
     if (isPlaying) {
-      return ButtonWidget(icon: Icons.pause_rounded, size: size, callback: () => player.pause());
+      return ButtonWidget(icon: Icons.pause_rounded, size: size, callback: _pause);
     } else {
-      return ButtonWidget(icon: Icons.play_arrow_rounded, size: size, callback: () => player.play());
+      return ButtonWidget(icon: Icons.play_arrow_rounded, size: size, callback: _play);
     }
   }
 }

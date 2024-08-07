@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/playback_song_provider.dart';
+import 'package:thinmpf/view/button/button_widget.dart';
+import 'package:thinmpf/view/button/next_button_widget.dart';
 import 'package:thinmpf/view/button/play_pause_button_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/slider/slider_widget.dart';
@@ -65,7 +67,10 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
           Positioned(
             top: screenSize.height * 0.65,
             width: screenSize.width,
-            child: Row(children: [PlayPauseButtonWidget(size: SizeConstant.large)]),
+            child: const Row(children: [
+              PlayPauseButtonWidget(size: SizeConstant.large),
+              NextButtonWidget(size: SizeConstant.medium),
+            ]),
           ),
         ],
       ),
