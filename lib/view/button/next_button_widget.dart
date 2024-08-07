@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 
 final PlayerHostApi _player = PlayerHostApi();
 
 class NextButtonWidget extends StatelessWidget {
-  final SizeConstant size;
+  final double size;
+  final double? imageSize;
 
-  const NextButtonWidget({Key? key, required this.size}) : super(key: key);
+  const NextButtonWidget({Key? key, required this.size, this.imageSize}) : super(key: key);
 
   void _next() {
     _player.next();
@@ -16,6 +16,6 @@ class NextButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ButtonWidget(icon: Icons.skip_next_rounded, size: size, callback: _next);
+    return ButtonWidget(icon: Icons.skip_next_rounded, size: size, imageSize: imageSize, callback: _next);
   }
 }

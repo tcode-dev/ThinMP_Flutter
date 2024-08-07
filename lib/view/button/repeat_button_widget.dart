@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 
@@ -14,6 +13,6 @@ class RepeatButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ButtonWidget(icon: Icons.repeat_rounded, size: SizeConstant.medium, callback: _repeat);
+    return ButtonWidget(icon: Icons.repeat_rounded, size: 50.0, callback: _repeat);
   }
 }

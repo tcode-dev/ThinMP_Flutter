@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 
 class FavoriteSongButtonWidget extends StatelessWidget {
@@ -11,6 +10,6 @@ class FavoriteSongButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ButtonWidget(icon: Icons.favorite_rounded, size: SizeConstant.medium, callback: _favoriteSong);
+    return ButtonWidget(icon: Icons.favorite_rounded, size: 50.0, imageSize: 44.0, callback: _favoriteSong);
   }
 }

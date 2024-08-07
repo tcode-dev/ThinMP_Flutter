@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 
 class PlaylistButtonWidget extends StatelessWidget {
@@ -11,6 +10,6 @@ class PlaylistButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ButtonWidget(icon: Icons.playlist_add_rounded, size: SizeConstant.medium, callback: _addPlaylist);
+    return ButtonWidget(icon: Icons.playlist_add_rounded, size: 50.0, callback: _addPlaylist);
   }
 }
