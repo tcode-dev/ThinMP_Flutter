@@ -38,7 +38,6 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
     Size screenSize = MediaQuery.sizeOf(context);
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Stack(
         children: [
           Positioned(
@@ -46,7 +45,7 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
             right: 0.0,
             left: 0.0,
             child: Blur(
-              blur: 15,
+              blur: 10,
               blurColor: Colors.white,
               child: ImageWidget(id: playbackSong.imageId, size: screenSize.width),
             ),
@@ -56,12 +55,12 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
             width: screenSize.width,
             child: Container(
               height: 200,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
                   colors: <Color>[
-                    Colors.white,
+                    Theme.of(context).scaffoldBackgroundColor,
                     Colors.transparent,
                   ],
                 ),
