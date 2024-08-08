@@ -15,6 +15,11 @@ class SongsPageWidget extends ConsumerWidget {
     final songs = ref.watch(songsProvider).value ?? [];
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+        surfaceTintColor: Colors.transparent,
+        title: const Text('songs'),
+      ),
       body: Stack(
         children: [
           ListView.builder(
