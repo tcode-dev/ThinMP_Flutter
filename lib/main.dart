@@ -29,6 +29,10 @@ class MainAppState extends ConsumerState<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: PermissionWidget(child: MainPageWidget()));
+    return MaterialApp(
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      home: const PermissionWidget(child: MainPageWidget()),
+    );
   }
 }
