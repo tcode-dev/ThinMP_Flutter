@@ -112,11 +112,14 @@ class SliderWidgetState extends ConsumerState<SliderWidget> {
       return Container();
     }
 
+    Color primaryColor = Theme.of(context).textTheme.bodyLarge?.color! ?? Colors.black;
+
     return Column(
       children: [
         Slider(
           value: _toSliderValue(currentTime, playbackSong.duration),
           max: scale,
+          activeColor: primaryColor,
           divisions: scale.toInt(),
           onChanged: _onChanged,
         ),
