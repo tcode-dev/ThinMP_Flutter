@@ -19,7 +19,11 @@ struct AlbumModel {
     }
 
     var imageId: String {
-        id
+        if let firstItem = media.items.first {
+            return String(firstItem.persistentID)
+        } else {
+            return "0"
+        }
     }
 
     var title: String {
