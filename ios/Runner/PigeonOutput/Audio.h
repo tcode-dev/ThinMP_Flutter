@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class Song;
+@class Album;
 
 @interface Song : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
@@ -27,10 +28,33 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) double  duration;
 @end
 
+@interface Album : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithId:(NSString *)id
+    title:(NSString *)title
+    artist:(NSString *)artist
+    imageId:(NSString *)imageId;
+@property(nonatomic, copy) NSString * id;
+@property(nonatomic, copy) NSString * title;
+@property(nonatomic, copy) NSString * artist;
+@property(nonatomic, copy) NSString * imageId;
+@end
+
+/// The codec used by AlbumHostApi.
+NSObject<FlutterMessageCodec> *AlbumHostApiGetCodec(void);
+
+/// HostApi
+@protocol AlbumHostApi
+/// @return `nil` only when `error != nil`.
+- (nullable NSArray<Album *> *)getAllAlbumsWithError:(FlutterError *_Nullable *_Nonnull)error;
+@end
+
+extern void SetUpAlbumHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<AlbumHostApi> *_Nullable api);
+
 /// The codec used by ArtworkHostApi.
 NSObject<FlutterMessageCodec> *ArtworkHostApiGetCodec(void);
 
-/// HostApi
 @protocol ArtworkHostApi
 - (void)queryArtworkId:(NSString *)id completion:(void (^)(FlutterStandardTypedData *_Nullable, FlutterError *_Nullable))completion;
 @end

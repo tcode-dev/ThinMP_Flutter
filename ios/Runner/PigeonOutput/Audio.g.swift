@@ -79,8 +79,100 @@ struct Song {
   }
 }
 
+/// Generated class from Pigeon that represents data sent in messages.
+struct Album {
+  var id: String
+  var title: String
+  var artist: String
+  var imageId: String
+
+  static func fromList(_ list: [Any?]) -> Album? {
+    let id = list[0] as! String
+    let title = list[1] as! String
+    let artist = list[2] as! String
+    let imageId = list[3] as! String
+
+    return Album(
+      id: id,
+      title: title,
+      artist: artist,
+      imageId: imageId
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      id,
+      title,
+      artist,
+      imageId,
+    ]
+  }
+}
+
+private class AlbumHostApiCodecReader: FlutterStandardReader {
+  override func readValue(ofType type: UInt8) -> Any? {
+    switch type {
+    case 128:
+      return Album.fromList(self.readValue() as! [Any?])
+    default:
+      return super.readValue(ofType: type)
+    }
+  }
+}
+
+private class AlbumHostApiCodecWriter: FlutterStandardWriter {
+  override func writeValue(_ value: Any) {
+    if let value = value as? Album {
+      super.writeByte(128)
+      super.writeValue(value.toList())
+    } else {
+      super.writeValue(value)
+    }
+  }
+}
+
+private class AlbumHostApiCodecReaderWriter: FlutterStandardReaderWriter {
+  override func reader(with data: Data) -> FlutterStandardReader {
+    return AlbumHostApiCodecReader(data: data)
+  }
+
+  override func writer(with data: NSMutableData) -> FlutterStandardWriter {
+    return AlbumHostApiCodecWriter(data: data)
+  }
+}
+
+class AlbumHostApiCodec: FlutterStandardMessageCodec {
+  static let shared = AlbumHostApiCodec(readerWriter: AlbumHostApiCodecReaderWriter())
+}
+
 /// HostApi
 ///
+/// Generated protocol from Pigeon that represents a handler of messages from Flutter.
+protocol AlbumHostApi {
+  func getAllAlbums() throws -> [Album]
+}
+
+/// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
+class AlbumHostApiSetup {
+  /// The codec used by AlbumHostApi.
+  static var codec: FlutterStandardMessageCodec { AlbumHostApiCodec.shared }
+  /// Sets up an instance of `AlbumHostApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: AlbumHostApi?) {
+    let getAllAlbumsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.AlbumHostApi.getAllAlbums", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getAllAlbumsChannel.setMessageHandler { _, reply in
+        do {
+          let result = try api.getAllAlbums()
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      getAllAlbumsChannel.setMessageHandler(nil)
+    }
+  }
+}
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol ArtworkHostApi {
   func queryArtwork(id: String, completion: @escaping (Result<FlutterStandardTypedData?, Error>) -> Void)

@@ -21,7 +21,21 @@ class Song {
   final double duration;
 }
 
+class Album {
+  Album(this.id, this.title, this.artist, this.imageId);
+
+  final String id;
+  final String title;
+  final String artist;
+  final String imageId;
+}
+
 /// HostApi
+@HostApi()
+abstract class AlbumHostApi {
+  List<Album> getAllAlbums();
+}
+
 @HostApi()
 abstract class ArtworkHostApi {
   @async

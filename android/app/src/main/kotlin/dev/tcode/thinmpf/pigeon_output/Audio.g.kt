@@ -76,11 +76,93 @@ data class Song (
   }
 }
 
+/** Generated class from Pigeon that represents data sent in messages. */
+data class Album (
+  val id: String,
+  val title: String,
+  val artist: String,
+  val imageId: String
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): Album {
+      val id = list[0] as String
+      val title = list[1] as String
+      val artist = list[2] as String
+      val imageId = list[3] as String
+      return Album(id, title, artist, imageId)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      id,
+      title,
+      artist,
+      imageId,
+    )
+  }
+}
+
+@Suppress("UNCHECKED_CAST")
+private object AlbumHostApiCodec : StandardMessageCodec() {
+  override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
+    return when (type) {
+      128.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          Album.fromList(it)
+        }
+      }
+      else -> super.readValueOfType(type, buffer)
+    }
+  }
+  override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
+    when (value) {
+      is Album -> {
+        stream.write(128)
+        writeValue(stream, value.toList())
+      }
+      else -> super.writeValue(stream, value)
+    }
+  }
+}
+
 /**
  * HostApi
  *
  * Generated interface from Pigeon that represents a handler of messages from Flutter.
  */
+interface AlbumHostApi {
+  fun getAllAlbums(): List<Album>
+
+  companion object {
+    /** The codec used by AlbumHostApi. */
+    val codec: MessageCodec<Any?> by lazy {
+      AlbumHostApiCodec
+    }
+    /** Sets up an instance of `AlbumHostApi` to handle messages through the `binaryMessenger`. */
+    @Suppress("UNCHECKED_CAST")
+    fun setUp(binaryMessenger: BinaryMessenger, api: AlbumHostApi?) {
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.AlbumHostApi.getAllAlbums", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            var wrapped: List<Any?>
+            try {
+              wrapped = listOf<Any?>(api.getAllAlbums())
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+    }
+  }
+}
+/** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface ArtworkHostApi {
   fun queryArtwork(id: String, callback: (Result<ByteArray?>) -> Unit)
 

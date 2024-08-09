@@ -10,6 +10,7 @@ import Flutter
         let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
 
         // HostApi
+        AlbumHostApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: AlbumHostApiImpl())
         ArtworkHostApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: ArtworkHostApiImpl())
         PlayerHostApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: PlayerHostApiImpl())
         SongHostApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: SongHostApiImpl())

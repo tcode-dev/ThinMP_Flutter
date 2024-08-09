@@ -66,7 +66,104 @@ class Song {
   }
 }
 
+class Album {
+  Album({
+    required this.id,
+    required this.title,
+    required this.artist,
+    required this.imageId,
+  });
+
+  String id;
+
+  String title;
+
+  String artist;
+
+  String imageId;
+
+  Object encode() {
+    return <Object?>[
+      id,
+      title,
+      artist,
+      imageId,
+    ];
+  }
+
+  static Album decode(Object result) {
+    result as List<Object?>;
+    return Album(
+      id: result[0]! as String,
+      title: result[1]! as String,
+      artist: result[2]! as String,
+      imageId: result[3]! as String,
+    );
+  }
+}
+
+class _AlbumHostApiCodec extends StandardMessageCodec {
+  const _AlbumHostApiCodec();
+  @override
+  void writeValue(WriteBuffer buffer, Object? value) {
+    if (value is Album) {
+      buffer.putUint8(128);
+      writeValue(buffer, value.encode());
+    } else {
+      super.writeValue(buffer, value);
+    }
+  }
+
+  @override
+  Object? readValueOfType(int type, ReadBuffer buffer) {
+    switch (type) {
+      case 128: 
+        return Album.decode(readValue(buffer)!);
+      default:
+        return super.readValueOfType(type, buffer);
+    }
+  }
+}
+
 /// HostApi
+class AlbumHostApi {
+  /// Constructor for [AlbumHostApi].  The [binaryMessenger] named argument is
+  /// available for dependency injection.  If it is left null, the default
+  /// BinaryMessenger will be used which routes to the host platform.
+  AlbumHostApi({BinaryMessenger? binaryMessenger})
+      : __pigeon_binaryMessenger = binaryMessenger;
+  final BinaryMessenger? __pigeon_binaryMessenger;
+
+  static const MessageCodec<Object?> pigeonChannelCodec = _AlbumHostApiCodec();
+
+  Future<List<Album?>> getAllAlbums() async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.AlbumHostApi.getAllAlbums';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(null) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<Album?>();
+    }
+  }
+}
+
 class ArtworkHostApi {
   /// Constructor for [ArtworkHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default

@@ -37,6 +37,12 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 - (NSArray *)toList;
 @end
 
+@interface Album ()
++ (Album *)fromList:(NSArray *)list;
++ (nullable Album *)nullableFromList:(NSArray *)list;
+- (NSArray *)toList;
+@end
+
 @implementation Song
 + (instancetype)makeWithId:(NSString *)id
     title:(NSString *)title
@@ -74,6 +80,105 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 }
 @end
 
+@implementation Album
++ (instancetype)makeWithId:(NSString *)id
+    title:(NSString *)title
+    artist:(NSString *)artist
+    imageId:(NSString *)imageId {
+  Album* pigeonResult = [[Album alloc] init];
+  pigeonResult.id = id;
+  pigeonResult.title = title;
+  pigeonResult.artist = artist;
+  pigeonResult.imageId = imageId;
+  return pigeonResult;
+}
++ (Album *)fromList:(NSArray *)list {
+  Album *pigeonResult = [[Album alloc] init];
+  pigeonResult.id = GetNullableObjectAtIndex(list, 0);
+  pigeonResult.title = GetNullableObjectAtIndex(list, 1);
+  pigeonResult.artist = GetNullableObjectAtIndex(list, 2);
+  pigeonResult.imageId = GetNullableObjectAtIndex(list, 3);
+  return pigeonResult;
+}
++ (nullable Album *)nullableFromList:(NSArray *)list {
+  return (list) ? [Album fromList:list] : nil;
+}
+- (NSArray *)toList {
+  return @[
+    self.id ?: [NSNull null],
+    self.title ?: [NSNull null],
+    self.artist ?: [NSNull null],
+    self.imageId ?: [NSNull null],
+  ];
+}
+@end
+
+@interface AlbumHostApiCodecReader : FlutterStandardReader
+@end
+@implementation AlbumHostApiCodecReader
+- (nullable id)readValueOfType:(UInt8)type {
+  switch (type) {
+    case 128: 
+      return [Album fromList:[self readValue]];
+    default:
+      return [super readValueOfType:type];
+  }
+}
+@end
+
+@interface AlbumHostApiCodecWriter : FlutterStandardWriter
+@end
+@implementation AlbumHostApiCodecWriter
+- (void)writeValue:(id)value {
+  if ([value isKindOfClass:[Album class]]) {
+    [self writeByte:128];
+    [self writeValue:[value toList]];
+  } else {
+    [super writeValue:value];
+  }
+}
+@end
+
+@interface AlbumHostApiCodecReaderWriter : FlutterStandardReaderWriter
+@end
+@implementation AlbumHostApiCodecReaderWriter
+- (FlutterStandardWriter *)writerWithData:(NSMutableData *)data {
+  return [[AlbumHostApiCodecWriter alloc] initWithData:data];
+}
+- (FlutterStandardReader *)readerWithData:(NSData *)data {
+  return [[AlbumHostApiCodecReader alloc] initWithData:data];
+}
+@end
+
+NSObject<FlutterMessageCodec> *AlbumHostApiGetCodec(void) {
+  static FlutterStandardMessageCodec *sSharedObject = nil;
+  static dispatch_once_t sPred = 0;
+  dispatch_once(&sPred, ^{
+    AlbumHostApiCodecReaderWriter *readerWriter = [[AlbumHostApiCodecReaderWriter alloc] init];
+    sSharedObject = [FlutterStandardMessageCodec codecWithReaderWriter:readerWriter];
+  });
+  return sSharedObject;
+}
+
+void SetUpAlbumHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<AlbumHostApi> *api) {
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.thinmpf.AlbumHostApi.getAllAlbums"
+        binaryMessenger:binaryMessenger
+        codec:AlbumHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(getAllAlbumsWithError:)], @"AlbumHostApi api (%@) doesn't respond to @selector(getAllAlbumsWithError:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        FlutterError *error;
+        NSArray<Album *> *output = [api getAllAlbumsWithError:&error];
+        callback(wrapResult(output, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+}
 NSObject<FlutterMessageCodec> *ArtworkHostApiGetCodec(void) {
   static FlutterStandardMessageCodec *sSharedObject = nil;
   sSharedObject = [FlutterStandardMessageCodec sharedInstance];
