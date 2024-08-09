@@ -33,7 +33,7 @@ class MainPageWidget extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AlbumsPageWidget()),
+                  MaterialPageRoute(builder: (context) => const AlbumsPageWidget()),
                 );
               },
               child: const Text('albums'),
