@@ -23,7 +23,11 @@ class AlbumsPageWidget extends ConsumerWidget {
       body: Stack(
         children: [
           GridView.builder(
+            padding: const EdgeInsets.all(20),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+              childAspectRatio: 0.8,
               crossAxisCount: 2,
             ),
             itemCount: albums.length,
