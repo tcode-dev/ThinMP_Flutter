@@ -48,6 +48,8 @@ NSObject<FlutterMessageCodec> *AlbumHostApiGetCodec(void);
 @protocol AlbumHostApi
 /// @return `nil` only when `error != nil`.
 - (nullable NSArray<Album *> *)getAllAlbumsWithError:(FlutterError *_Nullable *_Nonnull)error;
+/// @return `nil` only when `error != nil`.
+- (nullable Album *)getAlbumByIdId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void SetUpAlbumHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<AlbumHostApi> *_Nullable api);

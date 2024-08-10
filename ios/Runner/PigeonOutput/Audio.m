@@ -120,6 +120,8 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   switch (type) {
     case 128: 
       return [Album fromList:[self readValue]];
+    case 129: 
+      return [Album fromList:[self readValue]];
     default:
       return [super readValueOfType:type];
   }
@@ -132,6 +134,9 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 - (void)writeValue:(id)value {
   if ([value isKindOfClass:[Album class]]) {
     [self writeByte:128];
+    [self writeValue:[value toList]];
+  } else if ([value isKindOfClass:[Album class]]) {
+    [self writeByte:129];
     [self writeValue:[value toList]];
   } else {
     [super writeValue:value];
@@ -172,6 +177,25 @@ void SetUpAlbumHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<Albu
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         FlutterError *error;
         NSArray<Album *> *output = [api getAllAlbumsWithError:&error];
+        callback(wrapResult(output, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.thinmpf.AlbumHostApi.getAlbumById"
+        binaryMessenger:binaryMessenger
+        codec:AlbumHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(getAlbumByIdId:error:)], @"AlbumHostApi api (%@) doesn't respond to @selector(getAlbumByIdId:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        NSString *arg_id = GetNullableObjectAtIndex(args, 0);
+        FlutterError *error;
+        Album *output = [api getAlbumByIdId:arg_id error:&error];
         callback(wrapResult(output, error));
       }];
     } else {

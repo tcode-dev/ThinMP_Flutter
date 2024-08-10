@@ -34,6 +34,7 @@ class Album {
 @HostApi()
 abstract class AlbumHostApi {
   List<Album> getAllAlbums();
+  Album getAlbumById(String id);
 }
 
 @HostApi()

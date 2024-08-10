@@ -114,6 +114,8 @@ private class AlbumHostApiCodecReader: FlutterStandardReader {
     switch type {
     case 128:
       return Album.fromList(self.readValue() as! [Any?])
+    case 129:
+      return Album.fromList(self.readValue() as! [Any?])
     default:
       return super.readValue(ofType: type)
     }
@@ -124,6 +126,9 @@ private class AlbumHostApiCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
     if let value = value as? Album {
       super.writeByte(128)
+      super.writeValue(value.toList())
+    } else if let value = value as? Album {
+      super.writeByte(129)
       super.writeValue(value.toList())
     } else {
       super.writeValue(value)
@@ -150,6 +155,7 @@ class AlbumHostApiCodec: FlutterStandardMessageCodec {
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol AlbumHostApi {
   func getAllAlbums() throws -> [Album]
+  func getAlbumById(id: String) throws -> Album
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -170,6 +176,21 @@ class AlbumHostApiSetup {
       }
     } else {
       getAllAlbumsChannel.setMessageHandler(nil)
+    }
+    let getAlbumByIdChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.AlbumHostApi.getAlbumById", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getAlbumByIdChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let idArg = args[0] as! String
+        do {
+          let result = try api.getAlbumById(id: idArg)
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      getAlbumByIdChannel.setMessageHandler(nil)
     }
   }
 }

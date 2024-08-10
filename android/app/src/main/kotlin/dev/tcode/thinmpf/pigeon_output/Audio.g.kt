@@ -113,6 +113,11 @@ private object AlbumHostApiCodec : StandardMessageCodec() {
           Album.fromList(it)
         }
       }
+      129.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          Album.fromList(it)
+        }
+      }
       else -> super.readValueOfType(type, buffer)
     }
   }
@@ -120,6 +125,10 @@ private object AlbumHostApiCodec : StandardMessageCodec() {
     when (value) {
       is Album -> {
         stream.write(128)
+        writeValue(stream, value.toList())
+      }
+      is Album -> {
+        stream.write(129)
         writeValue(stream, value.toList())
       }
       else -> super.writeValue(stream, value)
@@ -134,6 +143,7 @@ private object AlbumHostApiCodec : StandardMessageCodec() {
  */
 interface AlbumHostApi {
   fun getAllAlbums(): List<Album>
+  fun getAlbumById(id: String): Album
 
   companion object {
     /** The codec used by AlbumHostApi. */
@@ -150,6 +160,24 @@ interface AlbumHostApi {
             var wrapped: List<Any?>
             try {
               wrapped = listOf<Any?>(api.getAllAlbums())
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.AlbumHostApi.getAlbumById", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val idArg = args[0] as String
+            var wrapped: List<Any?>
+            try {
+              wrapped = listOf<Any?>(api.getAlbumById(idArg))
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }
