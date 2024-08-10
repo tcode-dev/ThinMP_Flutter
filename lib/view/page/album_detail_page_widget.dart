@@ -18,15 +18,14 @@ class AlbumDetailPageWidget extends ConsumerWidget {
     }
 
     Size screenSize = MediaQuery.sizeOf(context);
+    final top = MediaQuery.of(context).padding.top;
 
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
             pinned: true,
-            snap: false,
-            floating: false,
-            expandedHeight: screenSize.width - 50,
+            expandedHeight: screenSize.width - top,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(album.title),
               background: Stack(
