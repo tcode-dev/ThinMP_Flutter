@@ -1,4 +1,3 @@
-import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/provider/album_songs_provider.dart';
@@ -36,11 +35,7 @@ class AlbumDetailPageWidget extends ConsumerWidget {
                     top: 0.0,
                     right: 0.0,
                     left: 0.0,
-                    child: Blur(
-                      blur: 10,
-                      blurColor: Colors.white,
-                      child: ImageWidget(id: album.imageId, size: screenSize.width),
-                    ),
+                    child: ImageWidget(id: album.imageId, size: screenSize.width),
                   ),
                   Positioned(
                     top: screenSize.width - 200,
@@ -58,9 +53,6 @@ class AlbumDetailPageWidget extends ConsumerWidget {
                         ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    child: Center(child: ImageWidget(id: album.imageId, size: screenSize.width * 0.6)),
                   ),
                 ],
               ),
