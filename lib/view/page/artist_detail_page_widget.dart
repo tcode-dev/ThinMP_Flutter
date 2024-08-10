@@ -1,10 +1,10 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/provider/album_provider.dart';
 import 'package:thinmpf/provider/artist_albums_provider.dart';
 import 'package:thinmpf/provider/artist_songs_provider.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
+import 'package:thinmpf/view/image/circle_image_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/page/album_detail_page_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';
@@ -23,8 +23,8 @@ class ArtistDetailPageWidget extends ConsumerWidget {
       return Container();
     }
 
-    final subTitle = ' songs';
-    final song = artistSongs.first!;
+    final subTitle = '${artistAlbums.length} albums, ${artistSongs.length} songs';
+    final album = artistAlbums.first!;
     final screenSize = MediaQuery.sizeOf(context);
     final top = MediaQuery.of(context).padding.top;
 
@@ -35,7 +35,7 @@ class ArtistDetailPageWidget extends ConsumerWidget {
             pinned: true,
             expandedHeight: screenSize.width - top,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(song.artist),
+              title: Text(album.artist),
               background: Stack(
                 children: [
                   Positioned(
@@ -44,8 +44,8 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                     left: 0.0,
                     child: Blur(
                       blur: 10,
-                      blurColor: Colors.white,
-                      child: ImageWidget(id: song.imageId, size: screenSize.width),
+                      blurColor: Color(0x00000000),
+                      child: ImageWidget(id: album.imageId, size: screenSize.width),
                     ),
                   ),
                   Positioned(
@@ -66,7 +66,7 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                     ),
                   ),
                   Positioned(
-                    child: Center(child: ImageWidget(id: song.imageId, size: screenSize.width * 0.6)),
+                    child: Center(child: CircleImageWidget(id: album.imageId, size: screenSize.width * 0.33)),
                   ),
                 ],
               ),
@@ -78,6 +78,13 @@ class ArtistDetailPageWidget extends ConsumerWidget {
               child: Center(
                 child: Text(subTitle),
               ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: const EdgeInsets.only(top: 20, left: 20),
+              child: 
+                Text("Albums", style: Theme.of(context).textTheme.headlineMedium),
             ),
           ),
           SliverPadding(
@@ -105,6 +112,13 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                 },
                 childCount: artistAlbums.length,
               ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: const EdgeInsets.only(bottom: 10, left: 20),
+              child: 
+                Text("Songs", style: Theme.of(context).textTheme.headlineMedium),
             ),
           ),
           SliverFixedExtentList(
