@@ -1,10 +1,8 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/playback_song_provider.dart';
-import 'package:thinmpf/view/button/button_widget.dart';
 import 'package:thinmpf/view/button/favorite_artist_button_widget.dart';
 import 'package:thinmpf/view/button/favorite_song_button_widget.dart';
 import 'package:thinmpf/view/button/next_button_widget.dart';
@@ -35,88 +33,91 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
       return Container();
     }
 
-    Size screenSize = MediaQuery.sizeOf(context);
+    final screenSize = MediaQuery.sizeOf(context);
+    final top = MediaQuery.of(context).padding.top;
+    final bottom = MediaQuery.of(context).padding.bottom;
 
     return Scaffold(
       body: Stack(
         children: [
           Positioned(
-            top: 0.0,
-            right: 0.0,
-            left: 0.0,
-            child: Blur(
-              blur: 10,
-              blurColor: Colors.white,
-              child: ImageWidget(id: playbackSong.imageId, size: screenSize.width),
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0.0,
+                  right: 0.0,
+                  left: 0.0,
+                  child: Blur(
+                    blur: 10,
+                    blurColor: Colors.white,
+                    child: ImageWidget(id: playbackSong.imageId, size: screenSize.width),
+                  ),
+                ),
+                Positioned(
+                  top: screenSize.width - 200,
+                  width: screenSize.width,
+                  child: Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: <Color>[
+                          Theme.of(context).scaffoldBackgroundColor,
+                          const Color(0x00ffffff),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           Positioned(
-            top: screenSize.width - 200,
-            width: screenSize.width,
             child: Container(
-              height: 200,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: <Color>[
-                    Theme.of(context).scaffoldBackgroundColor,
-                    Colors.transparent,
-                  ],
-                ),
+              padding: EdgeInsets.only(top: top, bottom: bottom),
+              child: Column(
+                children: [
+                  const Spacer(),
+                  Center(child: ImageWidget(id: playbackSong.imageId, size: screenSize.width * 0.65)),
+                  const Spacer(),
+                  Column(children: [
+                    Text(playbackSong.title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineMedium),
+                    Text(playbackSong.artist, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
+                  ]),
+                  const Spacer(),
+                  const SliderWidget(),
+                  const Spacer(),
+                  const Row(children: [
+                    Spacer(),
+                    PrevButtonWidget(),
+                    Spacer(),
+                    PlayPauseButtonWidget(size: 100.0),
+                    Spacer(),
+                    NextButtonWidget(size: 75.0),
+                    Spacer(),
+                  ]),
+                  const Spacer(),
+                  const Row(
+                    children: [
+                      Spacer(),
+                      RepeatButtonWidget(),
+                      Spacer(),
+                      ShuffleButtonWidget(),
+                      Spacer(),
+                      FavoriteArtistButtonWidget(),
+                      Spacer(),
+                      FavoriteSongButtonWidget(),
+                      Spacer(),
+                      PlaylistButtonWidget(),
+                      Spacer(),
+                    ],
+                  ),
+                  const Spacer(),
+                ],
               ),
             ),
-          ),
-          Positioned(
-            top: screenSize.width * 0.15,
-            left: screenSize.width * 0.15,
-            child: ImageWidget(id: playbackSong.imageId, size: screenSize.width * 0.7),
-          ),
-          Positioned(
-            top: screenSize.height * 0.48,
-            width: screenSize.width,
-            child: TextWidget(text: playbackSong.title, textAlign: TextAlign.center),
-          ),
-          Positioned(
-            top: screenSize.height * 0.51,
-            width: screenSize.width,
-            child: TextWidget(text: playbackSong.artist, textAlign: TextAlign.center),
-          ),
-          Positioned(
-            top: screenSize.height * 0.55,
-            width: screenSize.width,
-            child: const SliderWidget(),
-          ),
-          Positioned(
-            top: screenSize.height * 0.65,
-            width: screenSize.width,
-            child: const Row(children: [
-              Spacer(),
-              PrevButtonWidget(),
-              Spacer(),
-              PlayPauseButtonWidget(size: 100.0),
-              Spacer(),
-              NextButtonWidget(size: 75.0),
-              Spacer(),
-            ]),
-          ),
-          Positioned(
-            top: screenSize.height * 0.8,
-            width: screenSize.width,
-            child: const Row(children: [
-              Spacer(),
-              RepeatButtonWidget(),
-              Spacer(),
-              ShuffleButtonWidget(),
-              Spacer(),
-              FavoriteArtistButtonWidget(),
-              Spacer(),
-              FavoriteSongButtonWidget(),
-              Spacer(),
-              PlaylistButtonWidget(),
-              Spacer(),
-            ]),
-          ),
+          )
         ],
       ),
     );
