@@ -46,16 +46,16 @@ class SongRepository {
 //            .map { songId in filtered.first { $0.representativeItem?.persistentID == songId.id }! }
 //            .map { SongModel(media: $0) }
 //    }
-//
-//    func findByAlbumId(albumId: AlbumId) -> [SongModel] {
-//        let property = MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID)
-//        let query = MPMediaQuery.songs()
-//
-//        query.addFilterPredicate(property)
-//
-//        return query.collections!.map { SongModel(media: $0) }
-//    }
-//
+
+    func findByAlbumId(albumId: String) -> [SongModel] {
+        let property = MPMediaPropertyPredicate(value: UInt64(albumId), forProperty: MPMediaItemPropertyAlbumPersistentID)
+        let query = MPMediaQuery.songs()
+
+        query.addFilterPredicate(property)
+
+        return query.collections!.map { SongModel(media: $0) }
+    }
+
 //    func findByAlbumIds(albumIds: [AlbumId]) -> [SongModel] {
 //        return Array(
 //            albumIds

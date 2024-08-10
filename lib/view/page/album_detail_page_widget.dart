@@ -1,8 +1,9 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/provider/album_provider.dart';
+import 'package:thinmpf/provider/album_songs_provider.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
+import 'package:thinmpf/view/row/media_row_widget.dart';
 
 class AlbumDetailPageWidget extends ConsumerWidget {
   final String id;
@@ -11,13 +12,14 @@ class AlbumDetailPageWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final album = ref.watch(albumProvider(id)).value;
+    final albumSongs = ref.watch(albumSongsProvider(id)).value ?? [];
 
-    if (album == null) {
+    if (albumSongs.isEmpty) {
       return Container();
     }
 
-    Size screenSize = MediaQuery.sizeOf(context);
+    final album = albumSongs.first!;
+    final screenSize = MediaQuery.sizeOf(context);
     final top = MediaQuery.of(context).padding.top;
 
     return Scaffold(
@@ -51,16 +53,14 @@ class AlbumDetailPageWidget extends ConsumerWidget {
                           end: Alignment.topCenter,
                           colors: <Color>[
                             Theme.of(context).scaffoldBackgroundColor,
-                            Colors.transparent,
+                            Color(0x00ffffff),
                           ],
                         ),
                       ),
                     ),
                   ),
                   Positioned(
-                    top: screenSize.width * 0.15,
-                    left: screenSize.width * 0.15,
-                    child: ImageWidget(id: album.imageId, size: screenSize.width * 0.7),
+                    child: Center(child: ImageWidget(id: album.imageId, size: screenSize.width * 0.6)),
                   ),
                 ],
               ),
@@ -74,19 +74,16 @@ class AlbumDetailPageWidget extends ConsumerWidget {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Container(
-                  color: index.isOdd ? Colors.white : Colors.black12,
-                  height: 100.0,
-                  child: Center(
-                    child: Text('$index', textScaler: const TextScaler.linear(5)),
-                  ),
-                );
-              },
-              childCount: 20,
-            ),
+          SliverFixedExtentList(
+            itemExtent: 60,
+            delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+              return GestureDetector(
+                onTap: () {
+                  // player.startAllSongs(index);
+                },
+                child: MediaRowWidget(song: albumSongs[index]!),
+              );
+            }, childCount: albumSongs.length),
           ),
         ],
       ),

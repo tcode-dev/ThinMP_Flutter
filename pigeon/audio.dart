@@ -60,6 +60,7 @@ abstract class PlayerHostApi {
 @HostApi()
 abstract class SongHostApi {
   List<Song> getAllSongs();
+  List<Song> getSongsByAlbumId(String albumId);
   // List<Song> getSongsByIds(List<String> ids);
   // List<Song> getSongsByAlbumId(String albumId);
   // List<Song> getSongsByArtistId(String artistId);

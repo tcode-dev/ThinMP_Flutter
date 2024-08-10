@@ -426,6 +426,25 @@ void SetUpSongHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<SongH
       [channel setMessageHandler:nil];
     }
   }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.thinmpf.SongHostApi.getSongsByAlbumId"
+        binaryMessenger:binaryMessenger
+        codec:SongHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(getSongsByAlbumIdAlbumId:error:)], @"SongHostApi api (%@) doesn't respond to @selector(getSongsByAlbumIdAlbumId:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        NSString *arg_albumId = GetNullableObjectAtIndex(args, 0);
+        FlutterError *error;
+        NSArray<Song *> *output = [api getSongsByAlbumIdAlbumId:arg_albumId error:&error];
+        callback(wrapResult(output, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
 }
 @interface PlayerFlutterApiCodecReader : FlutterStandardReader
 @end

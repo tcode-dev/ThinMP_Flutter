@@ -85,6 +85,8 @@ NSObject<FlutterMessageCodec> *SongHostApiGetCodec(void);
 @protocol SongHostApi
 /// @return `nil` only when `error != nil`.
 - (nullable NSArray<Song *> *)getAllSongsWithError:(FlutterError *_Nullable *_Nonnull)error;
+/// @return `nil` only when `error != nil`.
+- (nullable NSArray<Song *> *)getSongsByAlbumIdAlbumId:(NSString *)albumId error:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void SetUpSongHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<SongHostApi> *_Nullable api);

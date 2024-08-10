@@ -394,6 +394,7 @@ private object SongHostApiCodec : StandardMessageCodec() {
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface SongHostApi {
   fun getAllSongs(): List<Song>
+  fun getSongsByAlbumId(albumId: String): List<Song>
 
   companion object {
     /** The codec used by SongHostApi. */
@@ -410,6 +411,24 @@ interface SongHostApi {
             var wrapped: List<Any?>
             try {
               wrapped = listOf<Any?>(api.getAllSongs())
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.SongHostApi.getSongsByAlbumId", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val albumIdArg = args[0] as String
+            var wrapped: List<Any?>
+            try {
+              wrapped = listOf<Any?>(api.getSongsByAlbumId(albumIdArg))
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }
