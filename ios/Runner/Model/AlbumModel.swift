@@ -27,7 +27,13 @@ struct AlbumModel {
     }
 
     var title: String {
-        media.representativeItem?.albumTitle ?? "undefined"
+        if let albumTitle = media.representativeItem?.albumTitle, !albumTitle.isEmpty {
+            return albumTitle
+        } else if let title = media.representativeItem?.title, !title.isEmpty {
+            return title
+        } else {
+            return "undefined"
+        }
     }
 
     var artist: String {
