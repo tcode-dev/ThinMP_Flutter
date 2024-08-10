@@ -11,6 +11,23 @@ import 'package:pigeon/pigeon.dart';
   swiftOptions: SwiftOptions(),
 ))
 
+class Album {
+  Album(this.id, this.title, this.artist, this.imageId);
+
+  final String id;
+  final String title;
+  final String artist;
+  final String imageId;
+}
+
+class Artist {
+  Artist(this.id, this.artist, this.imageId);
+
+  final String id;
+  final String artist;
+  final String imageId;
+}
+
 class Song {
   Song(this.id, this.title, this.artist, this.imageId, this.duration);
 
@@ -21,20 +38,16 @@ class Song {
   final double duration;
 }
 
-class Album {
-  Album(this.id, this.title, this.artist, this.imageId);
-
-  final String id;
-  final String title;
-  final String artist;
-  final String imageId;
-}
-
 /// HostApi
 @HostApi()
 abstract class AlbumHostApi {
   List<Album> getAllAlbums();
   Album getAlbumById(String id);
+}
+
+@HostApi()
+abstract class ArtistHostApi {
+  List<Artist> getAllArtists();
 }
 
 @HostApi()

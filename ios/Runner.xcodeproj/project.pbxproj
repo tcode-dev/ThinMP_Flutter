@@ -25,6 +25,11 @@
 		5242234E2C56087700B03E00 /* PlayerFlutterApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242234D2C56087700B03E00 /* PlayerFlutterApiImpl.swift */; };
 		527307212B61E42B00E65B2F /* SongHostApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527307202B61E42B00E65B2F /* SongHostApiImpl.swift */; };
 		52E135892B823CE1006C91B1 /* SongModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E135882B823CE1006C91B1 /* SongModel.swift */; };
+		52E78C402C673F7D00E766AA /* ArtistHostApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E78C3F2C673F7D00E766AA /* ArtistHostApiImpl.swift */; };
+		52E78C422C67405600E766AA /* ArtistRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E78C412C67405600E766AA /* ArtistRepository.swift */; };
+		52E78C442C67423200E766AA /* ArtistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E78C432C67423200E766AA /* ArtistModel.swift */; };
+		52E78C462C6745E400E766AA /* ArtistId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E78C452C6745E400E766AA /* ArtistId.swift */; };
+		52E78C482C674CCF00E766AA /* Id.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E78C472C674CCF00E766AA /* Id.swift */; };
 		52F5A0C12C5F077F00F4446C /* Audio.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F5A0BE2C5F077F00F4446C /* Audio.g.swift */; };
 		52F5A0C22C5F077F00F4446C /* Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F5A0C02C5F077F00F4446C /* Audio.m */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -78,6 +83,11 @@
 		5242234D2C56087700B03E00 /* PlayerFlutterApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFlutterApiImpl.swift; sourceTree = "<group>"; };
 		527307202B61E42B00E65B2F /* SongHostApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongHostApiImpl.swift; sourceTree = "<group>"; };
 		52E135882B823CE1006C91B1 /* SongModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongModel.swift; sourceTree = "<group>"; };
+		52E78C3F2C673F7D00E766AA /* ArtistHostApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistHostApiImpl.swift; sourceTree = "<group>"; };
+		52E78C412C67405600E766AA /* ArtistRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistRepository.swift; sourceTree = "<group>"; };
+		52E78C432C67423200E766AA /* ArtistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistModel.swift; sourceTree = "<group>"; };
+		52E78C452C6745E400E766AA /* ArtistId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistId.swift; sourceTree = "<group>"; };
+		52E78C472C674CCF00E766AA /* Id.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Id.swift; sourceTree = "<group>"; };
 		52F5A0BE2C5F077F00F4446C /* Audio.g.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.g.swift; sourceTree = "<group>"; };
 		52F5A0BF2C5F077F00F4446C /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
 		52F5A0C02C5F077F00F4446C /* Audio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Audio.m; sourceTree = "<group>"; };
@@ -129,8 +139,10 @@
 		520B9A722C2B853E0057A02B /* ValueObject */ = {
 			isa = PBXGroup;
 			children = (
-				520B9A732C2B85510057A02B /* SongId.swift */,
 				522863662C65908000C6A913 /* AlbumId.swift */,
+				52E78C452C6745E400E766AA /* ArtistId.swift */,
+				520B9A732C2B85510057A02B /* SongId.swift */,
+				52E78C472C674CCF00E766AA /* Id.swift */,
 			);
 			path = ValueObject;
 			sourceTree = "<group>";
@@ -155,8 +167,9 @@
 		52357F7D2B80F67C00133631 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				52357F7E2B80F71C00133631 /* SongRepository.swift */,
 				522863622C65856500C6A913 /* AlbumRepository.swift */,
+				52E78C412C67405600E766AA /* ArtistRepository.swift */,
+				52357F7E2B80F71C00133631 /* SongRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -165,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				522863602C6584E400C6A913 /* AlbumHostApiImpl.swift */,
+				52E78C3F2C673F7D00E766AA /* ArtistHostApiImpl.swift */,
 				52384F912C32205C00013C69 /* ArtworkHostApiImpl.swift */,
 				5242234D2C56087700B03E00 /* PlayerFlutterApiImpl.swift */,
 				52212B342C2A3B8E000ABB62 /* PlayerHostApiImpl.swift */,
@@ -186,9 +200,10 @@
 		52E135872B823CC4006C91B1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				520B9A722C2B853E0057A02B /* ValueObject */,
-				52E135882B823CE1006C91B1 /* SongModel.swift */,
 				522863642C6589FB00C6A913 /* AlbumModel.swift */,
+				52E78C432C67423200E766AA /* ArtistModel.swift */,
+				52E135882B823CE1006C91B1 /* SongModel.swift */,
+				520B9A722C2B853E0057A02B /* ValueObject */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -484,11 +499,16 @@
 				52357F7F2B80F71C00133631 /* SongRepository.swift in Sources */,
 				522863632C65856500C6A913 /* AlbumRepository.swift in Sources */,
 				52212B322C2A37E0000ABB62 /* MediaPlayerProtocol.swift in Sources */,
+				52E78C422C67405600E766AA /* ArtistRepository.swift in Sources */,
 				52E135892B823CE1006C91B1 /* SongModel.swift in Sources */,
 				52F5A0C22C5F077F00F4446C /* Audio.m in Sources */,
+				52E78C402C673F7D00E766AA /* ArtistHostApiImpl.swift in Sources */,
+				52E78C482C674CCF00E766AA /* Id.swift in Sources */,
 				52384F922C32205C00013C69 /* ArtworkHostApiImpl.swift in Sources */,
 				52F5A0C12C5F077F00F4446C /* Audio.g.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
+				52E78C442C67423200E766AA /* ArtistModel.swift in Sources */,
+				52E78C462C6745E400E766AA /* ArtistId.swift in Sources */,
 				520B9A742C2B85510057A02B /* SongId.swift in Sources */,
 				522863672C65908000C6A913 /* AlbumId.swift in Sources */,
 				522863612C6584E400C6A913 /* AlbumHostApiImpl.swift in Sources */,

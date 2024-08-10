@@ -24,7 +24,7 @@ class MainAppState extends ConsumerState<MainApp> {
   @override
   void initState() {
     super.initState();
-    PlayerFlutterApi.setup(PlayerFlutterApiImpl(ref));
+    PlayerFlutterApi.setUp(PlayerFlutterApiImpl(ref));
   }
 
   @override

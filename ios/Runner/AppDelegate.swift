@@ -11,6 +11,7 @@ import Flutter
 
         // HostApi
         AlbumHostApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: AlbumHostApiImpl())
+        ArtistHostApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: ArtistHostApiImpl())
         ArtworkHostApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: ArtworkHostApiImpl())
         PlayerHostApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: PlayerHostApiImpl())
         SongHostApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: SongHostApiImpl())

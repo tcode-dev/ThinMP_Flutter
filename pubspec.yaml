@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_riverpod: ^2.4.9
   riverpod_annotation: ^2.3.3
-  pigeon: ^16.0.4
+  pigeon: ^21.1.0
   permission_handler: ^11.3.1
   blur: ^4.0.0
 
@@ -50,10 +50,10 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
   riverpod_generator: ^2.3.9
   build_runner: ^2.4.7
-  custom_lint: ^0.5.7
+  custom_lint: ^0.6.4
   riverpod_lint: ^2.3.7
 
 # For information on the generic Dart part of this file, see the

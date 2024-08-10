@@ -1,0 +1,33 @@
+//
+//  ArtistModel.swift
+//  Runner
+//
+//  Created by t k on 2024/08/10.
+//
+
+import MediaPlayer
+
+struct ArtistModel {
+    let media: MPMediaItemCollection
+
+    var id: String {
+        return String(artistId.id)
+    }
+
+    var artistId: ArtistId {
+        ArtistId(id: media.representativeItem?.persistentID ?? 0)
+    }
+
+    var imageId: String {
+        if let firstItem = media.items.first {
+            return String(firstItem.persistentID)
+        } else {
+            return "0"
+        }
+    }
+
+    var artist: String {
+        media.representativeItem?.artist ?? "undefined"
+    }
+}
+
