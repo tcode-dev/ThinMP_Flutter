@@ -34,10 +34,10 @@ class AlbumsPageWidget extends ConsumerWidget {
 
               return GestureDetector(
                 onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album.id)),
-                );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album.id)),
+                  );
                 },
                 child: AlbumCellWidget(album: album),
               );

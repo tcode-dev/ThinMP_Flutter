@@ -105,25 +105,21 @@ struct Album {
 struct Artist {
   var id: String
   var artist: String
-  var imageId: String
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
   static func fromList(_ __pigeon_list: [Any?]) -> Artist? {
     let id = __pigeon_list[0] as! String
     let artist = __pigeon_list[1] as! String
-    let imageId = __pigeon_list[2] as! String
 
     return Artist(
       id: id,
-      artist: artist,
-      imageId: imageId
+      artist: artist
     )
   }
   func toList() -> [Any?] {
     return [
       id,
       artist,
-      imageId,
     ]
   }
 }
@@ -214,6 +210,7 @@ class AudioPigeonCodec: FlutterStandardMessageCodec, @unchecked Sendable {
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol AlbumHostApi {
   func getAllAlbums() throws -> [Album]
+  func getAlbumsByArtistId(artistId: String) throws -> [Album]
   func getAlbumById(id: String) throws -> Album
 }
 
@@ -235,6 +232,21 @@ class AlbumHostApiSetup {
       }
     } else {
       getAllAlbumsChannel.setMessageHandler(nil)
+    }
+    let getAlbumsByArtistIdChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.AlbumHostApi.getAlbumsByArtistId\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getAlbumsByArtistIdChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let artistIdArg = args[0] as! String
+        do {
+          let result = try api.getAlbumsByArtistId(artistId: artistIdArg)
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      getAlbumsByArtistIdChannel.setMessageHandler(nil)
     }
     let getAlbumByIdChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.AlbumHostApi.getAlbumById\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
@@ -426,6 +438,7 @@ class PlayerHostApiSetup {
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol SongHostApi {
   func getAllSongs() throws -> [Song]
+  func getSongsByArtistId(artistId: String) throws -> [Song]
   func getSongsByAlbumId(albumId: String) throws -> [Song]
 }
 
@@ -447,6 +460,21 @@ class SongHostApiSetup {
       }
     } else {
       getAllSongsChannel.setMessageHandler(nil)
+    }
+    let getSongsByArtistIdChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.SongHostApi.getSongsByArtistId\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getSongsByArtistIdChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let artistIdArg = args[0] as! String
+        do {
+          let result = try api.getSongsByArtistId(artistId: artistIdArg)
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      getSongsByArtistIdChannel.setMessageHandler(nil)
     }
     let getSongsByAlbumIdChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.SongHostApi.getSongsByAlbumId\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {

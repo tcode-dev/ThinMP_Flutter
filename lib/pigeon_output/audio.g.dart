@@ -65,20 +65,16 @@ class Artist {
   Artist({
     required this.id,
     required this.artist,
-    required this.imageId,
   });
 
   String id;
 
   String artist;
 
-  String imageId;
-
   Object encode() {
     return <Object?>[
       id,
       artist,
-      imageId,
     ];
   }
 
@@ -87,7 +83,6 @@ class Artist {
     return Artist(
       id: result[0]! as String,
       artist: result[1]! as String,
-      imageId: result[2]! as String,
     );
   }
 }
@@ -190,6 +185,33 @@ class AlbumHostApi {
     );
     final List<Object?>? __pigeon_replyList =
         await __pigeon_channel.send(null) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<Album?>();
+    }
+  }
+
+  Future<List<Album?>> getAlbumsByArtistId(String artistId) async {
+    final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.AlbumHostApi.getAlbumsByArtistId$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[artistId]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {
@@ -508,6 +530,33 @@ class SongHostApi {
     );
     final List<Object?>? __pigeon_replyList =
         await __pigeon_channel.send(null) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<Song?>();
+    }
+  }
+
+  Future<List<Song?>> getSongsByArtistId(String artistId) async {
+    final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.SongHostApi.getSongsByArtistId$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[artistId]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {

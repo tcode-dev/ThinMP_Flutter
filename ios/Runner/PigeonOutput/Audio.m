@@ -84,19 +84,16 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
 
 @implementation Artist
 + (instancetype)makeWithId:(NSString *)id
-    artist:(NSString *)artist
-    imageId:(NSString *)imageId {
+    artist:(NSString *)artist {
   Artist* pigeonResult = [[Artist alloc] init];
   pigeonResult.id = id;
   pigeonResult.artist = artist;
-  pigeonResult.imageId = imageId;
   return pigeonResult;
 }
 + (Artist *)fromList:(NSArray<id> *)list {
   Artist *pigeonResult = [[Artist alloc] init];
   pigeonResult.id = GetNullableObjectAtIndex(list, 0);
   pigeonResult.artist = GetNullableObjectAtIndex(list, 1);
-  pigeonResult.imageId = GetNullableObjectAtIndex(list, 2);
   return pigeonResult;
 }
 + (nullable Artist *)nullableFromList:(NSArray<id> *)list {
@@ -106,7 +103,6 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
   return @[
     self.id ?: [NSNull null],
     self.artist ?: [NSNull null],
-    self.imageId ?: [NSNull null],
   ];
 }
 @end
@@ -221,6 +217,25 @@ void SetUpAlbumHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NSO
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         FlutterError *error;
         NSArray<Album *> *output = [api getAllAlbumsWithError:&error];
+        callback(wrapResult(output, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.thinmpf.AlbumHostApi.getAlbumsByArtistId", messageChannelSuffix]
+        binaryMessenger:binaryMessenger
+        codec:nullGetAudioCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(getAlbumsByArtistIdArtistId:error:)], @"AlbumHostApi api (%@) doesn't respond to @selector(getAlbumsByArtistIdArtistId:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray<id> *args = message;
+        NSString *arg_artistId = GetNullableObjectAtIndex(args, 0);
+        FlutterError *error;
+        NSArray<Album *> *output = [api getAlbumsByArtistIdArtistId:arg_artistId error:&error];
         callback(wrapResult(output, error));
       }];
     } else {
@@ -444,6 +459,25 @@ void SetUpSongHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NSOb
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         FlutterError *error;
         NSArray<Song *> *output = [api getAllSongsWithError:&error];
+        callback(wrapResult(output, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.thinmpf.SongHostApi.getSongsByArtistId", messageChannelSuffix]
+        binaryMessenger:binaryMessenger
+        codec:nullGetAudioCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(getSongsByArtistIdArtistId:error:)], @"SongHostApi api (%@) doesn't respond to @selector(getSongsByArtistIdArtistId:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray<id> *args = message;
+        NSString *arg_artistId = GetNullableObjectAtIndex(args, 0);
+        FlutterError *error;
+        NSArray<Song *> *output = [api getSongsByArtistIdArtistId:arg_artistId error:&error];
         callback(wrapResult(output, error));
       }];
     } else {

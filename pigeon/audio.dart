@@ -21,11 +21,10 @@ class Album {
 }
 
 class Artist {
-  Artist(this.id, this.artist, this.imageId);
+  Artist(this.id, this.artist);
 
   final String id;
   final String artist;
-  final String imageId;
 }
 
 class Song {
@@ -42,6 +41,7 @@ class Song {
 @HostApi()
 abstract class AlbumHostApi {
   List<Album> getAllAlbums();
+  List<Album> getAlbumsByArtistId(String artistId);
   Album getAlbumById(String id);
 }
 
@@ -73,10 +73,9 @@ abstract class PlayerHostApi {
 @HostApi()
 abstract class SongHostApi {
   List<Song> getAllSongs();
+  List<Song> getSongsByArtistId(String artistId);
   List<Song> getSongsByAlbumId(String albumId);
   // List<Song> getSongsByIds(List<String> ids);
-  // List<Song> getSongsByAlbumId(String albumId);
-  // List<Song> getSongsByArtistId(String artistId);
 }
 
 /// FlutterApi

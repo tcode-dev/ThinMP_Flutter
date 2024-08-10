@@ -17,6 +17,15 @@ class AlbumHostApiImpl: AlbumHostApi {
         }
     }
     
+    func getAlbumsByArtistId(artistId: String) throws -> [Album] {
+        let repository = AlbumRepository()
+        let albums = repository.findByArtistId(artistId: ArtistId(id: artistId))
+
+        return albums.map { album in
+            return Album(id: album.id, title: album.title, artist: album.artist, imageId: album.imageId)
+        }
+    }
+
     func getAlbumById(id: String) throws -> Album {
         let repository = AlbumRepository()
 

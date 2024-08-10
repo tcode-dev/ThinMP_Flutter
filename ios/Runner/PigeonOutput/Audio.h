@@ -31,11 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithId:(NSString *)id
-    artist:(NSString *)artist
-    imageId:(NSString *)imageId;
+    artist:(NSString *)artist;
 @property(nonatomic, copy) NSString * id;
 @property(nonatomic, copy) NSString * artist;
-@property(nonatomic, copy) NSString * imageId;
 @end
 
 @interface Song : NSObject
@@ -60,6 +58,8 @@ NSObject<FlutterMessageCodec> *nullGetAudioCodec(void);
 @protocol AlbumHostApi
 /// @return `nil` only when `error != nil`.
 - (nullable NSArray<Album *> *)getAllAlbumsWithError:(FlutterError *_Nullable *_Nonnull)error;
+/// @return `nil` only when `error != nil`.
+- (nullable NSArray<Album *> *)getAlbumsByArtistIdArtistId:(NSString *)artistId error:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
 - (nullable Album *)getAlbumByIdId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
 @end
@@ -107,6 +107,8 @@ extern void SetUpPlayerHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessen
 @protocol SongHostApi
 /// @return `nil` only when `error != nil`.
 - (nullable NSArray<Song *> *)getAllSongsWithError:(FlutterError *_Nullable *_Nonnull)error;
+/// @return `nil` only when `error != nil`.
+- (nullable NSArray<Song *> *)getSongsByArtistIdArtistId:(NSString *)artistId error:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
 - (nullable NSArray<Song *> *)getSongsByAlbumIdAlbumId:(NSString *)albumId error:(FlutterError *_Nullable *_Nonnull)error;
 @end
