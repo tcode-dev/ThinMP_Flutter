@@ -4,12 +4,13 @@ This is a simple music player for Android and iOS.
 
 ## Demo
 
-### Google Pixel 7 Pro
+### Android
 <img src="https://github.com/user-attachments/assets/b3e8f140-171b-46ba-8523-d3d78193488a" width="156"> <img src="https://github.com/user-attachments/assets/c48e396c-e7f7-40aa-a72b-36d530055dd6" width="156">
 
-### iPhone 14 Plus
+### iOS
 
-<img src="https://github.com/user-attachments/assets/dc5ab21d-b0ae-40ca-b025-114d7090fdba" width="156"> <img src="https://github.com/user-attachments/assets/52246955-6424-4571-84c3-3733642f791b" width="156">
+<img src="https://github.com/user-attachments/assets/b56e829c-f3a7-4932-84bc-8336579c3504" width="156"> <img src="https://github.com/user-attachments/assets/2d9079de-5da5-428e-a1a9-6f9b6411cf09" width="156"> <img src="https://github.com/user-attachments/assets/917b5f8c-b4d5-4d15-8385-c64deafdc830" width="156"> <img src="https://github.com/user-attachments/assets/ce7beb33-00a7-4bd7-a679-2bcb1429e777" width="156"> <img src="https://github.com/user-attachments/assets/f40e8108-b300-44eb-9b58-53cf5f81d37f" width="156">
+
 
 ## Features
 
