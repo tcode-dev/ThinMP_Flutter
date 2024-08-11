@@ -324,6 +324,7 @@ class ArtworkHostApiSetup {
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol PlayerHostApi {
   func startAllSongs(index: Int64) throws
+  func startAlbumSongs(index: Int64, albumId: String) throws
   func play() throws
   func pause() throws
   func prev() throws
@@ -352,6 +353,22 @@ class PlayerHostApiSetup {
       }
     } else {
       startAllSongsChannel.setMessageHandler(nil)
+    }
+    let startAlbumSongsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.startAlbumSongs\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      startAlbumSongsChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let indexArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
+        let albumIdArg = args[1] as! String
+        do {
+          try api.startAlbumSongs(index: indexArg, albumId: albumIdArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      startAlbumSongsChannel.setMessageHandler(nil)
     }
     let playChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.play\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {

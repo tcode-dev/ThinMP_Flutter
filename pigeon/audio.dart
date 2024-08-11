@@ -60,7 +60,7 @@ abstract class ArtworkHostApi {
 abstract class PlayerHostApi {
   // void start(int index, List<String> ids);
   void startAllSongs(int index);
-  // void startAlbumSongs(int index, String albumId);
+  void startAlbumSongs(int index, String albumId);
   // void startArtistSongs(int index, String artistId);
   void play();
   void pause();

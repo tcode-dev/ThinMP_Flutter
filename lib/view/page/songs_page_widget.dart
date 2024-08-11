@@ -5,10 +5,10 @@ import 'package:thinmpf/provider/songs_provider.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';
 
-class SongsPageWidget extends ConsumerWidget {
-  final PlayerHostApi player = PlayerHostApi();
+final PlayerHostApi _player = PlayerHostApi();
 
-  SongsPageWidget({super.key});
+class SongsPageWidget extends ConsumerWidget {
+  const SongsPageWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,7 +29,7 @@ class SongsPageWidget extends ConsumerWidget {
 
               return GestureDetector(
                 onTap: () {
-                  player.startAllSongs(index);
+                  _player.startAllSongs(index);
                 },
                 child: MediaRowWidget(song: song),
               );

@@ -28,7 +28,7 @@ class SongHostApiImpl: SongHostApi {
     
     func getSongsByAlbumId(albumId: String) throws -> [Song] {
         let repository = SongRepository()
-        let songs = repository.findByAlbumId(albumId: albumId)
+        let songs = repository.findByAlbumId(albumId: AlbumId(id: albumId))
 
         return songs.map { song in
             return Song(id: song.id, title: song.title, artist: song.artist, imageId: song.imageId, duration: song.duration)

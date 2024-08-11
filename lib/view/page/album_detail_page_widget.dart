@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/album_provider.dart';
 import 'package:thinmpf/provider/album_songs_provider.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';
+
+final PlayerHostApi _player = PlayerHostApi();
 
 class AlbumDetailPageWidget extends ConsumerWidget {
   final String id;
@@ -74,7 +77,7 @@ class AlbumDetailPageWidget extends ConsumerWidget {
                 delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      // player.startAllSongs(index);
+                      _player.startAlbumSongs(index, id);
                     },
                     child: MediaRowWidget(song: albumSongs[index]!),
                   );

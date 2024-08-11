@@ -57,8 +57,8 @@ class SongRepository {
             .map { SongModel(media: $0) }
     }
 
-    func findByAlbumId(albumId: String) -> [SongModel] {
-        let property = MPMediaPropertyPredicate(value: UInt64(albumId), forProperty: MPMediaItemPropertyAlbumPersistentID)
+    func findByAlbumId(albumId: AlbumId) -> [SongModel] {
+        let property = MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID)
         let query = MPMediaQuery.songs()
 
         query.addFilterPredicate(property)

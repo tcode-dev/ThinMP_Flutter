@@ -340,6 +340,26 @@ void SetUpPlayerHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NS
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
+        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.thinmpf.PlayerHostApi.startAlbumSongs", messageChannelSuffix]
+        binaryMessenger:binaryMessenger
+        codec:nullGetAudioCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(startAlbumSongsIndex:albumId:error:)], @"PlayerHostApi api (%@) doesn't respond to @selector(startAlbumSongsIndex:albumId:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray<id> *args = message;
+        NSInteger arg_index = [GetNullableObjectAtIndex(args, 0) integerValue];
+        NSString *arg_albumId = GetNullableObjectAtIndex(args, 1);
+        FlutterError *error;
+        [api startAlbumSongsIndex:arg_index albumId:arg_albumId error:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
         initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.thinmpf.PlayerHostApi.play", messageChannelSuffix]
         binaryMessenger:binaryMessenger
         codec:nullGetAudioCodec()];
