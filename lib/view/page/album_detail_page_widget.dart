@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/album_provider.dart';
 import 'package:thinmpf/provider/album_songs_provider.dart';
+import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';
@@ -54,7 +55,7 @@ class AlbumDetailPageWidget extends ConsumerWidget {
                               end: Alignment.topCenter,
                               colors: <Color>[
                                 Theme.of(context).scaffoldBackgroundColor,
-                                Color(0x00ffffff),
+                                Theme.of(context).transparent,
                               ],
                             ),
                           ),

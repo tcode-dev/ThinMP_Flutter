@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/artist_albums_provider.dart';
 import 'package:thinmpf/provider/artist_songs_provider.dart';
+import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
 import 'package:thinmpf/view/image/circle_image_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
@@ -50,7 +51,7 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                         left: 0.0,
                         child: Blur(
                           blur: 10,
-                          blurColor: Color(0x00000000),
+                          blurColor: Theme.of(context).transparent,
                           child: ImageWidget(id: album.imageId, size: screenSize.width),
                         ),
                       ),
@@ -65,7 +66,7 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                               end: Alignment.topCenter,
                               colors: <Color>[
                                 Theme.of(context).scaffoldBackgroundColor,
-                                Color(0x00ffffff),
+                                Theme.of(context).transparent,
                               ],
                             ),
                           ),

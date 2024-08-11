@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/playback_song_provider.dart';
+import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/view/button/favorite_artist_button_widget.dart';
 import 'package:thinmpf/view/button/favorite_song_button_widget.dart';
 import 'package:thinmpf/view/button/next_button_widget.dart';
@@ -64,7 +65,7 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
                         end: Alignment.topCenter,
                         colors: <Color>[
                           Theme.of(context).scaffoldBackgroundColor,
-                          const Color(0x00ffffff),
+                          Theme.of(context).transparent,
                         ],
                       ),
                     ),
