@@ -13,8 +13,8 @@ import 'package:thinmpf/view/button/prev_button_widget.dart';
 import 'package:thinmpf/view/button/repeat_button_widget.dart';
 import 'package:thinmpf/view/button/shuffle_button_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
+import 'package:thinmpf/view/image/square_image_widget.dart';
 import 'package:thinmpf/view/slider/slider_widget.dart';
-import 'package:thinmpf/view/text/text_widget.dart';
 
 class PlayerPageWidget extends ConsumerStatefulWidget {
   const PlayerPageWidget({super.key});
@@ -80,7 +80,7 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
               child: Column(
                 children: [
                   const Spacer(),
-                  Center(child: ImageWidget(id: playbackSong.imageId, size: screenSize.width * 0.65)),
+                  Center(child: SquareImageWidget(id: playbackSong.imageId, size: screenSize.width * 0.65)),
                   const Spacer(),
                   Column(children: [
                     Text(playbackSong.title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineMedium),
