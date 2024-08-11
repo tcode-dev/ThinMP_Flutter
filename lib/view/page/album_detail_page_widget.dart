@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/provider/album_provider.dart';
 import 'package:thinmpf/provider/album_songs_provider.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';
@@ -11,15 +12,14 @@ class AlbumDetailPageWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final album = ref.watch(albumProvider(id)).value;
     final albumSongs = ref.watch(albumSongsProvider(id)).value ?? [];
-
-    if (albumSongs.isEmpty) {
-      return Container();
-    }
-
-    final album = albumSongs.first!;
     final screenSize = MediaQuery.sizeOf(context);
     final top = MediaQuery.of(context).padding.top;
+
+    if (album == null) {
+      return Container();
+    }
 
     return Scaffold(
       body: CustomScrollView(
