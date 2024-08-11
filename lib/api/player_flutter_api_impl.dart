@@ -10,11 +10,15 @@ class PlayerFlutterApiImpl implements PlayerFlutterApi {
 
   @override
   void onIsPlayingChange(bool isPlaying) {
-    ref.read(isPlayingProvider.notifier).updateState(isPlaying);
+    if (ref.read(isPlayingProvider) != isPlaying) {
+      ref.read(isPlayingProvider.notifier).updateState(isPlaying);
+    }
   }
 
   @override
   void onPlaybackSongChange(Song song) {
-    ref.read(playbackSongProvider.notifier).setSong(song);
+    if (ref.read(playbackSongProvider)?.id != song.id) {
+      ref.read(playbackSongProvider.notifier).setSong(song);
+    }
   }
 }

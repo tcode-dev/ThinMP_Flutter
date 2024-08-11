@@ -21,11 +21,7 @@ class MusicPlayer: MediaPlayerProtocol {
 //    private let playerConfig: PlayerConfig
     private let flutterApi: PlayerFlutterApiImpl
     private let player: MPMusicPlayerController
-//    private var timer: Timer?
     private var isBackground = false
-    private var nowPlayingItemDidChangeDebounceTimer: Timer?
-    private var playbackStateDidChangeDebounceTimer: Timer?
-    private let debounceTimeInterval = 0.1
 
     init() {
 //        playerConfig = PlayerConfig()
@@ -128,9 +124,7 @@ class MusicPlayer: MediaPlayerProtocol {
             object: player,
             queue: OperationQueue.main
         ) { _ in
-            self.nowPlayingItemDidChangeDebounce {
-                self.nowPlayingItemDidChangeCallback()
-            }
+            self.nowPlayingItemDidChangeCallback()
         }
 
         NotificationCenter.default.addObserver(
@@ -138,9 +132,7 @@ class MusicPlayer: MediaPlayerProtocol {
             object: player,
             queue: OperationQueue.main
         ) { _ in
-            self.playbackStateDidChangeDebounce {
-                self.playbackStateDidChangeCallback()
-            }
+            self.playbackStateDidChangeCallback()
         }
     }
 
@@ -159,7 +151,9 @@ class MusicPlayer: MediaPlayerProtocol {
     }
 
     private func nowPlayingItemDidChangeCallback() {
-        flutterApi.onPlaybackSongChange(song: getCurrentSong()!)
+        if let song = getCurrentSong() {
+            flutterApi.onPlaybackSongChange(song: song)
+        }
     }
 
     private func playbackStateDidChangeCallback() {
@@ -198,22 +192,6 @@ class MusicPlayer: MediaPlayerProtocol {
 
     private func setShuffle() {
         shuffleMode = player.shuffleMode == .songs
-    }
-    
-    // ios17以降MPMusicPlayerControllerNowPlayingItemDidChangeが複数回呼ばれる
-    // debounceを使用して一定時間内に複数回発生した通知を1回にまとめる
-    private func nowPlayingItemDidChangeDebounce(action: @escaping () -> Void) {
-        nowPlayingItemDidChangeDebounceTimer?.invalidate()
-        nowPlayingItemDidChangeDebounceTimer = Timer.scheduledTimer(withTimeInterval: debounceTimeInterval, repeats: false) { _ in
-            action()
-        }
-    }
-
-    private func playbackStateDidChangeDebounce(action: @escaping () -> Void) {
-        playbackStateDidChangeDebounceTimer?.invalidate()
-        playbackStateDidChangeDebounceTimer = Timer.scheduledTimer(withTimeInterval: debounceTimeInterval, repeats: false) { _ in
-            action()
-        }
     }
 
     deinit {

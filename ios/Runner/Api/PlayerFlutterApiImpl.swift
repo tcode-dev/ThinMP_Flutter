@@ -18,7 +18,7 @@ class PlayerFlutterApiImpl {
         PlayerFlutterApiImpl.api.onIsPlayingChange(isPlaying: isPlaying, completion: completion)
     }
 
-    func onPlaybackSongChange(song song: SongModel, completion: @escaping (Result<Void, PigeonError>) -> Void = { _ in }) {
+    func onPlaybackSongChange(song: SongModel, completion: @escaping (Result<Void, PigeonError>) -> Void = { _ in }) {
         let playbackSong = Song(id: song.id, title: song.title, artist: song.artist, imageId: song.imageId, duration: song.duration)
 
         PlayerFlutterApiImpl.api.onPlaybackSongChange(song: playbackSong, completion: completion)
