@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
 
 class PlainRowWidget extends StatelessWidget {
@@ -10,6 +11,8 @@ class PlainRowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      height: styleConstant[StyleType.height][SizeConstant.small],
+      alignment: Alignment.centerLeft,
       margin: const EdgeInsets.only(left: 10),
       padding: const EdgeInsets.only(top: 5, right: 10, bottom: 5),
       decoration: const BoxDecoration(
