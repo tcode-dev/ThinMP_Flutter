@@ -23,6 +23,13 @@ class PlayerHostApiImpl: PlayerHostApi {
         MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
     }
 
+    func startArtistSongs(index: Int64, artistId: String) throws {
+        let repository = SongRepository()
+        let songs = repository.findByArtistId(artistId: ArtistId(id: artistId))
+
+        MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
+    }
+
     func play() throws {
         MusicPlayer.shared.play()
     }

@@ -309,6 +309,7 @@ interface ArtworkHostApi {
 interface PlayerHostApi {
   fun startAllSongs(index: Long)
   fun startAlbumSongs(index: Long, albumId: String)
+  fun startArtistSongs(index: Long, artistId: String)
   fun play()
   fun pause()
   fun prev()
@@ -352,6 +353,25 @@ interface PlayerHostApi {
             val albumIdArg = args[1] as String
             val wrapped: List<Any?> = try {
               api.startAlbumSongs(indexArg, albumIdArg)
+              listOf(null)
+            } catch (exception: Throwable) {
+              wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.startArtistSongs$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val indexArg = args[0].let { num -> if (num is Int) num.toLong() else num as Long }
+            val artistIdArg = args[1] as String
+            val wrapped: List<Any?> = try {
+              api.startArtistSongs(indexArg, artistIdArg)
               listOf(null)
             } catch (exception: Throwable) {
               wrapError(exception)

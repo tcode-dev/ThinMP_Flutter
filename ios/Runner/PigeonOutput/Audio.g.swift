@@ -11,8 +11,6 @@ import Foundation
   #error("Unsupported platform.")
 #endif
 
-extension FlutterError: Error {}
-
 /// Error class for passing custom error details to Dart side.
 final class PigeonError: Error {
   let code: String
@@ -325,6 +323,7 @@ class ArtworkHostApiSetup {
 protocol PlayerHostApi {
   func startAllSongs(index: Int64) throws
   func startAlbumSongs(index: Int64, albumId: String) throws
+  func startArtistSongs(index: Int64, artistId: String) throws
   func play() throws
   func pause() throws
   func prev() throws
@@ -369,6 +368,22 @@ class PlayerHostApiSetup {
       }
     } else {
       startAlbumSongsChannel.setMessageHandler(nil)
+    }
+    let startArtistSongsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.startArtistSongs\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      startArtistSongsChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let indexArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
+        let artistIdArg = args[1] as! String
+        do {
+          try api.startArtistSongs(index: indexArg, artistId: artistIdArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      startArtistSongsChannel.setMessageHandler(nil)
     }
     let playChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.play\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
