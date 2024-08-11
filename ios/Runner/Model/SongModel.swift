@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct SongModel {
+struct SongModel: SongModelContract {
     let media: MPMediaItemCollection
 
     var id: String {

@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-class MusicPlayer: MediaPlayerProtocol {
+class MusicPlayer: MusicPlayerContract {
     static let shared = MusicPlayer()
     private let PREV_SECOND: Double = 3
 
@@ -104,7 +104,7 @@ class MusicPlayer: MediaPlayerProtocol {
         return Double(player.currentPlaybackTime)
     }
 
-    func changeRepeat() {
+    func setRepeat() {
 //        player.repeatMode = player.repeatMode == .none ? .all
 //            : player.repeatMode == .all ? .one
 //            : .none
@@ -112,7 +112,7 @@ class MusicPlayer: MediaPlayerProtocol {
 //        playerConfig.setRepeat(value: player.repeatMode)
     }
 
-    func shuffle() {
+    func setShuffle() {
 //        player.shuffleMode = player.shuffleMode == .off ? .songs : .off
 //        setShuffle()
 //        playerConfig.setShuffle(value: player.shuffleMode)
@@ -182,16 +182,6 @@ class MusicPlayer: MediaPlayerProtocol {
 
             break
         }
-    }
-
-    private func setRepeat() {
-        isRepeatOff = player.repeatMode == .none
-        isRepeatOne = player.repeatMode == .one
-        isRepeatAll = player.repeatMode == .all
-    }
-
-    private func setShuffle() {
-        shuffleMode = player.shuffleMode == .songs
     }
 
     deinit {

@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct AlbumModel {
+struct AlbumModel: AlbumModelContract {
     let media: MPMediaItemCollection
 
     var id: String {
@@ -43,16 +43,4 @@ struct AlbumModel {
     var artwork: MPMediaItemArtwork? {
         media.representativeItem?.artwork
     }
-
-    
-//    var albumId: AlbumId
-//    var imageId: String {
-//        id
-//    }
-//    var title: String?
-//    var artist: String?
-//    var artwork: MPMediaItemArtwork?
-//    var id: String {
-//        return String(albumId.id)
-//    }
 }

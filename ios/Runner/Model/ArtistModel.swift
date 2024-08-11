@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct ArtistModel {
+struct ArtistModel: ArtistModelContract {
     let media: MPMediaItemCollection
 
     var id: String {
@@ -22,4 +22,3 @@ struct ArtistModel {
         media.representativeItem?.artist ?? "undefined"
     }
 }
-

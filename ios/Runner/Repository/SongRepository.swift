@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-class SongRepository {
+class SongRepository: SongRepositoryContract {
     func findAll() -> [SongModel] {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.songs()
@@ -32,21 +32,6 @@ class SongRepository {
         return SongModel(media: song!)
     }
 
-//    func findByIds(songIds: [SongId]) -> [SongModel] {
-//        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
-//        let query = MPMediaQuery.songs()
-//        let ids = songIds.map { $0.id }
-//
-//        query.addFilterPredicate(property)
-//
-//        let filtered = query.collections!.filter { ids.contains($0.representativeItem?.persistentID ?? 0) }
-//
-//        return songIds
-//            .filter { songId in filtered.contains(where: { $0.representativeItem?.persistentID == songId.id }) }
-//            .map { songId in filtered.first { $0.representativeItem?.persistentID == songId.id }! }
-//            .map { SongModel(media: $0) }
-//    }
-
     func findByArtistId(artistId: ArtistId) -> [SongModel] {
         let property = MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID)
         let query = MPMediaQuery.songs()
@@ -65,12 +50,4 @@ class SongRepository {
 
         return query.collections!.map { SongModel(media: $0) }
     }
-
-//    func findByAlbumIds(albumIds: [AlbumId]) -> [SongModel] {
-//        return Array(
-//            albumIds
-//                .map { findByAlbumId(albumId: $0) }
-//                .joined()
-//        )
-//    }
 }

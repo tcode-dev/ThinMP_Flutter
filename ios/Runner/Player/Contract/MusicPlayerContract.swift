@@ -1,5 +1,5 @@
 //
-//  MediaPlayerProtocol.swift
+//  MusicPlayerContract.swift
 //  ThinMP
 //
 //  Created by tk on 2021/07/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol MediaPlayerProtocol {
+protocol MusicPlayerContract {
     func start(list: [SongModel], currentIndex: Int)
 
     func play()
@@ -20,7 +20,7 @@ protocol MediaPlayerProtocol {
 
     func seek(time: TimeInterval)
 
-    func changeRepeat()
+    func setRepeat()
 
-    func shuffle()
+    func setShuffle()
 }
