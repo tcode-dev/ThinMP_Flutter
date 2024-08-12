@@ -29,7 +29,7 @@ class AlbumHostApiImpl: AlbumHostApi {
     func getAlbumById(id: String) throws -> Album? {
         let repository = AlbumRepository()
 
-        guard let album = repository.findById(albumId: AlbumId(id: id)) else {
+        guard let album = repository.findByAlbumId(albumId: AlbumId(id: id)) else {
             return nil
         }
 
