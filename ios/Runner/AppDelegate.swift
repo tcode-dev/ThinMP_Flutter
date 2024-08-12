@@ -17,7 +17,7 @@ import Flutter
         SongHostApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: SongHostApiImpl())
 
         // FlutterApi
-        PlayerFlutterApiImpl.setup(binaryMessenger: controller.binaryMessenger)
+        PlayerFlutterApiImpl.setUp(binaryMessenger: controller.binaryMessenger)
 
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)

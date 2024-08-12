@@ -10,7 +10,7 @@ import Foundation
 class PlayerFlutterApiImpl {
     static var api: PlayerFlutterApi!
 
-    static func setup(binaryMessenger: FlutterBinaryMessenger) {
+    static func setUp(binaryMessenger: FlutterBinaryMessenger) {
         api = PlayerFlutterApi(binaryMessenger: binaryMessenger)
     }
 
