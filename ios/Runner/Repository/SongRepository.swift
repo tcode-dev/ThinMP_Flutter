@@ -17,13 +17,13 @@ class SongRepository: SongRepositoryContract {
         return query.collections!.map { SongModel(media: $0) }
     }
 
-    func findById(id: String) -> SongModel? {
+    func findBySongId(songId: SongId) -> SongModel? {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.songs()
 
         query.addFilterPredicate(property)
 
-        let song = query.collections?.first { UInt64(id) == $0.representativeItem?.persistentID }
+        let song = query.collections?.first { songId.id == $0.representativeItem?.persistentID }
 
         if (song == nil) {
             return nil

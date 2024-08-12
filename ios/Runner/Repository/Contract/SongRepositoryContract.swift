@@ -10,7 +10,7 @@ import Foundation
 protocol SongRepositoryContract {
     func findAll() -> [SongModel]
     
-    func findById(id: String) -> SongModel?
+    func findBySongId(songId: SongId) -> SongModel?
     
     func findByArtistId(artistId: ArtistId) -> [SongModel]
     
