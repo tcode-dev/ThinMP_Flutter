@@ -10,7 +10,7 @@ import Foundation
 protocol AlbumRepositoryContract {
     func findAll() -> [AlbumModel]
 
-    func findById(albumId: UInt64) -> AlbumModel?
+    func findById(albumId: AlbumId) -> AlbumModel?
     
     func findByArtistId(artistId: ArtistId) -> [AlbumModel]
 }

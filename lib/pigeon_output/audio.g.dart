@@ -230,7 +230,7 @@ class AlbumHostApi {
     }
   }
 
-  Future<Album> getAlbumById(String id) async {
+  Future<Album?> getAlbumById(String id) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.AlbumHostApi.getAlbumById$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -247,13 +247,8 @@ class AlbumHostApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Album?)!;
+      return (__pigeon_replyList[0] as Album?);
     }
   }
 }

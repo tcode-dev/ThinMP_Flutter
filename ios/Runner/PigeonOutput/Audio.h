@@ -60,7 +60,6 @@ NSObject<FlutterMessageCodec> *nullGetAudioCodec(void);
 - (nullable NSArray<Album *> *)getAllAlbumsWithError:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
 - (nullable NSArray<Album *> *)getAlbumsByArtistIdArtistId:(NSString *)artistId error:(FlutterError *_Nullable *_Nonnull)error;
-/// @return `nil` only when `error != nil`.
 - (nullable Album *)getAlbumByIdId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
 @end
 

@@ -17,9 +17,8 @@ class AlbumRepository: AlbumRepositoryContract {
         return query.collections!.map { AlbumModel(media: $0) }
     }
 
-    func findById(albumId: UInt64) -> AlbumModel? {
-        print(albumId)
-        let property = MPMediaPropertyPredicate(value: albumId, forProperty: MPMediaItemPropertyAlbumPersistentID)
+    func findById(albumId: AlbumId) -> AlbumModel? {
+        let property = MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID)
         let query = MPMediaQuery.albums()
 
         query.addFilterPredicate(property)

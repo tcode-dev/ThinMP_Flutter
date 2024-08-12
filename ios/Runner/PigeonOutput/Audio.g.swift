@@ -209,7 +209,7 @@ class AudioPigeonCodec: FlutterStandardMessageCodec, @unchecked Sendable {
 protocol AlbumHostApi {
   func getAllAlbums() throws -> [Album]
   func getAlbumsByArtistId(artistId: String) throws -> [Album]
-  func getAlbumById(id: String) throws -> Album
+  func getAlbumById(id: String) throws -> Album?
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.

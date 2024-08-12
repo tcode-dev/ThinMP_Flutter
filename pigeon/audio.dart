@@ -42,7 +42,7 @@ class Song {
 abstract class AlbumHostApi {
   List<Album> getAllAlbums();
   List<Album> getAlbumsByArtistId(String artistId);
-  Album getAlbumById(String id);
+  Album? getAlbumById(String id);
 }
 
 @HostApi()

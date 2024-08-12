@@ -26,15 +26,11 @@ class AlbumHostApiImpl: AlbumHostApi {
         }
     }
 
-    func getAlbumById(id: String) throws -> Album {
+    func getAlbumById(id: String) throws -> Album? {
         let repository = AlbumRepository()
 
-        guard let albumId = UInt64(id) else {
-            throw NSError(domain: "Invalid ID", code: 1, userInfo: nil)
-        }
-
-        guard let album = repository.findById(albumId: albumId) else {
-            throw NSError(domain: "Album not found", code: 2, userInfo: nil)
+        guard let album = repository.findById(albumId: AlbumId(id: id)) else {
+            return nil
         }
 
         return Album(id: album.id, title: album.title, artist: album.artist, imageId: album.imageId)
