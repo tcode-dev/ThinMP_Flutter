@@ -175,7 +175,7 @@ private object AudioPigeonCodec : StandardMessageCodec() {
 interface AlbumHostApi {
   fun getAllAlbums(): List<Album>
   fun getAlbumsByArtistId(artistId: String): List<Album>
-  fun getAlbumById(id: String): Album
+  fun getAlbumById(id: String): Album?
 
   companion object {
     /** The codec used by AlbumHostApi. */

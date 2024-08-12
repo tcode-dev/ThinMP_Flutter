@@ -18,7 +18,7 @@ class PlayerFlutterApiImpl {
     }
 
     fun onPlaybackSongChange(song: SongModel) {
-        val playbackSong = Song(song.id, song.name, song.artistName, song.albumId)
+        val playbackSong = Song(song.id, song.name, song.artistName, song.imageId, song.duration.toDouble())
 
         api.onPlaybackSongChange(playbackSong) { }
     }

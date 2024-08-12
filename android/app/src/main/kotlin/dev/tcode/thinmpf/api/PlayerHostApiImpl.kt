@@ -15,6 +15,14 @@ class PlayerHostApiImpl(private val context: Context): PlayerHostApi {
         player.start(songs, index.toInt())
     }
 
+    override fun startAlbumSongs(index: Long, albumId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun startArtistSongs(index: Long, artistId: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun play() {
         player.play()
     }
@@ -29,5 +37,13 @@ class PlayerHostApiImpl(private val context: Context): PlayerHostApi {
 
     override fun next() {
         player.next()
+    }
+
+    override fun seek(time: Double) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getCurrentTime(): Double {
+        TODO("Not yet implemented")
     }
 }

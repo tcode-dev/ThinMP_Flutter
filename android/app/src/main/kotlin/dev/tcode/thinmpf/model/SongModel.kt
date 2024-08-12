@@ -18,6 +18,9 @@ class SongModel(
 //        get() = songId.id
         get() = songId
 
+    val imageId: String
+        get() = albumId
+
     val imageUri: Uri
         get() =  Uri.parse("${MediaConstant.ALBUM_ART}/${albumId}")
 
