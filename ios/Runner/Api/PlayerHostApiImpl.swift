@@ -5,26 +5,22 @@
 //  Created by tk on 2024/06/25.
 //
 
-import Foundation
-import UIKit
-
 class PlayerHostApiImpl: PlayerHostApi {
+    private let repository = SongRepository()
+
     func startAllSongs(index: Int64) throws {
-        let repository = SongRepository()
         let songs = repository.findAll()
 
         MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
     }
 
     func startAlbumSongs(index: Int64, albumId: String) throws {
-        let repository = SongRepository()
         let songs = repository.findByAlbumId(albumId: AlbumId(id: albumId))
 
         MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
     }
 
     func startArtistSongs(index: Int64, artistId: String) throws {
-        let repository = SongRepository()
         let songs = repository.findByArtistId(artistId: ArtistId(id: artistId))
 
         MusicPlayer.shared.start(list: songs, currentIndex: Int(index))

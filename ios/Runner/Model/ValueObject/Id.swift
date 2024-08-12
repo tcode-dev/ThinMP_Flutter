@@ -5,7 +5,6 @@
 //  Created by t k on 2024/08/10.
 //
 
-import Foundation
 import MediaPlayer
 
 class Id {
