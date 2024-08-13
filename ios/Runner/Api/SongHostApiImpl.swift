@@ -10,55 +10,19 @@ class SongHostApiImpl: SongHostApi {
 
     func getAllSongs() throws -> [Song] {
         let songs = repository.findAll()
-        
-        return songs.map { song in
-            Song(
-                id: String(song.id.raw),
-                name: song.name,
-                albumId: String(song.albumId.raw),
-                albumName: song.albumName,
-                artistId: String(song.artistId.raw),
-                artistName: song.artistName,
-                imageId: song.imageId,
-                duration: song.duration,
-                trackNumber: Double(song.duration)
-            )
-        }
+
+        return songs.map { $0.toSong() }
     }
     
     func getSongsByArtistId(artistId: String) throws -> [Song] {
         let songs = repository.findByArtistId(artistId: ArtistId(id: artistId))
 
-        return songs.map { song in
-            Song(
-                id: String(song.id.raw),
-                name: song.name,
-                albumId: String(song.albumId.raw),
-                albumName: song.albumName,
-                artistId: String(song.artistId.raw),
-                artistName: song.artistName,
-                imageId: song.imageId,
-                duration: song.duration,
-                trackNumber: Double(song.duration)
-            )
-        }
+        return songs.map { $0.toSong() }
     }
     
     func getSongsByAlbumId(albumId: String) throws -> [Song] {
         let songs = repository.findByAlbumId(albumId: AlbumId(id: albumId))
 
-        return songs.map { song in
-            Song(
-                id: String(song.id.raw),
-                name: song.name,
-                albumId: String(song.albumId.raw),
-                albumName: song.albumName,
-                artistId: String(song.artistId.raw),
-                artistName: song.artistName,
-                imageId: song.imageId,
-                duration: song.duration,
-                trackNumber: Double(song.duration)
-            )
-        }
+        return songs.map { $0.toSong() }
     }
 }
