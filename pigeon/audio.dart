@@ -10,34 +10,48 @@ import 'package:pigeon/pigeon.dart';
   swiftOut: 'ios/Runner/PigeonOutput/Audio.g.swift',
   swiftOptions: SwiftOptions(),
 ))
-
-class Album {
-  Album(this.id, this.title, this.artist, this.imageId);
+class Song {
+  Song({required this.id, required this.name, required this.albumId, required this.albumName, required this.artistId, required this.artistName, required this.imageId, required this.duration, required this.trackNumber});
 
   final String id;
-  final String title;
-  final String artist;
+  final String name;
+  final String albumId;
+  final String albumName;
+  final String artistId;
+  final String artistName;
+  final String imageId;
+  final double duration;
+  final double trackNumber;
+}
+
+class Album {
+  Album({required this.id, required this.name, required this.artistId, required this.artistName, required this.imageId});
+
+  final String id;
+  final String name;
+  final String artistId;
+  final String artistName;
   final String imageId;
 }
 
 class Artist {
-  Artist(this.id, this.artist);
+  Artist(this.id, this.name);
 
   final String id;
-  final String artist;
+  final String name;
 }
 
-class Song {
-  Song(this.id, this.title, this.artist, this.imageId, this.duration);
-
-  final String id;
-  final String title;
-  final String artist;
-  final String imageId;
-  final double duration;
-}
-
+///
 /// HostApi
+///
+@HostApi()
+abstract class SongHostApi {
+  List<Song> getAllSongs();
+  List<Song> getSongsByAlbumId(String albumId);
+  List<Song> getSongsByArtistId(String artistId);
+  // List<Song> getSongsByIds(List<String> ids);
+}
+
 @HostApi()
 abstract class AlbumHostApi {
   List<Album> getAllAlbums();
@@ -70,15 +84,9 @@ abstract class PlayerHostApi {
   double getCurrentTime();
 }
 
-@HostApi()
-abstract class SongHostApi {
-  List<Song> getAllSongs();
-  List<Song> getSongsByArtistId(String artistId);
-  List<Song> getSongsByAlbumId(String albumId);
-  // List<Song> getSongsByIds(List<String> ids);
-}
-
+///
 /// FlutterApi
+///
 @FlutterApi()
 abstract class PlayerFlutterApi {
   void onIsPlayingChange(bool isPlaying);
