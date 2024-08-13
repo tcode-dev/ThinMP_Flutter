@@ -1,6 +1,7 @@
 package dev.tcode.thinmpf
 
-import PlayerFlutterApi
+import dev.tcode.thinmpf.api.AlbumHostApiImpl
+import dev.tcode.thinmpf.api.ArtistHostApiImpl
 import dev.tcode.thinmpf.api.ArtworkHostApiImpl
 import dev.tcode.thinmpf.api.PlayerFlutterApiImpl
 import dev.tcode.thinmpf.api.PlayerHostApiImpl
@@ -13,6 +14,8 @@ class MainActivity : FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
 
         // HostApi
+        AlbumHostApi.setUp(flutterEngine.dartExecutor.binaryMessenger, AlbumHostApiImpl(this))
+        ArtistHostApi.setUp(flutterEngine.dartExecutor.binaryMessenger, ArtistHostApiImpl(this))
         ArtworkHostApi.setUp(flutterEngine.dartExecutor.binaryMessenger, ArtworkHostApiImpl(this))
         PlayerHostApi.setUp(flutterEngine.dartExecutor.binaryMessenger, PlayerHostApiImpl(this))
         SongHostApi.setUp(flutterEngine.dartExecutor.binaryMessenger, SongHostApiImpl(this))

@@ -47,10 +47,54 @@ class FlutterError (
 ) : Throwable()
 
 /** Generated class from Pigeon that represents data sent in messages. */
+data class Song (
+  val id: String,
+  val name: String,
+  val albumId: String,
+  val albumName: String,
+  val artistId: String,
+  val artistName: String,
+  val imageId: String,
+  val duration: Double,
+  val trackNumber: Double
+
+) {
+  companion object {
+    @Suppress("LocalVariableName")
+    fun fromList(__pigeon_list: List<Any?>): Song {
+      val id = __pigeon_list[0] as String
+      val name = __pigeon_list[1] as String
+      val albumId = __pigeon_list[2] as String
+      val albumName = __pigeon_list[3] as String
+      val artistId = __pigeon_list[4] as String
+      val artistName = __pigeon_list[5] as String
+      val imageId = __pigeon_list[6] as String
+      val duration = __pigeon_list[7] as Double
+      val trackNumber = __pigeon_list[8] as Double
+      return Song(id, name, albumId, albumName, artistId, artistName, imageId, duration, trackNumber)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf(
+      id,
+      name,
+      albumId,
+      albumName,
+      artistId,
+      artistName,
+      imageId,
+      duration,
+      trackNumber,
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
 data class Album (
   val id: String,
-  val title: String,
-  val artist: String,
+  val name: String,
+  val artistId: String,
+  val artistName: String,
   val imageId: String
 
 ) {
@@ -58,17 +102,19 @@ data class Album (
     @Suppress("LocalVariableName")
     fun fromList(__pigeon_list: List<Any?>): Album {
       val id = __pigeon_list[0] as String
-      val title = __pigeon_list[1] as String
-      val artist = __pigeon_list[2] as String
-      val imageId = __pigeon_list[3] as String
-      return Album(id, title, artist, imageId)
+      val name = __pigeon_list[1] as String
+      val artistId = __pigeon_list[2] as String
+      val artistName = __pigeon_list[3] as String
+      val imageId = __pigeon_list[4] as String
+      return Album(id, name, artistId, artistName, imageId)
     }
   }
   fun toList(): List<Any?> {
     return listOf(
       id,
-      title,
-      artist,
+      name,
+      artistId,
+      artistName,
       imageId,
     )
   }
@@ -77,52 +123,21 @@ data class Album (
 /** Generated class from Pigeon that represents data sent in messages. */
 data class Artist (
   val id: String,
-  val artist: String
+  val name: String
 
 ) {
   companion object {
     @Suppress("LocalVariableName")
     fun fromList(__pigeon_list: List<Any?>): Artist {
       val id = __pigeon_list[0] as String
-      val artist = __pigeon_list[1] as String
-      return Artist(id, artist)
+      val name = __pigeon_list[1] as String
+      return Artist(id, name)
     }
   }
   fun toList(): List<Any?> {
     return listOf(
       id,
-      artist,
-    )
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class Song (
-  val id: String,
-  val title: String,
-  val artist: String,
-  val imageId: String,
-  val duration: Double
-
-) {
-  companion object {
-    @Suppress("LocalVariableName")
-    fun fromList(__pigeon_list: List<Any?>): Song {
-      val id = __pigeon_list[0] as String
-      val title = __pigeon_list[1] as String
-      val artist = __pigeon_list[2] as String
-      val imageId = __pigeon_list[3] as String
-      val duration = __pigeon_list[4] as Double
-      return Song(id, title, artist, imageId, duration)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      id,
-      title,
-      artist,
-      imageId,
-      duration,
+      name,
     )
   }
 }
@@ -131,17 +146,17 @@ private object AudioPigeonCodec : StandardMessageCodec() {
     return when (type) {
       129.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          Album.fromList(it)
+          Song.fromList(it)
         }
       }
       130.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          Artist.fromList(it)
+          Album.fromList(it)
         }
       }
       131.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          Song.fromList(it)
+          Artist.fromList(it)
         }
       }
       else -> super.readValueOfType(type, buffer)
@@ -149,15 +164,15 @@ private object AudioPigeonCodec : StandardMessageCodec() {
   }
   override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
     when (value) {
-      is Album -> {
+      is Song -> {
         stream.write(129)
         writeValue(stream, value.toList())
       }
-      is Artist -> {
+      is Album -> {
         stream.write(130)
         writeValue(stream, value.toList())
       }
-      is Song -> {
+      is Artist -> {
         stream.write(131)
         writeValue(stream, value.toList())
       }
@@ -168,10 +183,80 @@ private object AudioPigeonCodec : StandardMessageCodec() {
 
 
 /**
+ *
  * HostApi
+ *
+ *
  *
  * Generated interface from Pigeon that represents a handler of messages from Flutter.
  */
+interface SongHostApi {
+  fun getAllSongs(): List<Song>
+  fun getSongsByAlbumId(albumId: String): List<Song>
+  fun getSongsByArtistId(artistId: String): List<Song>
+
+  companion object {
+    /** The codec used by SongHostApi. */
+    val codec: MessageCodec<Any?> by lazy {
+      AudioPigeonCodec
+    }
+    /** Sets up an instance of `SongHostApi` to handle messages through the `binaryMessenger`. */
+    @JvmOverloads
+    fun setUp(binaryMessenger: BinaryMessenger, api: SongHostApi?, messageChannelSuffix: String = "") {
+      val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.SongHostApi.getAllSongs$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            val wrapped: List<Any?> = try {
+              listOf(api.getAllSongs())
+            } catch (exception: Throwable) {
+              wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.SongHostApi.getSongsByAlbumId$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val albumIdArg = args[0] as String
+            val wrapped: List<Any?> = try {
+              listOf(api.getSongsByAlbumId(albumIdArg))
+            } catch (exception: Throwable) {
+              wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.SongHostApi.getSongsByArtistId$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val artistIdArg = args[0] as String
+            val wrapped: List<Any?> = try {
+              listOf(api.getSongsByArtistId(artistIdArg))
+            } catch (exception: Throwable) {
+              wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+    }
+  }
+}
+/** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface AlbumHostApi {
   fun getAllAlbums(): List<Album>
   fun getAlbumsByArtistId(artistId: String): List<Album>
@@ -482,75 +567,10 @@ interface PlayerHostApi {
     }
   }
 }
-/** Generated interface from Pigeon that represents a handler of messages from Flutter. */
-interface SongHostApi {
-  fun getAllSongs(): List<Song>
-  fun getSongsByArtistId(artistId: String): List<Song>
-  fun getSongsByAlbumId(albumId: String): List<Song>
-
-  companion object {
-    /** The codec used by SongHostApi. */
-    val codec: MessageCodec<Any?> by lazy {
-      AudioPigeonCodec
-    }
-    /** Sets up an instance of `SongHostApi` to handle messages through the `binaryMessenger`. */
-    @JvmOverloads
-    fun setUp(binaryMessenger: BinaryMessenger, api: SongHostApi?, messageChannelSuffix: String = "") {
-      val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.SongHostApi.getAllSongs$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { _, reply ->
-            val wrapped: List<Any?> = try {
-              listOf(api.getAllSongs())
-            } catch (exception: Throwable) {
-              wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.SongHostApi.getSongsByArtistId$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val artistIdArg = args[0] as String
-            val wrapped: List<Any?> = try {
-              listOf(api.getSongsByArtistId(artistIdArg))
-            } catch (exception: Throwable) {
-              wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.SongHostApi.getSongsByAlbumId$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val albumIdArg = args[0] as String
-            val wrapped: List<Any?> = try {
-              listOf(api.getSongsByAlbumId(albumIdArg))
-            } catch (exception: Throwable) {
-              wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-    }
-  }
-}
 /**
+ *
  * FlutterApi
+ *
  *
  * Generated class from Pigeon that represents Flutter messages that can be called from Kotlin.
  */

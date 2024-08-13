@@ -3,6 +3,9 @@ package dev.tcode.thinmpf.repository
 import android.content.Context
 import android.provider.MediaStore
 import dev.tcode.thinmpf.model.SongModel
+import dev.tcode.thinmpf.model.valueObject.AlbumId
+import dev.tcode.thinmpf.model.valueObject.ArtistId
+import dev.tcode.thinmpf.model.valueObject.SongId
 
 class SongRepository(context: Context) : MediaStoreRepository<SongModel>(
     context, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, arrayOf(
@@ -33,20 +36,20 @@ class SongRepository(context: Context) : MediaStoreRepository<SongModel>(
 //
 //        return getList()
 //    }
-//
-//    fun findByArtistId(artistId: String): List<SongModel> {
-//        selection = MediaStore.Audio.Media.ARTIST_ID + " = ? AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
-//        selectionArgs = arrayOf(artistId)
-//        sortOrder = MediaStore.Audio.Media.ALBUM + " ASC, " + MediaStore.Audio.Media._ID + " ASC"
-//        return getList()
-//    }
-//
-//    fun findByAlbumId(albumId: String): List<SongModel> {
-//        selection = MediaStore.Audio.Media.ALBUM_ID + " = ? AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
-//        selectionArgs = arrayOf(albumId)
-//
-//        return getList()
-//    }
+
+    fun findByArtistId(artistId: ArtistId): List<SongModel> {
+        selection = MediaStore.Audio.Media.ARTIST_ID + " = ? AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
+        selectionArgs = arrayOf(artistId.raw)
+        sortOrder = MediaStore.Audio.Media.ALBUM + " ASC, " + MediaStore.Audio.Media._ID + " ASC"
+        return getList()
+    }
+
+    fun findByAlbumId(albumId: AlbumId): List<SongModel> {
+        selection = MediaStore.Audio.Media.ALBUM_ID + " = ? AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
+        selectionArgs = arrayOf(albumId.raw)
+
+        return getList()
+    }
 
     fun findAll(): List<SongModel> {
         selection = MediaStore.Audio.Media.IS_MUSIC + " = 1"
@@ -90,7 +93,14 @@ class SongRepository(context: Context) : MediaStoreRepository<SongModel>(
 
     private fun getSong(): SongModel {
         return SongModel(
-            getId(), getTitle(), getArtistId(), getArtistName(), getAlbumId(), getAlbumName(), getDuration(), getTrackNumber()
+            id = getId(),
+            name = getTitle(),
+            albumId = getAlbumId(),
+            albumName = getAlbumName(),
+            artistId = getArtistId(),
+            artistName = getArtistName(),
+            duration = getDuration(),
+            trackNumber = getTrackNumber()
         )
     }
 
