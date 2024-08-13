@@ -12,7 +12,17 @@ class SongHostApiImpl: SongHostApi {
         let songs = repository.findAll()
         
         return songs.map { song in
-            Song(id: song.id, title: song.title, artist: song.artist, imageId: song.imageId, duration: song.duration)
+            Song(
+                id: String(song.id.raw),
+                name: song.name,
+                albumId: String(song.albumId.raw),
+                albumName: song.albumName,
+                artistId: String(song.artistId.raw),
+                artistName: song.artistName,
+                imageId: song.imageId,
+                duration: song.duration,
+                trackNumber: Double(song.duration)
+            )
         }
     }
     
@@ -20,7 +30,17 @@ class SongHostApiImpl: SongHostApi {
         let songs = repository.findByArtistId(artistId: ArtistId(id: artistId))
 
         return songs.map { song in
-            Song(id: song.id, title: song.title, artist: song.artist, imageId: song.imageId, duration: song.duration)
+            Song(
+                id: String(song.id.raw),
+                name: song.name,
+                albumId: String(song.albumId.raw),
+                albumName: song.albumName,
+                artistId: String(song.artistId.raw),
+                artistName: song.artistName,
+                imageId: song.imageId,
+                duration: song.duration,
+                trackNumber: Double(song.duration)
+            )
         }
     }
     
@@ -28,7 +48,17 @@ class SongHostApiImpl: SongHostApi {
         let songs = repository.findByAlbumId(albumId: AlbumId(id: albumId))
 
         return songs.map { song in
-            Song(id: song.id, title: song.title, artist: song.artist, imageId: song.imageId, duration: song.duration)
+            Song(
+                id: String(song.id.raw),
+                name: song.name,
+                albumId: String(song.albumId.raw),
+                albumName: song.albumName,
+                artistId: String(song.artistId.raw),
+                artistName: song.artistName,
+                imageId: song.imageId,
+                duration: song.duration,
+                trackNumber: Double(song.duration)
+            )
         }
     }
 }

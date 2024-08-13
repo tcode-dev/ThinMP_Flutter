@@ -83,8 +83,8 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
                   Center(child: SquareImageWidget(id: playbackSong.imageId, size: screenSize.width * 0.65)),
                   const Spacer(),
                   Column(children: [
-                    Text(playbackSong.title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineMedium),
-                    Text(playbackSong.artist, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
+                    Text(playbackSong.name, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineMedium),
+                    Text(playbackSong.artistName, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
                   ]),
                   const Spacer(),
                   const SliderWidget(),

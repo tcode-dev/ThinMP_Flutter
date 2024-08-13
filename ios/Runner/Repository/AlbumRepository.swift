@@ -18,7 +18,7 @@ class AlbumRepository: AlbumRepositoryContract {
     }
 
     func findByAlbumId(albumId: AlbumId) -> AlbumModel? {
-        let property = MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID)
+        let property = MPMediaPropertyPredicate(value: albumId.raw, forProperty: MPMediaItemPropertyAlbumPersistentID)
         let query = MPMediaQuery.albums()
 
         query.addFilterPredicate(property)
@@ -27,7 +27,7 @@ class AlbumRepository: AlbumRepositoryContract {
     }
 
     func findByArtistId(artistId: ArtistId) -> [AlbumModel] {
-        let property = MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID)
+        let property = MPMediaPropertyPredicate(value: artistId.raw, forProperty: MPMediaItemPropertyArtistPersistentID)
         let query = MPMediaQuery.albums()
 
         query.addFilterPredicate(property)

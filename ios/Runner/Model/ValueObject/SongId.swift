@@ -7,6 +7,6 @@
 
 class SongId: Id {
     func equals(_ songId: SongId) -> Bool {
-        return songId.id == id
+        return songId.raw == raw
     }
 }

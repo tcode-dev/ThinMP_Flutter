@@ -23,8 +23,8 @@ class AlbumCellWidget extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 5),
             child: SquareImageWidget(id: album.imageId, size: width),
           ),
-          TextWidget(text: album.title, textAlign: TextAlign.center),
-          TextWidget(text: album.artist, textAlign: TextAlign.center),
+          TextWidget(text: album.name, textAlign: TextAlign.center),
+          TextWidget(text: album.artistName, textAlign: TextAlign.center),
         ],
       );
     });

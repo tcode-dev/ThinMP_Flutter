@@ -8,13 +8,13 @@
 import MediaPlayer
 
 class Id {
-    var id: MPMediaEntityPersistentID
+    var raw: MPMediaEntityPersistentID
 
     init(id: Any) {
         if let id = id as? MPMediaEntityPersistentID {
-            self.id = id
+            self.raw = id
         } else if let idString = id as? String, let id = UInt64(idString) {
-            self.id = id
+            self.raw = id
         } else {
             fatalError("Invalid id type")
         }

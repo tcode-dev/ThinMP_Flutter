@@ -10,15 +10,15 @@ import MediaPlayer
 protocol AlbumModelContract {
     var media: MPMediaItemCollection { get }
 
-    var id: String { get }
+    var id: AlbumId { get }
 
-    var albumId: AlbumId { get }
+    var name: String { get }
+
+    var artistId: ArtistId { get }
+
+    var artistName: String { get }
 
     var imageId: String { get }
-
-    var title: String { get }
-
-    var artist: String { get }
 
     var artwork: MPMediaItemArtwork? { get }
 }

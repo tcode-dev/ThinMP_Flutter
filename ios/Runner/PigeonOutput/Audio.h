@@ -10,20 +10,45 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class Song;
 @class Album;
 @class Artist;
-@class Song;
+
+@interface Song : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithId:(NSString *)id
+    name:(NSString *)name
+    albumId:(NSString *)albumId
+    albumName:(NSString *)albumName
+    artistId:(NSString *)artistId
+    artistName:(NSString *)artistName
+    imageId:(NSString *)imageId
+    duration:(double )duration
+    trackNumber:(double )trackNumber;
+@property(nonatomic, copy) NSString * id;
+@property(nonatomic, copy) NSString * name;
+@property(nonatomic, copy) NSString * albumId;
+@property(nonatomic, copy) NSString * albumName;
+@property(nonatomic, copy) NSString * artistId;
+@property(nonatomic, copy) NSString * artistName;
+@property(nonatomic, copy) NSString * imageId;
+@property(nonatomic, assign) double  duration;
+@property(nonatomic, assign) double  trackNumber;
+@end
 
 @interface Album : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithId:(NSString *)id
-    title:(NSString *)title
-    artist:(NSString *)artist
+    name:(NSString *)name
+    artistId:(NSString *)artistId
+    artistName:(NSString *)artistName
     imageId:(NSString *)imageId;
 @property(nonatomic, copy) NSString * id;
-@property(nonatomic, copy) NSString * title;
-@property(nonatomic, copy) NSString * artist;
+@property(nonatomic, copy) NSString * name;
+@property(nonatomic, copy) NSString * artistId;
+@property(nonatomic, copy) NSString * artistName;
 @property(nonatomic, copy) NSString * imageId;
 @end
 
@@ -31,30 +56,32 @@ NS_ASSUME_NONNULL_BEGIN
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithId:(NSString *)id
-    artist:(NSString *)artist;
+    name:(NSString *)name;
 @property(nonatomic, copy) NSString * id;
-@property(nonatomic, copy) NSString * artist;
-@end
-
-@interface Song : NSObject
-/// `init` unavailable to enforce nonnull fields, see the `make` class method.
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)makeWithId:(NSString *)id
-    title:(NSString *)title
-    artist:(NSString *)artist
-    imageId:(NSString *)imageId
-    duration:(double )duration;
-@property(nonatomic, copy) NSString * id;
-@property(nonatomic, copy) NSString * title;
-@property(nonatomic, copy) NSString * artist;
-@property(nonatomic, copy) NSString * imageId;
-@property(nonatomic, assign) double  duration;
+@property(nonatomic, copy) NSString * name;
 @end
 
 /// The codec used by all APIs.
 NSObject<FlutterMessageCodec> *nullGetAudioCodec(void);
 
+///
 /// HostApi
+///
+///
+@protocol SongHostApi
+/// @return `nil` only when `error != nil`.
+- (nullable NSArray<Song *> *)getAllSongsWithError:(FlutterError *_Nullable *_Nonnull)error;
+/// @return `nil` only when `error != nil`.
+- (nullable NSArray<Song *> *)getSongsByAlbumIdAlbumId:(NSString *)albumId error:(FlutterError *_Nullable *_Nonnull)error;
+/// @return `nil` only when `error != nil`.
+- (nullable NSArray<Song *> *)getSongsByArtistIdArtistId:(NSString *)artistId error:(FlutterError *_Nullable *_Nonnull)error;
+@end
+
+extern void SetUpSongHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<SongHostApi> *_Nullable api);
+
+extern void SetUpSongHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NSObject<SongHostApi> *_Nullable api, NSString *messageChannelSuffix);
+
+
 @protocol AlbumHostApi
 /// @return `nil` only when `error != nil`.
 - (nullable NSArray<Album *> *)getAllAlbumsWithError:(FlutterError *_Nullable *_Nonnull)error;
@@ -105,21 +132,9 @@ extern void SetUpPlayerHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObj
 extern void SetUpPlayerHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NSObject<PlayerHostApi> *_Nullable api, NSString *messageChannelSuffix);
 
 
-@protocol SongHostApi
-/// @return `nil` only when `error != nil`.
-- (nullable NSArray<Song *> *)getAllSongsWithError:(FlutterError *_Nullable *_Nonnull)error;
-/// @return `nil` only when `error != nil`.
-- (nullable NSArray<Song *> *)getSongsByArtistIdArtistId:(NSString *)artistId error:(FlutterError *_Nullable *_Nonnull)error;
-/// @return `nil` only when `error != nil`.
-- (nullable NSArray<Song *> *)getSongsByAlbumIdAlbumId:(NSString *)albumId error:(FlutterError *_Nullable *_Nonnull)error;
-@end
-
-extern void SetUpSongHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<SongHostApi> *_Nullable api);
-
-extern void SetUpSongHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NSObject<SongHostApi> *_Nullable api, NSString *messageChannelSuffix);
-
-
+///
 /// FlutterApi
+///
 @interface PlayerFlutterApi : NSObject
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger;
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger messageChannelSuffix:(nullable NSString *)messageChannelSuffix;

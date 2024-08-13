@@ -35,7 +35,7 @@ class ArtistsPageWidget extends ConsumerWidget {
                     MaterialPageRoute(builder: (context) => ArtistDetailPageWidget(id: artist.id)),
                   );
                 },
-                child: PlainRowWidget(title: artist.artist),
+                child: PlainRowWidget(title: artist.name),
               );
             },
           ),

@@ -10,15 +10,11 @@ import MediaPlayer
 struct ArtistModel: ArtistModelContract {
     let media: MPMediaItemCollection
 
-    var id: String {
-        return String(artistId.id)
-    }
-
-    var artistId: ArtistId {
+    var id: ArtistId {
         ArtistId(id: media.representativeItem?.artistPersistentID ?? 0)
     }
 
-    var artist: String {
+    var name: String {
         media.representativeItem?.artist ?? "undefined"
     }
 }

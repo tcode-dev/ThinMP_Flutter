@@ -49,7 +49,7 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
         child: Row(
           children: [
             Container(margin: const EdgeInsets.only(right: 10), child: SquareImageWidget(id: playbackSong.imageId, size: styleConstant[StyleType.image][SizeConstant.small])),
-            Expanded(child: TextWidget(text: playbackSong.title)),
+            Expanded(child: TextWidget(text: playbackSong.name)),
             const PlayPauseButtonWidget(size: 50.0, imageSize: 44.0),
             const NextButtonWidget(size: 50.0, imageSize: 44.0),
           ],

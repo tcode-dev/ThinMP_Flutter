@@ -35,7 +35,7 @@ class AlbumDetailPageWidget extends ConsumerWidget {
                 pinned: true,
                 expandedHeight: screenSize.width - top,
                 flexibleSpace: FlexibleSpaceBar(
-                  title: Text(album.title),
+                  title: Text(album.name),
                   background: Stack(
                     children: [
                       Positioned(
@@ -69,7 +69,7 @@ class AlbumDetailPageWidget extends ConsumerWidget {
                 child: SizedBox(
                   height: 20,
                   child: Center(
-                    child: Text(album.artist),
+                    child: Text(album.artistName),
                   ),
                 ),
               ),

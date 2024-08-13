@@ -10,24 +10,38 @@ import MediaPlayer
 struct SongModel: SongModelContract {
     let media: MPMediaItemCollection
 
-    var id: String {
-        return String(songId.id)
-    }
-
-    var songId: SongId {
+    var id: SongId {
         SongId(id: media.representativeItem?.persistentID ?? 0)
     }
 
-    var imageId: String {
-        id
-    }
-
-    var title: String {
+    var name: String {
         media.representativeItem?.title ?? "undefined"
     }
 
-    var artist: String {
+    var albumId: AlbumId {
+        AlbumId(id: media.representativeItem?.albumPersistentID ?? 0)
+    }
+
+    var albumName: String {
+        if let albumTitle = media.representativeItem?.albumTitle, !albumTitle.isEmpty {
+            return albumTitle
+        } else if let title = media.representativeItem?.title, !title.isEmpty {
+            return title
+        } else {
+            return "undefined"
+        }
+    }
+
+    var artistId: ArtistId {
+        ArtistId(id: media.representativeItem?.artistPersistentID ?? 0)
+    }
+
+    var artistName: String {
         media.representativeItem?.artist ?? "undefined"
+    }
+
+    var imageId: String {
+        String(id.raw)
     }
 
     var artwork: MPMediaItemArtwork? {
@@ -36,5 +50,9 @@ struct SongModel: SongModelContract {
 
     var duration: Double {
         media.representativeItem?.playbackDuration ?? 0
+    }
+
+    var trackNumber: Int {
+        media.representativeItem?.albumTrackNumber ?? 0
     }
 }

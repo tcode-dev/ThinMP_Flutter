@@ -12,7 +12,10 @@ class ArtistHostApiImpl: ArtistHostApi {
         let artists = repository.findAll()
 
         return artists.map { artist in
-            Artist(id: artist.id, artist: artist.artist)
+            Artist(
+                id: String(artist.id.raw),
+                name: artist.name
+            )
         }
     }
 }

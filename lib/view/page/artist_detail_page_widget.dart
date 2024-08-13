@@ -42,7 +42,7 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                 pinned: true,
                 expandedHeight: screenSize.width - top,
                 flexibleSpace: FlexibleSpaceBar(
-                  title: Text(album.artist),
+                  title: Text(album.artistName),
                   background: Stack(
                     children: [
                       Positioned(

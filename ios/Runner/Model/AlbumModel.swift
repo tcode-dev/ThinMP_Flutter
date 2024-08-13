@@ -10,23 +10,11 @@ import MediaPlayer
 struct AlbumModel: AlbumModelContract {
     let media: MPMediaItemCollection
 
-    var id: String {
-        return String(albumId.id)
-    }
-
-    var albumId: AlbumId {
+    var id: AlbumId {
         AlbumId(id: media.representativeItem?.albumPersistentID ?? 0)
     }
 
-    var imageId: String {
-        if let firstItem = media.items.first {
-            return String(firstItem.persistentID)
-        } else {
-            return "0"
-        }
-    }
-
-    var title: String {
+    var name: String {
         if let albumTitle = media.representativeItem?.albumTitle, !albumTitle.isEmpty {
             return albumTitle
         } else if let title = media.representativeItem?.title, !title.isEmpty {
@@ -36,8 +24,20 @@ struct AlbumModel: AlbumModelContract {
         }
     }
 
-    var artist: String {
+    var artistId: ArtistId {
+        ArtistId(id: media.representativeItem?.artistPersistentID ?? 0)
+    }
+
+    var artistName: String {
         media.representativeItem?.artist ?? "undefined"
+    }
+
+    var imageId: String {
+        if let firstItem = media.items.first {
+            return String(firstItem.persistentID)
+        } else {
+            return "0"
+        }
     }
 
     var artwork: MPMediaItemArtwork? {

@@ -23,7 +23,7 @@ class SongRepository: SongRepositoryContract {
 
         query.addFilterPredicate(property)
 
-        let song = query.collections?.first { songId.id == $0.representativeItem?.persistentID }
+        let song = query.collections?.first { songId.raw == $0.representativeItem?.persistentID }
 
         if (song == nil) {
             return nil
@@ -33,7 +33,7 @@ class SongRepository: SongRepositoryContract {
     }
 
     func findByArtistId(artistId: ArtistId) -> [SongModel] {
-        let property = MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID)
+        let property = MPMediaPropertyPredicate(value: artistId.raw, forProperty: MPMediaItemPropertyArtistPersistentID)
         let query = MPMediaQuery.songs()
 
         query.addFilterPredicate(property)
@@ -43,7 +43,7 @@ class SongRepository: SongRepositoryContract {
     }
 
     func findByAlbumId(albumId: AlbumId) -> [SongModel] {
-        let property = MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID)
+        let property = MPMediaPropertyPredicate(value: albumId.raw, forProperty: MPMediaItemPropertyAlbumPersistentID)
         let query = MPMediaQuery.songs()
 
         query.addFilterPredicate(property)

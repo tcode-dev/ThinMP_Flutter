@@ -10,9 +10,7 @@ import MediaPlayer
 protocol ArtistModelContract {
     var media: MPMediaItemCollection { get }
 
-    var id: String { get }
+    var id: ArtistId { get }
 
-    var artistId: ArtistId { get }
-
-    var artist: String { get }
+    var name: String { get }
 }

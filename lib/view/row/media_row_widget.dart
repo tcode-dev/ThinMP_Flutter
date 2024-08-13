@@ -32,7 +32,7 @@ class MediaRowWidget extends StatelessWidget {
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [TextWidget(text: song.title), TextWidget(text: song.artist)],
+              children: [TextWidget(text: song.name), TextWidget(text: song.artistName)],
             ),
           ),
         ],
