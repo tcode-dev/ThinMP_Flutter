@@ -1,12 +1,12 @@
 package dev.tcode.thinmpf.model
 
+import dev.tcode.thinmpf.model.contract.ArtistModelContract
 import dev.tcode.thinmpf.model.valueObject.ArtistId
 
 class ArtistModel(
     id: String,
-    name: String,
-
-): Music() {
-    val id: ArtistId = ArtistId(id)
-    val name: String = name
+    name: String
+): ArtistModelContract, Music() {
+    override val id: ArtistId = ArtistId(id)
+    override val name: String = name
 }

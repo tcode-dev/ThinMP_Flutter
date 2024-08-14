@@ -2,12 +2,13 @@ package dev.tcode.thinmpf.repository
 
 import android.content.Context
 import android.provider.MediaStore
+import android.util.Log
 import dev.tcode.thinmpf.model.SongModel
 import dev.tcode.thinmpf.model.valueObject.AlbumId
 import dev.tcode.thinmpf.model.valueObject.ArtistId
-import dev.tcode.thinmpf.model.valueObject.SongId
+import dev.tcode.thinmpf.repository.contract.SongRepositoryContract
 
-class SongRepository(context: Context) : MediaStoreRepository<SongModel>(
+class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepository<SongModel>(
     context, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, arrayOf(
         MediaStore.Audio.Media._ID,
         MediaStore.Audio.Media.TITLE,
@@ -19,43 +20,25 @@ class SongRepository(context: Context) : MediaStoreRepository<SongModel>(
         MediaStore.Audio.Media.CD_TRACK_NUMBER
     )
 ) {
-//    fun findById(songId: String): Song? {
-//        selection = MediaStore.Audio.Media._ID + " = ?"
-//        selectionArgs = arrayOf(songId)
-//        sortOrder = null
-//
-//        return get()
-//    }
-//
-//    fun findByIds(songIds: List<SongId>): List<SongModel> {
-//        val ids = songIds.map { it.id }
-//
-//        selection = MediaStore.Audio.Media._ID + " IN (" + makePlaceholders(ids.size) + ") " + "AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
-//        selectionArgs = toStringArray(ids)
-//        sortOrder = null
-//
-//        return getList()
-//    }
+    override fun findAll(): List<SongModel> {
+        selection = MediaStore.Audio.Media.IS_MUSIC + " = 1"
+        selectionArgs = null
+        sortOrder = (MediaStore.Audio.Media.ARTIST + " ASC, " + MediaStore.Audio.Media.ALBUM + " ASC, " + MediaStore.Audio.Media._ID + " ASC")
 
-    fun findByArtistId(artistId: ArtistId): List<SongModel> {
-        selection = MediaStore.Audio.Media.ARTIST_ID + " = ? AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
-        selectionArgs = arrayOf(artistId.raw)
-        sortOrder = MediaStore.Audio.Media.ALBUM + " ASC, " + MediaStore.Audio.Media._ID + " ASC"
         return getList()
     }
 
-    fun findByAlbumId(albumId: AlbumId): List<SongModel> {
+    override fun findByAlbumId(albumId: AlbumId): List<SongModel> {
         selection = MediaStore.Audio.Media.ALBUM_ID + " = ? AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
         selectionArgs = arrayOf(albumId.raw)
 
         return getList()
     }
 
-    fun findAll(): List<SongModel> {
-        selection = MediaStore.Audio.Media.IS_MUSIC + " = 1"
-        selectionArgs = null
-        sortOrder = (MediaStore.Audio.Media.ARTIST + " ASC, " + MediaStore.Audio.Media.ALBUM + " ASC, " + MediaStore.Audio.Media._ID + " ASC")
-
+    override fun findByArtistId(artistId: ArtistId): List<SongModel> {
+        selection = MediaStore.Audio.Media.ARTIST_ID + " = ? AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
+        selectionArgs = arrayOf(artistId.raw)
+        sortOrder = MediaStore.Audio.Media.ALBUM + " ASC, " + MediaStore.Audio.Media._ID + " ASC"
         return getList()
     }
 
@@ -92,6 +75,7 @@ class SongRepository(context: Context) : MediaStoreRepository<SongModel>(
     }
 
     private fun getSong(): SongModel {
+        Log.d("getDuration()", (getDuration()/1000).toString())
         return SongModel(
             id = getId(),
             name = getTitle(),

@@ -4,8 +4,9 @@ import android.content.Context
 import android.provider.MediaStore
 import dev.tcode.thinmpf.model.ArtistModel
 import dev.tcode.thinmpf.model.valueObject.ArtistId
+import dev.tcode.thinmpf.repository.contract.ArtistRepositoryContract
 
-class ArtistRepository(context: Context) : MediaStoreRepository<ArtistModel>(
+class ArtistRepository(context: Context) : ArtistRepositoryContract, MediaStoreRepository<ArtistModel>(
     context, MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI, arrayOf(
         MediaStore.Audio.Artists._ID,
         MediaStore.Audio.Artists.ARTIST,
@@ -13,7 +14,7 @@ class ArtistRepository(context: Context) : MediaStoreRepository<ArtistModel>(
         MediaStore.Audio.Artists.NUMBER_OF_TRACKS
     )
 ) {
-    fun findAll(): List<ArtistModel> {
+    override fun findAll(): List<ArtistModel> {
         selection = null
         selectionArgs = null
         sortOrder = MediaStore.Audio.Artists.ARTIST + " ASC"
@@ -21,23 +22,23 @@ class ArtistRepository(context: Context) : MediaStoreRepository<ArtistModel>(
         return getList();
     }
 
-    fun findById(artistId: ArtistId): ArtistModel? {
-        selection = MediaStore.Audio.Media._ID + " = ?"
-        selectionArgs = arrayOf(artistId.raw)
-        sortOrder = null
-
-        return get()
-    }
-
-    fun findByIds(artistIds: List<ArtistId>): List<ArtistModel> {
-        val ids = artistIds.map { it.raw }
-
-        selection = MediaStore.Audio.Media._ID + " IN (" + makePlaceholders(ids.size) + ")"
-        selectionArgs = toStringArray(ids)
-        sortOrder = null
-
-        return getList()
-    }
+//    fun findById(artistId: ArtistId): ArtistModel? {
+//        selection = MediaStore.Audio.Media._ID + " = ?"
+//        selectionArgs = arrayOf(artistId.raw)
+//        sortOrder = null
+//
+//        return get()
+//    }
+//
+//    fun findByIds(artistIds: List<ArtistId>): List<ArtistModel> {
+//        val ids = artistIds.map { it.raw }
+//
+//        selection = MediaStore.Audio.Media._ID + " IN (" + makePlaceholders(ids.size) + ")"
+//        selectionArgs = toStringArray(ids)
+//        sortOrder = null
+//
+//        return getList()
+//    }
 
     private fun getId(): String {
         return cursor?.getColumnIndex(MediaStore.Audio.Artists._ID)?.let { cursor?.getString(it) } ?: ""
