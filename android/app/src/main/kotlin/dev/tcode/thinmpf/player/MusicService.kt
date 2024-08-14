@@ -33,11 +33,8 @@ class MusicService : Service() {
     private lateinit var mediaStyle: MediaStyleNotificationHelper.MediaStyle
     private lateinit var headsetEventReceiver: HeadsetEventReceiver
     private lateinit var playerEventListener: PlayerEventListener
-//    private lateinit var config: ConfigStore
-//    private lateinit var repeat: RepeatState
     private var playingList: List<SongModel> = emptyList()
     private var initialized: Boolean = false
-//    private var shuffle = false
     private var isPlaying = false
     private var isPreparing = false
 
@@ -53,19 +50,10 @@ class MusicService : Service() {
         super.onCreate()
 
         isServiceRunning = true
-//        config = ConfigStore(baseContext)
-//        repeat = config.getRepeat()
-//        shuffle = config.getShuffle()
         headsetEventReceiver = HeadsetEventReceiver { player.stop() }
 
         registerReceiver(headsetEventReceiver, IntentFilter(Intent.ACTION_HEADSET_PLUG))
         initPlayer()
-    }
-
-    fun getCurrentSong(): SongModel? {
-        if (player.currentMediaItem == null) return null
-
-        return playingList.first { MediaItem.fromUri(it.mediaUri) == player.currentMediaItem }
     }
 
     fun start(songs: List<SongModel>, index: Int) {
@@ -86,11 +74,11 @@ class MusicService : Service() {
     }
 
     fun prev() {
-        if (getCurrentPosition() <= PREV_MS) {
+        if (getCurrentTime() <= PREV_MS) {
             player.seekToPrevious()
         } else {
             player.seekTo(0)
-            onPlaybackSongChange()
+//            onPlaybackSongChange()
         }
     }
 
@@ -98,46 +86,22 @@ class MusicService : Service() {
         player.seekToNext()
     }
 
-//    fun getRepeat(): RepeatState {
-//        return repeat
-//    }
-
-//    fun changeRepeat() {
-//        repeat = when (repeat) {
-//            RepeatState.OFF -> RepeatState.ALL
-//            RepeatState.ONE -> RepeatState.OFF
-//            RepeatState.ALL -> RepeatState.ONE
-//        }
-//        setRepeat()
-//        config.saveRepeat(repeat)
-//        onChange()
-//    }
-
-//    fun getShuffle(): Boolean {
-//        return shuffle
-//    }
-
-//    fun changeShuffle() {
-//        shuffle = !shuffle
-//        setShuffle()
-//        config.saveShuffle(shuffle)
-//        onChange()
-//    }
-
-    fun seekTo(ms: Long) {
+    fun seek(ms: Long) {
         player.seekTo(ms)
-    }
-
-    fun isPlaying(): Boolean {
-        return isPlaying
     }
 
     fun isPreparing(): Boolean {
         return isPreparing
     }
 
-    fun getCurrentPosition(): Long {
+    fun getCurrentTime(): Long {
         return player.currentPosition
+    }
+
+    private fun getCurrentSong(): SongModel? {
+        if (player.currentMediaItem == null) return null
+
+        return playingList.first { MediaItem.fromUri(it.mediaUri) == player.currentMediaItem }
     }
 
     @SuppressLint("UnsafeOptInUsageError")
@@ -145,8 +109,6 @@ class MusicService : Service() {
         player = ExoPlayer.Builder(applicationContext).setLooper(Looper.getMainLooper()).build()
         mediaSession = MediaSession.Builder(applicationContext, player).build()
         mediaStyle = MediaStyleNotificationHelper.MediaStyle(mediaSession)
-//        setRepeat()
-//        setShuffle()
     }
 
     private fun setPlayer(index: Int) {
@@ -175,18 +137,6 @@ class MusicService : Service() {
 
         initialized = true
     }
-
-//    private fun setRepeat() {
-//        player.repeatMode = when (repeat) {
-//            RepeatState.OFF -> Player.REPEAT_MODE_OFF
-//            RepeatState.ONE -> Player.REPEAT_MODE_ONE
-//            RepeatState.ALL -> Player.REPEAT_MODE_ALL
-//        }
-//    }
-
-//    private fun setShuffle() {
-//        player.shuffleModeEnabled = shuffle
-//    }
 
     private fun createNotification(): Notification? {
         val song = getCurrentSong() ?: return null
@@ -218,8 +168,9 @@ class MusicService : Service() {
 
     private fun onPlaybackSongChange() {
         val playerFlutterApi = PlayerFlutterApiImpl()
+        val song = getCurrentSong() ?: return
 
-        playerFlutterApi.onPlaybackSongChange(getCurrentSong()!!)
+        playerFlutterApi.onPlaybackSongChange(song)
     }
 
     private fun onError() {
@@ -275,6 +226,7 @@ class MusicService : Service() {
             if (events.contains(Player.EVENT_POSITION_DISCONTINUITY)) return
 
             if (events.contains(Player.EVENT_MEDIA_METADATA_CHANGED)) {
+                Log.d("MusicService", "EVENT_MEDIA_METADATA_CHANGED")
                 onPlaybackSongChange()
                 notification()
                 isPreparing = false

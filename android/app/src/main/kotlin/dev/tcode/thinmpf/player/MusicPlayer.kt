@@ -15,10 +15,6 @@ class MusicPlayer(context: Context) {
         bindService(context)
     }
 
-    fun isPlaying(): Boolean {
-        return musicService?.isPlaying() == true
-    }
-
     fun start(songs: List<SongModel>, index: Int) {
         musicService?.start(songs, index)
     }
@@ -39,34 +35,13 @@ class MusicPlayer(context: Context) {
         musicService?.next()
     }
 
-    fun seekTo(ms: Long) {
-        musicService?.seekTo(ms)
+    fun seek(ms: Long) {
+        musicService?.seek(ms)
     }
 
-//    fun getRepeat(): RepeatState {
-//        return musicService?.getRepeat() ?: RepeatState.OFF
-//    }
-
-//    fun changeRepeat() {
-//        musicService?.changeRepeat()
-//    }
-//
-//    fun getShuffle(): Boolean {
-//        return musicService?.getShuffle() ?: false
-//    }
-//
-//    fun changeShuffle() {
-//        musicService?.changeShuffle()
-//    }
-//
-    fun getCurrentSong(): SongModel? {
-        return musicService?.getCurrentSong()
+    fun getCurrentTime(): Long {
+        return musicService?.getCurrentTime() ?: 0
     }
-//
-//    fun getCurrentPosition(): Long {
-//        return musicService?.getCurrentPosition() ?: 0
-//    }
-//
 
     private fun bindService(context: Context) {
         context.startForegroundService(Intent(context, MusicService::class.java))
