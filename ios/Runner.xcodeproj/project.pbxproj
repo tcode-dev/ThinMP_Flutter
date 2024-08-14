@@ -23,6 +23,7 @@
 		52357F7F2B80F71C00133631 /* SongRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52357F7E2B80F71C00133631 /* SongRepository.swift */; };
 		52384F922C32205C00013C69 /* ArtworkHostApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52384F912C32205C00013C69 /* ArtworkHostApiImpl.swift */; };
 		5242234E2C56087700B03E00 /* PlayerFlutterApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242234D2C56087700B03E00 /* PlayerFlutterApiImpl.swift */; };
+		524DDAA22C6C7DA7008B4331 /* ArtistModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524DDAA12C6C7DA7008B4331 /* ArtistModelExtension.swift */; };
 		5251600F2C6C2566007292D2 /* SongModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5251600E2C6C2566007292D2 /* SongModelExtension.swift */; };
 		525160112C6C28C8007292D2 /* AlbumModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525160102C6C28C8007292D2 /* AlbumModelExtension.swift */; };
 		527307212B61E42B00E65B2F /* SongHostApiImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527307202B61E42B00E65B2F /* SongHostApiImpl.swift */; };
@@ -89,6 +90,7 @@
 		52357F7E2B80F71C00133631 /* SongRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongRepository.swift; sourceTree = "<group>"; };
 		52384F912C32205C00013C69 /* ArtworkHostApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkHostApiImpl.swift; sourceTree = "<group>"; };
 		5242234D2C56087700B03E00 /* PlayerFlutterApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFlutterApiImpl.swift; sourceTree = "<group>"; };
+		524DDAA12C6C7DA7008B4331 /* ArtistModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistModelExtension.swift; sourceTree = "<group>"; };
 		5251600E2C6C2566007292D2 /* SongModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongModelExtension.swift; sourceTree = "<group>"; };
 		525160102C6C28C8007292D2 /* AlbumModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModelExtension.swift; sourceTree = "<group>"; };
 		527307202B61E42B00E65B2F /* SongHostApiImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongHostApiImpl.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				525160102C6C28C8007292D2 /* AlbumModelExtension.swift */,
+				524DDAA12C6C7DA7008B4331 /* ArtistModelExtension.swift */,
 				5251600E2C6C2566007292D2 /* SongModelExtension.swift */,
 			);
 			path = Extension;
@@ -552,6 +555,7 @@
 				52E78C422C67405600E766AA /* ArtistRepository.swift in Sources */,
 				527F19CC2C697D0F009B1E61 /* ArtistRepositoryContract.swift in Sources */,
 				52E135892B823CE1006C91B1 /* SongModel.swift in Sources */,
+				524DDAA22C6C7DA7008B4331 /* ArtistModelExtension.swift in Sources */,
 				52F5A0C22C5F077F00F4446C /* Audio.m in Sources */,
 				52E78C402C673F7D00E766AA /* ArtistHostApiImpl.swift in Sources */,
 				527F19CE2C697D82009B1E61 /* SongRepositoryContract.swift in Sources */,
