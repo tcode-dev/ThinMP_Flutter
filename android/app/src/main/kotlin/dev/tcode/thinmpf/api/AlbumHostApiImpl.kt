@@ -24,7 +24,7 @@ class AlbumHostApiImpl(context: Context) : AlbumHostApi {
     }
 
     override fun getAlbumById(id: String): Album? {
-        val album = repository.findById(AlbumId(id))
+        val album = repository.findByAlbumId(AlbumId(id))
 
         return album?.toAlbum()
     }

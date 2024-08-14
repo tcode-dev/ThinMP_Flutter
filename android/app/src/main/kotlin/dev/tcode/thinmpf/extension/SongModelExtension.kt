@@ -1,8 +1,7 @@
 package dev.tcode.thinmpf.extension
 
-import Album
 import Song
-import dev.tcode.thinmpf.model.AlbumModel
+import android.util.Log
 import dev.tcode.thinmpf.model.SongModel
 
 fun SongModel.toSong(): Song {
@@ -14,17 +13,7 @@ fun SongModel.toSong(): Song {
         artistId = this.artistId.raw,
         artistName = this.artistName,
         imageId = this.imageId,
-        duration = this.duration.toDouble(),
+        duration = this.duration.toDouble() / 1000,
         trackNumber = this.trackNumber
-    )
-}
-
-fun AlbumModel.toAlbum(): Album {
-    return Album(
-        id = this.id.raw,
-        name = this.name,
-        artistId = this.artistId.raw,
-        artistName = this.artistName,
-        imageId = this.imageId
     )
 }
