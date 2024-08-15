@@ -36,7 +36,7 @@ class MusicService : Service() {
     private var playingList: List<SongModel> = emptyList()
     private var initialized: Boolean = false
     private var isPlaying = false
-    private var isPreparing = false
+    private var isStarting = false
 
     // Serviceの起動状態を確認する必要がある
     // Android13以降を対象にしているのでgetRunningServicesやLocalBroadcastManagerは使用できない
@@ -57,7 +57,9 @@ class MusicService : Service() {
     }
 
     fun start(songs: List<SongModel>, index: Int) {
-        isPreparing = true
+        if (isStarting) return
+
+        isStarting = true
         playingList = songs
 
         setPlayer(index)
@@ -78,7 +80,6 @@ class MusicService : Service() {
             player.seekToPrevious()
         } else {
             player.seekTo(0)
-//            onPlaybackSongChange()
         }
     }
 
@@ -88,10 +89,6 @@ class MusicService : Service() {
 
     fun seek(ms: Long) {
         player.seekTo(ms)
-    }
-
-    fun isPreparing(): Boolean {
-        return isPreparing
     }
 
     fun getCurrentTime(): Long {
@@ -194,7 +191,7 @@ class MusicService : Service() {
 
             start(list, nextIndex)
         } else {
-            isPreparing = false
+            isStarting = false
         }
     }
 
@@ -226,10 +223,9 @@ class MusicService : Service() {
             if (events.contains(Player.EVENT_POSITION_DISCONTINUITY)) return
 
             if (events.contains(Player.EVENT_MEDIA_METADATA_CHANGED)) {
-                Log.d("MusicService", "EVENT_MEDIA_METADATA_CHANGED")
                 onPlaybackSongChange()
                 notification()
-                isPreparing = false
+                isStarting = false
             }
             if (events.contains(Player.EVENT_IS_PLAYING_CHANGED)) {
                 isPlaying = player.isPlaying
@@ -248,7 +244,7 @@ class MusicService : Service() {
                 retry()
                 onError()
             } else {
-                isPreparing = false
+                isStarting = false
             }
         }
     }

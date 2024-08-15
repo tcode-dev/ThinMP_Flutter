@@ -75,7 +75,6 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
     }
 
     private fun getSong(): SongModel {
-        Log.d("getDuration()", (getDuration()/1000).toString())
         return SongModel(
             id = getId(),
             name = getTitle(),

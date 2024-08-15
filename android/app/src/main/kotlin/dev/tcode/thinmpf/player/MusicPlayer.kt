@@ -7,15 +7,22 @@ import android.content.ServiceConnection
 import android.os.IBinder
 import dev.tcode.thinmpf.model.SongModel
 
-class MusicPlayer(context: Context) {
+class MusicPlayer(var context: Context) {
     private var musicService: MusicService? = null
     private lateinit var connection: ServiceConnection
-
-    init {
-        bindService(context)
-    }
+    private var isServiceBinding = false
+    private var bound = false
 
     fun start(songs: List<SongModel>, index: Int) {
+        if (!isServiceRunning()) {
+            if (isServiceBinding) return
+
+            context.startForegroundService(Intent(context, MusicService::class.java))
+            bindService(context) { musicService?.start(songs, index) }
+
+            return
+        }
+
         musicService?.start(songs, index)
     }
 
@@ -43,16 +50,16 @@ class MusicPlayer(context: Context) {
         return musicService?.getCurrentTime() ?: 0
     }
 
-    private fun bindService(context: Context) {
-        context.startForegroundService(Intent(context, MusicService::class.java))
-        connection = createConnection()
+    private fun isServiceRunning(): Boolean {
+        return MusicService.isServiceRunning
+    }
+
+    private fun bindService(context: Context, callback: () -> Unit? = {}) {
+        isServiceBinding = true
+        connection = createConnection(callback)
         context.bindService(
             Intent(context, MusicService::class.java), connection, Context.BIND_AUTO_CREATE
         )
-    }
-
-    private fun isPreparing(): Boolean {
-        return musicService?.isPreparing() == true
     }
 
     fun unbindService(context: Context) {
@@ -60,11 +67,14 @@ class MusicPlayer(context: Context) {
         musicService = null
     }
 
-    private fun createConnection(): ServiceConnection {
+    private fun createConnection(callback: () -> Unit? = {}): ServiceConnection {
         return object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName, service: IBinder) {
                 val binder: MusicService.MusicBinder = service as MusicService.MusicBinder
                 musicService = binder.getService()
+                callback()
+                isServiceBinding = false
+                bound = true
             }
 
             override fun onServiceDisconnected(name: ComponentName) {}
