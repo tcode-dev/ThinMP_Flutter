@@ -29,10 +29,10 @@ class AlbumsPageWidget extends ConsumerWidget {
           GridView.builder(
             padding: EdgeInsets.all(styleConstant[StyleType.padding][SizeConstant.large]),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
-              mainAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
               childAspectRatio: childAspectRatio,
               crossAxisCount: crossAxisCount,
+              crossAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
+              mainAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
             ),
             itemCount: albums.length,
             itemBuilder: (context, index) {

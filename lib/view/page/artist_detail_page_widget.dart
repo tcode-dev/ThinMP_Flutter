@@ -1,10 +1,13 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/artist_albums_provider.dart';
 import 'package:thinmpf/provider/artist_songs_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
+import 'package:thinmpf/util/calc_child_aspect_ratio.dart';
+import 'package:thinmpf/util/calc_cross_axis_count.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
 import 'package:thinmpf/view/image/circle_image_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
@@ -31,6 +34,8 @@ class ArtistDetailPageWidget extends ConsumerWidget {
     final subTitle = '${artistAlbums.length} albums, ${artistSongs.length} songs';
     final album = artistAlbums.first!;
     final screenSize = MediaQuery.sizeOf(context);
+    final crossAxisCount = calcCrossAxisCount(screenSize.width);
+    final childAspectRatio = calcChildAspectRatio(screenSize.width, crossAxisCount);
     final top = MediaQuery.of(context).padding.top;
 
     return Scaffold(
@@ -94,13 +99,13 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                 ),
               ),
               SliverPadding(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(styleConstant[StyleType.padding][SizeConstant.large]),
                 sliver: SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                    childAspectRatio: 0.8,
-                    crossAxisCount: 2,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: childAspectRatio,
+                    crossAxisCount: crossAxisCount,
+                    crossAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
+                    mainAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
                   ),
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
