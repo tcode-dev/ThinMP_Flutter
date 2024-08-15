@@ -35,6 +35,7 @@ class AlbumDetailPageWidget extends ConsumerWidget {
                 pinned: true,
                 expandedHeight: screenSize.width - top,
                 flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
                   title: Text(album.name),
                   background: Stack(
                     children: [

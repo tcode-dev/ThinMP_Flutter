@@ -17,9 +17,10 @@ class ArtistsPageWidget extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: const Text('artists'),
+        title: const Text('Artists'),
       ),
       body: Stack(
         children: [

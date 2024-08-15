@@ -16,9 +16,10 @@ class SongsPageWidget extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: const Text('songs'),
+        title: const Text('Songs'),
       ),
       body: Stack(
         children: [

@@ -20,9 +20,10 @@ class AlbumsPageWidget extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: const Text('albums'),
+        title: const Text('Albums'),
       ),
       body: Stack(
         children: [
