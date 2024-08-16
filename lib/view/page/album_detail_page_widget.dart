@@ -6,6 +6,7 @@ import 'package:thinmpf/provider/album_songs_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
+import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';
 
 final PlayerHostApi _player = PlayerHostApi();
@@ -84,6 +85,9 @@ class AlbumDetailPageWidget extends ConsumerWidget {
                     child: MediaRowWidget(song: albumSongs[index]!),
                   );
                 }, childCount: albumSongs.length),
+              ),
+              const SliverToBoxAdapter(
+                child: EmptyRowWidget(),
               ),
             ],
           ),
