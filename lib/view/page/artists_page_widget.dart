@@ -4,6 +4,7 @@ import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/artists_provider.dart';
 import 'package:thinmpf/view/page/artist_detail_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
+import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/row/plain_row_widget.dart';
 
 class ArtistsPageWidget extends ConsumerWidget {
@@ -24,21 +25,28 @@ class ArtistsPageWidget extends ConsumerWidget {
       ),
       body: Stack(
         children: [
-          ListView.builder(
-            itemCount: artists.length,
-            itemBuilder: (context, index) {
-              final artist = artists[index]!;
+          CustomScrollView(
+            slivers: <Widget>[
+              SliverFixedExtentList(
+                itemExtent: 51,
+                delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                  final artist = artists[index]!;
 
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ArtistDetailPageWidget(id: artist.id)),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ArtistDetailPageWidget(id: artist.id)),
+                      );
+                    },
+                    child: PlainRowWidget(title: artist.name),
                   );
-                },
-                child: PlainRowWidget(title: artist.name),
-              );
-            },
+                }, childCount: artists.length),
+              ),
+              const SliverToBoxAdapter(
+                child: EmptyRowWidget(),
+              ),
+            ],
           ),
           const Positioned(
             right: 0.0,
