@@ -7,6 +7,7 @@ import 'package:thinmpf/util/calc_cross_axis_count.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
 import 'package:thinmpf/view/page/album_detail_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
+import 'package:thinmpf/view/row/empty_row_widget.dart';
 
 class AlbumsPageWidget extends ConsumerWidget {
   const AlbumsPageWidget({super.key});
@@ -27,28 +28,39 @@ class AlbumsPageWidget extends ConsumerWidget {
       ),
       body: Stack(
         children: [
-          GridView.builder(
-            padding: EdgeInsets.all(styleConstant[StyleType.padding][SizeConstant.large]),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: childAspectRatio,
-              crossAxisCount: crossAxisCount,
-              crossAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
-              mainAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
-            ),
-            itemCount: albums.length,
-            itemBuilder: (context, index) {
-              final album = albums[index]!;
+          CustomScrollView(
+            slivers: <Widget>[
+              SliverPadding(
+                padding: EdgeInsets.all(styleConstant[StyleType.padding][SizeConstant.large]),
+                sliver: SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: childAspectRatio,
+                    crossAxisCount: crossAxisCount,
+                    crossAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
+                    mainAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      final album = albums[index]!;
 
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album.id)),
-                  );
-                },
-                child: AlbumCellWidget(album: album),
-              );
-            },
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album.id)),
+                          );
+                        },
+                        child: AlbumCellWidget(album: album),
+                      );
+                    },
+                    childCount: albums.length,
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: EmptyRowWidget(),
+              ),
+            ],
           ),
           const Positioned(
             right: 0.0,
