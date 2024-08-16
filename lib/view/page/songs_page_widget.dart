@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/songs_provider.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
+import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';
 
 final PlayerHostApi _player = PlayerHostApi();
@@ -23,18 +24,23 @@ class SongsPageWidget extends ConsumerWidget {
       ),
       body: Stack(
         children: [
-          ListView.builder(
-            itemCount: songs.length,
-            itemBuilder: (context, index) {
-              final song = songs[index]!;
-
-              return GestureDetector(
-                onTap: () {
-                  _player.startAllSongs(index);
-                },
-                child: MediaRowWidget(song: song),
-              );
-            },
+          CustomScrollView(
+            slivers: <Widget>[
+              SliverFixedExtentList(
+                itemExtent: 51,
+                delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      _player.startAllSongs(index);
+                    },
+                    child: MediaRowWidget(song: songs[index]!),
+                  );
+                }, childCount: songs.length),
+              ),
+              const SliverToBoxAdapter(
+                child: EmptyRowWidget(),
+              ),
+            ],
           ),
           const Positioned(
             right: 0.0,
