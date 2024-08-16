@@ -13,6 +13,7 @@ import 'package:thinmpf/view/image/circle_image_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/page/album_detail_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
+import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';
 
 final PlayerHostApi _player = PlayerHostApi();
@@ -142,6 +143,9 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                     child: MediaRowWidget(song: artistSongs[index]!),
                   );
                 }, childCount: artistSongs.length),
+              ),
+              const SliverToBoxAdapter(
+                child: EmptyRowWidget(),
               ),
             ],
           ),
