@@ -13,7 +13,7 @@ class SongsPageWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final songs = ref.watch(songsProvider).value ?? [];
+    final songsAsyncValue = ref.watch(songsProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -24,23 +24,33 @@ class SongsPageWidget extends ConsumerWidget {
       ),
       body: Stack(
         children: [
-          CustomScrollView(
-            slivers: <Widget>[
-              SliverFixedExtentList(
-                itemExtent: 51,
-                delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      _player.startAllSongs(index);
-                    },
-                    child: MediaRowWidget(song: songs[index]!),
-                  );
-                }, childCount: songs.length),
-              ),
-              const SliverToBoxAdapter(
-                child: EmptyRowWidget(),
-              ),
-            ],
+          songsAsyncValue.when(
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            data: (songs) {
+              return CustomScrollView(
+                slivers: <Widget>[
+                  SliverFixedExtentList(
+                    itemExtent: 51,
+                    delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          _player.startAllSongs(index);
+                        },
+                        child: MediaRowWidget(song: songs[index]!),
+                      );
+                    }, childCount: songs.length),
+                  ),
+                  const SliverToBoxAdapter(
+                    child: EmptyRowWidget(),
+                  ),
+                ],
+              );
+            },
+            error: (Object error, StackTrace stackTrace) {
+              return Text('Error: $error');
+            },
           ),
           const Positioned(
             right: 0.0,
