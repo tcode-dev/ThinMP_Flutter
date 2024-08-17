@@ -23,7 +23,11 @@ class _PermissionWidgetState extends State<PermissionWidget> {
       future: platformSelect(permissionConstant).request(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting || snapshot.data == null) {
-          return Container();
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         }
         if (snapshot.data!.values.every((status) => status.isGranted)) {
           return widget.child;
