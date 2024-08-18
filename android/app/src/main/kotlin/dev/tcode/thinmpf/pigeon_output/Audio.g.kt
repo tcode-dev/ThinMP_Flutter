@@ -187,7 +187,6 @@ private object AudioPigeonCodec : StandardMessageCodec() {
  * HostApi
  *
  *
- *
  * Generated interface from Pigeon that represents a handler of messages from Flutter.
  */
 interface SongHostApi {
@@ -356,7 +355,7 @@ interface ArtistHostApi {
 }
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface ArtworkHostApi {
-  fun queryArtwork(id: String, callback: (Result<ByteArray?>) -> Unit)
+  fun getArtwork(id: String, callback: (Result<ByteArray?>) -> Unit)
 
   companion object {
     /** The codec used by ArtworkHostApi. */
@@ -368,12 +367,12 @@ interface ArtworkHostApi {
     fun setUp(binaryMessenger: BinaryMessenger, api: ArtworkHostApi?, messageChannelSuffix: String = "") {
       val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.ArtworkHostApi.queryArtwork$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.ArtworkHostApi.getArtwork$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
             val idArg = args[0] as String
-            api.queryArtwork(idArg) { result: Result<ByteArray?> ->
+            api.getArtwork(idArg) { result: Result<ByteArray?> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))

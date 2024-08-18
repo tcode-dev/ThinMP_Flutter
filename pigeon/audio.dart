@@ -67,7 +67,7 @@ abstract class ArtistHostApi {
 @HostApi()
 abstract class ArtworkHostApi {
   @async
-  Uint8List? queryArtwork(String id);
+  Uint8List? getArtwork(String id);
 }
 
 @HostApi()

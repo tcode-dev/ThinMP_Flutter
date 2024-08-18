@@ -190,7 +190,6 @@ class _PigeonCodec extends StandardMessageCodec {
 ///
 /// HostApi
 ///
-///
 class SongHostApi {
   /// Constructor for [SongHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
@@ -430,8 +429,8 @@ class ArtworkHostApi {
 
   final String __pigeon_messageChannelSuffix;
 
-  Future<Uint8List?> queryArtwork(String id) async {
-    final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.ArtworkHostApi.queryArtwork$__pigeon_messageChannelSuffix';
+  Future<Uint8List?> getArtwork(String id) async {
+    final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.ArtworkHostApi.getArtwork$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,

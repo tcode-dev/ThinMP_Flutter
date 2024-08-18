@@ -6,7 +6,7 @@
 //
 
 class ArtworkHostApiImpl: ArtworkHostApi {
-    func queryArtwork(id: String, completion: @escaping (Result<FlutterStandardTypedData?, Error>) -> Void) {
+    func getArtwork(id: String, completion: @escaping (Result<FlutterStandardTypedData?, Error>) -> Void) {
         let repository = SongRepository()
         let song = repository.findBySongId(songId: SongId(id: id))
         let image = song?.artwork?.image(at: CGSize(width: 100, height: 100))

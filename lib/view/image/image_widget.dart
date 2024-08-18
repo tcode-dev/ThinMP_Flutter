@@ -22,7 +22,7 @@ class _ImageWidgetState extends State<ImageWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Uint8List?>(
-      future: api.queryArtwork(widget.id),
+      future: api.getArtwork(widget.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SizedBox(

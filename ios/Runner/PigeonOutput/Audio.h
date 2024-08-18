@@ -67,7 +67,6 @@ NSObject<FlutterMessageCodec> *nullGetAudioCodec(void);
 ///
 /// HostApi
 ///
-///
 @protocol SongHostApi
 /// @return `nil` only when `error != nil`.
 - (nullable NSArray<Song *> *)getAllSongsWithError:(FlutterError *_Nullable *_Nonnull)error;
@@ -106,7 +105,7 @@ extern void SetUpArtistHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessen
 
 
 @protocol ArtworkHostApi
-- (void)queryArtworkId:(NSString *)id completion:(void (^)(FlutterStandardTypedData *_Nullable, FlutterError *_Nullable))completion;
+- (void)getArtworkId:(NSString *)id completion:(void (^)(FlutterStandardTypedData *_Nullable, FlutterError *_Nullable))completion;
 @end
 
 extern void SetUpArtworkHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<ArtworkHostApi> *_Nullable api);

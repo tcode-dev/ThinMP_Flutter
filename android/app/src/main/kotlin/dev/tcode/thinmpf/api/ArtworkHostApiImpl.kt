@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 
 class ArtworkHostApiImpl(private val context: Context) : ArtworkHostApi {
-    override fun queryArtwork(id: String, callback: (Result<ByteArray?>) -> Unit) {
+    override fun getArtwork(id: String, callback: (Result<ByteArray?>) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             val albumArtUri = Uri.parse("${MediaConstant.ALBUM_ART}/${id}")
             val source = ImageDecoder.createSource(context.contentResolver, albumArtUri)

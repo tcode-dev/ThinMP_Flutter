@@ -227,7 +227,6 @@ class AudioPigeonCodec: FlutterStandardMessageCodec, @unchecked Sendable {
 /// HostApi
 ///
 ///
-///
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol SongHostApi {
   func getAllSongs() throws -> [Song]
@@ -372,7 +371,7 @@ class ArtistHostApiSetup {
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol ArtworkHostApi {
-  func queryArtwork(id: String, completion: @escaping (Result<FlutterStandardTypedData?, Error>) -> Void)
+  func getArtwork(id: String, completion: @escaping (Result<FlutterStandardTypedData?, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -381,12 +380,12 @@ class ArtworkHostApiSetup {
   /// Sets up an instance of `ArtworkHostApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: ArtworkHostApi?, messageChannelSuffix: String = "") {
     let channelSuffix = messageChannelSuffix.count > 0 ? ".\(messageChannelSuffix)" : ""
-    let queryArtworkChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.ArtworkHostApi.queryArtwork\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let getArtworkChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.ArtworkHostApi.getArtwork\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      queryArtworkChannel.setMessageHandler { message, reply in
+      getArtworkChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let idArg = args[0] as! String
-        api.queryArtwork(id: idArg) { result in
+        api.getArtwork(id: idArg) { result in
           switch result {
           case .success(let res):
             reply(wrapResult(res))
@@ -396,7 +395,7 @@ class ArtworkHostApiSetup {
         }
       }
     } else {
-      queryArtworkChannel.setMessageHandler(nil)
+      getArtworkChannel.setMessageHandler(nil)
     }
   }
 }

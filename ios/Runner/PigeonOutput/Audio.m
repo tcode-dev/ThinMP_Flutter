@@ -377,15 +377,15 @@ void SetUpArtworkHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, N
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.thinmpf.ArtworkHostApi.queryArtwork", messageChannelSuffix]
+        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.thinmpf.ArtworkHostApi.getArtwork", messageChannelSuffix]
         binaryMessenger:binaryMessenger
         codec:nullGetAudioCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(queryArtworkId:completion:)], @"ArtworkHostApi api (%@) doesn't respond to @selector(queryArtworkId:completion:)", api);
+      NSCAssert([api respondsToSelector:@selector(getArtworkId:completion:)], @"ArtworkHostApi api (%@) doesn't respond to @selector(getArtworkId:completion:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         NSArray<id> *args = message;
         NSString *arg_id = GetNullableObjectAtIndex(args, 0);
-        [api queryArtworkId:arg_id completion:^(FlutterStandardTypedData *_Nullable output, FlutterError *_Nullable error) {
+        [api getArtworkId:arg_id completion:^(FlutterStandardTypedData *_Nullable output, FlutterError *_Nullable error) {
           callback(wrapResult(output, error));
         }];
       }];
