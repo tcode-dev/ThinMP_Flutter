@@ -49,9 +49,7 @@ class SongsPageWidget extends ConsumerWidget {
               );
             },
             error: (Object error, StackTrace stackTrace) {
-              return Center(
-                child: Text('Error: $error'),
-              );
+              return ErrorWidget(error);
             },
           ),
           const Positioned(
