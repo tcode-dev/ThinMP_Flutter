@@ -37,7 +37,7 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
     final screenSize = MediaQuery.sizeOf(context);
     final top = MediaQuery.of(context).padding.top;
     final bottom = MediaQuery.of(context).padding.bottom;
-    final appBarheight = AppBar().preferredSize.height;
+    final appBarHeight = AppBar().preferredSize.height;
 
     return Scaffold(
       body: Stack(
@@ -76,8 +76,8 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
             ),
           ),
           Positioned(
-            top: appBarheight,
-            left: 5.0,
+            top: appBarHeight,
+            left: 0.0,
             child: const BackButton(),
           ),
           Positioned(
