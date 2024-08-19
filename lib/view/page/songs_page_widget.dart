@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/songs_provider.dart';
+import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';
@@ -25,9 +26,7 @@ class SongsPageWidget extends ConsumerWidget {
       body: Stack(
         children: [
           songsAsyncValue.when(
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
-            ),
+            loading: () => const LoadingWidget(),
             error: (Object error, StackTrace stackTrace) {
               return ErrorWidget(error);
             },

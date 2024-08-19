@@ -10,6 +10,7 @@ import 'package:thinmpf/util/calc_cross_axis_count.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
 import 'package:thinmpf/view/image/circle_image_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
+import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/page/album_detail_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
@@ -34,9 +35,7 @@ class ArtistDetailPageWidget extends ConsumerWidget {
       body: Stack(
         children: [
           asyncValue.when(
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
-            ),
+            loading: () => const LoadingWidget(),
             error: (Object error, StackTrace stackTrace) {
               return ErrorWidget(error);
             },

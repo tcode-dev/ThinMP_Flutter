@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:thinmpf/constant/permission_constant.dart';
 import 'package:thinmpf/util/platform_select.dart';
+import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
 
 class PermissionWidget extends StatefulWidget {
@@ -24,9 +25,7 @@ class _PermissionWidgetState extends State<PermissionWidget> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting || snapshot.data == null) {
           return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
+            body: LoadingWidget(),
           );
         }
         if (snapshot.data!.values.every((status) => status.isGranted)) {

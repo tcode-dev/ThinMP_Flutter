@@ -4,6 +4,7 @@ import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/album_detail_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
+import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';
@@ -25,9 +26,7 @@ class AlbumDetailPageWidget extends ConsumerWidget {
       body: Stack(
         children: [
           asyncValue.when(
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
-            ),
+            loading: () => const LoadingWidget(),
             error: (Object error, StackTrace stackTrace) {
               return ErrorWidget(error);
             },
