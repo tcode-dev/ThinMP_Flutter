@@ -4,9 +4,7 @@ import 'package:thinmpf/view/button/button_widget.dart';
 class PlaylistButtonWidget extends StatelessWidget {
   const PlaylistButtonWidget({Key? key}) : super(key: key);
 
-  void _addPlaylist() {
-
-  }
+  void _addPlaylist() {}
 
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,7 @@ const Map<StyleType, dynamic> styleConstant = {
   StyleType.height: {
     SizeConstant.small: 50.0,
   },
-    StyleType.image: {
+  StyleType.image: {
     SizeConstant.small: 40.0,
     SizeConstant.medium: 70.0,
     SizeConstant.large: 90.0,
@@ -23,8 +23,5 @@ const Map<StyleType, dynamic> styleConstant = {
     SizeConstant.large: 20.0,
   },
   StyleType.radius: 4.0,
-  StyleType.grid: {
-      "minSpanCount": 2,
-      "spanBaseSize": 200
-  },
+  StyleType.grid: {"minSpanCount": 2, "spanBaseSize": 200},
 };

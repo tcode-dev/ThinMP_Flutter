@@ -4,9 +4,7 @@ import 'package:thinmpf/view/button/button_widget.dart';
 class FavoriteArtistButtonWidget extends StatelessWidget {
   const FavoriteArtistButtonWidget({Key? key}) : super(key: key);
 
-  void _favoriteArtist() {
-
-  }
+  void _favoriteArtist() {}
 
   @override
   Widget build(BuildContext context) {
