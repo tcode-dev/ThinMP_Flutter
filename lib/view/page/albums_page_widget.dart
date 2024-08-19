@@ -14,7 +14,7 @@ class AlbumsPageWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final albums = ref.watch(albumsProvider).value ?? [];
+    final asyncValue = ref.watch(albumsProvider);
     final screenSize = MediaQuery.sizeOf(context);
     final crossAxisCount = calcCrossAxisCount(screenSize.width);
     final childAspectRatio = calcChildAspectRatio(screenSize.width, crossAxisCount);
@@ -28,39 +28,49 @@ class AlbumsPageWidget extends ConsumerWidget {
       ),
       body: Stack(
         children: [
-          CustomScrollView(
-            slivers: <Widget>[
-              SliverPadding(
-                padding: EdgeInsets.all(styleConstant[StyleType.padding][SizeConstant.large]),
-                sliver: SliverGrid(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: childAspectRatio,
-                    crossAxisCount: crossAxisCount,
-                    crossAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
-                    mainAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
-                  ),
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      final album = albums[index]!;
+          asyncValue.when(
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            error: (Object error, StackTrace stackTrace) {
+              return ErrorWidget(error);
+            },
+            data: (vm) {
+              return CustomScrollView(
+                slivers: <Widget>[
+                  SliverPadding(
+                    padding: EdgeInsets.all(styleConstant[StyleType.padding][SizeConstant.large]),
+                    sliver: SliverGrid(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: childAspectRatio,
+                        crossAxisCount: crossAxisCount,
+                        crossAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
+                        mainAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          final album = vm.albums[index]!;
 
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album.id)),
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album.id)),
+                              );
+                            },
+                            child: AlbumCellWidget(album: album),
                           );
                         },
-                        child: AlbumCellWidget(album: album),
-                      );
-                    },
-                    childCount: albums.length,
+                        childCount: vm.albums.length,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: EmptyRowWidget(),
-              ),
-            ],
+                  const SliverToBoxAdapter(
+                    child: EmptyRowWidget(),
+                  ),
+                ],
+              );
+            },
           ),
           const Positioned(
             right: 0.0,

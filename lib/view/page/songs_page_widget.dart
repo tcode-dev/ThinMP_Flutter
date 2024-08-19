@@ -28,7 +28,10 @@ class SongsPageWidget extends ConsumerWidget {
             loading: () => const Center(
               child: CircularProgressIndicator(),
             ),
-            data: (songs) {
+            error: (Object error, StackTrace stackTrace) {
+              return ErrorWidget(error);
+            },
+            data: (vm) {
               return CustomScrollView(
                 slivers: <Widget>[
                   SliverFixedExtentList(
@@ -38,18 +41,15 @@ class SongsPageWidget extends ConsumerWidget {
                         onTap: () {
                           _player.startAllSongs(index);
                         },
-                        child: MediaRowWidget(song: songs[index]!),
+                        child: MediaRowWidget(song: vm.songs[index]!),
                       );
-                    }, childCount: songs.length),
+                    }, childCount: vm.songs.length),
                   ),
                   const SliverToBoxAdapter(
                     child: EmptyRowWidget(),
                   ),
                 ],
               );
-            },
-            error: (Object error, StackTrace stackTrace) {
-              return ErrorWidget(error);
             },
           ),
           const Positioned(

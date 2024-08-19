@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 
-final api = ArtworkHostApi();
+final _api = ArtworkHostApi();
 
 class ImageWidget extends StatefulWidget {
   final String id;
@@ -22,7 +22,7 @@ class _ImageWidgetState extends State<ImageWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Uint8List?>(
-      future: api.getArtwork(widget.id),
+      future: _api.getArtwork(widget.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SizedBox(

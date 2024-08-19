@@ -14,7 +14,7 @@ class ArtistsPageWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final artists = ref.watch(artistsProvider).value ?? [];
+    final asyncValue = ref.watch(artistsProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -25,28 +25,38 @@ class ArtistsPageWidget extends ConsumerWidget {
       ),
       body: Stack(
         children: [
-          CustomScrollView(
-            slivers: <Widget>[
-              SliverFixedExtentList(
-                itemExtent: 51,
-                delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                  final artist = artists[index]!;
+          asyncValue.when(
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            error: (Object error, StackTrace stackTrace) {
+              return ErrorWidget(error);
+            },
+            data: (vm) {
+              return CustomScrollView(
+                slivers: <Widget>[
+                  SliverFixedExtentList(
+                    itemExtent: 51,
+                    delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                      final artist = vm.artists[index]!;
 
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ArtistDetailPageWidget(id: artist.id)),
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ArtistDetailPageWidget(id: artist.id)),
+                          );
+                        },
+                        child: PlainRowWidget(title: artist.name),
                       );
-                    },
-                    child: PlainRowWidget(title: artist.name),
-                  );
-                }, childCount: artists.length),
-              ),
-              const SliverToBoxAdapter(
-                child: EmptyRowWidget(),
-              ),
-            ],
+                    }, childCount: vm.artists.length),
+                  ),
+                  const SliverToBoxAdapter(
+                    child: EmptyRowWidget(),
+                  ),
+                ],
+              );
+            },
           ),
           const Positioned(
             right: 0.0,

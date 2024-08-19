@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:thinmpf/constant/style_constant.dart';
-import 'package:thinmpf/pigeon_output/audio.g.dart';
+import 'package:thinmpf/model/song_model.dart';
 import 'package:thinmpf/view/image/square_image_widget.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
 
 class MediaRowWidget extends StatelessWidget {
-  final Song song;
+  final SongModel song;
 
   const MediaRowWidget({
     super.key,
