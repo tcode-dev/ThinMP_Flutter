@@ -6,7 +6,7 @@
 //
 
 extension SongModel {
-    func toSong() -> Song {
+    func toPigeon() -> Song {
         return Song(
             id: String(self.id.raw),
             name: self.name,

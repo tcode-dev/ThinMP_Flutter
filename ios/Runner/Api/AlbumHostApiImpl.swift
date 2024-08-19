@@ -11,13 +11,13 @@ class AlbumHostApiImpl: AlbumHostApi {
     func getAllAlbums() throws -> [Album] {
         let albums = repository.findAll()
         
-        return albums.map { $0.toAlbum() }
+        return albums.map { $0.toPigeon() }
     }
 
     func getAlbumsByArtistId(artistId: String) throws -> [Album] {
         let albums = repository.findByArtistId(artistId: ArtistId(id: artistId))
         
-        return albums.map { $0.toAlbum() }
+        return albums.map { $0.toPigeon() }
     }
 
     func getAlbumById(id: String) throws -> Album? {
@@ -25,6 +25,6 @@ class AlbumHostApiImpl: AlbumHostApi {
             return nil
         }
 
-        return album.toAlbum()
+        return album.toPigeon()
     }
 }

@@ -1,7 +1,7 @@
 package dev.tcode.thinmpf.api
 
 import PlayerFlutterApi
-import dev.tcode.thinmpf.extension.toSong
+import dev.tcode.thinmpf.extension.toPigeon
 import dev.tcode.thinmpf.model.SongModel
 import io.flutter.plugin.common.BinaryMessenger
 
@@ -18,6 +18,6 @@ class PlayerFlutterApiImpl {
     }
 
     fun onPlaybackSongChange(song: SongModel) {
-        api.onPlaybackSongChange(song.toSong()) { }
+        api.onPlaybackSongChange(song.toPigeon()) { }
     }
 }

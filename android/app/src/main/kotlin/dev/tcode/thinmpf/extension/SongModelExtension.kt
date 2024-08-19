@@ -1,10 +1,9 @@
 package dev.tcode.thinmpf.extension
 
 import Song
-import android.util.Log
 import dev.tcode.thinmpf.model.SongModel
 
-fun SongModel.toSong(): Song {
+fun SongModel.toPigeon(): Song {
     return Song(
         id = this.id.raw,
         name = this.name,

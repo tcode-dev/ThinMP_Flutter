@@ -11,6 +11,6 @@ class ArtistHostApiImpl: ArtistHostApi {
     func getAllArtists() throws -> [Artist] {
         let artists = repository.findAll()
 
-        return artists.map { $0.toArtist() }
+        return artists.map { $0.toPigeon() }
     }
 }

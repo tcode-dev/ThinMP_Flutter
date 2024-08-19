@@ -11,18 +11,18 @@ class SongHostApiImpl: SongHostApi {
     func getAllSongs() throws -> [Song] {
         let songs = repository.findAll()
 
-        return songs.map { $0.toSong() }
+        return songs.map { $0.toPigeon() }
     }
     
     func getSongsByArtistId(artistId: String) throws -> [Song] {
         let songs = repository.findByArtistId(artistId: ArtistId(id: artistId))
 
-        return songs.map { $0.toSong() }
+        return songs.map { $0.toPigeon() }
     }
     
     func getSongsByAlbumId(albumId: String) throws -> [Song] {
         let songs = repository.findByAlbumId(albumId: AlbumId(id: albumId))
 
-        return songs.map { $0.toSong() }
+        return songs.map { $0.toPigeon() }
     }
 }

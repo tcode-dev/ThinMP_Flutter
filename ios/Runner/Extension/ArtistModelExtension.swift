@@ -6,7 +6,7 @@
 //
 
 extension ArtistModel {
-    func toArtist() -> Artist {
+    func toPigeon() -> Artist {
         return Artist(
             id: String(self.id.raw),
             name: self.name
