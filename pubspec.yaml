@@ -40,6 +40,8 @@ dependencies:
   pigeon: ^21.1.0
   permission_handler: ^11.3.1
   blur: ^4.0.0
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
