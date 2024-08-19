@@ -84,7 +84,7 @@ class AlbumDetailPageWidget extends ConsumerWidget {
                         onTap: () {
                           _player.startAlbumSongs(index, id);
                         },
-                        child: MediaRowWidget(song: vm.songs[index]!),
+                        child: MediaRowWidget(song: vm.songs[index]),
                       );
                     }, childCount: vm.songs.length),
                   ),

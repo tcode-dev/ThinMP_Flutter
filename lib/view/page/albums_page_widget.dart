@@ -49,7 +49,7 @@ class AlbumsPageWidget extends ConsumerWidget {
                       ),
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                          final album = vm.albums[index]!;
+                          final album = vm.albums[index];
 
                           return GestureDetector(
                             onTap: () {
