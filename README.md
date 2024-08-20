@@ -24,7 +24,10 @@ This is a simple music player for Android and iOS.
 
 ## Environments
 
+### Flutter
+
 * Flutter
+* Dart
 * Visual Studio Code
 
 ### Android
@@ -46,6 +49,7 @@ This is a simple music player for Android and iOS.
 
 ## Libraries
 
+* flutter_localizations - https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization
 * flutter_riverpod - https://pub.dev/packages/flutter_riverpod
 * pigeon - https://pub.dev/packages/pigeon
 * permission_handler - https://pub.dev/packages/permission_handler
