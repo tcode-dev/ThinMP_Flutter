@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/songs_provider.dart';
@@ -21,7 +22,7 @@ class SongsPageWidget extends ConsumerWidget {
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: const Text('Songs'),
+        title: Text(AppLocalizations.of(context)!.songs),
       ),
       body: Stack(
         children: [

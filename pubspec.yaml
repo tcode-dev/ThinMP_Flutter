@@ -42,6 +42,7 @@ dependencies:
   blur: ^4.0.0
   flutter_localizations:
     sdk: flutter
+  intl: any
 
 dev_dependencies:
   flutter_test:
@@ -98,3 +99,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  generate: true
