@@ -10,10 +10,10 @@ import android.graphics.ImageDecoder
 import android.os.Binder
 import android.os.IBinder
 import android.os.Looper
-import android.util.Log
 import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
+import androidx.media3.common.Tracks
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaStyleNotificationHelper
@@ -135,6 +135,10 @@ class MusicService : Service() {
         initialized = true
     }
 
+    private fun seekToFirst() {
+        player.seekTo(0, 0)
+    }
+
     private fun createNotification(): Notification? {
         val song = getCurrentSong() ?: return null
         var albumArtBitmap: Bitmap? = null
@@ -222,20 +226,28 @@ class MusicService : Service() {
         override fun onEvents(player: Player, events: Player.Events) {
             if (events.contains(Player.EVENT_POSITION_DISCONTINUITY)) return
 
-            if (events.contains(Player.EVENT_MEDIA_METADATA_CHANGED)) {
-                onPlaybackSongChange()
-                notification()
-                isStarting = false
-            }
+            // onIsPlayingChangedだとシーク操作時に再生/停止ボタンの切り替えが繰り返し発生する
             if (events.contains(Player.EVENT_IS_PLAYING_CHANGED)) {
                 isPlaying = player.isPlaying
                 onIsPlayingChange()
             }
         }
 
-        override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+        // onMediaItemTransition初回再生時に呼ばれない
+        override fun onTracksChanged(tracks: Tracks) {
+            super.onTracksChanged(tracks)
             onPlaybackSongChange()
             notification()
+            isStarting = false
+        }
+
+        override fun onPlaybackStateChanged(playbackState: Int) {
+            if (playbackState == Player.STATE_ENDED) {
+                player.pause()
+                seekToFirst()
+                onIsPlayingChange()
+                onPlaybackSongChange()
+            }
         }
 
         override fun onPlayerError(error: PlaybackException) {

@@ -105,6 +105,7 @@ class SliderWidgetState extends ConsumerState<SliderWidget> {
         _startTimer();
       } else {
         _stopTimer();
+        ref.read(currentTimeProvider.notifier).update();
       }
     });
 
