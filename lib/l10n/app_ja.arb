@@ -1,3 +1,5 @@
 {
-  "songs": "曲"
+  "songs": "曲",
+  "permissionDenied": "権限が拒否されています。アプリの設定で権限を変更できます。",
+  "openAppSettings": "アプリの設定を開く"
 }
