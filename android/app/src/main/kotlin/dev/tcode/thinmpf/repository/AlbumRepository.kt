@@ -1,6 +1,8 @@
 package dev.tcode.thinmpf.repository
 
+import android.content.ContentResolver
 import android.content.Context
+import android.os.Bundle
 import android.provider.MediaStore
 import dev.tcode.thinmpf.model.AlbumModel
 import dev.tcode.thinmpf.model.valueObject.AlbumId
@@ -39,6 +41,20 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         sortOrder = null
 
         return getList()
+    }
+
+    fun findFirstByArtistId(artistId: ArtistId): AlbumModel? {
+        selection = null
+        selectionArgs = null
+        bundle = Bundle().apply {
+            putStringArray(ContentResolver.QUERY_ARG_SORT_COLUMNS, arrayOf(MediaStore.Audio.Albums.ALBUM))
+            putInt(ContentResolver.QUERY_ARG_SORT_DIRECTION, ContentResolver.QUERY_SORT_DIRECTION_ASCENDING)
+            putInt(ContentResolver.QUERY_ARG_LIMIT, 1)
+            putString(ContentResolver.QUERY_ARG_SQL_SELECTION, "${MediaStore.Audio.Media.ARTIST_ID} = ?")
+            putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, arrayOf(artistId.raw))
+        }
+
+        return get()
     }
 
     private fun getId(): String {

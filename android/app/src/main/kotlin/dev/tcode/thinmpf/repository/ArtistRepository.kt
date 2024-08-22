@@ -22,14 +22,14 @@ class ArtistRepository(context: Context) : ArtistRepositoryContract, MediaStoreR
         return getList();
     }
 
-//    fun findById(artistId: ArtistId): ArtistModel? {
-//        selection = MediaStore.Audio.Media._ID + " = ?"
-//        selectionArgs = arrayOf(artistId.raw)
-//        sortOrder = null
-//
-//        return get()
-//    }
-//
+    fun findById(artistId: ArtistId): ArtistModel? {
+        selection = MediaStore.Audio.Media._ID + " = ?"
+        selectionArgs = arrayOf(artistId.raw)
+        sortOrder = null
+
+        return get()
+    }
+
 //    fun findByIds(artistIds: List<ArtistId>): List<ArtistModel> {
 //        val ids = artistIds.map { it.raw }
 //

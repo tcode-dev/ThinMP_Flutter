@@ -6,7 +6,7 @@ part of 'artist_detail_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$artistDetailHash() => r'0e32688fa753567aefc8919ad530084e6670610f';
+String _$artistDetailHash() => r'fa5c5e8f72c5778a128be5f109c4235fef39b00b';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,10 +30,10 @@ class _SystemHash {
 }
 
 abstract class _$ArtistDetail
-    extends BuildlessAutoDisposeAsyncNotifier<ArtistDetailViewModel> {
+    extends BuildlessAutoDisposeAsyncNotifier<ArtistDetailViewModel?> {
   late final String id;
 
-  FutureOr<ArtistDetailViewModel> build(
+  FutureOr<ArtistDetailViewModel?> build(
     String id,
   );
 }
@@ -43,7 +43,7 @@ abstract class _$ArtistDetail
 const artistDetailProvider = ArtistDetailFamily();
 
 /// See also [ArtistDetail].
-class ArtistDetailFamily extends Family<AsyncValue<ArtistDetailViewModel>> {
+class ArtistDetailFamily extends Family<AsyncValue<ArtistDetailViewModel?>> {
   /// See also [ArtistDetail].
   const ArtistDetailFamily();
 
@@ -82,7 +82,7 @@ class ArtistDetailFamily extends Family<AsyncValue<ArtistDetailViewModel>> {
 
 /// See also [ArtistDetail].
 class ArtistDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    ArtistDetail, ArtistDetailViewModel> {
+    ArtistDetail, ArtistDetailViewModel?> {
   /// See also [ArtistDetail].
   ArtistDetailProvider(
     String id,
@@ -113,7 +113,7 @@ class ArtistDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
   final String id;
 
   @override
-  FutureOr<ArtistDetailViewModel> runNotifierBuild(
+  FutureOr<ArtistDetailViewModel?> runNotifierBuild(
     covariant ArtistDetail notifier,
   ) {
     return notifier.build(
@@ -138,7 +138,7 @@ class ArtistDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<ArtistDetail, ArtistDetailViewModel>
+  AutoDisposeAsyncNotifierProviderElement<ArtistDetail, ArtistDetailViewModel?>
       createElement() {
     return _ArtistDetailProviderElement(this);
   }
@@ -158,14 +158,14 @@ class ArtistDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
 }
 
 mixin ArtistDetailRef
-    on AutoDisposeAsyncNotifierProviderRef<ArtistDetailViewModel> {
+    on AutoDisposeAsyncNotifierProviderRef<ArtistDetailViewModel?> {
   /// The parameter `id` of this provider.
   String get id;
 }
 
 class _ArtistDetailProviderElement
     extends AutoDisposeAsyncNotifierProviderElement<ArtistDetail,
-        ArtistDetailViewModel> with ArtistDetailRef {
+        ArtistDetailViewModel?> with ArtistDetailRef {
   _ArtistDetailProviderElement(super.provider);
 
   @override

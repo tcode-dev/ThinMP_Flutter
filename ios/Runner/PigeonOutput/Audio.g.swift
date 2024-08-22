@@ -176,6 +176,33 @@ struct Artist {
     ]
   }
 }
+
+/// Generated class from Pigeon that represents data sent in messages.
+struct ArtistDetail {
+  var id: String
+  var name: String
+  var imageId: String
+
+  // swift-format-ignore: AlwaysUseLowerCamelCase
+  static func fromList(_ __pigeon_list: [Any?]) -> ArtistDetail? {
+    let id = __pigeon_list[0] as! String
+    let name = __pigeon_list[1] as! String
+    let imageId = __pigeon_list[2] as! String
+
+    return ArtistDetail(
+      id: id,
+      name: name,
+      imageId: imageId
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      id,
+      name,
+      imageId,
+    ]
+  }
+}
 private class AudioPigeonCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
@@ -185,6 +212,8 @@ private class AudioPigeonCodecReader: FlutterStandardReader {
       return Album.fromList(self.readValue() as! [Any?])
     case 131:
       return Artist.fromList(self.readValue() as! [Any?])
+    case 132:
+      return ArtistDetail.fromList(self.readValue() as! [Any?])
     default:
       return super.readValue(ofType: type)
     }
@@ -201,6 +230,9 @@ private class AudioPigeonCodecWriter: FlutterStandardWriter {
       super.writeValue(value.toList())
     } else if let value = value as? Artist {
       super.writeByte(131)
+      super.writeValue(value.toList())
+    } else if let value = value as? ArtistDetail {
+      super.writeByte(132)
       super.writeValue(value.toList())
     } else {
       super.writeValue(value)
@@ -346,6 +378,7 @@ class AlbumHostApiSetup {
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol ArtistHostApi {
   func getAllArtists() throws -> [Artist]
+  func getArtistDetailById(id: String) throws -> ArtistDetail?
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -366,6 +399,21 @@ class ArtistHostApiSetup {
       }
     } else {
       getAllArtistsChannel.setMessageHandler(nil)
+    }
+    let getArtistDetailByIdChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.ArtistHostApi.getArtistDetailById\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getArtistDetailByIdChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let idArg = args[0] as! String
+        do {
+          let result = try api.getArtistDetailById(id: idArg)
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      getArtistDetailByIdChannel.setMessageHandler(nil)
     }
   }
 }

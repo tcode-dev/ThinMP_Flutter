@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class Song;
 @class Album;
 @class Artist;
+@class ArtistDetail;
 
 @interface Song : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
@@ -61,6 +62,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString * name;
 @end
 
+@interface ArtistDetail : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithId:(NSString *)id
+    name:(NSString *)name
+    imageId:(NSString *)imageId;
+@property(nonatomic, copy) NSString * id;
+@property(nonatomic, copy) NSString * name;
+@property(nonatomic, copy) NSString * imageId;
+@end
+
 /// The codec used by all APIs.
 NSObject<FlutterMessageCodec> *nullGetAudioCodec(void);
 
@@ -97,6 +109,7 @@ extern void SetUpAlbumHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMesseng
 @protocol ArtistHostApi
 /// @return `nil` only when `error != nil`.
 - (nullable NSArray<Artist *> *)getAllArtistsWithError:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable ArtistDetail *)getArtistDetailByIdId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void SetUpArtistHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<ArtistHostApi> *_Nullable api);

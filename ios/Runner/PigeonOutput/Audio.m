@@ -49,6 +49,12 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
 - (NSArray<id> *)toList;
 @end
 
+@interface ArtistDetail ()
++ (ArtistDetail *)fromList:(NSArray<id> *)list;
++ (nullable ArtistDetail *)nullableFromList:(NSArray<id> *)list;
+- (NSArray<id> *)toList;
+@end
+
 @implementation Song
 + (instancetype)makeWithId:(NSString *)id
     name:(NSString *)name
@@ -164,6 +170,35 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
 }
 @end
 
+@implementation ArtistDetail
++ (instancetype)makeWithId:(NSString *)id
+    name:(NSString *)name
+    imageId:(NSString *)imageId {
+  ArtistDetail* pigeonResult = [[ArtistDetail alloc] init];
+  pigeonResult.id = id;
+  pigeonResult.name = name;
+  pigeonResult.imageId = imageId;
+  return pigeonResult;
+}
++ (ArtistDetail *)fromList:(NSArray<id> *)list {
+  ArtistDetail *pigeonResult = [[ArtistDetail alloc] init];
+  pigeonResult.id = GetNullableObjectAtIndex(list, 0);
+  pigeonResult.name = GetNullableObjectAtIndex(list, 1);
+  pigeonResult.imageId = GetNullableObjectAtIndex(list, 2);
+  return pigeonResult;
+}
++ (nullable ArtistDetail *)nullableFromList:(NSArray<id> *)list {
+  return (list) ? [ArtistDetail fromList:list] : nil;
+}
+- (NSArray<id> *)toList {
+  return @[
+    self.id ?: [NSNull null],
+    self.name ?: [NSNull null],
+    self.imageId ?: [NSNull null],
+  ];
+}
+@end
+
 @interface nullAudioPigeonCodecReader : FlutterStandardReader
 @end
 @implementation nullAudioPigeonCodecReader
@@ -175,6 +210,8 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
       return [Album fromList:[self readValue]];
     case 131: 
       return [Artist fromList:[self readValue]];
+    case 132: 
+      return [ArtistDetail fromList:[self readValue]];
     default:
       return [super readValueOfType:type];
   }
@@ -193,6 +230,9 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
     [self writeValue:[value toList]];
   } else if ([value isKindOfClass:[Artist class]]) {
     [self writeByte:131];
+    [self writeValue:[value toList]];
+  } else if ([value isKindOfClass:[ArtistDetail class]]) {
+    [self writeByte:132];
     [self writeValue:[value toList]];
   } else {
     [super writeValue:value];
@@ -361,6 +401,25 @@ void SetUpArtistHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NS
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         FlutterError *error;
         NSArray<Artist *> *output = [api getAllArtistsWithError:&error];
+        callback(wrapResult(output, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.thinmpf.ArtistHostApi.getArtistDetailById", messageChannelSuffix]
+        binaryMessenger:binaryMessenger
+        codec:nullGetAudioCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(getArtistDetailByIdId:error:)], @"ArtistHostApi api (%@) doesn't respond to @selector(getArtistDetailByIdId:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray<id> *args = message;
+        NSString *arg_id = GetNullableObjectAtIndex(args, 0);
+        FlutterError *error;
+        ArtistDetail *output = [api getArtistDetailByIdId:arg_id error:&error];
         callback(wrapResult(output, error));
       }];
     } else {

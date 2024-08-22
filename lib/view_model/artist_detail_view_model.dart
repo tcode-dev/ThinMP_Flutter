@@ -3,12 +3,12 @@ import 'package:thinmpf/model/song_model.dart';
 
 class ArtistDetailViewModel {
   ArtistDetailViewModel({
+    required this.id,
+    required this.name,
+    required this.imageId,
     required this.albums,
     required this.songs,
-  })  : id = albums.first.artistId,
-        name = albums.first.artistName,
-        description = '${albums.length} albums, ${songs.length} songs',
-        imageId = albums.first.imageId;
+  }) : description = '${albums.length} albums, ${songs.length} songs';
 
   final String id;
   final String name;

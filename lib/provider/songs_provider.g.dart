@@ -10,10 +10,12 @@ String _$songsHash() => r'bc12a0059fba142676f77a881aa7b5c196776784';
 
 /// See also [Songs].
 @ProviderFor(Songs)
-final songsProvider = AutoDisposeAsyncNotifierProvider<Songs, SongsViewModel>.internal(
+final songsProvider =
+    AutoDisposeAsyncNotifierProvider<Songs, SongsViewModel>.internal(
   Songs.new,
   name: r'songsProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product') ? null : _$songsHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$songsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

@@ -141,6 +141,31 @@ data class Artist (
     )
   }
 }
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class ArtistDetail (
+  val id: String,
+  val name: String,
+  val imageId: String
+
+) {
+  companion object {
+    @Suppress("LocalVariableName")
+    fun fromList(__pigeon_list: List<Any?>): ArtistDetail {
+      val id = __pigeon_list[0] as String
+      val name = __pigeon_list[1] as String
+      val imageId = __pigeon_list[2] as String
+      return ArtistDetail(id, name, imageId)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf(
+      id,
+      name,
+      imageId,
+    )
+  }
+}
 private object AudioPigeonCodec : StandardMessageCodec() {
   override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
     return when (type) {
@@ -159,6 +184,11 @@ private object AudioPigeonCodec : StandardMessageCodec() {
           Artist.fromList(it)
         }
       }
+      132.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          ArtistDetail.fromList(it)
+        }
+      }
       else -> super.readValueOfType(type, buffer)
     }
   }
@@ -174,6 +204,10 @@ private object AudioPigeonCodec : StandardMessageCodec() {
       }
       is Artist -> {
         stream.write(131)
+        writeValue(stream, value.toList())
+      }
+      is ArtistDetail -> {
+        stream.write(132)
         writeValue(stream, value.toList())
       }
       else -> super.writeValue(stream, value)
@@ -325,6 +359,7 @@ interface AlbumHostApi {
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface ArtistHostApi {
   fun getAllArtists(): List<Artist>
+  fun getArtistDetailById(id: String): ArtistDetail?
 
   companion object {
     /** The codec used by ArtistHostApi. */
@@ -341,6 +376,23 @@ interface ArtistHostApi {
           channel.setMessageHandler { _, reply ->
             val wrapped: List<Any?> = try {
               listOf(api.getAllArtists())
+            } catch (exception: Throwable) {
+              wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.ArtistHostApi.getArtistDetailById$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val idArg = args[0] as String
+            val wrapped: List<Any?> = try {
+              listOf(api.getArtistDetailById(idArg))
             } catch (exception: Throwable) {
               wrapError(exception)
             }

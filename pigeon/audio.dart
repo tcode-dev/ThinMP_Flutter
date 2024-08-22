@@ -41,6 +41,14 @@ class Artist {
   final String name;
 }
 
+class ArtistDetail {
+  ArtistDetail(this.id, this.name, this.imageId);
+
+  final String id;
+  final String name;
+  final String imageId;
+}
+
 ///
 /// HostApi
 ///
@@ -62,6 +70,7 @@ abstract class AlbumHostApi {
 @HostApi()
 abstract class ArtistHostApi {
   List<Artist> getAllArtists();
+  ArtistDetail? getArtistDetailById(String id);
 }
 
 @HostApi()

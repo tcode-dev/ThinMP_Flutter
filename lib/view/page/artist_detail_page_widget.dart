@@ -40,6 +40,12 @@ class ArtistDetailPageWidget extends ConsumerWidget {
               return ErrorWidget(error);
             },
             data: (vm) {
+              if (vm == null) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Navigator.of(context).pop();
+                });
+                return const LoadingWidget();
+              }
               return CustomScrollView(slivers: <Widget>[
                 SliverAppBar(
                   pinned: true,
