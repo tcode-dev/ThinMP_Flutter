@@ -29,21 +29,12 @@ class ArtistDetail extends _$ArtistDetail {
     final albumModels = albums.map((album) => album.fromPigeon()).toList();
     final songModels = songs.map((song) => song.fromPigeon()).toList();
 
-    albumModels.sort((a, b) => a.name.compareTo(b.name));
-    songModels.sort((a, b) {
-      int albumNameComparison = a.albumName.compareTo(b.albumName);
-      if (albumNameComparison != 0) {
-        return albumNameComparison;
-      }
-      return a.trackNumber.compareTo(b.trackNumber);
-    });
-
     return ArtistDetailViewModel(
       id: artist.id,
       name: artist.name,
       imageId: artist.imageId,
-      albums: albumModels,
-      songs: songModels,
+      albumModels: albumModels,
+      songModels: songModels,
     );
   }
 }
