@@ -6,9 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import android.util.Log
 import dev.tcode.thinmpf.model.SongModel
-
 
 @SuppressLint("StaticFieldLeak")
 object MusicPlayer{
@@ -83,7 +81,6 @@ object MusicPlayer{
 
     private fun unbindService() {
         connection?.let {
-            Log.d("MusicPlayer", "unbindService2")
             context.unbindService(it)
             connection = null
         }

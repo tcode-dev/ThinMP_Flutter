@@ -7,7 +7,6 @@ import android.os.Bundle
 import dev.tcode.thinmpf.player.MusicPlayer
 import dev.tcode.thinmpf.player.MusicService
 
-
 class MainApplication : Application(), Application.ActivityLifecycleCallbacks {
 
     override fun onCreate() {
