@@ -1,17 +1,26 @@
 package dev.tcode.thinmpf.player
 
+import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
+import android.util.Log
 import dev.tcode.thinmpf.model.SongModel
 
-class MusicPlayer(var context: Context) {
+
+@SuppressLint("StaticFieldLeak")
+object MusicPlayer{
+    private lateinit var context: Context
     private var musicService: MusicService? = null
-    private lateinit var connection: ServiceConnection
+    private var connection: ServiceConnection? = null
     private var isServiceBinding = false
     private var bound = false
+
+    fun initialize(context: Context) {
+        this.context = context.applicationContext
+    }
 
     fun start(songs: List<SongModel>, index: Int) {
         if (!isServiceRunning()) {
@@ -50,6 +59,16 @@ class MusicPlayer(var context: Context) {
         return musicService?.getCurrentTime() ?: 0
     }
 
+    fun dispose() {
+        if (!MusicService.isServiceRunning) return
+
+        unbindService()
+
+        val musicServiceIntent = Intent(context, MusicService::class.java)
+
+        context.stopService(musicServiceIntent)
+    }
+
     private fun isServiceRunning(): Boolean {
         return MusicService.isServiceRunning
     }
@@ -58,13 +77,18 @@ class MusicPlayer(var context: Context) {
         isServiceBinding = true
         connection = createConnection(callback)
         context.bindService(
-            Intent(context, MusicService::class.java), connection, Context.BIND_AUTO_CREATE
+            Intent(context, MusicService::class.java), connection!!, Context.BIND_AUTO_CREATE
         )
     }
 
-    fun unbindService(context: Context) {
-        context.unbindService(connection)
+    private fun unbindService() {
+        connection?.let {
+            Log.d("MusicPlayer", "unbindService2")
+            context.unbindService(it)
+            connection = null
+        }
         musicService = null
+        bound = false
     }
 
     private fun createConnection(callback: () -> Unit? = {}): ServiceConnection {

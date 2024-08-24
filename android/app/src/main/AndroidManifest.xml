@@ -6,7 +6,7 @@
 
     <application
         android:label="thinmpf"
-        android:name="${applicationName}"
+        android:name=".MainApplication"
         android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true">
 
