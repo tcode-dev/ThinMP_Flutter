@@ -39,7 +39,13 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
     override fun findByArtistId(artistId: ArtistId): List<SongModel> {
         selection = MediaStore.Audio.Media.ARTIST_ID + " = ? AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
         selectionArgs = arrayOf(artistId.raw)
-        sortOrder = null
+        sortOrder = "${MediaStore.Audio.Media.ALBUM} ASC, " +
+                "CASE " +
+                "WHEN ${MediaStore.Audio.Media.CD_TRACK_NUMBER} LIKE '%/%' THEN " +
+                "CAST(SUBSTR(${MediaStore.Audio.Media.CD_TRACK_NUMBER}, 0, INSTR(${MediaStore.Audio.Media.CD_TRACK_NUMBER}, '/')) AS INTEGER) " +
+                "ELSE " +
+                "CAST(${MediaStore.Audio.Media.CD_TRACK_NUMBER} AS INTEGER) " +
+                "END ASC"
 
         return getList()
     }

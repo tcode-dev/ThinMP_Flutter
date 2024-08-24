@@ -33,8 +33,8 @@ class ArtistDetail extends _$ArtistDetail {
       id: artist.id,
       name: artist.name,
       imageId: artist.imageId,
-      albumModels: albumModels,
-      songModels: songModels,
+      albums: albumModels,
+      songs: songModels,
     );
   }
 }

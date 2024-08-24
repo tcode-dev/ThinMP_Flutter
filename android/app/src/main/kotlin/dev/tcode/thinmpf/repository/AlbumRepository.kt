@@ -38,7 +38,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
     override fun findByArtistId(artistId: ArtistId): List<AlbumModel> {
         selection = MediaStore.Audio.Media.ARTIST_ID + " = ?"
         selectionArgs = arrayOf(artistId.raw)
-        sortOrder = null
+        sortOrder = "${MediaStore.Audio.Media.ALBUM} ASC"
 
         return getList()
     }
