@@ -53,7 +53,6 @@ class MusicService : Service() {
         headsetEventReceiver = HeadsetEventReceiver { player.stop() }
 
         registerReceiver(headsetEventReceiver, IntentFilter(Intent.ACTION_HEADSET_PLUG))
-        initPlayer()
     }
 
     fun start(songs: List<SongModel>, index: Int) {
@@ -61,6 +60,10 @@ class MusicService : Service() {
 
         isStarting = true
         playingList = songs
+
+        if (initialized) {
+            release()
+        }
 
         setPlayer(index)
         play()
@@ -102,16 +105,10 @@ class MusicService : Service() {
     }
 
     @SuppressLint("UnsafeOptInUsageError")
-    private fun initPlayer() {
+    private fun setPlayer(index: Int) {
         player = ExoPlayer.Builder(applicationContext).setLooper(Looper.getMainLooper()).build()
         mediaSession = MediaSession.Builder(applicationContext, player).build()
         mediaStyle = MediaStyleNotificationHelper.MediaStyle(mediaSession)
-    }
-
-    private fun setPlayer(index: Int) {
-        if (isPlaying) {
-            player.stop()
-        }
 
         val mediaItems = playingList.map {
             MediaItem.fromUri(it.mediaUri)
@@ -186,9 +183,6 @@ class MusicService : Service() {
         val list = playingList.toMutableList()
 
         list.removeAt(currentIndex)
-        player.release()
-        mediaSession.release()
-        initPlayer()
 
         if (list.isNotEmpty()) {
             val nextIndex = if (count == currentIndex + 1) currentIndex -1 else currentIndex
@@ -197,6 +191,15 @@ class MusicService : Service() {
         } else {
             isStarting = false
         }
+    }
+
+    private fun release() {
+        if (isPlaying) {
+            player.stop()
+        }
+        player.removeListener(playerEventListener)
+        player.release()
+        mediaSession.release()
     }
 
     override fun onBind(intent: Intent): IBinder {
@@ -209,13 +212,7 @@ class MusicService : Service() {
 
     @SuppressLint("ServiceCast")
     override fun onDestroy() {
-        if (isPlaying) {
-            player.stop()
-        }
-
-        player.removeListener(playerEventListener)
-        player.release()
-        mediaSession.release()
+        release()
         LocalNotificationHelper.cancelAll(applicationContext)
         unregisterReceiver(headsetEventReceiver)
         stopForeground(STOP_FOREGROUND_DETACH)
@@ -233,7 +230,6 @@ class MusicService : Service() {
             }
         }
 
-        // onMediaItemTransition初回再生時に呼ばれない
         override fun onTracksChanged(tracks: Tracks) {
             super.onTracksChanged(tracks)
             onPlaybackSongChange()
