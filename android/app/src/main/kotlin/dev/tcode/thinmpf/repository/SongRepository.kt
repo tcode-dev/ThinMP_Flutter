@@ -20,10 +20,17 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
         MediaStore.Audio.Media.CD_TRACK_NUMBER
     )
 ) {
+    private val trackNumberSortOrder = "CASE " +
+            "WHEN ${MediaStore.Audio.Media.CD_TRACK_NUMBER} LIKE '%/%' THEN " +
+            "CAST(SUBSTR(${MediaStore.Audio.Media.CD_TRACK_NUMBER}, 0, INSTR(${MediaStore.Audio.Media.CD_TRACK_NUMBER}, '/')) AS INTEGER) " +
+            "ELSE " +
+            "CAST(${MediaStore.Audio.Media.CD_TRACK_NUMBER} AS INTEGER) " +
+            "END ASC"
+
     override fun findAll(): List<SongModel> {
         selection = MediaStore.Audio.Media.IS_MUSIC + " = 1"
         selectionArgs = null
-        sortOrder = (MediaStore.Audio.Media.ARTIST + " ASC, " + MediaStore.Audio.Media.ALBUM + " ASC, " + MediaStore.Audio.Media._ID + " ASC")
+        sortOrder = MediaStore.Audio.Media.TITLE + " ASC"
 
         return getList()
     }
@@ -31,7 +38,7 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
     override fun findByAlbumId(albumId: AlbumId): List<SongModel> {
         selection = MediaStore.Audio.Media.ALBUM_ID + " = ? AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
         selectionArgs = arrayOf(albumId.raw)
-        sortOrder = null
+        sortOrder = trackNumberSortOrder
 
         return getList()
     }
@@ -39,13 +46,7 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
     override fun findByArtistId(artistId: ArtistId): List<SongModel> {
         selection = MediaStore.Audio.Media.ARTIST_ID + " = ? AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
         selectionArgs = arrayOf(artistId.raw)
-        sortOrder = "${MediaStore.Audio.Media.ALBUM} ASC, " +
-                "CASE " +
-                "WHEN ${MediaStore.Audio.Media.CD_TRACK_NUMBER} LIKE '%/%' THEN " +
-                "CAST(SUBSTR(${MediaStore.Audio.Media.CD_TRACK_NUMBER}, 0, INSTR(${MediaStore.Audio.Media.CD_TRACK_NUMBER}, '/')) AS INTEGER) " +
-                "ELSE " +
-                "CAST(${MediaStore.Audio.Media.CD_TRACK_NUMBER} AS INTEGER) " +
-                "END ASC"
+        sortOrder = "${MediaStore.Audio.Media.ALBUM} ASC, " + trackNumberSortOrder
 
         return getList()
     }
