@@ -46,7 +46,7 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
     override fun findByArtistId(artistId: ArtistId): List<SongModel> {
         selection = MediaStore.Audio.Media.ARTIST_ID + " = ? AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
         selectionArgs = arrayOf(artistId.raw)
-        sortOrder = "${MediaStore.Audio.Media.ALBUM} ASC, " + trackNumberSortOrder
+        sortOrder = "${MediaStore.Audio.Media.ALBUM} ASC, $trackNumberSortOrder"
 
         return getList()
     }
