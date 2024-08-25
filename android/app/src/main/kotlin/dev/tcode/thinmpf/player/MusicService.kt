@@ -61,10 +61,7 @@ class MusicService : Service() {
         isStarting = true
         playingList = songs
 
-        if (initialized) {
-            release()
-        }
-
+        release()
         setPlayer(index)
         play()
         startFirstService()
@@ -194,9 +191,12 @@ class MusicService : Service() {
     }
 
     private fun release() {
+        if (!initialized) return
+
         if (isPlaying) {
             player.stop()
         }
+
         player.removeListener(playerEventListener)
         player.release()
         mediaSession.release()
