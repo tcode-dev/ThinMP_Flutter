@@ -48,64 +48,66 @@ class MainPageWidget extends ConsumerWidget {
               return ErrorWidget(error);
             },
             data: (vm) {
-              return CustomScrollView(slivers: <Widget>[
-                SliverToBoxAdapter(
-                  child: Container(
-                    padding: EdgeInsets.only(top: top, left: 20),
-                    child: Text(AppLocalizations.of(context)!.library, style: Theme.of(context).textTheme.headlineLarge),
-                  ),
-                ),
-                SliverFixedExtentList(
-                  itemExtent: 51,
-                  delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => pageList[index].widgetBuilder()),
-                        );
-                      },
-                      child: PlainRowWidget(title: pageList[index].text),
-                    );
-                  }, childCount: pageList.length),
-                ),
-                SliverToBoxAdapter(
-                  child: Container(
-                    padding: const EdgeInsets.only(top: 20, left: 20),
-                    child: Text(AppLocalizations.of(context)!.recentlyAdded, style: Theme.of(context).textTheme.headlineMedium),
-                  ),
-                ),
-                SliverPadding(
-                  padding: EdgeInsets.all(styleConstant[StyleType.padding][SizeConstant.large]),
-                  sliver: SliverGrid(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: childAspectRatio,
-                      crossAxisCount: crossAxisCount,
-                      crossAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
-                      mainAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
+              return CustomScrollView(
+                slivers: <Widget>[
+                  SliverToBoxAdapter(
+                    child: Container(
+                      padding: EdgeInsets.only(top: top, left: 20),
+                      child: Text(AppLocalizations.of(context)!.library, style: Theme.of(context).textTheme.headlineLarge),
                     ),
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        final album = vm?.albums[index];
+                  ),
+                  SliverFixedExtentList(
+                    itemExtent: 51,
+                    delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => pageList[index].widgetBuilder()),
+                          );
+                        },
+                        child: PlainRowWidget(title: pageList[index].text),
+                      );
+                    }, childCount: pageList.length),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 20, left: 20),
+                      child: Text(AppLocalizations.of(context)!.recentlyAdded, style: Theme.of(context).textTheme.headlineMedium),
+                    ),
+                  ),
+                  SliverPadding(
+                    padding: EdgeInsets.all(styleConstant[StyleType.padding][SizeConstant.large]),
+                    sliver: SliverGrid(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: childAspectRatio,
+                        crossAxisCount: crossAxisCount,
+                        crossAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
+                        mainAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          final album = vm?.albums[index];
 
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album!.id)),
-                            );
-                          },
-                          child: AlbumCellWidget(album: vm!.albums[index]),
-                        );
-                      },
-                      childCount: vm?.albums.length,
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album!.id)),
+                              );
+                            },
+                            child: AlbumCellWidget(album: vm!.albums[index]),
+                          );
+                        },
+                        childCount: vm?.albums.length,
+                      ),
                     ),
                   ),
-                ),
-                const SliverToBoxAdapter(
-                  child: EmptyRowWidget(),
-                ),
-              ]);
+                  const SliverToBoxAdapter(
+                    child: EmptyRowWidget(),
+                  ),
+                ],
+              );
             },
           ),
           const Positioned(
