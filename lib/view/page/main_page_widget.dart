@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
-import 'package:thinmpf/provider/albums_provider.dart';
+import 'package:thinmpf/provider/main_provider.dart';
 import 'package:thinmpf/util/calc_child_aspect_ratio.dart';
 import 'package:thinmpf/util/calc_cross_axis_count.dart';
+import 'package:thinmpf/view/cell/album_cell_widget.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
+import 'package:thinmpf/view/page/album_detail_page_widget.dart';
 import 'package:thinmpf/view/page/albums_page_widget.dart';
 import 'package:thinmpf/view/page/artists_page_widget.dart';
 import 'package:thinmpf/view/page/songs_page_widget.dart';
@@ -21,7 +23,7 @@ class PageInfo {
 }
 
 final List<PageInfo> pageList = [
-  PageInfo(text: "Artists", widgetBuilder: () => ArtistsPageWidget()),
+  PageInfo(text: "Artists", widgetBuilder: () => const ArtistsPageWidget()),
   PageInfo(text: "Albums", widgetBuilder: () => const AlbumsPageWidget()),
   PageInfo(text: "Songs", widgetBuilder: () => const SongsPageWidget()),
 ];
@@ -31,7 +33,7 @@ class MainPageWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncValue = ref.watch(albumsProvider);
+    final asyncValue = ref.watch(mainProvider);
     final screenSize = MediaQuery.sizeOf(context);
     final crossAxisCount = calcCrossAxisCount(screenSize.width);
     final childAspectRatio = calcChildAspectRatio(screenSize.width, crossAxisCount);
@@ -66,6 +68,39 @@ class MainPageWidget extends ConsumerWidget {
                       child: PlainRowWidget(title: pageList[index].text),
                     );
                   }, childCount: pageList.length),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 20, left: 20),
+                    child: Text(AppLocalizations.of(context)!.recentlyAdded, style: Theme.of(context).textTheme.headlineMedium),
+                  ),
+                ),
+                SliverPadding(
+                  padding: EdgeInsets.all(styleConstant[StyleType.padding][SizeConstant.large]),
+                  sliver: SliverGrid(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: childAspectRatio,
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
+                      mainAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        final album = vm?.albums[index];
+
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album!.id)),
+                            );
+                          },
+                          child: AlbumCellWidget(album: vm!.albums[index]),
+                        );
+                      },
+                      childCount: vm?.albums.length,
+                    ),
+                  ),
                 ),
                 const SliverToBoxAdapter(
                   child: EmptyRowWidget(),

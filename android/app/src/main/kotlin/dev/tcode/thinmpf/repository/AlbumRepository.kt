@@ -57,6 +57,18 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         return get()
     }
 
+    fun findRecentlyAdded(limit: Int): List<AlbumModel> {
+        selection = null
+        selectionArgs = null
+        bundle = Bundle().apply {
+            putStringArray(ContentResolver.QUERY_ARG_SORT_COLUMNS, arrayOf(MediaStore.Audio.Artists._ID))
+            putInt(ContentResolver.QUERY_ARG_SORT_DIRECTION, ContentResolver.QUERY_SORT_DIRECTION_DESCENDING)
+            putInt(ContentResolver.QUERY_ARG_LIMIT, limit)
+        }
+
+        return getList()
+    }
+
     private fun getId(): String {
         return cursor?.getColumnIndex(MediaStore.Audio.Albums._ID)?.let { cursor?.getString(it) } ?: ""
     }

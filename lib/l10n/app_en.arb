@@ -1,6 +1,7 @@
 {
   "library": "Library",
-  "songs": "Songs",
+  "openAppSettings": "open app settings",
   "permissionDenied": "Permissions are denied. You can change permissions in app settings.",
-  "openAppSettings": "open app settings"
+  "recentlyAdded": "Recently Added",
+  "songs": "Songs"
 }

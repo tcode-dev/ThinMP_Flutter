@@ -1,6 +1,7 @@
 {
   "library": "ライブラリ",
-  "songs": "曲",
+  "openAppSettings": "アプリの設定を開く",
   "permissionDenied": "権限が拒否されています。アプリの設定で権限を変更できます。",
-  "openAppSettings": "アプリの設定を開く"
+  "recentlyAdded": "最近追加した項目",
+  "songs": "曲"
 }

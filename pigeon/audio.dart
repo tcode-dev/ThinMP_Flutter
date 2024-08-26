@@ -64,6 +64,7 @@ abstract class SongHostApi {
 abstract class AlbumHostApi {
   List<Album> getAllAlbums();
   List<Album> getAlbumsByArtistId(String artistId);
+  List<Album> getRecentlyAlbums(int count);
   Album? getAlbumById(String id);
 }
 

@@ -98,6 +98,8 @@ extern void SetUpSongHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenge
 - (nullable NSArray<Album *> *)getAllAlbumsWithError:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
 - (nullable NSArray<Album *> *)getAlbumsByArtistIdArtistId:(NSString *)artistId error:(FlutterError *_Nullable *_Nonnull)error;
+/// @return `nil` only when `error != nil`.
+- (nullable NSArray<Album *> *)getRecentlyAlbumsCount:(NSInteger)count error:(FlutterError *_Nullable *_Nonnull)error;
 - (nullable Album *)getAlbumByIdId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
 @end
 

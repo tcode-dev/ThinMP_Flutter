@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/artists_provider.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/page/artist_detail_page_widget.dart';
@@ -9,9 +8,7 @@ import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/row/plain_row_widget.dart';
 
 class ArtistsPageWidget extends ConsumerWidget {
-  final PlayerHostApi player = PlayerHostApi();
-
-  ArtistsPageWidget({super.key});
+  const ArtistsPageWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
