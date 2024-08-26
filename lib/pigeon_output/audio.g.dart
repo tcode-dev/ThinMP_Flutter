@@ -388,8 +388,8 @@ class AlbumHostApi {
     }
   }
 
-  Future<List<Album?>> getRecentlyAlbums(int count) async {
-    final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.AlbumHostApi.getRecentlyAlbums$__pigeon_messageChannelSuffix';
+  Future<List<Album?>> getRecentAlbums(int count) async {
+    final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.AlbumHostApi.getRecentAlbums$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,

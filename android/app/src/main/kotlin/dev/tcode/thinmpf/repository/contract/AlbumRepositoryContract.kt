@@ -8,4 +8,6 @@ interface AlbumRepositoryContract {
     fun findAll(): List<AlbumModel>
     fun findByAlbumId(albumId: AlbumId): AlbumModel?
     fun findByArtistId(artistId: ArtistId): List<AlbumModel>
+    fun findFirstByArtistId(artistId: ArtistId): AlbumModel?
+    fun findRecentAlbums(limit: Int): List<AlbumModel>
 }

@@ -367,16 +367,16 @@ void SetUpAlbumHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NSO
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.thinmpf.AlbumHostApi.getRecentlyAlbums", messageChannelSuffix]
+        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.thinmpf.AlbumHostApi.getRecentAlbums", messageChannelSuffix]
         binaryMessenger:binaryMessenger
         codec:nullGetAudioCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(getRecentlyAlbumsCount:error:)], @"AlbumHostApi api (%@) doesn't respond to @selector(getRecentlyAlbumsCount:error:)", api);
+      NSCAssert([api respondsToSelector:@selector(getRecentAlbumsCount:error:)], @"AlbumHostApi api (%@) doesn't respond to @selector(getRecentAlbumsCount:error:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         NSArray<id> *args = message;
         NSInteger arg_count = [GetNullableObjectAtIndex(args, 0) integerValue];
         FlutterError *error;
-        NSArray<Album *> *output = [api getRecentlyAlbumsCount:arg_count error:&error];
+        NSArray<Album *> *output = [api getRecentAlbumsCount:arg_count error:&error];
         callback(wrapResult(output, error));
       }];
     } else {

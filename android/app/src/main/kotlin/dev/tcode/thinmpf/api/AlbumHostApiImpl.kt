@@ -23,8 +23,8 @@ class AlbumHostApiImpl(context: Context) : AlbumHostApi {
         return albums.map { it.toPigeon() }
     }
 
-    override fun getRecentlyAlbums(count: Long): List<Album> {
-        val albums = repository.findRecentlyAdded(count.toInt())
+    override fun getRecentAlbums(count: Long): List<Album> {
+        val albums = repository.findRecentAlbums(count.toInt())
 
         return albums.map { it.toPigeon() }
     }

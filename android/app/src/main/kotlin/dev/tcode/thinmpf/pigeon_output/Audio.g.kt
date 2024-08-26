@@ -293,7 +293,7 @@ interface SongHostApi {
 interface AlbumHostApi {
   fun getAllAlbums(): List<Album>
   fun getAlbumsByArtistId(artistId: String): List<Album>
-  fun getRecentlyAlbums(count: Long): List<Album>
+  fun getRecentAlbums(count: Long): List<Album>
   fun getAlbumById(id: String): Album?
 
   companion object {
@@ -338,13 +338,13 @@ interface AlbumHostApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.AlbumHostApi.getRecentlyAlbums$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.AlbumHostApi.getRecentAlbums$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
             val countArg = args[0].let { num -> if (num is Int) num.toLong() else num as Long }
             val wrapped: List<Any?> = try {
-              listOf(api.getRecentlyAlbums(countArg))
+              listOf(api.getRecentAlbums(countArg))
             } catch (exception: Throwable) {
               wrapError(exception)
             }

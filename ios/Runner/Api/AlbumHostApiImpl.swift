@@ -20,8 +20,8 @@ class AlbumHostApiImpl: AlbumHostApi {
         return albums.map { $0.toPigeon() }
     }
 
-    func getRecentlyAlbums(count: Int64) throws -> [Album] {
-        let albums = repository.findRecently(count: Int(count))
+    func getRecentAlbums(count: Int64) throws -> [Album] {
+        let albums = repository.findRecentAlbums(count: Int(count))
         
         return albums.map { $0.toPigeon() }
     }

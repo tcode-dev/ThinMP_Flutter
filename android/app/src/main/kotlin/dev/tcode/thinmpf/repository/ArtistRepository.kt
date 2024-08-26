@@ -22,7 +22,7 @@ class ArtistRepository(context: Context) : ArtistRepositoryContract, MediaStoreR
         return getList();
     }
 
-    fun findById(artistId: ArtistId): ArtistModel? {
+    override fun findById(artistId: ArtistId): ArtistModel? {
         selection = MediaStore.Audio.Media._ID + " = ?"
         selectionArgs = arrayOf(artistId.raw)
         sortOrder = null

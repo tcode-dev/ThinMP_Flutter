@@ -9,6 +9,8 @@ protocol AlbumRepositoryContract {
     func findAll() -> [AlbumModel]
 
     func findByAlbumId(albumId: AlbumId) -> AlbumModel?
-    
+
     func findByArtistId(artistId: ArtistId) -> [AlbumModel]
+
+    func findRecentAlbums(count: Int) -> [AlbumModel]
 }

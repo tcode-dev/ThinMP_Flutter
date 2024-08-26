@@ -36,7 +36,7 @@ class AlbumRepository: AlbumRepositoryContract {
             .map { AlbumModel(media: $0) }
     }
 
-    func findRecently(count: Int) -> [AlbumModel] {
+    func findRecentAlbums(count: Int) -> [AlbumModel] {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.albums()
 

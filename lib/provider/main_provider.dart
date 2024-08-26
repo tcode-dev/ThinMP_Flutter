@@ -15,7 +15,7 @@ class Main extends _$Main {
   }
 
   Future<MainViewModel?> fetch() async {
-    final albums = await _albumHostApi.getRecentlyAlbums(20);
+    final albums = await _albumHostApi.getRecentAlbums(20);
     final albumModels = albums.map((album) => album.fromPigeon()).toList();
 
     return MainViewModel(

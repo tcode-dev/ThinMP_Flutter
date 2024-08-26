@@ -46,7 +46,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         return getList()
     }
 
-    fun findFirstByArtistId(artistId: ArtistId): AlbumModel? {
+    override fun findFirstByArtistId(artistId: ArtistId): AlbumModel? {
         selection = null
         selectionArgs = null
         sortOrder = null
@@ -61,7 +61,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         return get()
     }
 
-    fun findRecentlyAdded(limit: Int): List<AlbumModel> {
+    override fun findRecentAlbums(limit: Int): List<AlbumModel> {
         selection = null
         selectionArgs = null
         sortOrder = null

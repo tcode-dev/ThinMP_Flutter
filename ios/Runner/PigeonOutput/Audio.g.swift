@@ -321,7 +321,7 @@ class SongHostApiSetup {
 protocol AlbumHostApi {
   func getAllAlbums() throws -> [Album]
   func getAlbumsByArtistId(artistId: String) throws -> [Album]
-  func getRecentlyAlbums(count: Int64) throws -> [Album]
+  func getRecentAlbums(count: Int64) throws -> [Album]
   func getAlbumById(id: String) throws -> Album?
 }
 
@@ -359,20 +359,20 @@ class AlbumHostApiSetup {
     } else {
       getAlbumsByArtistIdChannel.setMessageHandler(nil)
     }
-    let getRecentlyAlbumsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.AlbumHostApi.getRecentlyAlbums\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let getRecentAlbumsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.AlbumHostApi.getRecentAlbums\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      getRecentlyAlbumsChannel.setMessageHandler { message, reply in
+      getRecentAlbumsChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let countArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
         do {
-          let result = try api.getRecentlyAlbums(count: countArg)
+          let result = try api.getRecentAlbums(count: countArg)
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      getRecentlyAlbumsChannel.setMessageHandler(nil)
+      getRecentAlbumsChannel.setMessageHandler(nil)
     }
     let getAlbumByIdChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.AlbumHostApi.getAlbumById\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
