@@ -23,6 +23,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         selection = null
         selectionArgs = null
         sortOrder = MediaStore.Audio.Albums.ALBUM + " ASC"
+        bundle = null
 
         return getList();
     }
@@ -31,6 +32,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         selection = MediaStore.Audio.Albums._ID + " = ?"
         selectionArgs = arrayOf(albumId.raw)
         sortOrder = null
+        bundle = null
 
         return get()
     }
@@ -39,6 +41,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         selection = MediaStore.Audio.Media.ARTIST_ID + " = ?"
         selectionArgs = arrayOf(artistId.raw)
         sortOrder = "${MediaStore.Audio.Media.ALBUM} ASC"
+        bundle = null
 
         return getList()
     }
@@ -46,6 +49,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
     fun findFirstByArtistId(artistId: ArtistId): AlbumModel? {
         selection = null
         selectionArgs = null
+        sortOrder = null
         bundle = Bundle().apply {
             putStringArray(ContentResolver.QUERY_ARG_SORT_COLUMNS, arrayOf(MediaStore.Audio.Albums.ALBUM))
             putInt(ContentResolver.QUERY_ARG_SORT_DIRECTION, ContentResolver.QUERY_SORT_DIRECTION_ASCENDING)
@@ -60,6 +64,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
     fun findRecentlyAdded(limit: Int): List<AlbumModel> {
         selection = null
         selectionArgs = null
+        sortOrder = null
         bundle = Bundle().apply {
             putStringArray(ContentResolver.QUERY_ARG_SORT_COLUMNS, arrayOf(MediaStore.Audio.Artists._ID))
             putInt(ContentResolver.QUERY_ARG_SORT_DIRECTION, ContentResolver.QUERY_SORT_DIRECTION_DESCENDING)
