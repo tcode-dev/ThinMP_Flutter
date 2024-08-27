@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'main_provider.dart';
+part of 'repeat_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$mainHash() => r'bb520cc62b16eba6edc613b0fc105df0fa6de85a';
+String _$repeatHash() => r'87f016a1c1ad0b61c86c8067c0b40bec9223d8ef';
 
-/// See also [Main].
-@ProviderFor(Main)
-final mainProvider =
-    AutoDisposeAsyncNotifierProvider<Main, MainViewModel?>.internal(
-  Main.new,
-  name: r'mainProvider',
+/// See also [Repeat].
+@ProviderFor(Repeat)
+final repeatProvider =
+    AutoDisposeNotifierProvider<Repeat, RepeatState>.internal(
+  Repeat.new,
+  name: r'repeatProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$mainHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$repeatHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Main = AutoDisposeAsyncNotifier<MainViewModel?>;
+typedef _$Repeat = AutoDisposeNotifier<RepeatState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
