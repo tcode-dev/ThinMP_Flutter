@@ -31,6 +31,16 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
   return (result == [NSNull null]) ? nil : result;
 }
 
+@implementation RepeatStateBox
+- (instancetype)initWithValue:(RepeatState)value {
+  self = [super init];
+  if (self) {
+    _value = value;
+  }
+  return self;
+}
+@end
+
 @interface Song ()
 + (Song *)fromList:(NSArray<id> *)list;
 + (nullable Song *)nullableFromList:(NSArray<id> *)list;
@@ -212,6 +222,11 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
       return [Artist fromList:[self readValue]];
     case 132: 
       return [ArtistDetail fromList:[self readValue]];
+    case 133: 
+      {
+        NSNumber *enumAsNumber = [self readValue];
+        return enumAsNumber == nil ? nil : [[RepeatStateBox alloc] initWithValue:[enumAsNumber integerValue]];
+      }
     default:
       return [super readValueOfType:type];
   }
@@ -234,6 +249,10 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
   } else if ([value isKindOfClass:[ArtistDetail class]]) {
     [self writeByte:132];
     [self writeValue:[value toList]];
+  } else if ([value isKindOfClass:[RepeatStateBox class]]) {
+    RepeatStateBox * box = (RepeatStateBox *)value;
+    [self writeByte:133];
+    [self writeValue:(value == nil ? [NSNull null] : [NSNumber numberWithInteger:box.value])];
   } else {
     [super writeValue:value];
   }
@@ -618,6 +637,45 @@ void SetUpPlayerHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NS
         double arg_time = [GetNullableObjectAtIndex(args, 0) doubleValue];
         FlutterError *error;
         [api seekTime:arg_time error:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.thinmpf.PlayerHostApi.setRepeat", messageChannelSuffix]
+        binaryMessenger:binaryMessenger
+        codec:nullGetAudioCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(setRepeatRepeatState:error:)], @"PlayerHostApi api (%@) doesn't respond to @selector(setRepeatRepeatState:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray<id> *args = message;
+        RepeatStateBox *enumBox = GetNullableObjectAtIndex(args, 0);
+        RepeatState arg_repeatState = enumBox.value;
+        FlutterError *error;
+        [api setRepeatRepeatState:arg_repeatState error:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.thinmpf.PlayerHostApi.setShuffle", messageChannelSuffix]
+        binaryMessenger:binaryMessenger
+        codec:nullGetAudioCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(setShuffleIsShuffle:error:)], @"PlayerHostApi api (%@) doesn't respond to @selector(setShuffleIsShuffle:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray<id> *args = message;
+        BOOL arg_isShuffle = [GetNullableObjectAtIndex(args, 0) boolValue];
+        FlutterError *error;
+        [api setShuffleIsShuffle:arg_isShuffle error:&error];
         callback(wrapResult(nil, error));
       }];
     } else {

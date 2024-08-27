@@ -68,6 +68,12 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
   return value as! T?
 }
 
+enum RepeatState: Int {
+  case off = 0
+  case one = 1
+  case all = 2
+}
+
 /// Generated class from Pigeon that represents data sent in messages.
 struct Song {
   var id: String
@@ -214,6 +220,13 @@ private class AudioPigeonCodecReader: FlutterStandardReader {
       return Artist.fromList(self.readValue() as! [Any?])
     case 132:
       return ArtistDetail.fromList(self.readValue() as! [Any?])
+    case 133:
+      var enumResult: RepeatState? = nil
+      let enumResultAsInt: Int? = nilOrValue(self.readValue() as? Int)
+      if let enumResultAsInt = enumResultAsInt {
+        enumResult = RepeatState(rawValue: enumResultAsInt)
+      }
+      return enumResult
     default:
       return super.readValue(ofType: type)
     }
@@ -234,6 +247,9 @@ private class AudioPigeonCodecWriter: FlutterStandardWriter {
     } else if let value = value as? ArtistDetail {
       super.writeByte(132)
       super.writeValue(value.toList())
+    } else if let value = value as? RepeatState {
+      super.writeByte(133)
+      super.writeValue(value.rawValue)
     } else {
       super.writeValue(value)
     }
@@ -473,6 +489,8 @@ protocol PlayerHostApi {
   func prev() throws
   func next() throws
   func seek(time: Double) throws
+  func setRepeat(repeatState: RepeatState) throws
+  func setShuffle(isShuffle: Bool) throws
   func getCurrentTime() throws -> Double
 }
 
@@ -595,6 +613,36 @@ class PlayerHostApiSetup {
       }
     } else {
       seekChannel.setMessageHandler(nil)
+    }
+    let setRepeatChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.setRepeat\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      setRepeatChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let repeatStateArg = args[0] as! RepeatState
+        do {
+          try api.setRepeat(repeatState: repeatStateArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      setRepeatChannel.setMessageHandler(nil)
+    }
+    let setShuffleChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.setShuffle\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      setShuffleChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let isShuffleArg = args[0] as! Bool
+        do {
+          try api.setShuffle(isShuffle: isShuffleArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      setShuffleChannel.setMessageHandler(nil)
     }
     let getCurrentTimeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.PlayerHostApi.getCurrentTime\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {

@@ -46,6 +46,18 @@ class FlutterError (
   val details: Any? = null
 ) : Throwable()
 
+enum class RepeatState(val raw: Int) {
+  OFF(0),
+  ONE(1),
+  ALL(2);
+
+  companion object {
+    fun ofRaw(raw: Int): RepeatState? {
+      return values().firstOrNull { it.raw == raw }
+    }
+  }
+}
+
 /** Generated class from Pigeon that represents data sent in messages. */
 data class Song (
   val id: String,
@@ -189,6 +201,11 @@ private object AudioPigeonCodec : StandardMessageCodec() {
           ArtistDetail.fromList(it)
         }
       }
+      133.toByte() -> {
+        return (readValue(buffer) as Int?)?.let {
+          RepeatState.ofRaw(it)
+        }
+      }
       else -> super.readValueOfType(type, buffer)
     }
   }
@@ -209,6 +226,10 @@ private object AudioPigeonCodec : StandardMessageCodec() {
       is ArtistDetail -> {
         stream.write(132)
         writeValue(stream, value.toList())
+      }
+      is RepeatState -> {
+        stream.write(133)
+        writeValue(stream, value.raw)
       }
       else -> super.writeValue(stream, value)
     }
@@ -469,6 +490,8 @@ interface PlayerHostApi {
   fun prev()
   fun next()
   fun seek(time: Double)
+  fun setRepeat(repeatState: RepeatState)
+  fun setShuffle(isShuffle: Boolean)
   fun getCurrentTime(): Double
 
   companion object {
@@ -608,6 +631,42 @@ interface PlayerHostApi {
             val timeArg = args[0] as Double
             val wrapped: List<Any?> = try {
               api.seek(timeArg)
+              listOf(null)
+            } catch (exception: Throwable) {
+              wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.setRepeat$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val repeatStateArg = args[0] as RepeatState
+            val wrapped: List<Any?> = try {
+              api.setRepeat(repeatStateArg)
+              listOf(null)
+            } catch (exception: Throwable) {
+              wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.setShuffle$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val isShuffleArg = args[0] as Boolean
+            val wrapped: List<Any?> = try {
+              api.setShuffle(isShuffleArg)
               listOf(null)
             } catch (exception: Throwable) {
               wrapError(exception)

@@ -10,6 +10,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, RepeatState) {
+  RepeatStateOff = 0,
+  RepeatStateOne = 1,
+  RepeatStateAll = 2,
+};
+
+/// Wrapper for RepeatState to allow for nullability.
+@interface RepeatStateBox : NSObject
+@property(nonatomic, assign) RepeatState value;
+- (instancetype)initWithValue:(RepeatState)value;
+@end
+
 @class Song;
 @class Album;
 @class Artist;
@@ -137,6 +149,8 @@ extern void SetUpArtworkHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMesse
 - (void)prevWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)nextWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)seekTime:(double)time error:(FlutterError *_Nullable *_Nonnull)error;
+- (void)setRepeatRepeatState:(RepeatState)repeatState error:(FlutterError *_Nullable *_Nonnull)error;
+- (void)setShuffleIsShuffle:(BOOL)isShuffle error:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
 - (nullable NSNumber *)getCurrentTimeWithError:(FlutterError *_Nullable *_Nonnull)error;
 @end

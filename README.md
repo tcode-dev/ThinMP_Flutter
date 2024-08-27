@@ -53,3 +53,4 @@ This is a simple music player for Android and iOS.
 * flutter_riverpod - https://pub.dev/packages/flutter_riverpod
 * pigeon - https://pub.dev/packages/pigeon
 * permission_handler - https://pub.dev/packages/permission_handler
+* shared_preferences - https://pub.dev/packages/shared_preferences

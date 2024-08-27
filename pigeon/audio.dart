@@ -49,6 +49,8 @@ class ArtistDetail {
   final String imageId;
 }
 
+enum RepeatState { off, one, all }
+
 ///
 /// HostApi
 ///
@@ -91,6 +93,8 @@ abstract class PlayerHostApi {
   void prev();
   void next();
   void seek(double time);
+  void setRepeat(RepeatState repeatState);
+  void setShuffle(bool isShuffle);
   double getCurrentTime();
 }
 
