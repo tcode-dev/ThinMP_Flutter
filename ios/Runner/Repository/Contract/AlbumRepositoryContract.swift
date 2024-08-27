@@ -12,5 +12,7 @@ protocol AlbumRepositoryContract {
 
     func findByArtistId(artistId: ArtistId) -> [AlbumModel]
 
+    func findFirstByArtistId(artistId: ArtistId) -> AlbumModel?
+
     func findRecentAlbums(count: Int) -> [AlbumModel]
 }

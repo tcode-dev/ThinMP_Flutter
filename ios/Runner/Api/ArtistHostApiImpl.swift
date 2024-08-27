@@ -15,6 +15,18 @@ class ArtistHostApiImpl: ArtistHostApi {
     }
     
     func getArtistDetailById(id: String) throws -> ArtistDetail? {
-        return nil
+        let artistId = ArtistId(id: id)
+        let albumRepository = AlbumRepository()
+        let artist = repository.findById(artistId: artistId)
+        
+        if (artist == nil) {
+            return nil
+        }
+
+        let album = albumRepository.findFirstByArtistId(artistId: artistId)
+        let name = artist?.name ?? ""
+        let imageId = album?.imageId ?? ""
+
+        return ArtistDetail(id: id, name: name, imageId: imageId)
     }
 }
