@@ -46,6 +46,6 @@ class AlbumRepository: AlbumRepositoryContract {
             left.representativeItem!.dateAdded > right.representativeItem!.dateAdded
         })
             .prefix(count)
-            .map { AlbumModel(albumId: AlbumId(id: $0.representativeItem!.albumPersistentID), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork) }
+            .map { AlbumModel(media: $0) }
     }
 }

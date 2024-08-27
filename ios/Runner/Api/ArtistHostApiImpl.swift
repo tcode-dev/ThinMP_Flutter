@@ -13,4 +13,8 @@ class ArtistHostApiImpl: ArtistHostApi {
 
         return artists.map { $0.toPigeon() }
     }
+    
+    func getArtistDetailById(id: String) throws -> ArtistDetail? {
+        return nil
+    }
 }
