@@ -8,7 +8,7 @@ class Repeat extends _$Repeat {
   @override
   RepeatState build() => RepeatState.off;
 
-  void updateState(RepeatState repeatState) {
+  void setRepeatState(RepeatState repeatState) {
     state = repeatState;
   }
 }

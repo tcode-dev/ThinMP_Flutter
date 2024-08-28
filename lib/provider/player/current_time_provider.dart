@@ -8,7 +8,7 @@ class CurrentTime extends _$CurrentTime {
   @override
   double build() => 0;
 
-  void update() async {
+  void updateCurrentTime() async {
     final api = PlayerHostApi();
 
     state = await api.getCurrentTime();

@@ -8,7 +8,7 @@ class PlaybackSong extends _$PlaybackSong {
   @override
   Song? build() => null;
 
-  void setSong(Song song) {
+  void setPlaybackSong(Song song) {
     state = song;
   }
 }

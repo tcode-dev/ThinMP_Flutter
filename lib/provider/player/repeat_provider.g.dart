@@ -6,7 +6,7 @@ part of 'repeat_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$repeatHash() => r'87f016a1c1ad0b61c86c8067c0b40bec9223d8ef';
+String _$repeatHash() => r'4d03af419d4541fb1394d91efd817d5a3bcba994';
 
 /// See also [Repeat].
 @ProviderFor(Repeat)

@@ -30,7 +30,7 @@ class SliderWidgetState extends ConsumerState<SliderWidget> {
     if (isPlaying) {
       _startTimer();
     } else {
-      ref.read(currentTimeProvider.notifier).update();
+      ref.read(currentTimeProvider.notifier).updateCurrentTime();
     }
   }
 
@@ -42,10 +42,10 @@ class SliderWidgetState extends ConsumerState<SliderWidget> {
   }
 
   void _startTimer() {
-    ref.read(currentTimeProvider.notifier).update();
+    ref.read(currentTimeProvider.notifier).updateCurrentTime();
 
     _timer = Timer.periodic(const Duration(seconds: durationSeconds), (timer) {
-      ref.read(currentTimeProvider.notifier).update();
+      ref.read(currentTimeProvider.notifier).updateCurrentTime();
     });
   }
 
@@ -105,7 +105,7 @@ class SliderWidgetState extends ConsumerState<SliderWidget> {
         _startTimer();
       } else {
         _stopTimer();
-        ref.read(currentTimeProvider.notifier).update();
+        ref.read(currentTimeProvider.notifier).updateCurrentTime();
       }
     });
 

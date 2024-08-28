@@ -5,7 +5,7 @@ import 'package:thinmpf/view/button/button_widget.dart';
 final PlayerHostApi _player = PlayerHostApi();
 
 class ShuffleButtonWidget extends StatelessWidget {
-  const ShuffleButtonWidget({Key? key}) : super(key: key);
+  const ShuffleButtonWidget({super.key});
 
   void _shuffle() {
     // _player.repeat();

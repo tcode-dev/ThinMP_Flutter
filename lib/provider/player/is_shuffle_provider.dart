@@ -7,7 +7,7 @@ class IsShuffle extends _$IsShuffle {
   @override
   bool build() => false;
 
-  void updateState(bool isShuffle) {
+  void setIsShuffle(bool isShuffle) {
     state = isShuffle;
   }
 }

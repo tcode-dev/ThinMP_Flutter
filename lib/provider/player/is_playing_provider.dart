@@ -7,7 +7,7 @@ class IsPlaying extends _$IsPlaying {
   @override
   bool build() => true;
 
-  void updateState(bool isPlaying) {
+  void setIsPlaying(bool isPlaying) {
     state = isPlaying;
   }
 }
