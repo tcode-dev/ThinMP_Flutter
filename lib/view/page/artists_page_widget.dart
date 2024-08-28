@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/provider/artists_provider.dart';
+import 'package:thinmpf/provider/page/artists_provider.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/page/artist_detail_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';

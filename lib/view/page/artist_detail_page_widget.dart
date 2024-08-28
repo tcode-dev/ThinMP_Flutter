@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
-import 'package:thinmpf/provider/artist_detail_provider.dart';
+import 'package:thinmpf/provider/page/artist_detail_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/util/calc_child_aspect_ratio.dart';
 import 'package:thinmpf/util/calc_cross_axis_count.dart';

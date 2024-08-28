@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
-import 'package:thinmpf/provider/playback_song_provider.dart';
+import 'package:thinmpf/provider/player/playback_song_provider.dart';
 import 'package:thinmpf/view/button/next_button_widget.dart';
 import 'package:thinmpf/view/button/play_pause_button_widget.dart';
 import 'package:thinmpf/view/image/square_image_widget.dart';
