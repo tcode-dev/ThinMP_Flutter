@@ -1,6 +1,7 @@
 package dev.tcode.thinmpf.api
 
 import PlayerHostApi
+import RepeatState
 import android.content.Context
 import dev.tcode.thinmpf.model.valueObject.AlbumId
 import dev.tcode.thinmpf.model.valueObject.ArtistId
@@ -47,6 +48,14 @@ class PlayerHostApiImpl(private val context: Context): PlayerHostApi {
 
     override fun seek(time: Double) {
         MusicPlayer.seek(time.toLong() * 1000)
+    }
+
+    override fun setRepeat(repeatState: RepeatState) {
+        MusicPlayer.setRepeat(repeatState)
+    }
+
+    override fun setShuffle(isShuffle: Boolean) {
+        MusicPlayer.setShuffle(isShuffle)
     }
 
     override fun getCurrentTime(): Double {

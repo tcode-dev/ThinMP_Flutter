@@ -1,5 +1,6 @@
 package dev.tcode.thinmpf.player
 
+import RepeatState
 import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
@@ -51,6 +52,14 @@ object MusicPlayer{
 
     fun seek(ms: Long) {
         musicService?.seek(ms)
+    }
+
+    fun setRepeat(repeatState: RepeatState) {
+        musicService?.setRepeat(repeatState)
+    }
+
+    fun setShuffle(isShuffle: Boolean) {
+        musicService?.setShuffle(isShuffle)
     }
 
     fun getCurrentTime(): Long {
