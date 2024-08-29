@@ -1,6 +1,7 @@
 package dev.tcode.thinmpf.player
 
-import RepeatState
+import RepeatMode
+import ShuffleMode
 import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.Service
@@ -92,12 +93,12 @@ class MusicService : Service() {
         player.seekTo(ms)
     }
 
-    fun setRepeat(repeatState: RepeatState) {
-        player.repeatMode = repeatState.raw
+    fun setRepeat(repeatMode: RepeatMode) {
+        player.repeatMode = repeatMode.raw
     }
 
-    fun setShuffle(isShuffle: Boolean) {
-        player.shuffleModeEnabled = isShuffle
+    fun setShuffle(shuffleMode: ShuffleMode) {
+        player.shuffleModeEnabled = shuffleMode == ShuffleMode.ON
     }
 
     fun getCurrentTime(): Long {

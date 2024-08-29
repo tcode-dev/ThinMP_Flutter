@@ -6,9 +6,19 @@ part 'repeat_provider.g.dart';
 @riverpod
 class Repeat extends _$Repeat {
   @override
-  RepeatState build() => RepeatState.off;
+  RepeatMode build() => RepeatMode.off;
 
-  void setRepeatState(RepeatState repeatState) {
-    state = repeatState;
+  void changeRepeat() {
+    switch (state) {
+      case RepeatMode.off:
+        state = RepeatMode.one;
+        break;
+      case RepeatMode.one:
+        state = RepeatMode.all;
+        break;
+      case RepeatMode.all:
+        state = RepeatMode.off;
+        break;
+    }
   }
 }

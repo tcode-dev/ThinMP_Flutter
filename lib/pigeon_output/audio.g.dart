@@ -25,10 +25,15 @@ List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty
   return <Object?>[error.code, error.message, error.details];
 }
 
-enum RepeatState {
+enum RepeatMode {
   off,
   one,
   all,
+}
+
+enum ShuffleMode {
+  off,
+  on,
 }
 
 class Song {
@@ -207,8 +212,11 @@ class _PigeonCodec extends StandardMessageCodec {
     } else     if (value is ArtistDetail) {
       buffer.putUint8(132);
       writeValue(buffer, value.encode());
-    } else     if (value is RepeatState) {
+    } else     if (value is RepeatMode) {
       buffer.putUint8(133);
+      writeValue(buffer, value.index);
+    } else     if (value is ShuffleMode) {
+      buffer.putUint8(134);
       writeValue(buffer, value.index);
     } else {
       super.writeValue(buffer, value);
@@ -228,7 +236,10 @@ class _PigeonCodec extends StandardMessageCodec {
         return ArtistDetail.decode(readValue(buffer)!);
       case 133: 
         final int? value = readValue(buffer) as int?;
-        return value == null ? null : RepeatState.values[value];
+        return value == null ? null : RepeatMode.values[value];
+      case 134: 
+        final int? value = readValue(buffer) as int?;
+        return value == null ? null : ShuffleMode.values[value];
       default:
         return super.readValueOfType(type, buffer);
     }
@@ -738,7 +749,7 @@ class PlayerHostApi {
     }
   }
 
-  Future<void> setRepeat(RepeatState repeatState) async {
+  Future<void> setRepeat(RepeatMode repeatMode) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.PlayerHostApi.setRepeat$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -746,7 +757,7 @@ class PlayerHostApi {
       binaryMessenger: __pigeon_binaryMessenger,
     );
     final List<Object?>? __pigeon_replyList =
-        await __pigeon_channel.send(<Object?>[repeatState]) as List<Object?>?;
+        await __pigeon_channel.send(<Object?>[repeatMode]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {
@@ -760,7 +771,7 @@ class PlayerHostApi {
     }
   }
 
-  Future<void> setShuffle(bool isShuffle) async {
+  Future<void> setShuffle(ShuffleMode shuffleMode) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.PlayerHostApi.setShuffle$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -768,7 +779,7 @@ class PlayerHostApi {
       binaryMessenger: __pigeon_binaryMessenger,
     );
     final List<Object?>? __pigeon_replyList =
-        await __pigeon_channel.send(<Object?>[isShuffle]) as List<Object?>?;
+        await __pigeon_channel.send(<Object?>[shuffleMode]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {

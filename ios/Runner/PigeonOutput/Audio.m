@@ -31,8 +31,18 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
   return (result == [NSNull null]) ? nil : result;
 }
 
-@implementation RepeatStateBox
-- (instancetype)initWithValue:(RepeatState)value {
+@implementation RepeatModeBox
+- (instancetype)initWithValue:(RepeatMode)value {
+  self = [super init];
+  if (self) {
+    _value = value;
+  }
+  return self;
+}
+@end
+
+@implementation ShuffleModeBox
+- (instancetype)initWithValue:(ShuffleMode)value {
   self = [super init];
   if (self) {
     _value = value;
@@ -225,7 +235,12 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
     case 133: 
       {
         NSNumber *enumAsNumber = [self readValue];
-        return enumAsNumber == nil ? nil : [[RepeatStateBox alloc] initWithValue:[enumAsNumber integerValue]];
+        return enumAsNumber == nil ? nil : [[RepeatModeBox alloc] initWithValue:[enumAsNumber integerValue]];
+      }
+    case 134: 
+      {
+        NSNumber *enumAsNumber = [self readValue];
+        return enumAsNumber == nil ? nil : [[ShuffleModeBox alloc] initWithValue:[enumAsNumber integerValue]];
       }
     default:
       return [super readValueOfType:type];
@@ -249,9 +264,13 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
   } else if ([value isKindOfClass:[ArtistDetail class]]) {
     [self writeByte:132];
     [self writeValue:[value toList]];
-  } else if ([value isKindOfClass:[RepeatStateBox class]]) {
-    RepeatStateBox * box = (RepeatStateBox *)value;
+  } else if ([value isKindOfClass:[RepeatModeBox class]]) {
+    RepeatModeBox * box = (RepeatModeBox *)value;
     [self writeByte:133];
+    [self writeValue:(value == nil ? [NSNull null] : [NSNumber numberWithInteger:box.value])];
+  } else if ([value isKindOfClass:[ShuffleModeBox class]]) {
+    ShuffleModeBox * box = (ShuffleModeBox *)value;
+    [self writeByte:134];
     [self writeValue:(value == nil ? [NSNull null] : [NSNumber numberWithInteger:box.value])];
   } else {
     [super writeValue:value];
@@ -650,13 +669,13 @@ void SetUpPlayerHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NS
         binaryMessenger:binaryMessenger
         codec:nullGetAudioCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(setRepeatRepeatState:error:)], @"PlayerHostApi api (%@) doesn't respond to @selector(setRepeatRepeatState:error:)", api);
+      NSCAssert([api respondsToSelector:@selector(setRepeatRepeatMode:error:)], @"PlayerHostApi api (%@) doesn't respond to @selector(setRepeatRepeatMode:error:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         NSArray<id> *args = message;
-        RepeatStateBox *enumBox = GetNullableObjectAtIndex(args, 0);
-        RepeatState arg_repeatState = enumBox.value;
+        RepeatModeBox *enumBox = GetNullableObjectAtIndex(args, 0);
+        RepeatMode arg_repeatMode = enumBox.value;
         FlutterError *error;
-        [api setRepeatRepeatState:arg_repeatState error:&error];
+        [api setRepeatRepeatMode:arg_repeatMode error:&error];
         callback(wrapResult(nil, error));
       }];
     } else {
@@ -670,12 +689,13 @@ void SetUpPlayerHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NS
         binaryMessenger:binaryMessenger
         codec:nullGetAudioCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(setShuffleIsShuffle:error:)], @"PlayerHostApi api (%@) doesn't respond to @selector(setShuffleIsShuffle:error:)", api);
+      NSCAssert([api respondsToSelector:@selector(setShuffleShuffleMode:error:)], @"PlayerHostApi api (%@) doesn't respond to @selector(setShuffleShuffleMode:error:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         NSArray<id> *args = message;
-        BOOL arg_isShuffle = [GetNullableObjectAtIndex(args, 0) boolValue];
+        ShuffleModeBox *enumBox = GetNullableObjectAtIndex(args, 0);
+        ShuffleMode arg_shuffleMode = enumBox.value;
         FlutterError *error;
-        [api setShuffleIsShuffle:arg_isShuffle error:&error];
+        [api setShuffleShuffleMode:arg_shuffleMode error:&error];
         callback(wrapResult(nil, error));
       }];
     } else {

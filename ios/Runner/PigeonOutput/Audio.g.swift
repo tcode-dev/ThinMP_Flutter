@@ -68,10 +68,15 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
   return value as! T?
 }
 
-enum RepeatState: Int {
+enum RepeatMode: Int {
   case off = 0
   case one = 1
   case all = 2
+}
+
+enum ShuffleMode: Int {
+  case off = 0
+  case on = 1
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
@@ -221,10 +226,17 @@ private class AudioPigeonCodecReader: FlutterStandardReader {
     case 132:
       return ArtistDetail.fromList(self.readValue() as! [Any?])
     case 133:
-      var enumResult: RepeatState? = nil
+      var enumResult: RepeatMode? = nil
       let enumResultAsInt: Int? = nilOrValue(self.readValue() as? Int)
       if let enumResultAsInt = enumResultAsInt {
-        enumResult = RepeatState(rawValue: enumResultAsInt)
+        enumResult = RepeatMode(rawValue: enumResultAsInt)
+      }
+      return enumResult
+    case 134:
+      var enumResult: ShuffleMode? = nil
+      let enumResultAsInt: Int? = nilOrValue(self.readValue() as? Int)
+      if let enumResultAsInt = enumResultAsInt {
+        enumResult = ShuffleMode(rawValue: enumResultAsInt)
       }
       return enumResult
     default:
@@ -247,8 +259,11 @@ private class AudioPigeonCodecWriter: FlutterStandardWriter {
     } else if let value = value as? ArtistDetail {
       super.writeByte(132)
       super.writeValue(value.toList())
-    } else if let value = value as? RepeatState {
+    } else if let value = value as? RepeatMode {
       super.writeByte(133)
+      super.writeValue(value.rawValue)
+    } else if let value = value as? ShuffleMode {
+      super.writeByte(134)
       super.writeValue(value.rawValue)
     } else {
       super.writeValue(value)
@@ -489,8 +504,8 @@ protocol PlayerHostApi {
   func prev() throws
   func next() throws
   func seek(time: Double) throws
-  func setRepeat(repeatState: RepeatState) throws
-  func setShuffle(isShuffle: Bool) throws
+  func setRepeat(repeatMode: RepeatMode) throws
+  func setShuffle(shuffleMode: ShuffleMode) throws
   func getCurrentTime() throws -> Double
 }
 
@@ -618,9 +633,9 @@ class PlayerHostApiSetup {
     if let api = api {
       setRepeatChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let repeatStateArg = args[0] as! RepeatState
+        let repeatModeArg = args[0] as! RepeatMode
         do {
-          try api.setRepeat(repeatState: repeatStateArg)
+          try api.setRepeat(repeatMode: repeatModeArg)
           reply(wrapResult(nil))
         } catch {
           reply(wrapError(error))
@@ -633,9 +648,9 @@ class PlayerHostApiSetup {
     if let api = api {
       setShuffleChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let isShuffleArg = args[0] as! Bool
+        let shuffleModeArg = args[0] as! ShuffleMode
         do {
-          try api.setShuffle(isShuffle: isShuffleArg)
+          try api.setShuffle(shuffleMode: shuffleModeArg)
           reply(wrapResult(nil))
         } catch {
           reply(wrapError(error))

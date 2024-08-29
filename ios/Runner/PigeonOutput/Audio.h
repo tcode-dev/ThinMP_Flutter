@@ -10,16 +10,27 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, RepeatState) {
-  RepeatStateOff = 0,
-  RepeatStateOne = 1,
-  RepeatStateAll = 2,
+typedef NS_ENUM(NSUInteger, RepeatMode) {
+  RepeatModeOff = 0,
+  RepeatModeOne = 1,
+  RepeatModeAll = 2,
 };
 
-/// Wrapper for RepeatState to allow for nullability.
-@interface RepeatStateBox : NSObject
-@property(nonatomic, assign) RepeatState value;
-- (instancetype)initWithValue:(RepeatState)value;
+/// Wrapper for RepeatMode to allow for nullability.
+@interface RepeatModeBox : NSObject
+@property(nonatomic, assign) RepeatMode value;
+- (instancetype)initWithValue:(RepeatMode)value;
+@end
+
+typedef NS_ENUM(NSUInteger, ShuffleMode) {
+  ShuffleModeOff = 0,
+  ShuffleModeOn = 1,
+};
+
+/// Wrapper for ShuffleMode to allow for nullability.
+@interface ShuffleModeBox : NSObject
+@property(nonatomic, assign) ShuffleMode value;
+- (instancetype)initWithValue:(ShuffleMode)value;
 @end
 
 @class Song;
@@ -149,8 +160,8 @@ extern void SetUpArtworkHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMesse
 - (void)prevWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)nextWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)seekTime:(double)time error:(FlutterError *_Nullable *_Nonnull)error;
-- (void)setRepeatRepeatState:(RepeatState)repeatState error:(FlutterError *_Nullable *_Nonnull)error;
-- (void)setShuffleIsShuffle:(BOOL)isShuffle error:(FlutterError *_Nullable *_Nonnull)error;
+- (void)setRepeatRepeatMode:(RepeatMode)repeatMode error:(FlutterError *_Nullable *_Nonnull)error;
+- (void)setShuffleShuffleMode:(ShuffleMode)shuffleMode error:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
 - (nullable NSNumber *)getCurrentTimeWithError:(FlutterError *_Nullable *_Nonnull)error;
 @end

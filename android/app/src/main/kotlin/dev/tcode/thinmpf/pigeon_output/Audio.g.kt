@@ -46,13 +46,24 @@ class FlutterError (
   val details: Any? = null
 ) : Throwable()
 
-enum class RepeatState(val raw: Int) {
+enum class RepeatMode(val raw: Int) {
   OFF(0),
   ONE(1),
   ALL(2);
 
   companion object {
-    fun ofRaw(raw: Int): RepeatState? {
+    fun ofRaw(raw: Int): RepeatMode? {
+      return values().firstOrNull { it.raw == raw }
+    }
+  }
+}
+
+enum class ShuffleMode(val raw: Int) {
+  OFF(0),
+  ON(1);
+
+  companion object {
+    fun ofRaw(raw: Int): ShuffleMode? {
       return values().firstOrNull { it.raw == raw }
     }
   }
@@ -203,7 +214,12 @@ private object AudioPigeonCodec : StandardMessageCodec() {
       }
       133.toByte() -> {
         return (readValue(buffer) as Int?)?.let {
-          RepeatState.ofRaw(it)
+          RepeatMode.ofRaw(it)
+        }
+      }
+      134.toByte() -> {
+        return (readValue(buffer) as Int?)?.let {
+          ShuffleMode.ofRaw(it)
         }
       }
       else -> super.readValueOfType(type, buffer)
@@ -227,8 +243,12 @@ private object AudioPigeonCodec : StandardMessageCodec() {
         stream.write(132)
         writeValue(stream, value.toList())
       }
-      is RepeatState -> {
+      is RepeatMode -> {
         stream.write(133)
+        writeValue(stream, value.raw)
+      }
+      is ShuffleMode -> {
+        stream.write(134)
         writeValue(stream, value.raw)
       }
       else -> super.writeValue(stream, value)
@@ -490,8 +510,8 @@ interface PlayerHostApi {
   fun prev()
   fun next()
   fun seek(time: Double)
-  fun setRepeat(repeatState: RepeatState)
-  fun setShuffle(isShuffle: Boolean)
+  fun setRepeat(repeatMode: RepeatMode)
+  fun setShuffle(shuffleMode: ShuffleMode)
   fun getCurrentTime(): Double
 
   companion object {
@@ -646,9 +666,9 @@ interface PlayerHostApi {
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
-            val repeatStateArg = args[0] as RepeatState
+            val repeatModeArg = args[0] as RepeatMode
             val wrapped: List<Any?> = try {
-              api.setRepeat(repeatStateArg)
+              api.setRepeat(repeatModeArg)
               listOf(null)
             } catch (exception: Throwable) {
               wrapError(exception)
@@ -664,9 +684,9 @@ interface PlayerHostApi {
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
-            val isShuffleArg = args[0] as Boolean
+            val shuffleModeArg = args[0] as ShuffleMode
             val wrapped: List<Any?> = try {
-              api.setShuffle(isShuffleArg)
+              api.setShuffle(shuffleModeArg)
               listOf(null)
             } catch (exception: Throwable) {
               wrapError(exception)
