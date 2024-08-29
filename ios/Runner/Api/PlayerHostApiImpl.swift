@@ -46,12 +46,12 @@ class PlayerHostApiImpl: PlayerHostApi {
         MusicPlayer.shared.seek(time: time)
     }
 
-    func setRepeat(repeatState: RepeatState) throws {
-        
+    func setRepeat(repeatMode: RepeatMode) throws {
+        MusicPlayer.shared.setRepeat(repeatMode: RepeatMode)
     }
 
-    func setShuffle(isShuffle: Bool) throws {
-        
+    func setShuffle(shuffleMode: ShuffleMode) throws {
+        MusicPlayer.shared.setShuffle(shuffleMode: ShuffleMode)
     }
 
     func getCurrentTime() throws -> Double {
