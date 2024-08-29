@@ -24,6 +24,12 @@ class ShuffleButtonWidgetState extends ConsumerState<ShuffleButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ButtonWidget(icon: Icons.shuffle_rounded, size: 50.0, callback: _shuffle);
+    final provider = ref.watch(shuffleProvider);
+    final opacity = provider == ShuffleMode.on ? 1.0 : 0.5;
+
+    return Opacity(
+      opacity: opacity,
+      child: ButtonWidget(icon: Icons.shuffle_rounded, size: 50.0, callback: _shuffle),
+    );
   }
 }
