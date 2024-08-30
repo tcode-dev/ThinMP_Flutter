@@ -5,28 +5,29 @@ class PlayerConfig {
   static const String _repeatKey = 'repeat';
   static const String _shuffleKey = 'shuffle';
 
-  Future<RepeatState> loadRepeat() async {
+  Future<RepeatMode> loadRepeat() async {
     final prefs = await SharedPreferences.getInstance();
-    final index = prefs.getInt(_repeatKey) ?? RepeatState.off.index;
+    final index = prefs.getInt(_repeatKey) ?? RepeatMode.off.index;
 
-    return RepeatState.values[index];
+    return RepeatMode.values[index];
   }
 
-  Future<void> saveRepeat(RepeatState repeat) async {
+  Future<void> saveRepeat(RepeatMode repeat) async {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt(_repeatKey, repeat.index);
   }
 
-  Future<bool> loadShuffle() async {
+  Future<ShuffleMode> loadShuffle() async {
     final prefs = await SharedPreferences.getInstance();
+    final index = prefs.getInt(_shuffleKey) ?? ShuffleMode.off.index;
 
-    return prefs.getBool(_shuffleKey) ?? false;
+    return ShuffleMode.values[index];
   }
 
-  Future<void> saveShuffle(bool shuffle) async {
+  Future<void> saveShuffle(ShuffleMode shuffle) async {
     final prefs = await SharedPreferences.getInstance();
 
-    await prefs.setBool(_shuffleKey, shuffle);
+    await prefs.setInt(_shuffleKey, shuffle.index);
   }
 }
