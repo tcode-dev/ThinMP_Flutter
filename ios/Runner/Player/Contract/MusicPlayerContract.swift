@@ -18,7 +18,7 @@ protocol MusicPlayerContract {
 
     func seek(time: TimeInterval)
 
-    func setRepeat()
+    func setRepeat(repeatMode: RepeatMode)
 
-    func setShuffle()
+    func setShuffle(shuffleMode: ShuffleMode)
 }
