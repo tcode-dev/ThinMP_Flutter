@@ -103,3 +103,9 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
   generate: true
+
+flutter_icons:       
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "images/app_icon.png"
