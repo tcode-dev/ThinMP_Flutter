@@ -6,11 +6,12 @@ part of 'repeat_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$repeatHash() => r'd468c4b384ce7bc55617b7a66940dbd886b6b76d';
+String _$repeatHash() => r'88a2ed0d7cfea7edca1453cdc38bfbb5285b665f';
 
 /// See also [Repeat].
 @ProviderFor(Repeat)
-final repeatProvider = AutoDisposeNotifierProvider<Repeat, RepeatMode>.internal(
+final repeatProvider =
+    AutoDisposeAsyncNotifierProvider<Repeat, RepeatMode>.internal(
   Repeat.new,
   name: r'repeatProvider',
   debugGetCreateSourceHash:
@@ -19,6 +20,6 @@ final repeatProvider = AutoDisposeNotifierProvider<Repeat, RepeatMode>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _$Repeat = AutoDisposeNotifier<RepeatMode>;
+typedef _$Repeat = AutoDisposeAsyncNotifier<RepeatMode>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -19,7 +19,7 @@ class ShuffleButtonWidgetState extends ConsumerState<ShuffleButtonWidget> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to change shuffle mode: $e')),
+          SnackBar(content: Text('Failed to change shuffle: $e')),
         );
       }
     }
@@ -31,12 +31,12 @@ class ShuffleButtonWidgetState extends ConsumerState<ShuffleButtonWidget> {
 
     return asyncValue.when(
       loading: () => const LoadingWidget(),
-      error: (Object error, StackTrace stackTrace) {
-        return const LoadingWidget();
-      },
+      error: (Object error, StackTrace stackTrace) => const LoadingWidget(),
       data: (provider) {
+        final opacity = provider == ShuffleMode.off ? 0.5 : 1.0;
+
         return Opacity(
-          opacity: provider == ShuffleMode.on ? 1.0 : 0.5,
+          opacity: opacity,
           child: ButtonWidget(icon: Icons.shuffle_rounded, size: 50.0, callback: _shuffle),
         );
       },
