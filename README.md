@@ -51,6 +51,27 @@ This is a simple music player for Android and iOS.
 
 * flutter_localizations - https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization
 * flutter_riverpod - https://pub.dev/packages/flutter_riverpod
+* Material Icons - https://fonts.google.com/icons
 * pigeon - https://pub.dev/packages/pigeon
 * permission_handler - https://pub.dev/packages/permission_handler
 * shared_preferences - https://pub.dev/packages/shared_preferences
+
+## command
+
+### riverpod
+
+```
+dart run build_runner build
+```
+
+### pigeon
+
+```
+dart run pigeon --input pigeon/audio.dart
+```
+
+### localizations
+
+```
+flutter pub get
+```
