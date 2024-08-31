@@ -49,14 +49,15 @@ This is a simple music player for Android and iOS.
 
 ## Libraries
 
+* flutter_launcher_icons - https://pub.dev/packages/flutter_launcher_icons
 * flutter_localizations - https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization
 * flutter_riverpod - https://pub.dev/packages/flutter_riverpod
 * Material Icons - https://fonts.google.com/icons
-* pigeon - https://pub.dev/packages/pigeon
 * permission_handler - https://pub.dev/packages/permission_handler
+* pigeon - https://pub.dev/packages/pigeon
 * shared_preferences - https://pub.dev/packages/shared_preferences
 
-## command
+## Command
 
 ### riverpod
 
@@ -74,4 +75,9 @@ dart run pigeon --input pigeon/audio.dart
 
 ```
 flutter pub get
+```
+
+### app launcher icon
+```
+flutter pub run flutter_launcher_icons:main
 ```
