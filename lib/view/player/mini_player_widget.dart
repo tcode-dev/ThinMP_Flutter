@@ -30,15 +30,7 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
       width: double.infinity,
       height: StyleConstant.height.contentBox + bottom,
       padding: EdgeInsets.only(bottom: bottom, left: StyleConstant.padding.small),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onInverseSurface,
-        border: const Border(
-          bottom: BorderSide(
-            color: Color(0x1F000000),
-            width: 1,
-          ),
-        ),
-      ),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.onInverseSurface),
       child: GestureDetector(
         onTap: () {
           Navigator.push(
