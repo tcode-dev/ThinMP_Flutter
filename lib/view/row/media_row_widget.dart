@@ -16,9 +16,9 @@ class MediaRowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 51.0,
-      margin: const EdgeInsets.only(left: 10),
-      padding: const EdgeInsets.only(top: 5, right: 10, bottom: 5),
+      height: StyleConstant.height.borderBox,
+      margin: EdgeInsets.only(left: StyleConstant.padding.small),
+      padding: EdgeInsets.only(top: StyleConstant.padding.tiny, right: StyleConstant.padding.small, bottom: StyleConstant.padding.tiny),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -29,7 +29,7 @@ class MediaRowWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(margin: const EdgeInsets.only(right: 10), child: SquareImageWidget(id: song.imageId, size: StyleConstant.image.small)),
+          Container(margin: EdgeInsets.only(right: StyleConstant.padding.small), child: SquareImageWidget(id: song.imageId, size: StyleConstant.image.tiny)),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -13,8 +13,8 @@ class PlainRowWidget extends StatelessWidget {
       width: double.infinity,
       height: StyleConstant.height.contentBox,
       alignment: Alignment.centerLeft,
-      margin: const EdgeInsets.only(left: 10),
-      padding: const EdgeInsets.only(top: 5, right: 10, bottom: 5),
+      margin: EdgeInsets.only(left: StyleConstant.padding.small),
+      padding: EdgeInsets.only(top: StyleConstant.padding.tiny, right: StyleConstant.padding.small, bottom: StyleConstant.padding.tiny),
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(

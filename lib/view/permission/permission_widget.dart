@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:thinmpf/constant/permission_constant.dart';
+import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/util/platform_select.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
 
@@ -37,7 +38,7 @@ class _PermissionWidgetState extends State<PermissionWidget> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 20.0, bottom: 50.0, left: 20.0),
+                  padding: EdgeInsets.only(right: StyleConstant.padding.large, bottom: StyleConstant.height.contentBox, left: StyleConstant.button.large),
                   child: Text(AppLocalizations.of(context)!.permissionDenied),
                 ),
                 ElevatedButton(

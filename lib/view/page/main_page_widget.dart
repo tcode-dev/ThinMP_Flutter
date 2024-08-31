@@ -52,7 +52,7 @@ class MainPageWidget extends ConsumerWidget {
                 slivers: <Widget>[
                   SliverToBoxAdapter(
                     child: Container(
-                      padding: EdgeInsets.only(top: top, left: 20),
+                      padding: EdgeInsets.only(top: top, left: StyleConstant.padding.large),
                       child: Text(AppLocalizations.of(context)!.library, style: Theme.of(context).textTheme.headlineLarge),
                     ),
                   ),
@@ -72,7 +72,7 @@ class MainPageWidget extends ConsumerWidget {
                   ),
                   SliverToBoxAdapter(
                     child: Container(
-                      padding: const EdgeInsets.only(top: 20, left: 20),
+                      padding: EdgeInsets.only(top: StyleConstant.padding.large, left: StyleConstant.padding.large),
                       child: Text(AppLocalizations.of(context)!.recentlyAdded, style: Theme.of(context).textTheme.headlineMedium),
                     ),
                   ),

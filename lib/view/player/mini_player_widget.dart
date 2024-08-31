@@ -29,7 +29,7 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
     return Container(
       width: double.infinity,
       height: StyleConstant.height.contentBox + bottom,
-      padding: EdgeInsets.only(bottom: bottom, left: 10),
+      padding: EdgeInsets.only(bottom: bottom, left: StyleConstant.padding.small),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.onInverseSurface,
         border: const Border(
@@ -48,10 +48,10 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
         },
         child: Row(
           children: [
-            Container(margin: const EdgeInsets.only(right: 10), child: SquareImageWidget(id: playbackSong.imageId, size: StyleConstant.image.small)),
+            Container(margin: EdgeInsets.only(right: StyleConstant.padding.small), child: SquareImageWidget(id: playbackSong.imageId, size: StyleConstant.image.tiny)),
             Expanded(child: TextWidget(text: playbackSong.name)),
-            const PlayPauseButtonWidget(size: 50.0, imageSize: 44.0),
-            const NextButtonWidget(size: 50.0, imageSize: 44.0),
+            PlayPauseButtonWidget(size: StyleConstant.button.small, imageSize: StyleConstant.image.small),
+            NextButtonWidget(size: StyleConstant.button.small, imageSize: StyleConstant.image.small),
           ],
         ),
       ),

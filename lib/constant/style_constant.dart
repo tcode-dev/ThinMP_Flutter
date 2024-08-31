@@ -25,7 +25,8 @@ class HeightValue {
 }
 
 class ImageValue {
-  final double small = 40.0;
+  final double tiny = 40.0;
+  final double small = 44.0;
   final double medium = 70.0;
   final double large = 90.0;
 }

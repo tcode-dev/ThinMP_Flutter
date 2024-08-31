@@ -99,7 +99,7 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                 ),
                 SliverToBoxAdapter(
                   child: Container(
-                    padding: const EdgeInsets.only(top: 20, left: 20),
+                    padding: EdgeInsets.only(top: StyleConstant.padding.large, left: StyleConstant.padding.large),
                     child: Text("Albums", style: Theme.of(context).textTheme.headlineMedium),
                   ),
                 ),
@@ -132,7 +132,7 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                 ),
                 SliverToBoxAdapter(
                   child: Container(
-                    padding: const EdgeInsets.only(bottom: 10, left: 20),
+                    padding: EdgeInsets.only(bottom: StyleConstant.padding.small, left: StyleConstant.padding.large),
                     child: Text("Songs", style: Theme.of(context).textTheme.headlineMedium),
                   ),
                 ),
