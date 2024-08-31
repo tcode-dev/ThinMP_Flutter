@@ -6,7 +6,7 @@ class EmptyRowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).padding.bottom + styleConstant[StyleType.height][SizeConstant.small];
+    final height = MediaQuery.of(context).padding.bottom + StyleConstant.height.contentBox;
 
     return SizedBox(
       width: double.infinity,

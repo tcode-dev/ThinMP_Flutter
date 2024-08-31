@@ -1,27 +1,47 @@
-enum SizeConstant { tiny, small, medium, large }
+class StyleConstant {
+  static ButtonValue button = ButtonValue();
+  static GridValue grid = GridValue();
+  static HeightValue height = HeightValue();
+  static ImageValue image = ImageValue();
+  static OpacityValue opacity = OpacityValue();
+  static PaddingValue padding = PaddingValue();
+  static RadiusValue radius = RadiusValue();
+}
 
-enum StyleType { button, grid, height, image, padding, radius }
+class ButtonValue {
+  final double small = 50.0;
+  final double medium = 75.0;
+  final double large = 100.0;
+}
 
-const Map<StyleType, dynamic> styleConstant = {
-  StyleType.button: {
-    SizeConstant.small: 50.0,
-    SizeConstant.medium: 75.0,
-    SizeConstant.large: 100.0,
-  },
-  StyleType.height: {
-    SizeConstant.small: 50.0,
-  },
-  StyleType.image: {
-    SizeConstant.small: 40.0,
-    SizeConstant.medium: 70.0,
-    SizeConstant.large: 90.0,
-  },
-  StyleType.padding: {
-    SizeConstant.tiny: 5.0,
-    SizeConstant.small: 10.0,
-    SizeConstant.medium: 15.0,
-    SizeConstant.large: 20.0,
-  },
-  StyleType.radius: 4.0,
-  StyleType.grid: {"minSpanCount": 2, "spanBaseSize": 200},
-};
+class GridValue {
+  final int minSpanCount = 2;
+  final int spanBaseSize = 200;
+}
+
+class HeightValue {
+  final double borderBox = 51.0;
+  final double contentBox = 50.0;
+}
+
+class ImageValue {
+  final double small = 40.0;
+  final double medium = 70.0;
+  final double large = 90.0;
+}
+
+class OpacityValue {
+  final double off = 0.5;
+  final double on = 1.0;
+}
+
+class PaddingValue {
+  final double tiny = 5.0;
+  final double small = 10.0;
+  final double medium = 15.0;
+  final double large = 20.0;
+}
+
+class RadiusValue {
+  final double small = 4.0;
+}

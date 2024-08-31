@@ -15,7 +15,7 @@ class SquareImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(styleConstant[StyleType.radius]),
+      borderRadius: BorderRadius.circular(StyleConstant.radius.small),
       child: ImageWidget(id: id, size: size),
     );
   }

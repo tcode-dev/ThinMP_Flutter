@@ -104,13 +104,13 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                   ),
                 ),
                 SliverPadding(
-                  padding: EdgeInsets.all(styleConstant[StyleType.padding][SizeConstant.large]),
+                  padding: EdgeInsets.all(StyleConstant.padding.large),
                   sliver: SliverGrid(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       childAspectRatio: childAspectRatio,
                       crossAxisCount: crossAxisCount,
-                      crossAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
-                      mainAxisSpacing: styleConstant[StyleType.padding][SizeConstant.large],
+                      crossAxisSpacing: StyleConstant.padding.large,
+                      mainAxisSpacing: StyleConstant.padding.large,
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {

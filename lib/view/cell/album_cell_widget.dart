@@ -21,7 +21,7 @@ class AlbumCellWidget extends StatelessWidget {
           children: [
             SquareImageWidget(id: album.imageId, size: constraints.maxWidth),
             SizedBox(
-              height: styleConstant[StyleType.height][SizeConstant.small],
+              height: StyleConstant.height.contentBox,
               child: Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

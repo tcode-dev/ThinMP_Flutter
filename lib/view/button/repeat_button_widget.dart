@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/player/repeat_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
@@ -33,12 +34,12 @@ class RepeatButtonWidgetState extends ConsumerState<RepeatButtonWidget> {
       loading: () => const LoadingWidget(),
       error: (Object error, StackTrace stackTrace) => const LoadingWidget(),
       data: (provider) {
-        final opacity = provider == RepeatMode.off ? 0.5 : 1.0;
+        final opacity = provider == RepeatMode.off ? StyleConstant.opacity.off : StyleConstant.opacity.on;
         final icon = provider == RepeatMode.one ? Icons.repeat_one_rounded : Icons.repeat_rounded;
 
         return Opacity(
           opacity: opacity,
-          child: ButtonWidget(icon: icon, size: 50.0, callback: _repeat),
+          child: ButtonWidget(icon: icon, size: StyleConstant.button.small, callback: _repeat),
         );
       },
     );

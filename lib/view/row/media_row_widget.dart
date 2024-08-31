@@ -29,7 +29,7 @@ class MediaRowWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(margin: const EdgeInsets.only(right: 10), child: SquareImageWidget(id: song.imageId, size: styleConstant[StyleType.image][SizeConstant.small])),
+          Container(margin: const EdgeInsets.only(right: 10), child: SquareImageWidget(id: song.imageId, size: StyleConstant.image.small)),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -11,7 +11,7 @@ class PlainRowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: styleConstant[StyleType.height][SizeConstant.small],
+      height: StyleConstant.height.contentBox,
       alignment: Alignment.centerLeft,
       margin: const EdgeInsets.only(left: 10),
       padding: const EdgeInsets.only(top: 5, right: 10, bottom: 5),

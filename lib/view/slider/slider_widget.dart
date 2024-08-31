@@ -125,7 +125,7 @@ class SliderWidgetState extends ConsumerState<SliderWidget> {
           onChanged: _onChanged,
         ),
         Container(
-          padding: EdgeInsets.only(right: styleConstant[StyleType.padding][SizeConstant.large], left: styleConstant[StyleType.padding][SizeConstant.large]),
+          padding: EdgeInsets.only(right: StyleConstant.padding.large, left: StyleConstant.padding.large),
           child: Row(
             children: [
               Text(_formatDuration(currentTime)),
