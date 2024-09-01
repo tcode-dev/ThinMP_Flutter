@@ -23,7 +23,7 @@ class MediaRowWidget extends StatelessWidget {
         border: Border(
           bottom: BorderSide(
             color: Theme.of(context).colorScheme.onInverseSurface,
-            width: 1,
+            width: 1.0,
           ),
         ),
       ),
@@ -33,7 +33,10 @@ class MediaRowWidget extends StatelessWidget {
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [TextWidget(text: song.name), TextWidget(text: song.artistName)],
+              children: [
+                TextWidget(text: song.name),
+                TextWidget(text: song.artistName, style: Theme.of(context).textTheme.bodySmall),
+              ],
             ),
           ),
         ],

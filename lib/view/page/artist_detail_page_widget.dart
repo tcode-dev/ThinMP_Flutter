@@ -137,7 +137,7 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                   ),
                 ),
                 SliverFixedExtentList(
-                  itemExtent: 51,
+                  itemExtent: StyleConstant.height.borderBox,
                   delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () {

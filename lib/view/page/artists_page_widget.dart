@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/page/artists_provider.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/page/artist_detail_page_widget.dart';
@@ -32,7 +33,7 @@ class ArtistsPageWidget extends ConsumerWidget {
               return CustomScrollView(
                 slivers: <Widget>[
                   SliverFixedExtentList(
-                    itemExtent: 51,
+                    itemExtent: StyleConstant.height.borderBox,
                     delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                       final artist = vm.artists[index];
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/page/album_detail_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
@@ -77,7 +78,7 @@ class AlbumDetailPageWidget extends ConsumerWidget {
                     ),
                   ),
                   SliverFixedExtentList(
-                    itemExtent: 51,
+                    itemExtent: StyleConstant.height.borderBox,
                     delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {

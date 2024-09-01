@@ -27,7 +27,7 @@ class AlbumCellWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextWidget(text: album.name, textAlign: TextAlign.center),
-                    TextWidget(text: album.artistName, textAlign: TextAlign.center),
+                    TextWidget(text: album.artistName, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall),
                   ],
                 ),
               ),
