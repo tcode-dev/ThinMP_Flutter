@@ -33,7 +33,7 @@ class AlbumDetailPageWidget extends ConsumerWidget {
             },
             data: (vm) {
               return CustomScrollView(
-                slivers: <Widget>[
+                slivers: [
                   SliverAppBar(
                     pinned: true,
                     expandedHeight: screenSize.width - top,
@@ -57,7 +57,7 @@ class AlbumDetailPageWidget extends ConsumerWidget {
                                 gradient: LinearGradient(
                                   begin: Alignment.bottomCenter,
                                   end: Alignment.topCenter,
-                                  colors: <Color>[
+                                  colors: [
                                     Theme.of(context).scaffoldBackgroundColor,
                                     Theme.of(context).transparent,
                                   ],

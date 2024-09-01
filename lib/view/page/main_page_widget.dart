@@ -49,7 +49,7 @@ class MainPageWidget extends ConsumerWidget {
             },
             data: (vm) {
               return CustomScrollView(
-                slivers: <Widget>[
+                slivers: [
                   SliverToBoxAdapter(
                     child: Container(
                       padding: EdgeInsets.only(top: top, left: StyleConstant.padding.large),

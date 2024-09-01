@@ -36,7 +36,7 @@ class AlbumsPageWidget extends ConsumerWidget {
             },
             data: (vm) {
               return CustomScrollView(
-                slivers: <Widget>[
+                slivers: [
                   SliverPadding(
                     padding: EdgeInsets.all(StyleConstant.padding.large),
                     sliver: SliverGrid(

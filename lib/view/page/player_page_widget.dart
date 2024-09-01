@@ -65,7 +65,7 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
                       gradient: LinearGradient(
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
-                        colors: <Color>[
+                        colors: [
                           Theme.of(context).scaffoldBackgroundColor,
                           Theme.of(context).transparent,
                         ],

@@ -34,7 +34,7 @@ class SongsPageWidget extends ConsumerWidget {
             },
             data: (vm) {
               return CustomScrollView(
-                slivers: <Widget>[
+                slivers: [
                   SliverFixedExtentList(
                     itemExtent: StyleConstant.row.borderBoxHeight,
                     delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
