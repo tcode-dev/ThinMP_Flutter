@@ -38,7 +38,7 @@ class _ImageWidgetState extends State<ImageWidget> {
           );
         }
         return Image.asset(
-          'images/song_dark.png',
+          'assets/images/song_dark.png',
           width: widget.size,
           height: widget.size,
           fit: BoxFit.cover,
