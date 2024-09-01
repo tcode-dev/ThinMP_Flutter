@@ -1,11 +1,11 @@
 class StyleConstant {
   static ButtonValue button = ButtonValue();
   static GridValue grid = GridValue();
-  static RowValue row = RowValue();
   static ImageValue image = ImageValue();
   static OpacityValue opacity = OpacityValue();
   static PaddingValue padding = PaddingValue();
   static RadiusValue radius = RadiusValue();
+  static RowValue row = RowValue();
 }
 
 class ButtonValue {
@@ -17,11 +17,6 @@ class ButtonValue {
 class GridValue {
   final int minSpanCount = 2;
   final int spanBaseSize = 200;
-}
-
-class RowValue {
-  final double borderBoxHeight = 51.0;
-  final double contentBoxHeight = 50.0;
 }
 
 class ImageValue {
@@ -45,4 +40,9 @@ class PaddingValue {
 
 class RadiusValue {
   final double small = 4.0;
+}
+
+class RowValue {
+  final double borderBoxHeight = 51.0;
+  final double contentBoxHeight = 50.0;
 }
