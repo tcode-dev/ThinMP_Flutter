@@ -33,7 +33,7 @@ class ArtistsPageWidget extends ConsumerWidget {
               return CustomScrollView(
                 slivers: <Widget>[
                   SliverFixedExtentList(
-                    itemExtent: StyleConstant.height.borderBox,
+                    itemExtent: StyleConstant.row.borderBoxHeight,
                     delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                       final artist = vm.artists[index];
 

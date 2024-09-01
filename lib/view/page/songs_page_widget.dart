@@ -36,7 +36,7 @@ class SongsPageWidget extends ConsumerWidget {
               return CustomScrollView(
                 slivers: <Widget>[
                   SliverFixedExtentList(
-                    itemExtent: StyleConstant.height.borderBox,
+                    itemExtent: StyleConstant.row.borderBoxHeight,
                     delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {

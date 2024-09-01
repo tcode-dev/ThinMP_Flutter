@@ -38,7 +38,7 @@ class _PermissionWidgetState extends State<PermissionWidget> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(right: StyleConstant.padding.large, bottom: StyleConstant.height.contentBox, left: StyleConstant.button.large),
+                  padding: EdgeInsets.only(right: StyleConstant.padding.large, bottom: StyleConstant.row.contentBoxHeight, left: StyleConstant.button.large),
                   child: Text(AppLocalizations.of(context)!.permissionDenied),
                 ),
                 ElevatedButton(

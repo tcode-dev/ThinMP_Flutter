@@ -16,7 +16,7 @@ class MediaRowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: StyleConstant.height.borderBox,
+      height: StyleConstant.row.borderBoxHeight,
       margin: EdgeInsets.only(left: StyleConstant.padding.small),
       padding: EdgeInsets.only(top: StyleConstant.padding.tiny, right: StyleConstant.padding.small, bottom: StyleConstant.padding.tiny),
       decoration: BoxDecoration(

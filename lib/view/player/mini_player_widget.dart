@@ -28,7 +28,7 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
 
     return Container(
       width: double.infinity,
-      height: StyleConstant.height.contentBox + bottom,
+      height: StyleConstant.row.contentBoxHeight + bottom,
       padding: EdgeInsets.only(bottom: bottom, left: StyleConstant.padding.small),
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.onInverseSurface),
       child: GestureDetector(
