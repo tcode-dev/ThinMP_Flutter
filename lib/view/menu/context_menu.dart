@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SongMenuWidget extends StatelessWidget {
+class ContextMenuWidget extends StatelessWidget {
   final Widget child;
-  const SongMenuWidget({
-    super.key,
-    required this.child,
-  });
+  final List<PopupMenuEntry<String>> items;
+  final void Function(String) onSelected;
+
+  const ContextMenuWidget({super.key, required this.child, required this.items, required this.onSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -22,25 +22,10 @@ class SongMenuWidget extends StatelessWidget {
             0,
             offset.dy + renderBox.size.height,
           ),
-          items: [
-            const PopupMenuItem(
-              value: 'Option 1',
-              child: Text('Option 1'),
-            ),
-            const PopupMenuItem(
-              value: 'Option 2',
-              child: Text('Option 2'),
-            ),
-            const PopupMenuItem(
-              value: 'Option 3',
-              child: Text('Option 3'),
-            ),
-          ],
+          items: items,
         ).then((value) {
           if (value != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Selected: $value')),
-            );
+            onSelected(value);
           }
         });
       },
