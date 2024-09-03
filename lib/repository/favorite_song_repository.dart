@@ -27,14 +27,15 @@ class FavoriteSongRepository {
     return findById(id) != null;
   }
 
-  List<FavoriteSongRealmModel> getAll() {
+  List<String> findAllSongIds() {
     open();
+    try {
+      final favoriteSongRealmModels = realm?.all<FavoriteSongRealmModel>();
 
-    final favoriteSongRealmModels = realm?.all<FavoriteSongRealmModel>();
-
-    close();
-
-    return favoriteSongRealmModels?.toList() ?? [];
+      return favoriteSongRealmModels?.map((favoriteSong) => favoriteSong.songId).toList() ?? [];
+    } finally {
+      close();
+    }
   }
 
   void add(String id) {

@@ -6,6 +6,7 @@ import android.util.Log
 import dev.tcode.thinmpf.model.SongModel
 import dev.tcode.thinmpf.model.valueObject.AlbumId
 import dev.tcode.thinmpf.model.valueObject.ArtistId
+import dev.tcode.thinmpf.model.valueObject.SongId
 import dev.tcode.thinmpf.repository.contract.SongRepositoryContract
 
 class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepository<SongModel>(
@@ -31,6 +32,16 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
         selection = MediaStore.Audio.Media.IS_MUSIC + " = 1"
         selectionArgs = null
         sortOrder = MediaStore.Audio.Media.TITLE + " ASC"
+
+        return getList()
+    }
+
+    fun findByIds(songIds: List<SongId>): List<SongModel> {
+        val ids = songIds.map { it.raw }
+
+        selection = MediaStore.Audio.Media._ID + " IN (" + makePlaceholders(ids.size) + ") " + "AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
+        selectionArgs = toStringArray(ids)
+        sortOrder = null
 
         return getList()
     }

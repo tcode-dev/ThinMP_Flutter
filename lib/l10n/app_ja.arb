@@ -1,4 +1,5 @@
 {
+  "favoriteSongs": "お気に入りの曲",
   "library": "ライブラリ",
   "openAppSettings": "アプリの設定を開く",
   "permissionDenied": "権限が拒否されています。アプリの設定で権限を変更できます。",

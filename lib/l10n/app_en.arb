@@ -1,4 +1,5 @@
 {
+  "favoriteSongs": "FavoriteSongs",
   "library": "Library",
   "openAppSettings": "open app settings",
   "permissionDenied": "Permissions are denied. You can change permissions in app settings.",

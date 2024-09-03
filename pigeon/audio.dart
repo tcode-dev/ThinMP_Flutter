@@ -61,7 +61,7 @@ abstract class SongHostApi {
   List<Song> getAllSongs();
   List<Song> getSongsByAlbumId(String albumId);
   List<Song> getSongsByArtistId(String artistId);
-  // List<Song> getSongsByIds(List<String> ids);
+  List<Song> getSongsByIds(List<String> ids);
 }
 
 @HostApi()
