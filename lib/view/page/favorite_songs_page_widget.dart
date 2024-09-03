@@ -41,7 +41,7 @@ class FavoriteSongsPageWidget extends ConsumerWidget {
                     delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          _player.startAllSongs(index);
+                          _player.start(index, vm.songIds);
                         },
                         child: SongContextMenuWidget(child: MediaRowWidget(song: vm.songs[index])),
                       );

@@ -6,10 +6,19 @@ import ShuffleMode
 import android.content.Context
 import dev.tcode.thinmpf.model.valueObject.AlbumId
 import dev.tcode.thinmpf.model.valueObject.ArtistId
+import dev.tcode.thinmpf.model.valueObject.SongId
 import dev.tcode.thinmpf.player.MusicPlayer
 import dev.tcode.thinmpf.repository.SongRepository
 
 class PlayerHostApiImpl(private val context: Context): PlayerHostApi {
+    override fun start(index: Long, ids: List<String>) {
+        val repository = SongRepository(context)
+        val songIds = ids.map { SongId(it) }
+        val songs = repository.findByIds(songIds)
+
+        MusicPlayer.start(songs, index.toInt())
+    }
+
     override fun startAllSongs(index: Long) {
         val repository = SongRepository(context)
         val songs = repository.findAll()

@@ -520,6 +520,7 @@ interface ArtworkHostApi {
 }
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface PlayerHostApi {
+  fun start(index: Long, ids: List<String>)
   fun startAllSongs(index: Long)
   fun startAlbumSongs(index: Long, albumId: String)
   fun startArtistSongs(index: Long, artistId: String)
@@ -541,6 +542,25 @@ interface PlayerHostApi {
     @JvmOverloads
     fun setUp(binaryMessenger: BinaryMessenger, api: PlayerHostApi?, messageChannelSuffix: String = "") {
       val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.start$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val indexArg = args[0].let { num -> if (num is Int) num.toLong() else num as Long }
+            val idsArg = args[1] as List<String>
+            val wrapped: List<Any?> = try {
+              api.start(indexArg, idsArg)
+              listOf(null)
+            } catch (exception: Throwable) {
+              wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
       run {
         val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.PlayerHostApi.startAllSongs$separatedMessageChannelSuffix", codec)
         if (api != null) {

@@ -23,6 +23,7 @@ class FavoriteSongs extends _$FavoriteSongs {
 
     return FavoriteSongsViewModel(
       songs: songModels,
+      songIds: favoriteSongsIds
     );
   }
 }

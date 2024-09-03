@@ -154,6 +154,7 @@ extern void SetUpArtworkHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMesse
 
 
 @protocol PlayerHostApi
+- (void)startIndex:(NSInteger)index ids:(NSArray<NSString *> *)ids error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)startAllSongsIndex:(NSInteger)index error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)startAlbumSongsIndex:(NSInteger)index albumId:(NSString *)albumId error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)startArtistSongsIndex:(NSInteger)index artistId:(NSString *)artistId error:(FlutterError *_Nullable *_Nonnull)error;
