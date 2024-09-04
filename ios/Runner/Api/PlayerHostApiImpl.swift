@@ -8,6 +8,13 @@
 class PlayerHostApiImpl: PlayerHostApi {
     private let repository = SongRepository()
 
+    func start(index: Int64, ids: [String]) throws {
+        let songIds = ids.map { SongId(id: $0) }
+        let songs = repository.findBySongIds(songIds: songIds)
+
+        MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
+    }
+
     func startAllSongs(index: Int64) throws {
         let songs = repository.findAll()
 
