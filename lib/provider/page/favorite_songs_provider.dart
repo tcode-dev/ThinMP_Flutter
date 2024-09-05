@@ -17,13 +17,14 @@ class FavoriteSongs extends _$FavoriteSongs {
   }
 
   Future<FavoriteSongsViewModel> fetchSongs() async {
-    final favoriteSongsIds = _favoriteSongRepository.findAllSongIds();
-    final songs = await _songHostApi.getSongsByIds(favoriteSongsIds);
+    final favoriteSongs = _favoriteSongRepository.findAll();
+    final favoriteSongIds = favoriteSongs.map((song) => song.songId).toList();
+    final songs = await _songHostApi.getSongsByIds(favoriteSongIds);
     final songModels = songs.map((song) => song.fromPigeon()).toList();
 
     return FavoriteSongsViewModel(
       songs: songModels,
-      songIds: favoriteSongsIds
+      songIds: favoriteSongIds
     );
   }
 }

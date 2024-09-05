@@ -1,5 +1,7 @@
 import 'package:realm/realm.dart';
 import 'package:thinmpf/model/realm/favorite_song_realm_model.dart';
+import 'package:thinmpf/repository/dto/favorite_song_dto.dart';
+import 'package:thinmpf/extension/favorite_song_extension.dart';
 
 class FavoriteSongRepository {
   final LocalConfiguration config = Configuration.local([FavoriteSongRealmModel.schema]);
@@ -13,26 +15,27 @@ class FavoriteSongRepository {
     realm?.close();
   }
 
-  FavoriteSongRealmModel? findById(String id) {
+  FavoriteSongDTO? findById(String id) {
     open();
 
-    final favoriteSongRealmModel = realm?.find<FavoriteSongRealmModel>(id);
+    final model = realm?.find<FavoriteSongRealmModel>(id);
+    final dto = model?.toDTO();
 
     close();
 
-    return favoriteSongRealmModel;
+    return dto;
   }
 
   bool exists(String id) {
     return findById(id) != null;
   }
 
-  List<String> findAllSongIds() {
+  List<FavoriteSongDTO> findAll() {
     open();
     try {
-      final favoriteSongRealmModels = realm?.all<FavoriteSongRealmModel>();
+      final models = realm?.all<FavoriteSongRealmModel>();
 
-      return favoriteSongRealmModels?.map((favoriteSong) => favoriteSong.songId).toList() ?? [];
+      return models?.map((model) => model.toDTO()).toList() ?? [];
     } finally {
       close();
     }
@@ -41,10 +44,10 @@ class FavoriteSongRepository {
   void add(String id) {
     open();
 
-    final favoriteSongRealmModel = FavoriteSongRealmModel(id, 1);
+    final model = FavoriteSongRealmModel(id, 1);
 
     realm?.write(() {
-      realm?.add(favoriteSongRealmModel);
+      realm?.add(model);
     });
 
     close();
