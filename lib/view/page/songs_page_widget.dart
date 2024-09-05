@@ -5,7 +5,6 @@ import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
-import 'package:thinmpf/view/menu/context_menu.dart';
 import 'package:thinmpf/view/menu/song_context_menu.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
