@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
+import 'package:thinmpf/provider/player/favorite_artist_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 
-class FavoriteArtistButtonWidget extends StatelessWidget {
-  const FavoriteArtistButtonWidget({Key? key}) : super(key: key);
+class FavoriteArtistButtonWidget extends ConsumerStatefulWidget {
+  const FavoriteArtistButtonWidget({super.key});
 
-  void _favoriteArtist() {}
+  @override
+  FavoriteSongButtonWidgetState createState() => FavoriteSongButtonWidgetState();
+}
+
+class FavoriteSongButtonWidgetState extends ConsumerState<FavoriteArtistButtonWidget> {
+  void _favorite() {
+    ref.read(favoriteArtistProvider.notifier).toggleFavorite();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ButtonWidget(icon: Icons.person_rounded, size: StyleConstant.button.small, callback: _favoriteArtist);
+    final isfavoriteSong = ref.watch(favoriteArtistProvider);
+    final opacity = isfavoriteSong ? StyleConstant.opacity.on : StyleConstant.opacity.off;
+
+    return Opacity(opacity: opacity, child: ButtonWidget(icon: Icons.person_rounded, size: StyleConstant.button.small, imageSize: StyleConstant.image.small, callback: _favorite));
   }
 }

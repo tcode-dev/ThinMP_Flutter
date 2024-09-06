@@ -12,8 +12,8 @@ class FavoriteSongButtonWidget extends ConsumerStatefulWidget {
 }
 
 class FavoriteSongButtonWidgetState extends ConsumerState<FavoriteSongButtonWidget> {
-  void _favoriteSong() {
-    ref.read(favoriteSongProvider.notifier).toggleFavoriteSong();
+  void _favorite() {
+    ref.read(favoriteSongProvider.notifier).toggleFavorite();
   }
 
   @override
@@ -21,6 +21,6 @@ class FavoriteSongButtonWidgetState extends ConsumerState<FavoriteSongButtonWidg
     final isfavoriteSong = ref.watch(favoriteSongProvider);
     final opacity = isfavoriteSong ? StyleConstant.opacity.on : StyleConstant.opacity.off;
 
-    return Opacity(opacity: opacity, child: ButtonWidget(icon: Icons.favorite_rounded, size: StyleConstant.button.small, imageSize: StyleConstant.image.small, callback: _favoriteSong));
+    return Opacity(opacity: opacity, child: ButtonWidget(icon: Icons.favorite_rounded, size: StyleConstant.button.small, imageSize: StyleConstant.image.small, callback: _favorite));
   }
 }

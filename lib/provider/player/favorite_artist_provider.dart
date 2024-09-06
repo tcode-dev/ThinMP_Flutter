@@ -1,11 +1,11 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/provider/player/playback_song_provider.dart';
-import 'package:thinmpf/repository/favorite_song_repository.dart';
+import 'package:thinmpf/repository/favorite_artist_repository.dart';
 
-part 'favorite_song_provider.g.dart';
+part 'favorite_artist_provider.g.dart';
 
 @riverpod
-class FavoriteSong extends _$FavoriteSong {
+class FavoriteArtist extends _$FavoriteArtist {
   @override
   bool build() {
     return isFavorite();
@@ -18,8 +18,8 @@ class FavoriteSong extends _$FavoriteSong {
       return false;
     }
 
-    final repository = FavoriteSongRepository();
-    final exists = repository.exists(song.id);
+    final repository = FavoriteArtistRepository();
+    final exists = repository.exists(song.artistId);
 
     repository.destroy();
 
@@ -33,14 +33,14 @@ class FavoriteSong extends _$FavoriteSong {
       return;
     }
 
-    final repository = FavoriteSongRepository();
+    final repository = FavoriteArtistRepository();
 
     try {
-      if (repository.exists(song.id)) {
-        repository.delete(song.id);
+      if (repository.exists(song.artistId)) {
+        repository.delete(song.artistId);
         state = false;
       } else {
-        repository.add(song.id);
+        repository.add(song.artistId);
         state = true;
       }
     } finally {
