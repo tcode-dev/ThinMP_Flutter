@@ -7,7 +7,6 @@ import 'package:thinmpf/view_model/favorite_songs_view_model.dart';
 part 'favorite_songs_provider.g.dart';
 
 final _songHostApi = SongHostApi();
-final _favoriteSongRepository = FavoriteSongRepository();
 
 @riverpod
 class FavoriteSongs extends _$FavoriteSongs {
@@ -17,14 +16,17 @@ class FavoriteSongs extends _$FavoriteSongs {
   }
 
   Future<FavoriteSongsViewModel> fetchSongs() async {
-    final favoriteSongs = _favoriteSongRepository.findAll();
-    final favoriteSongIds = favoriteSongs.map((song) => song.songId).toList();
-    final songs = await _songHostApi.getSongsByIds(favoriteSongIds);
-    final songModels = songs.map((song) => song.fromPigeon()).toList();
+    final favoriteSongRepository = FavoriteSongRepository();
 
-    return FavoriteSongsViewModel(
-      songs: songModels,
-      songIds: favoriteSongIds
-    );
+    try {
+      final favoriteSongs = favoriteSongRepository.findAll();
+      final favoriteSongIds = favoriteSongs.map((song) => song.songId).toList();
+      final songs = await _songHostApi.getSongsByIds(favoriteSongIds);
+      final songModels = songs.map((song) => song.fromPigeon()).toList();
+
+      return FavoriteSongsViewModel(songs: songModels, songIds: favoriteSongIds);
+    } finally {
+      favoriteSongRepository.destroy();
+    }
   }
 }
