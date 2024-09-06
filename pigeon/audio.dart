@@ -76,6 +76,7 @@ abstract class AlbumHostApi {
 abstract class ArtistHostApi {
   List<Artist> getAllArtists();
   ArtistDetail? getArtistDetailById(String id);
+  List<Artist> getArtistsByIds(List<String> ids);
 }
 
 @HostApi()

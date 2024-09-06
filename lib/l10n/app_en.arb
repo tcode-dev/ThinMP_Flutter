@@ -1,4 +1,5 @@
 {
+  "favoriteArtists": "favoriteArtists",
   "favoriteSongs": "FavoriteSongs",
   "library": "Library",
   "openAppSettings": "open app settings",

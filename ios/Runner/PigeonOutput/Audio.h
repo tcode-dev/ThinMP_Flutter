@@ -137,6 +137,8 @@ extern void SetUpAlbumHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMesseng
 /// @return `nil` only when `error != nil`.
 - (nullable NSArray<Artist *> *)getAllArtistsWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (nullable ArtistDetail *)getArtistDetailByIdId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
+/// @return `nil` only when `error != nil`.
+- (nullable NSArray<Artist *> *)getArtistsByIdsIds:(NSArray<NSString *> *)ids error:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void SetUpArtistHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<ArtistHostApi> *_Nullable api);

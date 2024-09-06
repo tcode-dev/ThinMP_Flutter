@@ -29,4 +29,24 @@ class ArtistRepository: ArtistRepositoryContract {
 
         return ArtistModel(media: artist)
     }
+    
+    func findByIds(artistIds: [ArtistId]) -> [ArtistModel] {
+        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
+        let query = MPMediaQuery.artists()
+        let ids = artistIds.map { $0.raw }
+
+        query.addFilterPredicate(property)
+
+        let filtered = query.collections!.filter {
+            if let artistPersistentId = $0.representativeItem?.artistPersistentID {
+                return ids.contains(artistPersistentId)
+            }
+            return false
+        }
+
+        return artistIds
+            .filter { artistId in filtered.contains(where: { $0.representativeItem?.artistPersistentID == artistId.raw }) }
+            .map { artistId in filtered.first { $0.representativeItem?.artistPersistentID == artistId.raw }!}
+            .map { ArtistModel(media: $0) }
+    }
 }

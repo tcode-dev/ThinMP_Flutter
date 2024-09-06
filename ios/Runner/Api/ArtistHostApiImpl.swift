@@ -29,4 +29,11 @@ class ArtistHostApiImpl: ArtistHostApi {
 
         return ArtistDetail(id: id, name: name, imageId: imageId)
     }
+    
+    func getArtistsByIds(ids: [String]) throws -> [Artist] {
+        let artistIds = ids.map { ArtistId(id: $0) }
+        let artists = repository.findByIds(artistIds: artistIds )
+
+        return artists.map { $0.toPigeon() }
+    }
 }

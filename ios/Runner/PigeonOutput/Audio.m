@@ -502,6 +502,25 @@ void SetUpArtistHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NS
       [channel setMessageHandler:nil];
     }
   }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.thinmpf.ArtistHostApi.getArtistsByIds", messageChannelSuffix]
+        binaryMessenger:binaryMessenger
+        codec:nullGetAudioCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(getArtistsByIdsIds:error:)], @"ArtistHostApi api (%@) doesn't respond to @selector(getArtistsByIdsIds:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray<id> *args = message;
+        NSArray<NSString *> *arg_ids = GetNullableObjectAtIndex(args, 0);
+        FlutterError *error;
+        NSArray<Artist *> *output = [api getArtistsByIdsIds:arg_ids error:&error];
+        callback(wrapResult(output, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
 }
 void SetUpArtworkHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<ArtworkHostApi> *api) {
   SetUpArtworkHostApiWithSuffix(binaryMessenger, api, @"");

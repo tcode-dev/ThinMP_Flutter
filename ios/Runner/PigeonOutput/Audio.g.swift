@@ -442,6 +442,7 @@ class AlbumHostApiSetup {
 protocol ArtistHostApi {
   func getAllArtists() throws -> [Artist]
   func getArtistDetailById(id: String) throws -> ArtistDetail?
+  func getArtistsByIds(ids: [String]) throws -> [Artist]
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -477,6 +478,21 @@ class ArtistHostApiSetup {
       }
     } else {
       getArtistDetailByIdChannel.setMessageHandler(nil)
+    }
+    let getArtistsByIdsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.ArtistHostApi.getArtistsByIds\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getArtistsByIdsChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let idsArg = args[0] as! [String]
+        do {
+          let result = try api.getArtistsByIds(ids: idsArg)
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      getArtistsByIdsChannel.setMessageHandler(nil)
     }
   }
 }

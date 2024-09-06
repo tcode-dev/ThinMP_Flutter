@@ -6,7 +6,7 @@ part of 'favorite_song_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$favoriteSongHash() => r'667816684333872a7d0af6d0f8ccb90b90d85a2d';
+String _$favoriteSongHash() => r'55fff27b79d98c8dd0f1d47624c4b15f05af7ccf';
 
 /// See also [FavoriteSong].
 @ProviderFor(FavoriteSong)
