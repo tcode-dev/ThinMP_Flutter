@@ -19,8 +19,11 @@ class FavoriteSong extends _$FavoriteSong {
     }
 
     final repository = FavoriteSongRepository();
+    final exists = repository.exists(song.id);
 
-    return repository.exists(song.id);
+    repository.destroy();
+
+    return exists;
   }
 
   void toggleFavoriteSong() {
@@ -39,5 +42,6 @@ class FavoriteSong extends _$FavoriteSong {
       repository.add(song.id);
       state = true;
     }
+    repository.destroy();
   }
 }
