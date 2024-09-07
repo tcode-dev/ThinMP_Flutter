@@ -77,7 +77,12 @@ dart run pigeon --input pigeon/audio.dart
 flutter pub get
 ```
 
-### app launcher icon
+### app icon
 ```
 flutter pub run flutter_launcher_icons:main
+```
+
+### realm
+```
+dart run realm generate   
 ```
