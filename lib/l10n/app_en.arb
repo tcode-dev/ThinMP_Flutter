@@ -5,5 +5,10 @@
   "openAppSettings": "open app settings",
   "permissionDenied": "Permissions are denied. You can change permissions in app settings.",
   "recentlyAdded": "Recently Added",
-  "songs": "Songs"
+  "songs": "Songs",
+  "done": "Done",
+  "cancel": "Cancel",
+  "playlistName": "Playlist name",
+  "addPlaylist": "Add to a playlist",
+  "newPlaylist": "New playlist"
 }

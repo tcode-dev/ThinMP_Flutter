@@ -5,5 +5,10 @@
   "openAppSettings": "アプリの設定を開く",
   "permissionDenied": "権限が拒否されています。アプリの設定で権限を変更できます。",
   "recentlyAdded": "最近追加した項目",
-  "songs": "曲"
+  "songs": "曲",
+  "done": "完了",
+  "cancel": "キャンセル",
+  "playlistName": "プレイリスト名",
+  "addPlaylist": "プレイリストに追加",
+  "newPlaylist": "プレイリストを作成"
 }

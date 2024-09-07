@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PlaylistDialogWidget extends ConsumerStatefulWidget {
@@ -9,21 +10,25 @@ class PlaylistDialogWidget extends ConsumerStatefulWidget {
 }
 
 class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
+  final controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Basic dialog title'),
-      content: const Text(
-        'A dialog is a type of modal window that appears in front of app content to\n'
-        'provide critical information, or prompt\n'
-        'for a decision to be made.',
+      title: Text(AppLocalizations.of(context)!.newPlaylist),
+      content: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          hintText: AppLocalizations.of(context)!.playlistName,
+        ),
       ),
       actions: [
         TextButton(
           style: TextButton.styleFrom(
             textStyle: Theme.of(context).textTheme.labelLarge,
           ),
-          child: const Text('Disable'),
+          child: Text(AppLocalizations.of(context)!.done),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -32,7 +37,7 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
           style: TextButton.styleFrom(
             textStyle: Theme.of(context).textTheme.labelLarge,
           ),
-          child: const Text('Enable'),
+          child: Text(AppLocalizations.of(context)!.cancel),
           onPressed: () {
             Navigator.of(context).pop();
           },
