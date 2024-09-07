@@ -6,12 +6,21 @@ import 'package:thinmpf/view/playlist/playlist_dialog_widget.dart';
 class PlaylistButtonWidget extends StatelessWidget {
   const PlaylistButtonWidget({super.key});
 
-  void _addPlaylist(BuildContext context) {
-    PlaylistDialogWidget.showPlaylistRegister(context);
+  Future<void> _showPlaylistDialog(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return const PlaylistDialogWidget();
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return ButtonWidget(icon: Icons.playlist_add_rounded, size: StyleConstant.button.small, callback: () => _addPlaylist(context));
+    return ButtonWidget(
+      icon: Icons.playlist_add_rounded,
+      size: StyleConstant.button.small,
+      callback: () => _showPlaylistDialog(context),
+    );
   }
 }

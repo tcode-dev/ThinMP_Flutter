@@ -15,7 +15,6 @@ import 'package:thinmpf/view/button/repeat_button_widget.dart';
 import 'package:thinmpf/view/button/shuffle_button_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/image/square_image_widget.dart';
-import 'package:thinmpf/view/playlist/playlist_dialog_widget.dart';
 import 'package:thinmpf/view/slider/slider_widget.dart';
 
 class PlayerPageWidget extends ConsumerStatefulWidget {
