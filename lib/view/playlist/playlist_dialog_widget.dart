@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/repository/playlist_repository.dart';
 
 class PlaylistDialogWidget extends ConsumerStatefulWidget {
-  const PlaylistDialogWidget({super.key});
+  final String songId;
+ 
+  const PlaylistDialogWidget({super.key, required this.songId});
 
   @override
   PlaylistDialogWidgetState createState() => PlaylistDialogWidgetState();
@@ -11,6 +14,11 @@ class PlaylistDialogWidget extends ConsumerStatefulWidget {
 
 class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
   final controller = TextEditingController();
+
+  void _create() {
+    final repository = PlaylistRepository();
+    repository.create(controller.text, widget.songId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +38,7 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
           ),
           child: Text(AppLocalizations.of(context)!.done),
           onPressed: () {
+            _create();
             Navigator.of(context).pop();
           },
         ),
