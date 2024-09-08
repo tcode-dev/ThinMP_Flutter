@@ -10,5 +10,6 @@
   "cancel": "Cancel",
   "playlistName": "Playlist name",
   "addPlaylist": "Add to a playlist",
-  "newPlaylist": "New playlist"
+  "newPlaylist": "New playlist",
+  "playlists": "Playlists"
 }

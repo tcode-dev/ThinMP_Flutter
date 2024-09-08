@@ -10,5 +10,6 @@
   "cancel": "キャンセル",
   "playlistName": "プレイリスト名",
   "addPlaylist": "プレイリストに追加",
-  "newPlaylist": "プレイリストを作成"
+  "newPlaylist": "プレイリストを作成",
+  "playlists": "プレイリスト"
 }

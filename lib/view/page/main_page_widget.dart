@@ -12,6 +12,7 @@ import 'package:thinmpf/view/page/albums_page_widget.dart';
 import 'package:thinmpf/view/page/artists_page_widget.dart';
 import 'package:thinmpf/view/page/favorite_artists_page_widget.dart';
 import 'package:thinmpf/view/page/favorite_songs_page_widget.dart';
+import 'package:thinmpf/view/page/playlists_page_widget.dart';
 import 'package:thinmpf/view/page/songs_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
@@ -30,6 +31,7 @@ final List<PageInfo> pageList = [
   PageInfo(text: "Songs", widgetBuilder: () => const SongsPageWidget()),
   PageInfo(text: "FavoriteSongs", widgetBuilder: () => const FavoriteSongsPageWidget()),
   PageInfo(text: "FavoriteArtists", widgetBuilder: () => const FavoriteArtistsPageWidget()),
+  PageInfo(text: "Playlists", widgetBuilder: () => const PlaylistsPageWidget()),
 ];
 
 class MainPageWidget extends ConsumerWidget {
