@@ -32,6 +32,7 @@ class PlaylistDetail extends _$PlaylistDetail {
       name: playlist.name,
       imageId: songModels.first.imageId,
       songs: songModels,
+      songIds: songIds,
     );
   }
 }

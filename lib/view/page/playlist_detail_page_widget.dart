@@ -89,7 +89,7 @@ class PlaylistDetailPageWidget extends ConsumerWidget {
                     delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          _player.startAlbumSongs(index, id);
+                          _player.start(index, vm.songIds);
                         },
                         child: MediaRowWidget(song: vm.songs[index]),
                       );
