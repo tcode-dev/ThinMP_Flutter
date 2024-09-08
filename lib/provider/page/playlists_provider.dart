@@ -24,4 +24,24 @@ class Playlists extends _$Playlists {
       playlistRepository.destroy();
     }
   }
+  
+  void create(String name, String songId) {
+    final repository = PlaylistRepository();
+
+    try {
+      repository.create(name, songId);
+    } finally {
+      repository.destroy();
+    }
+  }
+
+  void add(String playlistId, String songId) {
+    final repository = PlaylistRepository();
+
+    try {
+      repository.add(playlistId, songId);
+    } finally {
+      repository.destroy();
+    }
+  }
 }

@@ -19,8 +19,11 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
   bool _isNewPlaylist = false;
 
   void _create() {
-    final repository = PlaylistRepository();
-    repository.create(controller.text, widget.songId);
+    ref.read(playlistsProvider.notifier).create(controller.text, widget.songId);
+  }
+
+  void _add(String playlistId) {
+    ref.read(playlistsProvider.notifier).add(playlistId, widget.songId);
   }
 
   @override
@@ -49,7 +52,10 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
                       for (final playlist in vm.playlists)
                         ListTile(
                           title: Text(playlist.name),
-                          onTap: () {},
+                          onTap: () {
+                            _add(playlist.id);
+                            Navigator.of(context).pop();
+                          },
                         ),
                     ],
                   ),
