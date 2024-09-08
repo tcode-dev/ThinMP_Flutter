@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/page/playlists_provider.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
+import 'package:thinmpf/view/page/playlist_detail_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/row/plain_row_widget.dart';
@@ -35,16 +36,16 @@ class PlaylistsPageWidget extends ConsumerWidget {
                   SliverFixedExtentList(
                     itemExtent: StyleConstant.row.borderBoxHeight,
                     delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                      final artist = vm.playlists[index];
+                      final playlist = vm.playlists[index];
 
                       return GestureDetector(
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => ArtistDetailPageWidget(id: artist.id)),
-                          // );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PlaylistDetailPageWidget(id: playlist.id)),
+                          );
                         },
-                        child: PlainRowWidget(title: artist.name),
+                        child: PlainRowWidget(title: playlist.name),
                       );
                     }, childCount: vm.playlists.length),
                   ),

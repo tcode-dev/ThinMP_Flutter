@@ -9,7 +9,7 @@ class PlaylistRepository {
   }
 
   PlaylistRealmModel? findById(String id) {
-    return realm.find<PlaylistRealmModel>(id);
+    return realm.find<PlaylistRealmModel>(ObjectId.fromHexString(id));
   }
 
   bool exists(String id) {
@@ -37,9 +37,8 @@ class PlaylistRepository {
       return;
     }
 
-    model.songIds.add(songId);
-
     realm.write(() {
+      model.songIds.add(songId);
       realm.add(model);
     });
   }
