@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/provider/page/playlists_provider.dart';
 import 'package:thinmpf/repository/playlist_repository.dart';
+import 'package:thinmpf/view/loading/loading_widget.dart';
 
 class PlaylistDialogWidget extends ConsumerStatefulWidget {
   final String songId;
- 
+
   const PlaylistDialogWidget({super.key, required this.songId});
 
   @override
@@ -14,6 +16,7 @@ class PlaylistDialogWidget extends ConsumerStatefulWidget {
 
 class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
   final controller = TextEditingController();
+  bool _isNewPlaylist = false;
 
   void _create() {
     final repository = PlaylistRepository();
@@ -22,36 +25,76 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(AppLocalizations.of(context)!.newPlaylist),
-      content: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          hintText: AppLocalizations.of(context)!.playlistName,
-        ),
-      ),
-      actions: [
-        TextButton(
-          style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
-          ),
-          child: Text(AppLocalizations.of(context)!.done),
-          onPressed: () {
-            _create();
-            Navigator.of(context).pop();
-          },
-        ),
-        TextButton(
-          style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
-          ),
-          child: Text(AppLocalizations.of(context)!.cancel),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
+    final asyncValue = ref.watch(playlistsProvider);
+
+    return asyncValue.when(
+      loading: () => const LoadingWidget(),
+      error: (Object error, StackTrace stackTrace) {
+        return ErrorWidget(error);
+      },
+      data: (vm) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context)!.newPlaylist),
+          content: vm.playlists.isEmpty || _isNewPlaylist
+              ? TextField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    hintText: AppLocalizations.of(context)!.playlistName,
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      for (final playlist in vm.playlists)
+                        ListTile(
+                          title: Text(playlist.name),
+                          onTap: () {},
+                        ),
+                    ],
+                  ),
+                ),
+          actions: [
+            _isNewPlaylist
+                ? TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: Theme.of(context).textTheme.labelLarge,
+                    ),
+                    child: Text(AppLocalizations.of(context)!.done),
+                    onPressed: () {
+                      _create();
+                      Navigator.of(context).pop();
+                    },
+                  )
+                : TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: Theme.of(context).textTheme.labelLarge,
+                    ),
+                    child: Text(AppLocalizations.of(context)!.newPlaylist),
+                    onPressed: () {
+                      setState(() {
+                        _isNewPlaylist = true;
+                      });
+                    },
+                  ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: Text(AppLocalizations.of(context)!.cancel),
+              onPressed: () {
+                if (_isNewPlaylist) {
+                  setState(() {
+                    _isNewPlaylist = false;
+                  });
+                } else {
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
