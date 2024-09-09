@@ -1,3 +1,4 @@
+import 'package:realm/realm.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/extension/song_extension.dart';
 import 'package:thinmpf/repository/playlist_repository.dart';
@@ -17,7 +18,7 @@ class PlaylistDetail extends _$PlaylistDetail {
 
   Future<PlaylistDetailViewModel?> fetch(String id) async {
     final playlistRepository = PlaylistRepository();
-    final playlist = playlistRepository.findById(id);
+    final playlist = playlistRepository.findById(ObjectId.fromHexString(id));
 
     if (playlist == null) {
       return null;
