@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/page/artists_provider.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
+import 'package:thinmpf/view/menu/artist_context_menu.dart';
 import 'package:thinmpf/view/page/artist_detail_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
@@ -44,7 +45,7 @@ class ArtistsPageWidget extends ConsumerWidget {
                             MaterialPageRoute(builder: (context) => ArtistDetailPageWidget(id: artist.id)),
                           );
                         },
-                        child: PlainRowWidget(title: artist.name),
+                        child: ArtistContextMenuWidget(artistId: artist.id, child: PlainRowWidget(title: artist.name)),
                       );
                     }, childCount: vm.artists.length),
                   ),
