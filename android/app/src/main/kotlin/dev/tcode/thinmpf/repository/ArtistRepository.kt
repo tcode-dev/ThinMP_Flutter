@@ -30,15 +30,15 @@ class ArtistRepository(context: Context) : ArtistRepositoryContract, MediaStoreR
         return get()
     }
 
-//    fun findByIds(artistIds: List<ArtistId>): List<ArtistModel> {
-//        val ids = artistIds.map { it.raw }
-//
-//        selection = MediaStore.Audio.Media._ID + " IN (" + makePlaceholders(ids.size) + ")"
-//        selectionArgs = toStringArray(ids)
-//        sortOrder = null
-//
-//        return getList()
-//    }
+    override fun findByIds(artistIds: List<ArtistId>): List<ArtistModel> {
+        val ids = artistIds.map { it.raw }
+
+        selection = MediaStore.Audio.Media._ID + " IN (" + makePlaceholders(ids.size) + ")"
+        selectionArgs = toStringArray(ids)
+        sortOrder = null
+
+        return getList()
+    }
 
     private fun getId(): String {
         return cursor?.getColumnIndex(MediaStore.Audio.Artists._ID)?.let { cursor?.getString(it) } ?: ""

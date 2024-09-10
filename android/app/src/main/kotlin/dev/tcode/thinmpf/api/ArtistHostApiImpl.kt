@@ -28,4 +28,11 @@ class ArtistHostApiImpl(private val context: Context) : ArtistHostApi {
 
         return ArtistDetail(id = artistId.raw, name = name, imageId = imageId)
     }
+
+    override fun getArtistsByIds(ids: List<String>): List<Artist> {
+        val artistIds = ids.map { ArtistId(it) }
+        val artists = repository.findByIds(artistIds)
+
+        return artists.map { it.toPigeon() }
+    }
 }
