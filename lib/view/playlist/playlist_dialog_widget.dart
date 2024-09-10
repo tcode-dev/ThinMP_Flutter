@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/provider/page/playlists_provider.dart';
-import 'package:thinmpf/repository/playlist_repository.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
 
 class PlaylistDialogWidget extends ConsumerStatefulWidget {
