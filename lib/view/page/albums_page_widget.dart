@@ -6,6 +6,7 @@ import 'package:thinmpf/util/calc_child_aspect_ratio.dart';
 import 'package:thinmpf/util/calc_cross_axis_count.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
+import 'package:thinmpf/view/menu/album_context_menu.dart';
 import 'package:thinmpf/view/page/album_detail_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
@@ -57,7 +58,7 @@ class AlbumsPageWidget extends ConsumerWidget {
                                 MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album.id)),
                               );
                             },
-                            child: AlbumCellWidget(album: album),
+                            child: AlbumContextMenuWidget(albumId: album.id, child: AlbumCellWidget(album: album)),
                           );
                         },
                         childCount: vm.albums.length,

@@ -17,4 +17,18 @@ extension ShortcutRealmModelExtension on ShortcutRealmModel {
       imageId: artist.imageId,
     );
   }
+
+  ShortcutModel? toShortcutAlbum(Album? album) {
+    if (album == null) {
+      return null;
+    }
+
+    return ShortcutModel(
+      id: id.toString(),
+      itemId: itemId,
+      name: album.name,
+      type: ShortcutItemType.values[type],
+      imageId: album.imageId,
+    );
+  }
 }

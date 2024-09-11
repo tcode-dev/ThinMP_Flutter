@@ -29,7 +29,10 @@ class Main extends _$Main {
         final artist = await _artistHostApi.getArtistDetailById(shortcut.itemId);
 
         return shortcut.toShortcutArtist(artist);
-      } else {
+      } else if (shortcut.type == ShortcutItemType.album.index) {
+          final album = await _albumHostApi.getAlbumById(shortcut.itemId);
+
+        return shortcut.toShortcutAlbum(album);
       }
     }).toList();
     final shortcutModels = await Future.wait(shortcutFutures);
