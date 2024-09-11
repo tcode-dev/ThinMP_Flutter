@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/shortcut_item_type.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/page/main_provider.dart';
 import 'package:thinmpf/util/calc_child_aspect_ratio.dart';
 import 'package:thinmpf/util/calc_cross_axis_count.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
+import 'package:thinmpf/view/cell/shortcut_cell_view.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/page/album_detail_page_widget.dart';
 import 'package:thinmpf/view/page/albums_page_widget.dart';
+import 'package:thinmpf/view/page/artist_detail_page_widget.dart';
 import 'package:thinmpf/view/page/artists_page_widget.dart';
 import 'package:thinmpf/view/page/favorite_artists_page_widget.dart';
 import 'package:thinmpf/view/page/favorite_songs_page_widget.dart';
+import 'package:thinmpf/view/page/playlist_detail_page_widget.dart';
 import 'package:thinmpf/view/page/playlists_page_widget.dart';
 import 'package:thinmpf/view/page/songs_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
@@ -33,6 +37,11 @@ final List<PageInfo> pageList = [
   PageInfo(text: "FavoriteArtists", widgetBuilder: () => const FavoriteArtistsPageWidget()),
   PageInfo(text: "Playlists", widgetBuilder: () => const PlaylistsPageWidget()),
 ];
+final shortcutMap = {
+  ShortcutItemType.artist: (String id) => ArtistDetailPageWidget(id: id),
+  ShortcutItemType.album: (String id) => AlbumDetailPageWidget(id: id),
+  ShortcutItemType.playlist: (String id) => PlaylistDetailPageWidget(id: id)
+};
 
 class MainPageWidget extends ConsumerWidget {
   const MainPageWidget({super.key});
@@ -75,6 +84,39 @@ class MainPageWidget extends ConsumerWidget {
                         child: PlainRowWidget(title: pageList[index].text),
                       );
                     }, childCount: pageList.length),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      padding: EdgeInsets.only(top: StyleConstant.padding.large, left: StyleConstant.padding.large),
+                      child: Text('Shortcut', style: Theme.of(context).textTheme.headlineMedium),
+                    ),
+                  ),
+                  SliverPadding(
+                    padding: EdgeInsets.all(StyleConstant.padding.large),
+                    sliver: SliverGrid(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: childAspectRatio,
+                        crossAxisCount: crossAxisCount,
+                        crossAxisSpacing: StyleConstant.padding.large,
+                        mainAxisSpacing: StyleConstant.padding.large,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          final shortcut = vm!.shortcuts[index];
+
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => shortcutMap[shortcut.type]!(shortcut.itemId)),
+                              );
+                            },
+                            child: ShortcutCellWidget(shortcut: shortcut),
+                          );
+                        },
+                        childCount: vm?.shortcuts.length,
+                      ),
+                    ),
                   ),
                   SliverToBoxAdapter(
                     child: Container(
