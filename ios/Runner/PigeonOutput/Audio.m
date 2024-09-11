@@ -378,6 +378,25 @@ void SetUpSongHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NSOb
       [channel setMessageHandler:nil];
     }
   }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.thinmpf.SongHostApi.getSongById", messageChannelSuffix]
+        binaryMessenger:binaryMessenger
+        codec:nullGetAudioCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(getSongByIdId:error:)], @"SongHostApi api (%@) doesn't respond to @selector(getSongByIdId:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray<id> *args = message;
+        NSString *arg_id = GetNullableObjectAtIndex(args, 0);
+        FlutterError *error;
+        Song *output = [api getSongByIdId:arg_id error:&error];
+        callback(wrapResult(output, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
 }
 void SetUpAlbumHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<AlbumHostApi> *api) {
   SetUpAlbumHostApiWithSuffix(binaryMessenger, api, @"");

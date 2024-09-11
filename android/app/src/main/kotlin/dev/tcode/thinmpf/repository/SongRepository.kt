@@ -36,6 +36,14 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
         return getList()
     }
 
+    fun findById(songId: SongId): SongModel? {
+        selection = MediaStore.Audio.Media._ID + " = ?"
+        selectionArgs = arrayOf(songId.raw)
+        sortOrder = null
+
+        return get()
+    }
+
     fun findByIds(songIds: List<SongId>): List<SongModel> {
         val ids = songIds.map { it.raw }
 

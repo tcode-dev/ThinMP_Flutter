@@ -1,17 +1,21 @@
+import 'package:realm/realm.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/constant/shortcut_item_type.dart';
 import 'package:thinmpf/extension/album_extension.dart';
 import 'package:thinmpf/extension/shortcut_extension.dart';
 import 'package:thinmpf/model/shortcut_model.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
+import 'package:thinmpf/repository/playlist_repository.dart';
 import 'package:thinmpf/repository/shortcut_repository.dart';
 import 'package:thinmpf/view_model/main_view_model.dart';
 
 part 'main_provider.g.dart';
 
 final _albumHostApi = AlbumHostApi();
-final _shortcutRepository = ShortcutRepository();
+final _songHostApi = SongHostApi();
 final _artistHostApi = ArtistHostApi();
+final _shortcutRepository = ShortcutRepository();
+final _playlistRepository = PlaylistRepository();
 
 @riverpod
 class Main extends _$Main {
@@ -33,6 +37,11 @@ class Main extends _$Main {
           final album = await _albumHostApi.getAlbumById(shortcut.itemId);
 
         return shortcut.toShortcutAlbum(album);
+      } else if (shortcut.type == ShortcutItemType.playlist.index) {
+        final playlist = _playlistRepository.findById(ObjectId.fromHexString(shortcut.itemId));
+        final song = await _songHostApi.getSongById(playlist!.songIds.first);
+
+        return shortcut.toShortcutPlaylist(playlist, song);
       }
     }).toList();
     final shortcutModels = await Future.wait(shortcutFutures);

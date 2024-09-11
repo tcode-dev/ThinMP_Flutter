@@ -1,4 +1,5 @@
 import 'package:thinmpf/constant/shortcut_item_type.dart';
+import 'package:thinmpf/model/realm/playlist_realm_model.dart';
 import 'package:thinmpf/model/realm/shortcut_realm_model.dart';
 import 'package:thinmpf/model/shortcut_model.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
@@ -29,6 +30,20 @@ extension ShortcutRealmModelExtension on ShortcutRealmModel {
       name: album.name,
       type: ShortcutItemType.values[type],
       imageId: album.imageId,
+    );
+  }
+
+  ShortcutModel? toShortcutPlaylist(PlaylistRealmModel? playlist, Song? song) {
+    if (playlist == null || song == null) {
+      return null;
+    }
+
+    return ShortcutModel(
+      id: id.toString(),
+      itemId: itemId,
+      name: playlist.name,
+      type: ShortcutItemType.values[type],
+      imageId: song.imageId,
     );
   }
 }

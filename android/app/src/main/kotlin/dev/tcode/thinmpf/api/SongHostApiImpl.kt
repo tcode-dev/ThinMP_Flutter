@@ -36,4 +36,11 @@ class SongHostApiImpl(context: Context) : SongHostApi {
 
         return songs.map { it.toPigeon() }
     }
+
+    override fun getSongById(id: String): Song? {
+        val songId = SongId(id)
+        val song = repository.findById(songId) ?: return null
+
+        return song.toPigeon()
+    }
 }

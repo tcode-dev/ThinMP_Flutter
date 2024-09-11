@@ -296,6 +296,7 @@ protocol SongHostApi {
   func getSongsByAlbumId(albumId: String) throws -> [Song]
   func getSongsByArtistId(artistId: String) throws -> [Song]
   func getSongsByIds(ids: [String]) throws -> [Song]
+  func getSongById(id: String) throws -> Song?
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -361,6 +362,21 @@ class SongHostApiSetup {
       }
     } else {
       getSongsByIdsChannel.setMessageHandler(nil)
+    }
+    let getSongByIdChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.thinmpf.SongHostApi.getSongById\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getSongByIdChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let idArg = args[0] as! String
+        do {
+          let result = try api.getSongById(id: idArg)
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      getSongByIdChannel.setMessageHandler(nil)
     }
   }
 }

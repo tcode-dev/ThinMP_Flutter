@@ -269,6 +269,7 @@ interface SongHostApi {
   fun getSongsByAlbumId(albumId: String): List<Song>
   fun getSongsByArtistId(artistId: String): List<Song>
   fun getSongsByIds(ids: List<String>): List<Song>
+  fun getSongById(id: String): Song?
 
   companion object {
     /** The codec used by SongHostApi. */
@@ -336,6 +337,23 @@ interface SongHostApi {
             val idsArg = args[0] as List<String>
             val wrapped: List<Any?> = try {
               listOf(api.getSongsByIds(idsArg))
+            } catch (exception: Throwable) {
+              wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.thinmpf.SongHostApi.getSongById$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val idArg = args[0] as String
+            val wrapped: List<Any?> = try {
+              listOf(api.getSongById(idArg))
             } catch (exception: Throwable) {
               wrapError(exception)
             }
