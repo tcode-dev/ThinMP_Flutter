@@ -13,9 +13,9 @@ class Shuffle extends _$Shuffle {
     return _loadShuffle();
   }
 
-  Future<void> changeShuffle() async{
+  Future<void> changeShuffle() async {
     final shuffle = state.value == ShuffleMode.off ? ShuffleMode.on : ShuffleMode.off;
-    state =  AsyncValue.data(shuffle);
+    state = AsyncValue.data(shuffle);
     await _player.setShuffle(shuffle);
     await _saveShuffle(shuffle);
   }

@@ -46,7 +46,7 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                 });
                 return const LoadingWidget();
               }
-              return CustomScrollView(slivers:[
+              return CustomScrollView(slivers: [
                 SliverAppBar(
                   pinned: true,
                   expandedHeight: screenSize.width - top,

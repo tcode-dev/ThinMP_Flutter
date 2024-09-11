@@ -24,7 +24,7 @@ class Playlists extends _$Playlists {
       playlistRepository.destroy();
     }
   }
-  
+
   void create(String name, String songId) {
     final repository = PlaylistRepository();
 

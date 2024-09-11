@@ -34,7 +34,7 @@ class Main extends _$Main {
 
         return shortcut.toShortcutArtist(artist);
       } else if (shortcut.type == ShortcutItemType.album.index) {
-          final album = await _albumHostApi.getAlbumById(shortcut.itemId);
+        final album = await _albumHostApi.getAlbumById(shortcut.itemId);
 
         return shortcut.toShortcutAlbum(album);
       } else if (shortcut.type == ShortcutItemType.playlist.index) {
