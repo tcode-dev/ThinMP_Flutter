@@ -27,7 +27,7 @@ class Main extends _$Main {
   Future<MainViewModel> fetch() async {
     final albums = await _albumHostApi.getRecentAlbums(20);
     final albumModels = albums.map((album) => album.fromPigeon()).toList();
-    final shortcuts = _shortcutRepository.findAll();
+    final shortcuts = _shortcutRepository.findAllSortedByDesc();
     final shortcutFutures = shortcuts.map((shortcut) async {
       if (shortcut.type == ShortcutItemType.artist.index) {
         final artist = await _artistHostApi.getArtistDetailById(shortcut.itemId);

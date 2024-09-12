@@ -14,4 +14,8 @@ class ShortcutRepository extends BaseRepository<ShortcutRealmModel> {
       realm.add(model);
     });
   }
+
+  List<ShortcutRealmModel> findAllSortedByDesc() {
+    return realm.query<ShortcutRealmModel>('TRUEPREDICATE SORT(order DESC)').toList();
+  }
 }
