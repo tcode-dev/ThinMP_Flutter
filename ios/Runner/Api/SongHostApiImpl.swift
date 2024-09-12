@@ -32,4 +32,12 @@ class SongHostApiImpl: SongHostApi {
         
         return songs.map { $0.toPigeon() }
     }
+    
+    func getSongById(id: String) throws -> Song? {
+        guard let song = repository.findBySongId(songId: SongId(id: id)) else {
+            return nil
+        }
+        
+        return song.toPigeon()
+    }
 }
