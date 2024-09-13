@@ -4,6 +4,10 @@ import 'package:thinmpf/repository/base_repository.dart';
 abstract class FavoriteRepository<T extends RealmObject> extends BaseRepository<T> {
   T createModel(String id);
 
+  bool exists(Object primaryKey) {
+    return findById(primaryKey) != null;
+  }
+
   void add(String id) {
     final model = createModel(id);
 

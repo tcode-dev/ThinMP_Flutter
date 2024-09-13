@@ -19,10 +19,6 @@ abstract class BaseRepository<T extends RealmObject> {
     return realm.query<T>('TRUEPREDICATE SORT(order DESC) LIMIT(1)').first;
   }
 
-  bool exists(Object primaryKey) {
-    return findById(primaryKey) != null;
-  }
-
   void delete(Object primaryKey) {
     final model = findById(primaryKey);
 
