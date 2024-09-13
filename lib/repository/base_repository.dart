@@ -15,6 +15,10 @@ abstract class BaseRepository<T extends RealmObject> {
     return realm.all<T>().toList();
   }
 
+  T? findLatest() {
+    return realm.query<T>('TRUEPREDICATE SORT(order DESC) LIMIT(1)').first;
+  }
+
   bool exists(Object primaryKey) {
     return findById(primaryKey) != null;
   }
@@ -27,11 +31,5 @@ abstract class BaseRepository<T extends RealmObject> {
         realm.delete(model);
       });
     }
-  }
-
-  int incrementOrder() {
-    final models = realm.all<T>();
-
-    return models.length + 1;
   }
 }

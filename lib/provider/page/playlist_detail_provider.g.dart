@@ -6,7 +6,7 @@ part of 'playlist_detail_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$playlistDetailHash() => r'd556017d09b3487c80aab63bdc5fc8a0ebd0db3f';
+String _$playlistDetailHash() => r'85b069bedce2f64da14fa870f30338e35b27d7e3';
 
 /// Copied from Dart SDK
 class _SystemHash {

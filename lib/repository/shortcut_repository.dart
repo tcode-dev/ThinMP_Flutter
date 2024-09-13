@@ -8,7 +8,7 @@ class ShortcutRepository extends BaseRepository<ShortcutRealmModel> {
   Realm realm = Realm(Configuration.local([ShortcutRealmModel.schema]));
 
   void add(String id, ShortcutItemType type) {
-    final model = ShortcutRealmModel(ObjectId(), id, type.index, incrementOrder());
+    final model = ShortcutRealmModel(ObjectId(), id, type.index, increment());
 
     realm.write(() {
       realm.add(model);
@@ -17,5 +17,15 @@ class ShortcutRepository extends BaseRepository<ShortcutRealmModel> {
 
   List<ShortcutRealmModel> findAllSortedByDesc() {
     return realm.query<ShortcutRealmModel>('TRUEPREDICATE SORT(order DESC)').toList();
+  }
+
+  int increment() {
+    final latest = findLatest();
+
+    if (latest != null) {
+      return latest.order + 1;
+    } else {
+      return 1;
+    }
   }
 }
