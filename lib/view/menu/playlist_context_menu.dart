@@ -3,6 +3,8 @@ import 'package:thinmpf/constant/shortcut_item_type.dart';
 import 'package:thinmpf/repository/shortcut_repository.dart';
 import 'package:thinmpf/view/menu/context_menu.dart';
 
+final _shortcutRepository = ShortcutRepository();
+
 class PlaylistContextMenuWidget extends StatelessWidget {
   final String playlistId;
   final Widget child;
@@ -12,16 +14,18 @@ class PlaylistContextMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContextMenuWidget(
-      items: const [
+      items: [
         PopupMenuItem(
           value: 'shortcut',
-          child: Text('add to shortcut'),
+          child: Text(_shortcutRepository.exists(playlistId, ShortcutItemType.playlist) ? 'remove from shortcut' : 'add to shortcut'),
         ),
       ],
       onSelected: (String value) {
-        final shortcutRepository = ShortcutRepository();
-
-        shortcutRepository.add(playlistId, ShortcutItemType.playlist);
+        if (_shortcutRepository.exists(playlistId, ShortcutItemType.playlist)) {
+          _shortcutRepository.delete(playlistId, ShortcutItemType.playlist);
+        } else {
+          _shortcutRepository.add(playlistId, ShortcutItemType.playlist);
+        }
       },
       child: child,
     );

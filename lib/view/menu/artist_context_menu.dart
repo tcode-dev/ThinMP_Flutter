@@ -4,6 +4,8 @@ import 'package:thinmpf/repository/favorite_artist_repository.dart';
 import 'package:thinmpf/repository/shortcut_repository.dart';
 import 'package:thinmpf/view/menu/context_menu.dart';
 
+final _shortcutRepository = ShortcutRepository();
+
 class ArtistContextMenuWidget extends StatelessWidget {
   final String artistId;
   final Widget child;
@@ -13,21 +15,23 @@ class ArtistContextMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContextMenuWidget(
-      items: const [
+      items: [
         PopupMenuItem(
           value: 'shortcut',
-          child: Text('add to shortcut'),
+          child: Text(_shortcutRepository.exists(artistId, ShortcutItemType.artist) ? 'remove from shortcut' : 'add to shortcut'),
         ),
-        PopupMenuItem(
+        const PopupMenuItem(
           value: 'favorite',
           child: Text('add to favorites'),
         ),
       ],
       onSelected: (String value) {
         if (value == 'shortcut') {
-          final shortcutRepository = ShortcutRepository();
-
-          shortcutRepository.add(artistId, ShortcutItemType.artist);
+          if (_shortcutRepository.exists(artistId, ShortcutItemType.artist)) {
+            _shortcutRepository.delete(artistId, ShortcutItemType.artist);
+          } else {
+            _shortcutRepository.add(artistId, ShortcutItemType.artist);
+          }
         } else if (value == 'favorite') {
           final repository = FavoriteArtistRepository();
 

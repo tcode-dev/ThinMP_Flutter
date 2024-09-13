@@ -18,7 +18,10 @@ class ShortcutRepository {
   }
 
   bool exists(String id, ShortcutItemType type) {
-    return realm.find<ShortcutRealmModel>('id == $id AND type == ${type.index}') != null;
+    return realm.query<ShortcutRealmModel>(
+      'itemId == \$0 AND type == \$1',
+      [id, type.index],
+    ).isNotEmpty;
   }
 
   void add(String id, ShortcutItemType type) {
@@ -34,11 +37,14 @@ class ShortcutRepository {
   }
 
   void delete(String id, ShortcutItemType type) {
-    final model = realm.find<ShortcutRealmModel>('id == $id AND type == ${type.index}');
+    final models = realm.query<ShortcutRealmModel>(
+      'itemId == \$0 AND type == \$1',
+      [id, type.index],
+    );
 
-    if (model != null) {
+    if (models.isNotEmpty) {
       realm.write(() {
-        realm.delete(model);
+        realm.delete(models.first);
       });
     }
   }
