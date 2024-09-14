@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class ContextMenuWidget extends StatelessWidget {
   final Widget child;
-  final List<PopupMenuEntry<String>> items;
+  final List<PopupMenuEntry<String>> Function() widgetBuilder;
   final void Function(String) onSelected;
 
-  const ContextMenuWidget({super.key, required this.child, required this.items, required this.onSelected});
+  const ContextMenuWidget({super.key, required this.child, required this.widgetBuilder, required this.onSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class ContextMenuWidget extends StatelessWidget {
             0,
             offset.dy + renderBox.size.height,
           ),
-          items: items,
+          items: widgetBuilder(),
         ).then((value) {
           if (value != null) {
             onSelected(value);

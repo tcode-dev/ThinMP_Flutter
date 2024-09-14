@@ -14,11 +14,8 @@ class AlbumContextMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContextMenuWidget(
-      items: [
-        PopupMenuItem(
-          value: 'shortcut',
-          child: Text(_shortcutRepository.exists(albumId, ShortcutItemType.album) ? 'remove from shortcut' : 'add to shortcut'),
-        ),
+      widgetBuilder: () => [
+        PopupMenuItem(value: 'shortcut', child: Text(_shortcutRepository.exists(albumId, ShortcutItemType.album) ? 'remove from shortcut' : 'add to shortcut')),
       ],
       onSelected: (String value) {
         if (_shortcutRepository.exists(albumId, ShortcutItemType.album)) {

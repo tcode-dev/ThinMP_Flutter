@@ -14,7 +14,7 @@ class PlaylistContextMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContextMenuWidget(
-      items: [
+      widgetBuilder: () => [
         PopupMenuItem(
           value: 'shortcut',
           child: Text(_shortcutRepository.exists(playlistId, ShortcutItemType.playlist) ? 'remove from shortcut' : 'add to shortcut'),

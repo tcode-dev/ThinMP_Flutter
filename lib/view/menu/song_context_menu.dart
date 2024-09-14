@@ -9,12 +9,12 @@ class SongContextMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContextMenuWidget(
-      items: const [
-        PopupMenuItem(
+      widgetBuilder: () => [
+        const PopupMenuItem(
           value: 'favorite',
           child: Text('add to favorites'),
         ),
-        PopupMenuItem(
+        const PopupMenuItem(
           value: 'playlist',
           child: Text('add to playlist'),
         ),
