@@ -21,11 +21,7 @@ class PlaylistContextMenuWidget extends StatelessWidget {
         ),
       ],
       onSelected: (String value) {
-        if (_shortcutRepository.exists(playlistId, ShortcutItemType.playlist)) {
-          _shortcutRepository.delete(playlistId, ShortcutItemType.playlist);
-        } else {
-          _shortcutRepository.add(playlistId, ShortcutItemType.playlist);
-        }
+        _shortcutRepository.toggleShortcut(playlistId, ShortcutItemType.playlist);
       },
       child: child,
     );

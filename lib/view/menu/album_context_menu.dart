@@ -19,11 +19,7 @@ class AlbumContextMenuWidget extends StatelessWidget {
         PopupMenuItem(value: 'shortcut', child: Text(_shortcutRepository.exists(albumId, ShortcutItemType.album) ? 'remove from shortcut' : 'add to shortcut')),
       ],
       onSelected: (String value) {
-        if (_shortcutRepository.exists(albumId, ShortcutItemType.album)) {
-          _shortcutRepository.delete(albumId, ShortcutItemType.album);
-        } else {
-          _shortcutRepository.add(albumId, ShortcutItemType.album);
-        }
+        _shortcutRepository.toggleShortcut(albumId, ShortcutItemType.album);
       },
       index: index,
       child: child,

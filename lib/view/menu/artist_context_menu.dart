@@ -27,11 +27,7 @@ class ArtistContextMenuWidget extends StatelessWidget {
       ],
       onSelected: (String value) {
         if (value == 'shortcut') {
-          if (_shortcutRepository.exists(artistId, ShortcutItemType.artist)) {
-            _shortcutRepository.delete(artistId, ShortcutItemType.artist);
-          } else {
-            _shortcutRepository.add(artistId, ShortcutItemType.artist);
-          }
+          _shortcutRepository.toggleShortcut(artistId, ShortcutItemType.artist);
         } else if (value == 'favorite') {
           final repository = FavoriteArtistRepository();
 

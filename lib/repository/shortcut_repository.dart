@@ -32,6 +32,14 @@ class ShortcutRepository {
     });
   }
 
+  void toggleShortcut(String id, ShortcutItemType type) {
+    if (exists(id, type)) {
+      delete(id, type);
+    } else {
+      add(id, type);
+    }
+  }
+
   List<ShortcutRealmModel> findAllSortedByDesc() {
     return realm.query<ShortcutRealmModel>('TRUEPREDICATE SORT(order DESC)').toList();
   }
