@@ -5,12 +5,12 @@ import 'package:thinmpf/view/menu/grid_context_menu.dart';
 
 final _shortcutRepository = ShortcutRepository();
 
-class AlbumContextMenuWidget extends StatelessWidget {
+class AlbumGridContextMenuWidget extends StatelessWidget {
   final String albumId;
   final int index;
   final Widget child;
 
-  const AlbumContextMenuWidget({super.key, required this.albumId, required this.index, required this.child});
+  const AlbumGridContextMenuWidget({super.key, required this.albumId, required this.index, required this.child});
 
   @override
   Widget build(BuildContext context) {

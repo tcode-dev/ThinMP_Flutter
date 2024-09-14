@@ -10,7 +10,7 @@ import 'package:thinmpf/util/calc_grid_count.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
 import 'package:thinmpf/view/cell/shortcut_cell_view.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
-import 'package:thinmpf/view/menu/album_context_menu.dart';
+import 'package:thinmpf/view/menu/album_grid_context_menu.dart';
 import 'package:thinmpf/view/menu/artist_grid_context_menu.dart';
 import 'package:thinmpf/view/menu/playlist_grid_context_menu.dart';
 import 'package:thinmpf/view/page/album_detail_page_widget.dart';
@@ -48,7 +48,7 @@ final shortcutNavigatorMap = {
 };
 final shortcutWidgetMap = {
   ShortcutItemType.artist: (String id, int index, ShortcutModel shortcut) => ArtistGridContextMenuWidget(artistId: id, index: index, child: ShortcutCellWidget(shortcut: shortcut)),
-  ShortcutItemType.album: (String id, int index, ShortcutModel shortcut) => AlbumContextMenuWidget(albumId: id, index: index, child: ShortcutCellWidget(shortcut: shortcut)),
+  ShortcutItemType.album: (String id, int index, ShortcutModel shortcut) => AlbumGridContextMenuWidget(albumId: id, index: index, child: ShortcutCellWidget(shortcut: shortcut)),
   ShortcutItemType.playlist: (String id, int index, ShortcutModel shortcut) => PlaylistGridContextMenuWidget(playlistId: id, index: index, child: ShortcutCellWidget(shortcut: shortcut)),
 };
 

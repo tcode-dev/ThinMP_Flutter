@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/page/playlists_provider.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
-import 'package:thinmpf/view/menu/playlist_context_menu.dart';
+import 'package:thinmpf/view/menu/playlist_list_context_menu.dart';
 import 'package:thinmpf/view/page/playlist_detail_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
@@ -46,7 +46,7 @@ class PlaylistsPageWidget extends ConsumerWidget {
                             MaterialPageRoute(builder: (context) => PlaylistDetailPageWidget(id: playlist.id)),
                           );
                         },
-                        child: PlaylistContextMenuWidget(playlistId: playlist.id, child: PlainRowWidget(title: playlist.name)),
+                        child: PlaylistListContextMenuWidget(playlistId: playlist.id, child: PlainRowWidget(title: playlist.name)),
                       );
                     }, childCount: vm.playlists.length),
                   ),

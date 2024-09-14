@@ -5,11 +5,11 @@ import 'package:thinmpf/view/menu/list_context_menu.dart';
 
 final _shortcutRepository = ShortcutRepository();
 
-class PlaylistContextMenuWidget extends StatelessWidget {
+class PlaylistListContextMenuWidget extends StatelessWidget {
   final String playlistId;
   final Widget child;
 
-  const PlaylistContextMenuWidget({super.key, required this.playlistId, required this.child});
+  const PlaylistListContextMenuWidget({super.key, required this.playlistId, required this.child});
 
   @override
   Widget build(BuildContext context) {
