@@ -14,7 +14,9 @@ class ShortcutRepository {
   }
 
   ShortcutRealmModel? findLatest() {
-    return realm.query<ShortcutRealmModel>('TRUEPREDICATE SORT(order DESC) LIMIT(1)').first;
+    final result = realm.query<ShortcutRealmModel>('TRUEPREDICATE SORT(order DESC) LIMIT(1)');
+
+    return result.isNotEmpty ? result.first : null;
   }
 
   bool exists(String id, ShortcutItemType type) {
