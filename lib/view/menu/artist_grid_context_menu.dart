@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:thinmpf/constant/shortcut_item_type.dart';
 import 'package:thinmpf/repository/favorite_artist_repository.dart';
 import 'package:thinmpf/repository/shortcut_repository.dart';
-import 'package:thinmpf/view/menu/list_context_menu.dart';
+import 'package:thinmpf/view/menu/grid_context_menu.dart';
 
 final _shortcutRepository = ShortcutRepository();
 
-class ArtistContextMenuWidget extends StatelessWidget {
+class ArtistGridContextMenuWidget extends StatelessWidget {
   final String artistId;
+  final int index;
   final Widget child;
 
-  const ArtistContextMenuWidget({super.key, required this.artistId, required this.child});
+  const ArtistGridContextMenuWidget({super.key, required this.artistId, required this.index, required this.child});
 
   @override
   Widget build(BuildContext context) {
-    return ListContextMenuWidget(
+    return GridContextMenuWidget(
       widgetBuilder: () => [
         PopupMenuItem(
           value: 'shortcut',
@@ -34,6 +35,7 @@ class ArtistContextMenuWidget extends StatelessWidget {
           repository.add(artistId);
         }
       },
+      index: index,
       child: child,
     );
   }

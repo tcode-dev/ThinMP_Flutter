@@ -3,12 +3,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/shortcut_item_type.dart';
 import 'package:thinmpf/constant/style_constant.dart';
+import 'package:thinmpf/model/shortcut_model.dart';
 import 'package:thinmpf/provider/page/main_provider.dart';
 import 'package:thinmpf/util/calc_grid_aspect_ratio.dart';
 import 'package:thinmpf/util/calc_grid_count.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
 import 'package:thinmpf/view/cell/shortcut_cell_view.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
+import 'package:thinmpf/view/menu/album_context_menu.dart';
+import 'package:thinmpf/view/menu/artist_grid_context_menu.dart';
+import 'package:thinmpf/view/menu/playlist_grid_context_menu.dart';
 import 'package:thinmpf/view/page/album_detail_page_widget.dart';
 import 'package:thinmpf/view/page/albums_page_widget.dart';
 import 'package:thinmpf/view/page/artist_detail_page_widget.dart';
@@ -37,10 +41,15 @@ final List<PageInfo> pageList = [
   PageInfo(text: "FavoriteArtists", widgetBuilder: () => const FavoriteArtistsPageWidget()),
   PageInfo(text: "Playlists", widgetBuilder: () => const PlaylistsPageWidget()),
 ];
-final shortcutMap = {
+final shortcutNavigatorMap = {
   ShortcutItemType.artist: (String id) => ArtistDetailPageWidget(id: id),
   ShortcutItemType.album: (String id) => AlbumDetailPageWidget(id: id),
   ShortcutItemType.playlist: (String id) => PlaylistDetailPageWidget(id: id),
+};
+final shortcutWidgetMap = {
+  ShortcutItemType.artist: (String id, int index, ShortcutModel shortcut) => ArtistGridContextMenuWidget(artistId: id, index: index, child: ShortcutCellWidget(shortcut: shortcut)),
+  ShortcutItemType.album: (String id, int index, ShortcutModel shortcut) => AlbumContextMenuWidget(albumId: id, index: index, child: ShortcutCellWidget(shortcut: shortcut)),
+  ShortcutItemType.playlist: (String id, int index, ShortcutModel shortcut) => PlaylistGridContextMenuWidget(playlistId: id, index: index, child: ShortcutCellWidget(shortcut: shortcut)),
 };
 
 class MainPageWidget extends ConsumerStatefulWidget {
@@ -118,11 +127,11 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
                             onTap: () async {
                               await Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => shortcutMap[shortcut.type]!(shortcut.itemId)),
+                                MaterialPageRoute(builder: (context) => shortcutNavigatorMap[shortcut.type]!(shortcut.itemId)),
                               );
                               _reload();
                             },
-                            child: ShortcutCellWidget(shortcut: shortcut),
+                            child: shortcutWidgetMap[shortcut.type]!(shortcut.itemId, index, shortcut),
                           );
                         },
                         childCount: vm?.shortcuts.length,
