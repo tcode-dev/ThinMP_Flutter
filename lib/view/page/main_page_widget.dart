@@ -40,14 +40,23 @@ final List<PageInfo> pageList = [
 final shortcutMap = {
   ShortcutItemType.artist: (String id) => ArtistDetailPageWidget(id: id),
   ShortcutItemType.album: (String id) => AlbumDetailPageWidget(id: id),
-  ShortcutItemType.playlist: (String id) => PlaylistDetailPageWidget(id: id)
+  ShortcutItemType.playlist: (String id) => PlaylistDetailPageWidget(id: id),
 };
 
-class MainPageWidget extends ConsumerWidget {
+class MainPageWidget extends ConsumerStatefulWidget {
   const MainPageWidget({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  MainPageWidgetState createState() => MainPageWidgetState();
+}
+
+class MainPageWidgetState extends ConsumerState<MainPageWidget> {
+  void _reload() {
+    ref.read(mainProvider.notifier).reload();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final asyncValue = ref.watch(mainProvider);
     final screenSize = MediaQuery.sizeOf(context);
     final gridCount = calcGridCount(screenSize.width);
@@ -75,11 +84,12 @@ class MainPageWidget extends ConsumerWidget {
                     itemExtent: StyleConstant.row.borderBoxHeight,
                     delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                       return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
+                        onTap: () async {
+                          await Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => pageList[index].widgetBuilder()),
                           );
+                          _reload();
                         },
                         child: PlainRowWidget(title: pageList[index].text),
                       );
@@ -105,11 +115,12 @@ class MainPageWidget extends ConsumerWidget {
                           final shortcut = vm!.shortcuts[index];
 
                           return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
+                            onTap: () async {
+                              await Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => shortcutMap[shortcut.type]!(shortcut.itemId)),
                               );
+                              _reload();
                             },
                             child: ShortcutCellWidget(shortcut: shortcut),
                           );
@@ -138,11 +149,12 @@ class MainPageWidget extends ConsumerWidget {
                           final album = vm?.albums[index];
 
                           return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
+                            onTap: () async {
+                              await Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album!.id)),
                               );
+                              _reload();
                             },
                             child: AlbumCellWidget(album: vm!.albums[index]),
                           );

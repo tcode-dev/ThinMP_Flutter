@@ -52,4 +52,10 @@ class Main extends _$Main {
       albums: albumModels,
     );
   }
+
+  void reload() async {
+    final data = await fetch();
+
+    state = state = AsyncValue.data(data);
+  }
 }
