@@ -16,7 +16,9 @@ abstract class BaseRepository<T extends RealmObject> {
   }
 
   T? findLatest() {
-    return realm.query<T>('TRUEPREDICATE SORT(order DESC) LIMIT(1)').first;
+    final result = realm.query<T>('TRUEPREDICATE SORT(order DESC) LIMIT(1)');
+
+    return result.isNotEmpty ? result.first : null;
   }
 
   void delete(Object primaryKey) {
