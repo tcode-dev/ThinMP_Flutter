@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thinmpf/constant/shortcut_item_type.dart';
 import 'package:thinmpf/repository/favorite_artist_repository.dart';
 import 'package:thinmpf/repository/shortcut_repository.dart';
-import 'package:thinmpf/view/menu/context_menu.dart';
+import 'package:thinmpf/view/menu/list_context_menu.dart';
 
 final _shortcutRepository = ShortcutRepository();
 
@@ -14,7 +14,7 @@ class ArtistContextMenuWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ContextMenuWidget(
+    return ListContextMenuWidget(
       widgetBuilder: () => [
         PopupMenuItem(
           value: 'shortcut',

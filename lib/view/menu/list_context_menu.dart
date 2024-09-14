@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ContextMenuWidget extends StatelessWidget {
+class ListContextMenuWidget extends StatelessWidget {
   final Widget child;
   final List<PopupMenuEntry<String>> Function() widgetBuilder;
   final void Function(String) onSelected;
 
-  const ContextMenuWidget({super.key, required this.child, required this.widgetBuilder, required this.onSelected});
+  const ListContextMenuWidget({super.key, required this.child, required this.widgetBuilder, required this.onSelected});
 
   @override
   Widget build(BuildContext context) {

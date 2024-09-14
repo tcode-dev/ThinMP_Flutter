@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thinmpf/view/menu/context_menu.dart';
+import 'package:thinmpf/view/menu/list_context_menu.dart';
 
 class SongContextMenuWidget extends StatelessWidget {
   final Widget child;
@@ -8,7 +8,7 @@ class SongContextMenuWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ContextMenuWidget(
+    return ListContextMenuWidget(
       widgetBuilder: () => [
         const PopupMenuItem(
           value: 'favorite',
