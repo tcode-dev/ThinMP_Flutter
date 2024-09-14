@@ -8,9 +8,10 @@ final _shortcutRepository = ShortcutRepository();
 class PlaylistGridContextMenuWidget extends StatelessWidget {
   final String playlistId;
   final int index;
+  final Function() callback;
   final Widget child;
 
-  const PlaylistGridContextMenuWidget({super.key, required this.playlistId, required this.index, required this.child});
+  const PlaylistGridContextMenuWidget({super.key, required this.playlistId, required this.index, required this.callback, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class PlaylistGridContextMenuWidget extends StatelessWidget {
       ],
       onSelected: (String value) {
         _shortcutRepository.toggleShortcut(playlistId, ShortcutItemType.playlist);
+        callback();
       },
       index: index,
       child: child,

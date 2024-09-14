@@ -47,9 +47,9 @@ final shortcutNavigatorMap = {
   ShortcutItemType.playlist: (String id) => PlaylistDetailPageWidget(id: id),
 };
 final shortcutWidgetMap = {
-  ShortcutItemType.artist: (String id, int index, ShortcutModel shortcut) => ArtistGridContextMenuWidget(artistId: id, index: index, child: ShortcutCellWidget(shortcut: shortcut)),
-  ShortcutItemType.album: (String id, int index, ShortcutModel shortcut) => AlbumGridContextMenuWidget(albumId: id, index: index, child: ShortcutCellWidget(shortcut: shortcut)),
-  ShortcutItemType.playlist: (String id, int index, ShortcutModel shortcut) => PlaylistGridContextMenuWidget(playlistId: id, index: index, child: ShortcutCellWidget(shortcut: shortcut)),
+  ShortcutItemType.artist: (String id, int index, ShortcutModel shortcut, Function() callback) => ArtistGridContextMenuWidget(artistId: id, index: index, callback: callback, child: ShortcutCellWidget(shortcut: shortcut)),
+  ShortcutItemType.album: (String id, int index, ShortcutModel shortcut, Function() callback) => AlbumGridContextMenuWidget(albumId: id, index: index, callback: callback, child: ShortcutCellWidget(shortcut: shortcut)),
+  ShortcutItemType.playlist: (String id, int index, ShortcutModel shortcut, Function() callback) => PlaylistGridContextMenuWidget(playlistId: id, index: index, callback: callback, child: ShortcutCellWidget(shortcut: shortcut)),
 };
 
 class MainPageWidget extends ConsumerStatefulWidget {
@@ -61,6 +61,7 @@ class MainPageWidget extends ConsumerStatefulWidget {
 
 class MainPageWidgetState extends ConsumerState<MainPageWidget> {
   void _reload() {
+    print('reload');
     ref.read(mainProvider.notifier).reload();
   }
 
@@ -131,7 +132,7 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
                               );
                               _reload();
                             },
-                            child: shortcutWidgetMap[shortcut.type]!(shortcut.itemId, index, shortcut),
+                            child: shortcutWidgetMap[shortcut.type]!(shortcut.itemId, index, shortcut, _reload),
                           );
                         },
                         childCount: vm?.shortcuts.length,

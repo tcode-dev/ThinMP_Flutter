@@ -45,7 +45,7 @@ class ArtistsPageWidget extends ConsumerWidget {
                             MaterialPageRoute(builder: (context) => ArtistDetailPageWidget(id: artist.id)),
                           );
                         },
-                        child: ArtistListContextMenuWidget(artistId: artist.id, child: PlainRowWidget(title: artist.name)),
+                        child: ArtistListContextMenuWidget(artistId: artist.id, callback: () => {}, child: PlainRowWidget(title: artist.name)),
                       );
                     }, childCount: vm.artists.length),
                   ),

@@ -58,7 +58,7 @@ class AlbumsPageWidget extends ConsumerWidget {
                                 MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album.id)),
                               );
                             },
-                            child: AlbumGridContextMenuWidget(albumId: album.id, index: index, child: AlbumCellWidget(album: album)),
+                            child: AlbumGridContextMenuWidget(albumId: album.id, index: index, callback: () => {}, child: AlbumCellWidget(album: album)),
                           );
                         },
                         childCount: vm.albums.length,

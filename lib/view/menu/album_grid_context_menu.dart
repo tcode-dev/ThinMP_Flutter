@@ -8,9 +8,10 @@ final _shortcutRepository = ShortcutRepository();
 class AlbumGridContextMenuWidget extends StatelessWidget {
   final String albumId;
   final int index;
+  final Function() callback;
   final Widget child;
 
-  const AlbumGridContextMenuWidget({super.key, required this.albumId, required this.index, required this.child});
+  const AlbumGridContextMenuWidget({super.key, required this.albumId, required this.index, required this.callback, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +21,7 @@ class AlbumGridContextMenuWidget extends StatelessWidget {
       ],
       onSelected: (String value) {
         _shortcutRepository.toggleShortcut(albumId, ShortcutItemType.album);
+        callback();
       },
       index: index,
       child: child,

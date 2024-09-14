@@ -43,7 +43,7 @@ class SongsPageWidget extends ConsumerWidget {
                         onTap: () {
                           _player.startAllSongs(index);
                         },
-                        child: SongContextMenuWidget(child: MediaRowWidget(song: vm.songs[index])),
+                        child: SongContextMenuWidget(callback: () => {}, child: MediaRowWidget(song: vm.songs[index])),
                       );
                     }, childCount: vm.songs.length),
                   ),

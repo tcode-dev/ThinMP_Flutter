@@ -46,7 +46,7 @@ class PlaylistsPageWidget extends ConsumerWidget {
                             MaterialPageRoute(builder: (context) => PlaylistDetailPageWidget(id: playlist.id)),
                           );
                         },
-                        child: PlaylistListContextMenuWidget(playlistId: playlist.id, child: PlainRowWidget(title: playlist.name)),
+                        child: PlaylistListContextMenuWidget(playlistId: playlist.id, callback: () => {}, child: PlainRowWidget(title: playlist.name)),
                       );
                     }, childCount: vm.playlists.length),
                   ),

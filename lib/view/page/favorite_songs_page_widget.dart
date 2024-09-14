@@ -43,7 +43,7 @@ class FavoriteSongsPageWidget extends ConsumerWidget {
                         onTap: () {
                           _player.start(index, vm.songIds);
                         },
-                        child: SongContextMenuWidget(child: MediaRowWidget(song: vm.songs[index])),
+                        child: SongContextMenuWidget(callback: () => {}, child: MediaRowWidget(song: vm.songs[index])),
                       );
                     }, childCount: vm.songs.length),
                   ),
