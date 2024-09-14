@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/page/albums_provider.dart';
-import 'package:thinmpf/util/calc_child_aspect_ratio.dart';
-import 'package:thinmpf/util/calc_cross_axis_count.dart';
+import 'package:thinmpf/util/calc_grid_aspect_ratio.dart';
+import 'package:thinmpf/util/calc_grid_count.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/menu/album_context_menu.dart';
@@ -18,8 +18,8 @@ class AlbumsPageWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncValue = ref.watch(albumsProvider);
     final screenSize = MediaQuery.sizeOf(context);
-    final crossAxisCount = calcCrossAxisCount(screenSize.width);
-    final childAspectRatio = calcChildAspectRatio(screenSize.width, crossAxisCount);
+    final gridCount = calcGridCount(screenSize.width);
+    final gridAspectRatio = calcGridAspectRatio(screenSize.width, gridCount);
 
     return Scaffold(
       appBar: AppBar(
@@ -42,8 +42,8 @@ class AlbumsPageWidget extends ConsumerWidget {
                     padding: EdgeInsets.all(StyleConstant.padding.large),
                     sliver: SliverGrid(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: childAspectRatio,
-                        crossAxisCount: crossAxisCount,
+                        childAspectRatio: gridAspectRatio,
+                        crossAxisCount: gridCount,
                         crossAxisSpacing: StyleConstant.padding.large,
                         mainAxisSpacing: StyleConstant.padding.large,
                       ),
@@ -58,7 +58,7 @@ class AlbumsPageWidget extends ConsumerWidget {
                                 MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album.id)),
                               );
                             },
-                            child: AlbumContextMenuWidget(albumId: album.id, child: AlbumCellWidget(album: album)),
+                            child: AlbumContextMenuWidget(albumId: album.id, index: index, child: AlbumCellWidget(album: album)),
                           );
                         },
                         childCount: vm.albums.length,

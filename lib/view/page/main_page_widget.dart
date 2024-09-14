@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/shortcut_item_type.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/page/main_provider.dart';
-import 'package:thinmpf/util/calc_child_aspect_ratio.dart';
-import 'package:thinmpf/util/calc_cross_axis_count.dart';
+import 'package:thinmpf/util/calc_grid_aspect_ratio.dart';
+import 'package:thinmpf/util/calc_grid_count.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
 import 'package:thinmpf/view/cell/shortcut_cell_view.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
@@ -50,8 +50,8 @@ class MainPageWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncValue = ref.watch(mainProvider);
     final screenSize = MediaQuery.sizeOf(context);
-    final crossAxisCount = calcCrossAxisCount(screenSize.width);
-    final childAspectRatio = calcChildAspectRatio(screenSize.width, crossAxisCount);
+    final gridCount = calcGridCount(screenSize.width);
+    final gridAspectRatio = calcGridAspectRatio(screenSize.width, gridCount);
     final top = MediaQuery.of(context).padding.top;
 
     return Scaffold(
@@ -95,8 +95,8 @@ class MainPageWidget extends ConsumerWidget {
                     padding: EdgeInsets.all(StyleConstant.padding.large),
                     sliver: SliverGrid(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: childAspectRatio,
-                        crossAxisCount: crossAxisCount,
+                        childAspectRatio: gridAspectRatio,
+                        crossAxisCount: gridCount,
                         crossAxisSpacing: StyleConstant.padding.large,
                         mainAxisSpacing: StyleConstant.padding.large,
                       ),
@@ -128,8 +128,8 @@ class MainPageWidget extends ConsumerWidget {
                     padding: EdgeInsets.all(StyleConstant.padding.large),
                     sliver: SliverGrid(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: childAspectRatio,
-                        crossAxisCount: crossAxisCount,
+                        childAspectRatio: gridAspectRatio,
+                        crossAxisCount: gridCount,
                         crossAxisSpacing: StyleConstant.padding.large,
                         mainAxisSpacing: StyleConstant.padding.large,
                       ),

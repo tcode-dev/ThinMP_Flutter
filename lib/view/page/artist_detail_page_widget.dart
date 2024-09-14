@@ -5,8 +5,8 @@ import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/page/artist_detail_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
-import 'package:thinmpf/util/calc_child_aspect_ratio.dart';
-import 'package:thinmpf/util/calc_cross_axis_count.dart';
+import 'package:thinmpf/util/calc_grid_aspect_ratio.dart';
+import 'package:thinmpf/util/calc_grid_count.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
 import 'package:thinmpf/view/image/circle_image_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
@@ -27,8 +27,8 @@ class ArtistDetailPageWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncValue = ref.watch(artistDetailProvider(id));
     final screenSize = MediaQuery.sizeOf(context);
-    final crossAxisCount = calcCrossAxisCount(screenSize.width);
-    final childAspectRatio = calcChildAspectRatio(screenSize.width, crossAxisCount);
+    final gridCount = calcGridCount(screenSize.width);
+    final gridAspectRatio = calcGridAspectRatio(screenSize.width, gridCount);
     final top = MediaQuery.of(context).padding.top;
 
     return Scaffold(
@@ -107,8 +107,8 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                   padding: EdgeInsets.all(StyleConstant.padding.large),
                   sliver: SliverGrid(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: childAspectRatio,
-                      crossAxisCount: crossAxisCount,
+                      childAspectRatio: gridAspectRatio,
+                      crossAxisCount: gridCount,
                       crossAxisSpacing: StyleConstant.padding.large,
                       mainAxisSpacing: StyleConstant.padding.large,
                     ),
