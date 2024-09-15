@@ -25,6 +25,17 @@ class FavoriteSongsPageWidget extends ConsumerWidget {
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
         title: Text(AppLocalizations.of(context)!.favoriteSongs),
+        actions: [
+          PopupMenuButton(
+            onSelected: (item) {},
+            itemBuilder: (BuildContext context) => [
+              const PopupMenuItem(
+                value: 'edit',
+                child: Text('edit'),
+              ),
+            ],
+          )
+        ],
       ),
       body: Stack(
         children: [
