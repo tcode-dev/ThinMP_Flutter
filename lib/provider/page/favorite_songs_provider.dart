@@ -12,10 +12,10 @@ final _songHostApi = SongHostApi();
 class FavoriteSongs extends _$FavoriteSongs {
   @override
   Future<FavoriteSongsViewModel> build() async {
-    return fetchSongs();
+    return fetch();
   }
 
-  Future<FavoriteSongsViewModel> fetchSongs() async {
+  Future<FavoriteSongsViewModel> fetch() async {
     final favoriteSongRepository = FavoriteSongRepository();
 
     try {
@@ -28,5 +28,11 @@ class FavoriteSongs extends _$FavoriteSongs {
     } finally {
       favoriteSongRepository.destroy();
     }
+  }
+
+  void reload() async {
+    final data = await fetch();
+
+    state = state = AsyncValue.data(data);
   }
 }

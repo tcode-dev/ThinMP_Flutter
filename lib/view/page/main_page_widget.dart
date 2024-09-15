@@ -61,7 +61,6 @@ class MainPageWidget extends ConsumerStatefulWidget {
 
 class MainPageWidgetState extends ConsumerState<MainPageWidget> {
   void _reload() {
-    print('reload');
     ref.read(mainProvider.notifier).reload();
   }
 

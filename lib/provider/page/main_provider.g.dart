@@ -6,7 +6,7 @@ part of 'main_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$mainHash() => r'f497aa72364309d9e0cce629b95052b5d38bad3d';
+String _$mainHash() => r'2542441b4a8f047d8567789d36389aa961f0c085';
 
 /// See also [Main].
 @ProviderFor(Main)

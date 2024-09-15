@@ -6,17 +6,27 @@ import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/page/favorite_songs_provider.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/menu/song_context_menu.dart';
+import 'package:thinmpf/view/page/favorite_songs_edit_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';
 
 final PlayerHostApi _player = PlayerHostApi();
 
-class FavoriteSongsPageWidget extends ConsumerWidget {
+class FavoriteSongsPageWidget extends ConsumerStatefulWidget {
   const FavoriteSongsPageWidget({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  FavoriteSongsPageWidgetState createState() => FavoriteSongsPageWidgetState();
+}
+
+class FavoriteSongsPageWidgetState extends ConsumerState<FavoriteSongsPageWidget> {
+  void _reload() {
+    ref.read(favoriteSongsProvider.notifier).reload();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final asyncValue = ref.watch(favoriteSongsProvider);
 
     return Scaffold(
@@ -27,11 +37,20 @@ class FavoriteSongsPageWidget extends ConsumerWidget {
         title: Text(AppLocalizations.of(context)!.favoriteSongs),
         actions: [
           PopupMenuButton(
-            onSelected: (item) {},
+            onSelected: (item) async {
+              if (item == 'edit') {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const FavoriteSongsEditPageWidget()),
+              );
+
+              _reload();
+              }
+            },
             itemBuilder: (BuildContext context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'edit',
-                child: Text('edit'),
+                child: Text(AppLocalizations.of(context)!.edit),
               ),
             ],
           )

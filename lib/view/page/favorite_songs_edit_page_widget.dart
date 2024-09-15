@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/model/song_model.dart';
+import 'package:thinmpf/provider/page/favorite_songs_provider.dart';
+import 'package:thinmpf/view/row/media_row_widget.dart';
+
+class FavoriteSongsEditPageWidget extends ConsumerStatefulWidget {
+  const FavoriteSongsEditPageWidget({super.key});
+
+  @override
+  FavoriteSongsEditPageWidgetState createState() => FavoriteSongsEditPageWidgetState();
+}
+
+class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPageWidget> {
+  late List<SongModel> _list;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final asyncValue = ref.read(favoriteSongsProvider);
+    asyncValue.when(
+      data: (vm) {
+        _list = List.from(vm.songs);
+      },
+      loading: () {
+        _list = [];
+      },
+      error: (error, stackTrace) {
+        _list = [];
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+        surfaceTintColor: Colors.transparent,
+        title: Text(AppLocalizations.of(context)!.edit),
+        actions: [
+          PopupMenuButton(
+            onSelected: (item) {},
+            itemBuilder: (BuildContext context) => [
+              const PopupMenuItem(
+                value: 'edit',
+                child: Text('edit'),
+              ),
+            ],
+          )
+        ],
+      ),
+      body: ReorderableListView(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        children: <Widget>[for (int index = 0; index < _list.length; index += 1) MediaRowWidget(key: Key('$index'), song: _list[index])],
+        onReorder: (int oldIndex, int newIndex) {
+          setState(() {
+            if (oldIndex < newIndex) {
+              newIndex -= 1;
+            }
+            final SongModel item = _list.removeAt(oldIndex);
+            _list.insert(newIndex, item);
+          });
+        },
+      ),
+    );
+  }
+}
