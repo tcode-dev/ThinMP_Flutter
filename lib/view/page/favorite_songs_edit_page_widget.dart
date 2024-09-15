@@ -58,7 +58,18 @@ class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPa
       ),
       body: ReorderableListView(
         padding: const EdgeInsets.symmetric(horizontal: 40),
-        children: <Widget>[for (int index = 0; index < _list.length; index += 1) MediaRowWidget(key: Key('$index'), song: _list[index])],
+        children: [
+          for (int index = 0; index < _list.length; index += 1)
+            Dismissible(
+              key: Key(_list[index].id),
+              onDismissed: (direction) {
+                setState(() {
+                  _list.removeAt(index);
+                });
+              },
+              child: MediaRowWidget(song: _list[index]),
+            )
+        ],
         onReorder: (int oldIndex, int newIndex) {
           setState(() {
             if (oldIndex < newIndex) {
