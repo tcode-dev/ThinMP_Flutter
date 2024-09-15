@@ -24,6 +24,7 @@ import 'package:thinmpf/view/page/playlists_page_widget.dart';
 import 'package:thinmpf/view/page/songs_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
+import 'package:thinmpf/view/row/list_item_row_widget.dart';
 import 'package:thinmpf/view/row/plain_row_widget.dart';
 
 class PageInfo {
@@ -100,7 +101,7 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
                           );
                           _reload();
                         },
-                        child: PlainRowWidget(title: pageList[index].text),
+                        child: ListItemRowWidget(child: PlainRowWidget(title: pageList[index].text)),
                       );
                     }, childCount: pageList.length),
                   ),
