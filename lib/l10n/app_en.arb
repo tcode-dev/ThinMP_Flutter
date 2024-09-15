@@ -13,5 +13,7 @@
   "newPlaylist": "New playlist",
   "playlist": "Playlist",
   "playlists": "Playlists",
-  "edit": "Edit"
+  "edit": "Edit",
+  "done": "Done",
+  "cancel": "Cancel"
 }

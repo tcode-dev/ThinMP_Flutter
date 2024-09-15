@@ -41,15 +41,18 @@ class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPa
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
         title: Text(AppLocalizations.of(context)!.edit),
+        leadingWidth: 100,
+        leading: TextButton(
+          style: TextButton.styleFrom(
+            alignment: Alignment.centerLeft,
+          ),
+          onPressed: () {},
+          child: Text(AppLocalizations.of(context)!.cancel),
+        ),
         actions: [
-          PopupMenuButton(
-            onSelected: (item) {},
-            itemBuilder: (BuildContext context) => [
-              const PopupMenuItem(
-                value: 'edit',
-                child: Text('edit'),
-              ),
-            ],
+          TextButton(
+            onPressed: () {},
+            child: Text(AppLocalizations.of(context)!.done),
           )
         ],
       ),

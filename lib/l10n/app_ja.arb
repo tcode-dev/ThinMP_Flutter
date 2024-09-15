@@ -13,5 +13,7 @@
   "newPlaylist": "プレイリストを作成",
   "playlist": "プレイリスト",
   "playlists": "プレイリスト",
-  "edit": "編集"
+  "edit": "編集",
+  "done": "完了",
+  "cancel": "キャンセル"
 }
