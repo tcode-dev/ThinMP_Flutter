@@ -28,19 +28,19 @@ import 'package:thinmpf/view/row/list_item_row_widget.dart';
 import 'package:thinmpf/view/row/plain_row_widget.dart';
 
 class PageInfo {
-  final String text;
+  final String Function(BuildContext context) text;
   final Widget Function() widgetBuilder;
 
   PageInfo({required this.text, required this.widgetBuilder});
 }
 
 final List<PageInfo> pageList = [
-  PageInfo(text: "Artists", widgetBuilder: () => const ArtistsPageWidget()),
-  PageInfo(text: "Albums", widgetBuilder: () => const AlbumsPageWidget()),
-  PageInfo(text: "Songs", widgetBuilder: () => const SongsPageWidget()),
-  PageInfo(text: "FavoriteSongs", widgetBuilder: () => const FavoriteSongsPageWidget()),
-  PageInfo(text: "FavoriteArtists", widgetBuilder: () => const FavoriteArtistsPageWidget()),
-  PageInfo(text: "Playlists", widgetBuilder: () => const PlaylistsPageWidget()),
+  PageInfo(text: (BuildContext context) => AppLocalizations.of(context)!.artists, widgetBuilder: () => const ArtistsPageWidget()),
+  PageInfo(text: (BuildContext context) => AppLocalizations.of(context)!.albums, widgetBuilder: () => const AlbumsPageWidget()),
+  PageInfo(text: (BuildContext context) => AppLocalizations.of(context)!.songs, widgetBuilder: () => const SongsPageWidget()),
+  PageInfo(text: (BuildContext context) => AppLocalizations.of(context)!.favoriteSong, widgetBuilder: () => const FavoriteSongsPageWidget()),
+  PageInfo(text: (BuildContext context) => AppLocalizations.of(context)!.favoriteArtist, widgetBuilder: () => const FavoriteArtistsPageWidget()),
+  PageInfo(text: (BuildContext context) => AppLocalizations.of(context)!.playlists, widgetBuilder: () => const PlaylistsPageWidget()),
 ];
 final shortcutMap = {
   ShortcutItemType.artist: (String id, int index, ShortcutModel shortcut, Function() callback) => ArtistGridContextMenuWidget(
@@ -111,14 +111,14 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
                           );
                           _reload();
                         },
-                        child: ListItemRowWidget(child: PlainRowWidget(title: pageList[index].text)),
+                        child: ListItemRowWidget(child: PlainRowWidget(title: pageList[index].text(context))),
                       );
                     }, childCount: pageList.length),
                   ),
                   SliverToBoxAdapter(
                     child: Container(
                       padding: EdgeInsets.only(top: StyleConstant.padding.large, left: StyleConstant.padding.large),
-                      child: Text('Shortcut', style: Theme.of(context).textTheme.headlineMedium),
+                      child: Text(AppLocalizations.of(context)!.shortcut, style: Theme.of(context).textTheme.headlineMedium),
                     ),
                   ),
                   SliverPadding(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/page/albums_provider.dart';
@@ -26,7 +27,7 @@ class AlbumsPageWidget extends ConsumerWidget {
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: const Text('Albums'),
+        title: Text(AppLocalizations.of(context)!.albums),
       ),
       body: Stack(
         children: [

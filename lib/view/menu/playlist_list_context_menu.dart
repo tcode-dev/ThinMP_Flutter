@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:thinmpf/constant/shortcut_item_type.dart';
 import 'package:thinmpf/repository/shortcut_repository.dart';
 import 'package:thinmpf/view/menu/list_context_menu.dart';
@@ -18,7 +19,7 @@ class PlaylistListContextMenuWidget extends StatelessWidget {
       widgetBuilder: () => [
         PopupMenuItem(
           value: 'shortcut',
-          child: Text(_shortcutRepository.exists(playlistId, ShortcutItemType.playlist) ? 'remove from shortcut' : 'add to shortcut'),
+          child: Text(_shortcutRepository.exists(playlistId, ShortcutItemType.playlist) ? AppLocalizations.of(context)!.shortcutRemove : AppLocalizations.of(context)!.shortcutAdd),
         ),
       ],
       onSelected: (String value) {

@@ -1,5 +1,6 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
@@ -105,7 +106,7 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                 SliverToBoxAdapter(
                   child: Container(
                     padding: EdgeInsets.only(top: StyleConstant.padding.large, left: StyleConstant.padding.large),
-                    child: Text("Albums", style: Theme.of(context).textTheme.headlineMedium),
+                    child: Text(AppLocalizations.of(context)!.albums, style: Theme.of(context).textTheme.headlineMedium),
                   ),
                 ),
                 SliverPadding(
@@ -138,7 +139,7 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                 SliverToBoxAdapter(
                   child: Container(
                     padding: EdgeInsets.only(bottom: StyleConstant.padding.small, left: StyleConstant.padding.large),
-                    child: Text("Songs", style: Theme.of(context).textTheme.headlineMedium),
+                    child: Text(AppLocalizations.of(context)!.songs, style: Theme.of(context).textTheme.headlineMedium),
                   ),
                 ),
                 SliverFixedExtentList(

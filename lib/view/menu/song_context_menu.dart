@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:thinmpf/repository/favorite_song_repository.dart';
 import 'package:thinmpf/view/menu/list_context_menu.dart';
 import 'package:thinmpf/view/playlist/playlist_dialog_widget.dart';
@@ -18,11 +19,11 @@ class SongContextMenuWidget extends StatelessWidget {
       widgetBuilder: () => [
         PopupMenuItem(
           value: 'favorite',
-          child: Text(_favoriteSongRepository.exists(songId) ? 'remove from favorites' : 'add to favorites'),
+          child: Text(_favoriteSongRepository.exists(songId) ? AppLocalizations.of(context)!.favoriteRemove : AppLocalizations.of(context)!.favoriteAdd),
         ),
-        const PopupMenuItem(
+        PopupMenuItem(
           value: 'playlist',
-          child: Text('add to playlist'),
+          child: Text(AppLocalizations.of(context)!.playlistAdd),
         ),
       ],
       onSelected: (String value) async {

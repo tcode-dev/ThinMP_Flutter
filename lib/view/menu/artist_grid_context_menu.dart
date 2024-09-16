@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:thinmpf/constant/shortcut_item_type.dart';
 import 'package:thinmpf/repository/favorite_artist_repository.dart';
 import 'package:thinmpf/repository/shortcut_repository.dart';
@@ -21,11 +22,11 @@ class ArtistGridContextMenuWidget extends StatelessWidget {
       widgetBuilder: () => [
         PopupMenuItem(
           value: 'shortcut',
-          child: Text(_shortcutRepository.exists(artistId, ShortcutItemType.artist) ? 'remove from shortcut' : 'add to shortcut'),
+          child: Text(_shortcutRepository.exists(artistId, ShortcutItemType.artist) ? AppLocalizations.of(context)!.shortcutRemove : AppLocalizations.of(context)!.shortcutAdd),
         ),
         PopupMenuItem(
           value: 'favorite',
-          child: Text(_favoriteArtistRepository.exists(artistId) ? 'remove from favorites' : 'add to favorites'),
+          child: Text(_favoriteArtistRepository.exists(artistId) ? AppLocalizations.of(context)!.favoriteRemove : AppLocalizations.of(context)!.favoriteAdd),
         ),
       ],
       onSelected: (String value) {
