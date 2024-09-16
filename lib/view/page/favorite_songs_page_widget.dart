@@ -37,7 +37,7 @@ class FavoriteSongsPageWidgetState extends ConsumerState<FavoriteSongsPageWidget
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: Text(AppLocalizations.of(context)!.favoriteSongs),
+        title: Text(AppLocalizations.of(context)!.favoriteSong),
         actions: [
           PopupMenuButton(
             onSelected: (item) async {

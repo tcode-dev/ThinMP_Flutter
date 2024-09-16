@@ -22,7 +22,7 @@ class FavoriteArtistsPageWidget extends ConsumerWidget {
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: Text(AppLocalizations.of(context)!.favoriteArtists),
+        title: Text(AppLocalizations.of(context)!.favoriteArtist),
       ),
       body: Stack(
         children: [

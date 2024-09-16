@@ -36,7 +36,7 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
       },
       data: (vm) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.newPlaylist),
+          title: Text(AppLocalizations.of(context)!.playlist, textAlign: TextAlign.center),
           content: vm.playlists.isEmpty || _isNewPlaylist
               ? TextField(
                   controller: controller,
@@ -75,7 +75,7 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
                     style: TextButton.styleFrom(
                       textStyle: Theme.of(context).textTheme.labelLarge,
                     ),
-                    child: Text(AppLocalizations.of(context)!.newPlaylist),
+                    child: Text(AppLocalizations.of(context)!.playlistCreate),
                     onPressed: () {
                       setState(() {
                         _isNewPlaylist = true;
