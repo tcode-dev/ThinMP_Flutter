@@ -8,10 +8,10 @@ final _shortcutRepository = ShortcutRepository();
 
 class ArtistListContextMenuWidget extends StatelessWidget {
   final String artistId;
-  final Function() callback;
+  final VoidCallback? callback;
   final Widget child;
 
-  const ArtistListContextMenuWidget({super.key, required this.artistId, required this.callback, required this.child});
+  const ArtistListContextMenuWidget({super.key, required this.artistId, required this.child, this.callback});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class ArtistListContextMenuWidget extends StatelessWidget {
 
           repository.add(artistId);
         }
-        callback();
+        callback?.call();
       },
       child: child,
     );

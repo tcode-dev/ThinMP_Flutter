@@ -20,8 +20,12 @@ class ArtistActionRowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: ListItemRowWidget(
-        child: ArtistListContextMenuWidget(artistId: artist.id, callback: () => {}, child: PlainRowWidget(title: artist.name)),
+      child: ArtistListContextMenuWidget(
+        artistId: artist.id,
+        callback: onLongPress,
+        child: ListItemRowWidget(
+          child: PlainRowWidget(title: artist.name),
+        ),
       ),
     );
   }
