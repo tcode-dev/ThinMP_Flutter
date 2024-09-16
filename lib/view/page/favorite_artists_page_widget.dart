@@ -6,6 +6,7 @@ import 'package:thinmpf/provider/page/favorite_artists_provider.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/page/artist_detail_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
+import 'package:thinmpf/view/row/artist_action_row_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/row/plain_row_widget.dart';
 
@@ -38,14 +39,14 @@ class FavoriteArtistsPageWidget extends ConsumerWidget {
                     delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                       final artist = vm.artists[index];
 
-                      return GestureDetector(
+                      return ArtistActionRowWidget(
+                        artist: artist,
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => ArtistDetailPageWidget(id: artist.id)),
                           );
                         },
-                        child: PlainRowWidget(title: artist.name),
                       );
                     }, childCount: vm.artists.length),
                   ),
