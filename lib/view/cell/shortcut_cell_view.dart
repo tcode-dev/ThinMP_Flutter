@@ -8,10 +8,14 @@ import 'package:thinmpf/view/text/text_widget.dart';
 
 class ShortcutCellWidget extends StatelessWidget {
   final ShortcutModel shortcut;
+  final Widget Function() widgetBuilder;
+  final void Function() onTap;
 
   const ShortcutCellWidget({
     super.key,
     required this.shortcut,
+    required this.widgetBuilder,
+    required this.onTap,
   });
 
   @override
@@ -24,23 +28,32 @@ class ShortcutCellWidget extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            shortcut.type == ShortcutItemType.artist ? CircleImageWidget(id: shortcut.imageId, size: constraints.maxWidth) : SquareImageWidget(id: shortcut.imageId, size: constraints.maxWidth),
-            SizedBox(
-              height: StyleConstant.row.contentBoxHeight,
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextWidget(text: shortcut.name, textAlign: TextAlign.center),
-                    TextWidget(text: secondaryText, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall),
-                  ],
+        return GestureDetector(
+          onTap: () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => widgetBuilder()),
+            );
+            onTap();
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              shortcut.type == ShortcutItemType.artist ? CircleImageWidget(id: shortcut.imageId, size: constraints.maxWidth) : SquareImageWidget(id: shortcut.imageId, size: constraints.maxWidth),
+              SizedBox(
+                height: StyleConstant.row.contentBoxHeight,
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextWidget(text: shortcut.name, textAlign: TextAlign.center),
+                      TextWidget(text: secondaryText, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

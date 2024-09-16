@@ -42,15 +42,25 @@ final List<PageInfo> pageList = [
   PageInfo(text: "FavoriteArtists", widgetBuilder: () => const FavoriteArtistsPageWidget()),
   PageInfo(text: "Playlists", widgetBuilder: () => const PlaylistsPageWidget()),
 ];
-final shortcutNavigatorMap = {
-  ShortcutItemType.artist: (String id) => ArtistDetailPageWidget(id: id),
-  ShortcutItemType.album: (String id) => AlbumDetailPageWidget(id: id),
-  ShortcutItemType.playlist: (String id) => PlaylistDetailPageWidget(id: id),
-};
-final shortcutWidgetMap = {
-  ShortcutItemType.artist: (String id, int index, ShortcutModel shortcut, Function() callback) => ArtistGridContextMenuWidget(artistId: id, index: index, callback: callback, child: ShortcutCellWidget(shortcut: shortcut)),
-  ShortcutItemType.album: (String id, int index, ShortcutModel shortcut, Function() callback) => AlbumGridContextMenuWidget(albumId: id, index: index, callback: callback, child: ShortcutCellWidget(shortcut: shortcut)),
-  ShortcutItemType.playlist: (String id, int index, ShortcutModel shortcut, Function() callback) => PlaylistGridContextMenuWidget(playlistId: id, index: index, callback: callback, child: ShortcutCellWidget(shortcut: shortcut)),
+final shortcutMap = {
+  ShortcutItemType.artist: (String id, int index, ShortcutModel shortcut, Function() callback) => ArtistGridContextMenuWidget(
+        artistId: id,
+        index: index,
+        callback: callback,
+        child: ShortcutCellWidget(shortcut: shortcut, widgetBuilder: () => ArtistDetailPageWidget(id: id), onTap: callback),
+      ),
+  ShortcutItemType.album: (String id, int index, ShortcutModel shortcut, Function() callback) => AlbumGridContextMenuWidget(
+        albumId: id,
+        index: index,
+        callback: callback,
+        child: ShortcutCellWidget(shortcut: shortcut, widgetBuilder: () => AlbumDetailPageWidget(id: id), onTap: callback),
+      ),
+  ShortcutItemType.playlist: (String id, int index, ShortcutModel shortcut, Function() callback) => PlaylistGridContextMenuWidget(
+        playlistId: id,
+        index: index,
+        callback: callback,
+        child: ShortcutCellWidget(shortcut: shortcut, widgetBuilder: () => PlaylistDetailPageWidget(id: id), onTap: callback),
+      ),
 };
 
 class MainPageWidget extends ConsumerStatefulWidget {
@@ -124,16 +134,7 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
                         (BuildContext context, int index) {
                           final shortcut = vm!.shortcuts[index];
 
-                          return GestureDetector(
-                            onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => shortcutNavigatorMap[shortcut.type]!(shortcut.itemId)),
-                              );
-                              _reload();
-                            },
-                            child: shortcutWidgetMap[shortcut.type]!(shortcut.itemId, index, shortcut, _reload),
-                          );
+                          return shortcutMap[shortcut.type]!(shortcut.itemId, index, shortcut, _reload);
                         },
                         childCount: vm?.shortcuts.length,
                       ),
