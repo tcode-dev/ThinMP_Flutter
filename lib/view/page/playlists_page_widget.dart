@@ -4,17 +4,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/page/playlists_provider.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
-import 'package:thinmpf/view/menu/playlist_list_context_menu.dart';
 import 'package:thinmpf/view/page/playlist_detail_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
-import 'package:thinmpf/view/row/plain_row_widget.dart';
+import 'package:thinmpf/view/row/playlist_action_row_widget.dart';
 
-class PlaylistsPageWidget extends ConsumerWidget {
+class PlaylistsPageWidget extends ConsumerStatefulWidget {
   const PlaylistsPageWidget({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  PlaylistsPageWidgetState createState() => PlaylistsPageWidgetState();
+}
+
+class PlaylistsPageWidgetState extends ConsumerState<PlaylistsPageWidget> {
+  void _reload() {
+    ref.read(playlistsProvider.notifier).reload();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final asyncValue = ref.watch(playlistsProvider);
 
     return Scaffold(
@@ -40,13 +48,16 @@ class PlaylistsPageWidget extends ConsumerWidget {
                       final playlist = vm.playlists[index];
 
                       return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => PlaylistDetailPageWidget(id: playlist.id)),
-                          );
-                        },
-                        child: PlaylistListContextMenuWidget(playlistId: playlist.id, callback: () => {}, child: PlainRowWidget(title: playlist.name)),
+                        child: PlaylistActionRowWidget(
+                          playlist: playlist,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => PlaylistDetailPageWidget(id: playlist.id)),
+                            );
+                          },
+                          onLongPress: _reload,
+                        ),
                       );
                     }, childCount: vm.playlists.length),
                   ),

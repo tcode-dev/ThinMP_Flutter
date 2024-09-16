@@ -9,10 +9,10 @@ part 'playlists_provider.g.dart';
 class Playlists extends _$Playlists {
   @override
   Future<PlaylistsViewModel> build() async {
-    return fetchPlaylists();
+    return fetch();
   }
 
-  Future<PlaylistsViewModel> fetchPlaylists() async {
+  Future<PlaylistsViewModel> fetch() async {
     final playlistRepository = PlaylistRepository();
 
     try {
@@ -43,5 +43,11 @@ class Playlists extends _$Playlists {
     } finally {
       repository.destroy();
     }
+  }
+
+  void reload() async {
+    final data = await fetch();
+
+    state = state = AsyncValue.data(data);
   }
 }
