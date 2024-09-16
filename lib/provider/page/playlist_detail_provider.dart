@@ -36,4 +36,10 @@ class PlaylistDetail extends _$PlaylistDetail {
       songIds: songIds,
     );
   }
+
+  void reload(String id) async {
+    final data = await fetch(id);
+
+    state = state = AsyncValue.data(data);
+  }
 }

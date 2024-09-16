@@ -9,18 +9,31 @@ import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
-import 'package:thinmpf/view/row/media_row_widget.dart';
+import 'package:thinmpf/view/row/media_action_row_widget.dart';
 
 final PlayerHostApi _player = PlayerHostApi();
 
-class PlaylistDetailPageWidget extends ConsumerWidget {
+class PlaylistDetailPageWidget extends ConsumerStatefulWidget {
   final String id;
 
   const PlaylistDetailPageWidget({super.key, required this.id});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final asyncValue = ref.watch(playlistDetailProvider(id));
+  PlaylistDetailPageWidgetState createState() => PlaylistDetailPageWidgetState();
+}
+
+class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidget> {
+  void _reload() {
+    ref.read(playlistDetailProvider(widget.id).notifier).reload(widget.id);
+  }
+
+  void _play(int index, List<String?> ids) {
+    _player.start(index, ids);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final asyncValue = ref.watch(playlistDetailProvider(widget.id));
     final screenSize = MediaQuery.sizeOf(context);
     final top = MediaQuery.of(context).padding.top;
 
@@ -87,11 +100,10 @@ class PlaylistDetailPageWidget extends ConsumerWidget {
                   SliverFixedExtentList(
                     itemExtent: StyleConstant.row.borderBoxHeight,
                     delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          _player.start(index, vm.songIds);
-                        },
-                        child: MediaRowWidget(song: vm.songs[index]),
+                      return MediaActionRowWidget(
+                        song: vm.songs[index],
+                        onTap: () => _play(index, vm.songIds),
+                        onLongPress: _reload,
                       );
                     }, childCount: vm.songs.length),
                   ),

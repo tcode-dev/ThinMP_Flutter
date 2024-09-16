@@ -6,14 +6,14 @@ import 'package:thinmpf/view/row/media_row_widget.dart';
 
 class MediaActionRowWidget extends StatelessWidget {
   final SongModel song;
-  final Function() onTap;
-  final Function() onLongPress;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
 
   const MediaActionRowWidget({
     super.key,
     required this.song,
-    required this.onTap,
-    required this.onLongPress,
+    this.onTap,
+    this.onLongPress,
   });
 
   @override

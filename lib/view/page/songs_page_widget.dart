@@ -37,16 +37,13 @@ class SongsPageWidget extends ConsumerWidget {
                 slivers: [
                   SliverFixedExtentList(
                     itemExtent: StyleConstant.row.borderBoxHeight,
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return MediaActionRowWidget(
-                          song: vm.songs[index],
-                          onTap: () => _player.startAllSongs(index),
-                          onLongPress: () => {},
-                        );
-                      },
-                      childCount: vm.songs.length,
-                    ),
+                    delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                      return MediaActionRowWidget(
+                        song: vm.songs[index],
+                        onTap: () => _player.startAllSongs(index),
+                        onLongPress: () => {},
+                      );
+                    }, childCount: vm.songs.length),
                   ),
                   const SliverToBoxAdapter(
                     child: EmptyRowWidget(),

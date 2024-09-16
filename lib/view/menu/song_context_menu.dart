@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:thinmpf/view/menu/list_context_menu.dart';
 
 class SongContextMenuWidget extends StatelessWidget {
-  final Function() callback;
+  final VoidCallback? callback;
   final Widget child;
 
-  const SongContextMenuWidget({super.key, required this.callback, required this.child});
+  const SongContextMenuWidget({super.key, required this.child, this.callback});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class SongContextMenuWidget extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Selected: $value')),
         );
-        callback();
+        callback?.call();
       },
       child: child,
     );
