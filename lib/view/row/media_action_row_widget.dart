@@ -21,6 +21,7 @@ class MediaActionRowWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: SongContextMenuWidget(
+        songId: song.id,
         callback: onLongPress,
         child: ListItemRowWidget(child: MediaRowWidget(song: song)),
       ),

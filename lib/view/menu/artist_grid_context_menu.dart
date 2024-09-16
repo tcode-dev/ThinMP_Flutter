@@ -5,11 +5,12 @@ import 'package:thinmpf/repository/shortcut_repository.dart';
 import 'package:thinmpf/view/menu/grid_context_menu.dart';
 
 final _shortcutRepository = ShortcutRepository();
+final _favoriteArtistRepository = FavoriteArtistRepository();
 
 class ArtistGridContextMenuWidget extends StatelessWidget {
   final String artistId;
   final int index;
-  final Function() callback;
+  final VoidCallback? callback;
   final Widget child;
 
   const ArtistGridContextMenuWidget({super.key, required this.artistId, required this.index, required this.callback, required this.child});
@@ -22,20 +23,18 @@ class ArtistGridContextMenuWidget extends StatelessWidget {
           value: 'shortcut',
           child: Text(_shortcutRepository.exists(artistId, ShortcutItemType.artist) ? 'remove from shortcut' : 'add to shortcut'),
         ),
-        const PopupMenuItem(
+        PopupMenuItem(
           value: 'favorite',
-          child: Text('add to favorites'),
+          child: Text(_favoriteArtistRepository.exists(artistId) ? 'remove from favorites' : 'add to favorites'),
         ),
       ],
       onSelected: (String value) {
         if (value == 'shortcut') {
           _shortcutRepository.toggleShortcut(artistId, ShortcutItemType.artist);
         } else if (value == 'favorite') {
-          final repository = FavoriteArtistRepository();
-
-          repository.add(artistId);
+          _favoriteArtistRepository.toggle(artistId);
         }
-        callback();
+        callback?.call();
       },
       index: index,
       child: child,

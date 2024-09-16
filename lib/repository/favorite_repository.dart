@@ -15,4 +15,12 @@ abstract class FavoriteRepository<T extends RealmObject> extends BaseRepository<
       realm.add(model);
     });
   }
+
+  void toggle(String id) {
+    if (exists(id)) {
+      delete(id);
+    } else {
+      add(id);
+    }
+  }
 }

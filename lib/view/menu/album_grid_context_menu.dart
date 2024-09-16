@@ -17,7 +17,10 @@ class AlbumGridContextMenuWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridContextMenuWidget(
       widgetBuilder: () => [
-        PopupMenuItem(value: 'shortcut', child: Text(_shortcutRepository.exists(albumId, ShortcutItemType.album) ? 'remove from shortcut' : 'add to shortcut')),
+        PopupMenuItem(
+          value: 'shortcut',
+          child: Text(_shortcutRepository.exists(albumId, ShortcutItemType.album) ? 'remove from shortcut' : 'add to shortcut'),
+        ),
       ],
       onSelected: (String value) {
         _shortcutRepository.toggleShortcut(albumId, ShortcutItemType.album);
