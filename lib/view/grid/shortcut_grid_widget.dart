@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
-import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/model/shortcut_model.dart';
 import 'package:thinmpf/provider/page/main_provider.dart';
-import 'package:thinmpf/util/calc_grid_aspect_ratio.dart';
-import 'package:thinmpf/util/calc_grid_count.dart';
 import 'package:thinmpf/view/cell/shortcut_cell_view.dart';
+import 'package:thinmpf/view/grid/grid_widget.dart';
 import 'package:thinmpf/view/menu/album_grid_context_menu.dart';
 import 'package:thinmpf/view/menu/artist_grid_context_menu.dart';
 import 'package:thinmpf/view/menu/playlist_grid_context_menu.dart';
@@ -50,9 +48,6 @@ class ShortcutGridWidgetState extends ConsumerState<ShortcutGridWidget> {
   @override
   Widget build(BuildContext context) {
     final asyncValue = ref.watch(mainProvider);
-    final screenSize = MediaQuery.sizeOf(context);
-    final gridCount = calcGridCount(screenSize.width);
-    final gridAspectRatio = calcGridAspectRatio(screenSize.width, gridCount);
 
     return asyncValue.when(
       loading: () => Container(),
@@ -60,13 +55,7 @@ class ShortcutGridWidgetState extends ConsumerState<ShortcutGridWidget> {
         return ErrorWidget(error);
       },
       data: (vm) {
-        return SliverGrid(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: gridAspectRatio,
-            crossAxisCount: gridCount,
-            crossAxisSpacing: StyleConstant.padding.large,
-            mainAxisSpacing: StyleConstant.padding.large,
-          ),
+        return GridWidget(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               final shortcut = vm.shortcuts[index];
