@@ -1,45 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
-import 'package:thinmpf/model/shortcut_model.dart';
 import 'package:thinmpf/provider/page/main_provider.dart';
 import 'package:thinmpf/util/calc_grid_aspect_ratio.dart';
 import 'package:thinmpf/util/calc_grid_count.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
-import 'package:thinmpf/view/cell/shortcut_cell_view.dart';
+import 'package:thinmpf/view/grid/shortcut_grid_widget.dart';
 import 'package:thinmpf/view/list/navigation_list_widget.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
-import 'package:thinmpf/view/menu/album_grid_context_menu.dart';
-import 'package:thinmpf/view/menu/artist_grid_context_menu.dart';
-import 'package:thinmpf/view/menu/playlist_grid_context_menu.dart';
 import 'package:thinmpf/view/page/album_detail_page_widget.dart';
-import 'package:thinmpf/view/page/artist_detail_page_widget.dart';
-import 'package:thinmpf/view/page/playlist_detail_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
-
-final shortcutMap = {
-  ShortcutConstant.artist: (ShortcutModel shortcut, int index, Function() callback) => ArtistGridContextMenuWidget(
-        artistId: shortcut.itemId,
-        index: index,
-        callback: callback,
-        child: ShortcutCellWidget(shortcut: shortcut, widgetBuilder: () => ArtistDetailPageWidget(id: shortcut.itemId), onTap: callback),
-      ),
-  ShortcutConstant.album: (ShortcutModel shortcut, int index, Function() callback) => AlbumGridContextMenuWidget(
-        albumId: shortcut.itemId,
-        index: index,
-        callback: callback,
-        child: ShortcutCellWidget(shortcut: shortcut, widgetBuilder: () => AlbumDetailPageWidget(id: shortcut.itemId), onTap: callback),
-      ),
-  ShortcutConstant.playlist: (ShortcutModel shortcut, int index, Function() callback) => PlaylistGridContextMenuWidget(
-        playlistId: shortcut.itemId,
-        index: index,
-        callback: callback,
-        child: ShortcutCellWidget(shortcut: shortcut, widgetBuilder: () => PlaylistDetailPageWidget(id: shortcut.itemId), onTap: callback),
-      ),
-};
 
 class MainPageWidget extends ConsumerStatefulWidget {
   const MainPageWidget({super.key});
@@ -87,22 +59,7 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
                   ),
                   SliverPadding(
                     padding: EdgeInsets.all(StyleConstant.padding.large),
-                    sliver: SliverGrid(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: gridAspectRatio,
-                        crossAxisCount: gridCount,
-                        crossAxisSpacing: StyleConstant.padding.large,
-                        mainAxisSpacing: StyleConstant.padding.large,
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          final shortcut = vm!.shortcuts[index];
-
-                          return shortcutMap[shortcut.type]!(shortcut, index, _reload);
-                        },
-                        childCount: vm?.shortcuts.length,
-                      ),
-                    ),
+                    sliver: const ShortcutGridWidget(),
                   ),
                   SliverToBoxAdapter(
                     child: Container(
