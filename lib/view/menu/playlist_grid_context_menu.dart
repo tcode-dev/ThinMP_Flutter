@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:thinmpf/constant/shortcut_item_type.dart';
+import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/repository/shortcut_repository.dart';
 import 'package:thinmpf/view/menu/grid_context_menu.dart';
 
@@ -20,11 +20,11 @@ class PlaylistGridContextMenuWidget extends StatelessWidget {
       widgetBuilder: () => [
         PopupMenuItem(
           value: 'shortcut',
-          child: Text(_shortcutRepository.exists(playlistId, ShortcutItemType.playlist) ? AppLocalizations.of(context)!.shortcutRemove : AppLocalizations.of(context)!.shortcutAdd),
+          child: Text(_shortcutRepository.exists(playlistId, ShortcutConstant.playlist) ? AppLocalizations.of(context)!.shortcutRemove : AppLocalizations.of(context)!.shortcutAdd),
         ),
       ],
       onSelected: (String value) {
-        _shortcutRepository.toggleShortcut(playlistId, ShortcutItemType.playlist);
+        _shortcutRepository.toggleShortcut(playlistId, ShortcutConstant.playlist);
         callback();
       },
       index: index,

@@ -1,4 +1,4 @@
-import 'package:thinmpf/constant/shortcut_item_type.dart';
+import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/model/realm/playlist_realm_model.dart';
 import 'package:thinmpf/model/realm/shortcut_realm_model.dart';
 import 'package:thinmpf/model/shortcut_model.dart';
@@ -14,7 +14,7 @@ extension ShortcutRealmModelExtension on ShortcutRealmModel {
       id: id.toString(),
       itemId: itemId,
       name: artist.name,
-      type: ShortcutItemType.values[type],
+      type: ShortcutConstant.values[type],
       imageId: artist.imageId,
     );
   }
@@ -28,7 +28,7 @@ extension ShortcutRealmModelExtension on ShortcutRealmModel {
       id: id.toString(),
       itemId: itemId,
       name: album.name,
-      type: ShortcutItemType.values[type],
+      type: ShortcutConstant.values[type],
       imageId: album.imageId,
     );
   }
@@ -42,7 +42,7 @@ extension ShortcutRealmModelExtension on ShortcutRealmModel {
       id: id.toString(),
       itemId: itemId,
       name: playlist.name,
-      type: ShortcutItemType.values[type],
+      type: ShortcutConstant.values[type],
       imageId: song.imageId,
     );
   }

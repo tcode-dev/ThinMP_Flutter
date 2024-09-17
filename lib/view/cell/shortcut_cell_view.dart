@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thinmpf/constant/shortcut_item_type.dart';
+import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/model/shortcut_model.dart';
 import 'package:thinmpf/view/image/circle_image_widget.dart';
@@ -20,9 +20,9 @@ class ShortcutCellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final secondaryText = shortcut.type == ShortcutItemType.artist
+    final secondaryText = shortcut.type == ShortcutConstant.artist
         ? 'Artist'
-        : shortcut.type == ShortcutItemType.album
+        : shortcut.type == ShortcutConstant.album
             ? 'Album'
             : 'Playlist';
 
@@ -39,7 +39,7 @@ class ShortcutCellWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              shortcut.type == ShortcutItemType.artist ? CircleImageWidget(id: shortcut.imageId, size: constraints.maxWidth) : SquareImageWidget(id: shortcut.imageId, size: constraints.maxWidth),
+              shortcut.type == ShortcutConstant.artist ? CircleImageWidget(id: shortcut.imageId, size: constraints.maxWidth) : SquareImageWidget(id: shortcut.imageId, size: constraints.maxWidth),
               SizedBox(
                 height: StyleConstant.row.contentBoxHeight,
                 child: Center(

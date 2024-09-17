@@ -1,4 +1,4 @@
-import 'package:thinmpf/constant/shortcut_item_type.dart';
+import 'package:thinmpf/constant/shortcut_constant.dart';
 
 class ShortcutModel {
   ShortcutModel({
@@ -13,5 +13,5 @@ class ShortcutModel {
   final String itemId;
   final String name;
   final String imageId;
-  final ShortcutItemType type;
+  final ShortcutConstant type;
 }
