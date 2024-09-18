@@ -23,4 +23,10 @@ class Albums extends _$Albums {
 
     state = albums.map((album) => album.fromPigeon()).toList();
   }
+
+  Future<void> fetchArtistAlbums(String id) async {
+    final albums = await _api.getAlbumsByArtistId(id);
+
+    state = albums.map((album) => album.fromPigeon()).toList();
+  }
 }

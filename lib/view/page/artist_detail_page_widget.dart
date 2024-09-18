@@ -4,11 +4,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
+import 'package:thinmpf/provider/page/albums_provider.dart';
 import 'package:thinmpf/provider/page/artist_detail_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/util/calc_grid_aspect_ratio.dart';
 import 'package:thinmpf/util/calc_grid_count.dart';
 import 'package:thinmpf/view/cell/album_cell_widget.dart';
+import 'package:thinmpf/view/grid/album_grid_widget.dart';
 import 'package:thinmpf/view/image/circle_image_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
@@ -16,22 +18,31 @@ import 'package:thinmpf/view/page/album_detail_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/row/media_action_row_widget.dart';
-import 'package:thinmpf/view/row/media_row_widget.dart';
+import 'package:thinmpf/view/title/section_title_widget.dart';
 
 final PlayerHostApi _player = PlayerHostApi();
 
-class ArtistDetailPageWidget extends ConsumerWidget {
+class ArtistDetailPageWidget extends ConsumerStatefulWidget {
   final String id;
 
   const ArtistDetailPageWidget({super.key, required this.id});
 
+  @override
+  ArtistDetailPageWidgetState createState() => ArtistDetailPageWidgetState();
+}
+
+class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> {
+  void _load() {
+    ref.read(albumsProvider.notifier).fetchArtistAlbums(widget.id);
+  }
+
   void _play(int index) {
-    _player.startArtistSongs(index, id);
+    _player.startArtistSongs(index, widget.id);
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final asyncValue = ref.watch(artistDetailProvider(id));
+  Widget build(BuildContext context) {
+    final asyncValue = ref.watch(artistDetailProvider(widget.id));
     final screenSize = MediaQuery.sizeOf(context);
     final gridCount = calcGridCount(screenSize.width);
     final gridAspectRatio = calcGridAspectRatio(screenSize.width, gridCount);
@@ -103,6 +114,8 @@ class ArtistDetailPageWidget extends ConsumerWidget {
                     ),
                   ),
                 ),
+                SectionTitleWidget(title: AppLocalizations.of(context)!.recentlyAdded),
+                AlbumGridWidget(callback: _load),
                 SliverToBoxAdapter(
                   child: Container(
                     padding: EdgeInsets.only(top: StyleConstant.padding.large, left: StyleConstant.padding.large),
