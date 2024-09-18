@@ -43,9 +43,7 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
               ShortcutGridWidget(callback: _load),
               SectionTitleWidget(title: AppLocalizations.of(context)!.recentlyAdded),
               AlbumGridWidget(callback: _load),
-              const SliverToBoxAdapter(
-                child: EmptyRowWidget(),
-              ),
+              const EmptyRowWidget(),
             ],
           ),
           const Positioned(

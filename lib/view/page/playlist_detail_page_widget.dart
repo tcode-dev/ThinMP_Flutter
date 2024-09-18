@@ -107,9 +107,7 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
                       );
                     }, childCount: vm.songs.length),
                   ),
-                  const SliverToBoxAdapter(
-                    child: EmptyRowWidget(),
-                  ),
+                  const EmptyRowWidget(),
                 ],
               );
             },

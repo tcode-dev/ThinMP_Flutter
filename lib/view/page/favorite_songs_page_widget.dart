@@ -79,9 +79,7 @@ class FavoriteSongsPageWidgetState extends ConsumerState<FavoriteSongsPageWidget
                       );
                     }, childCount: vm.songs.length),
                   ),
-                  const SliverToBoxAdapter(
-                    child: EmptyRowWidget(),
-                  ),
+                  const EmptyRowWidget(),
                 ],
               );
             },

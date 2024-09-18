@@ -8,10 +8,12 @@ class EmptyRowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).padding.bottom + StyleConstant.row.contentBoxHeight;
 
-    return SizedBox(
-      width: double.infinity,
-      height: height,
-      child: Container(),
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        width: double.infinity,
+        height: height,
+        child: Container(),
+      ),
     );
   }
 }

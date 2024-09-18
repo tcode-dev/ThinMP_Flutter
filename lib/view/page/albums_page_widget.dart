@@ -42,13 +42,8 @@ class AlbumsPageWidgetState extends ConsumerState<AlbumsPageWidget> {
         children: [
           CustomScrollView(
             slivers: [
-              SliverPadding(
-                padding: EdgeInsets.all(StyleConstant.padding.large),
-                sliver: AlbumGridWidget(callback: _reload),
-              ),
-              const SliverToBoxAdapter(
-                child: EmptyRowWidget(),
-              ),
+              AlbumGridWidget(callback: _reload),
+              const EmptyRowWidget(),
             ],
           ),
           const Positioned(

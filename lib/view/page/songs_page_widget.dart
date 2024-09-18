@@ -45,9 +45,7 @@ class SongsPageWidget extends ConsumerWidget {
                       );
                     }, childCount: vm.songs.length),
                   ),
-                  const SliverToBoxAdapter(
-                    child: EmptyRowWidget(),
-                  ),
+                  const EmptyRowWidget(),
                 ],
               );
             },

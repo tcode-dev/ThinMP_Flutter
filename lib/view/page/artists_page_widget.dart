@@ -48,9 +48,7 @@ class ArtistsPageWidget extends ConsumerWidget {
                       );
                     }, childCount: vm.artists.length),
                   ),
-                  const SliverToBoxAdapter(
-                    child: EmptyRowWidget(),
-                  ),
+                  const EmptyRowWidget(),
                 ],
               );
             },

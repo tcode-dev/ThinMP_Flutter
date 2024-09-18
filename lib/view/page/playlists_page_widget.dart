@@ -61,7 +61,7 @@ class PlaylistsPageWidgetState extends ConsumerState<PlaylistsPageWidget> {
                       );
                     }, childCount: vm.playlists.length),
                   ),
-                  const SliverToBoxAdapter(child: EmptyRowWidget()),
+                  const EmptyRowWidget(),
                 ],
               );
             },
