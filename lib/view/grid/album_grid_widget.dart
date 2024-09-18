@@ -25,7 +25,7 @@ class AlbumGridWidget extends ConsumerWidget {
                 context,
                 MaterialPageRoute(builder: (context) => AlbumDetailPageWidget(id: album.id)),
               );
-              callback?.call();
+              callback();
             },
             child: AlbumCellWidget(album: albums[index]),
           );
