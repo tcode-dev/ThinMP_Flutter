@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/model/shortcut_model.dart';
-import 'package:thinmpf/provider/page/main_provider.dart';
+import 'package:thinmpf/provider/page/shortcut_provider.dart';
 import 'package:thinmpf/view/cell/shortcut_cell_view.dart';
 import 'package:thinmpf/view/grid/grid_widget.dart';
 import 'package:thinmpf/view/menu/album_grid_context_menu.dart';
@@ -33,39 +33,24 @@ final _shortcutMap = {
       ),
 };
 
-class ShortcutGridWidget extends ConsumerStatefulWidget {
-  const ShortcutGridWidget({super.key});
+class ShortcutGridWidget extends ConsumerWidget {
+  final VoidCallback callback;
+
+  const ShortcutGridWidget({super.key, required this.callback});
 
   @override
-  ShortcutGridWidgetState createState() => ShortcutGridWidgetState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final shortcuts = ref.watch(shortcutProvider);
 
-class ShortcutGridWidgetState extends ConsumerState<ShortcutGridWidget> {
-  void _reload() {
-    ref.read(mainProvider.notifier).reload();
-  }
+    return GridWidget(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          final shortcut = shortcuts[index];
 
-  @override
-  Widget build(BuildContext context) {
-    final asyncValue = ref.watch(mainProvider);
-
-    return asyncValue.when(
-      loading: () => Container(),
-      error: (Object error, StackTrace stackTrace) {
-        return ErrorWidget(error);
-      },
-      data: (vm) {
-        return GridWidget(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              final shortcut = vm.shortcuts[index];
-
-              return _shortcutMap[shortcut.type]!(shortcut, index, _reload);
-            },
-            childCount: vm.shortcuts.length,
-          ),
-        );
-      },
+          return _shortcutMap[shortcut.type]!(shortcut, index, callback);
+        },
+        childCount: shortcuts.length,
+      ),
     );
   }
 }
