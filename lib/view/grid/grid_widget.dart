@@ -14,14 +14,17 @@ class GridWidget extends StatelessWidget {
     final gridCount = calcGridCount(screenSize.width);
     final gridAspectRatio = calcGridAspectRatio(screenSize.width, gridCount);
 
-    return SliverGrid(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: gridAspectRatio,
-        crossAxisCount: gridCount,
-        crossAxisSpacing: StyleConstant.padding.large,
-        mainAxisSpacing: StyleConstant.padding.large,
+    return SliverPadding(
+      padding: EdgeInsets.all(StyleConstant.padding.large),
+      sliver: SliverGrid(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          childAspectRatio: gridAspectRatio,
+          crossAxisCount: gridCount,
+          crossAxisSpacing: StyleConstant.padding.large,
+          mainAxisSpacing: StyleConstant.padding.large,
+        ),
+        delegate: delegate,
       ),
-      delegate: delegate,
     );
   }
 }
