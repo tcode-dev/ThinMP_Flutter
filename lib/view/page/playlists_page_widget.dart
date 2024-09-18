@@ -66,12 +66,7 @@ class PlaylistsPageWidgetState extends ConsumerState<PlaylistsPageWidget> {
               );
             },
           ),
-          const Positioned(
-            right: 0.0,
-            bottom: 0.0,
-            left: 0.0,
-            child: MiniPlayerWidget(),
-          ),
+          const MiniPlayerWidget(),
         ],
       ),
     );

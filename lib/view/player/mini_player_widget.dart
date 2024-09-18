@@ -26,25 +26,30 @@ class MiniPlayerWidgetState extends ConsumerState<MiniPlayerWidget> {
 
     final bottom = MediaQuery.of(context).padding.bottom;
 
-    return Container(
-      width: double.infinity,
-      height: StyleConstant.row.contentBoxHeight + bottom,
-      padding: EdgeInsets.only(bottom: bottom, left: StyleConstant.padding.small),
-      decoration: BoxDecoration(color: Theme.of(context).colorScheme.onInverseSurface),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const PlayerPageWidget()),
-          );
-        },
-        child: Row(
-          children: [
-            Container(margin: EdgeInsets.only(right: StyleConstant.padding.small), child: SquareImageWidget(id: playbackSong.imageId, size: StyleConstant.image.tiny)),
-            Expanded(child: TextWidget(text: playbackSong.name)),
-            PlayPauseButtonWidget(size: StyleConstant.button.small, imageSize: StyleConstant.image.small),
-            NextButtonWidget(size: StyleConstant.button.small, imageSize: StyleConstant.image.small),
-          ],
+    return Positioned(
+      right: 0.0,
+      bottom: 0.0,
+      left: 0.0,
+      child: Container(
+        width: double.infinity,
+        height: StyleConstant.row.contentBoxHeight + bottom,
+        padding: EdgeInsets.only(bottom: bottom, left: StyleConstant.padding.small),
+        decoration: BoxDecoration(color: Theme.of(context).colorScheme.onInverseSurface),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const PlayerPageWidget()),
+            );
+          },
+          child: Row(
+            children: [
+              Container(margin: EdgeInsets.only(right: StyleConstant.padding.small), child: SquareImageWidget(id: playbackSong.imageId, size: StyleConstant.image.tiny)),
+              Expanded(child: TextWidget(text: playbackSong.name)),
+              PlayPauseButtonWidget(size: StyleConstant.button.small, imageSize: StyleConstant.image.small),
+              NextButtonWidget(size: StyleConstant.button.small, imageSize: StyleConstant.image.small),
+            ],
+          ),
         ),
       ),
     );
