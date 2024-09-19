@@ -29,7 +29,6 @@ class SongsPageWidgetState extends ConsumerState<SongsPageWidget> {
 
   void _play(int index) {
     _player.startAllSongs(index);
-
   }
 
   @override

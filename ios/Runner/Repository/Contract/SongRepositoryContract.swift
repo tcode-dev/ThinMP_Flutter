@@ -10,7 +10,7 @@ protocol SongRepositoryContract {
     
     func findBySongId(songId: SongId) -> SongModel?
     
-    func findByArtistId(artistId: ArtistId) -> [SongModel]
+//    func findByArtistId(artistId: ArtistId) -> [SongModel]
     
     func findByAlbumId(albumId: AlbumId) -> [SongModel]
 }

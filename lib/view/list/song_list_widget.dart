@@ -12,6 +12,7 @@ class SongListWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print('SongListWidget build');
     final songs = ref.watch(songsProvider);
 
     return SliverFixedExtentList(

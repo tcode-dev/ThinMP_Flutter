@@ -6,29 +6,32 @@
 //
 
 class PlayerHostApiImpl: PlayerHostApi {
-    private let repository = SongRepository()
+    private let albumRepository = AlbumRepository()
+    private let songRepository = SongRepository()
 
     func start(index: Int64, ids: [String]) throws {
         let songIds = ids.map { SongId(id: $0) }
-        let songs = repository.findBySongIds(songIds: songIds)
+        let songs = songRepository.findBySongIds(songIds: songIds)
 
         MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
     }
 
     func startAllSongs(index: Int64) throws {
-        let songs = repository.findAll()
+        let songs = songRepository.findAll()
 
         MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
     }
 
     func startAlbumSongs(index: Int64, albumId: String) throws {
-        let songs = repository.findByAlbumId(albumId: AlbumId(id: albumId))
+        let songs = songRepository.findByAlbumId(albumId: AlbumId(id: albumId))
 
         MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
     }
 
     func startArtistSongs(index: Int64, artistId: String) throws {
-        let songs = repository.findByArtistId(artistId: ArtistId(id: artistId))
+        let albums = albumRepository.findByArtistId(artistId: ArtistId(id: artistId))
+        let albumIds = albums.map { $0.id }
+        let songs = songRepository.findByAlbumIds(albumIds: albumIds)
 
         MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
     }
