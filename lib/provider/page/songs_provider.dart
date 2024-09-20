@@ -20,7 +20,7 @@ class Songs extends _$Songs {
 
   Future<void> fetchArtistSongs(String id) async {
     final songs = await _songHostApi.getSongsByArtistId(id);
-    print('fetchArtistSongs');
+
     state = songs.map((song) => song.fromPigeon()).toList();
   }
 }

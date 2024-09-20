@@ -4,14 +4,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/page/albums_provider.dart';
-import 'package:thinmpf/provider/page/artist_detail_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/view/grid/album_grid_widget.dart';
 import 'package:thinmpf/view/image/circle_image_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
-import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/title/section_title_widget.dart';
@@ -35,7 +33,8 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
   }
 
   Future<void> _load() async {
-    await ref.read(artistDetailProvider.notifier).fetchArtistDetail(widget.id);
+    await ref.read(albumsProvider.notifier).fetchArtistAlbums(widget.id);
+    await ref.read(songsProvider.notifier).fetchArtistSongs(widget.id);
   }
 
   void _play(int index) {
@@ -44,12 +43,11 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
 
   @override
   Widget build(BuildContext context) {
-    final artistDetail = ref.watch(artistDetailProvider);
-
-    if (artistDetail == null) {
-      return const LoadingWidget();
-    }
-
+    final albums = ref.watch(albumsProvider);
+    final songs = ref.watch(songsProvider);
+    final artistName = albums.first.artistName;
+    final imageId = albums.first.imageId;
+    final description = '${albums.length} albums, ${songs.length} songs';
     final screenSize = MediaQuery.sizeOf(context);
     final top = MediaQuery.of(context).padding.top;
 
@@ -63,7 +61,7 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
                 expandedHeight: screenSize.width - top,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: Text(artistDetail.name),
+                  title: Text(artistName),
                   background: Stack(
                     children: [
                       Positioned(
@@ -73,7 +71,7 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
                         child: Blur(
                           blur: 10,
                           blurColor: Theme.of(context).transparent,
-                          child: ImageWidget(id: artistDetail.imageId, size: screenSize.width),
+                          child: ImageWidget(id: imageId, size: screenSize.width),
                         ),
                       ),
                       Positioned(
@@ -94,7 +92,7 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
                         ),
                       ),
                       Positioned(
-                        child: Center(child: CircleImageWidget(id: artistDetail.imageId, size: screenSize.width * 0.33)),
+                        child: Center(child: CircleImageWidget(id: imageId, size: screenSize.width * 0.33)),
                       ),
                     ],
                   ),
@@ -104,7 +102,7 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
                 child: SizedBox(
                   height: 20,
                   child: Center(
-                    child: Text(artistDetail.description),
+                    child: Text(description),
                   ),
                 ),
               ),

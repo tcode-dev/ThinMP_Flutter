@@ -19,12 +19,9 @@ class ArtistDetail extends _$ArtistDetail {
     if (artist == null) {
       return;
     }
-    print('fetchArtistDetail');
-    await ref.read(albumsProvider.notifier).fetchArtistAlbums(id);
-    await ref.read(songsProvider.notifier).fetchArtistSongs(id);
-    print('fetchArtistDetail2');
-    final albums = ref.watch(albumsProvider);
-    final songs = ref.watch(songsProvider);
+
+    final albums = ref.read(albumsProvider);
+    final songs = ref.read(songsProvider);
     final description = '${albums.length} albums, ${songs.length} songs';
 
     state = ArtistDetailModel(

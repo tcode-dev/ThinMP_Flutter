@@ -18,13 +18,8 @@ class SongHostApiImpl: SongHostApi {
     func getSongsByArtistId(artistId: String) throws -> [Song] {
         let albums = albumRepository.findByArtistId(artistId: ArtistId(id: artistId))
         let albumIds = albums.map { $0.id }
-        albumIds.forEach { albumId in
-            print(albumId.raw)
-        }
         let songs = songRepository.findByAlbumIds(albumIds: albumIds)
-//        songs.map { $0.toPigeon() }.forEach { song in
-//            print(song.name)
-//        }
+
         return songs.map { $0.toPigeon() }
     }
     
