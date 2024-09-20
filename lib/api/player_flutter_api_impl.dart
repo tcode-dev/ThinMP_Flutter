@@ -16,7 +16,7 @@ class PlayerFlutterApiImpl implements PlayerFlutterApi {
   }
 
   @override
-  void onPlaybackSongChange(Song song) {
+  void onPlaybackSongChange(SongDTO song) {
     if (ref.read(playbackSongProvider)?.id != song.id) {
       ref.read(playbackSongProvider.notifier).setPlaybackSong(song);
     }

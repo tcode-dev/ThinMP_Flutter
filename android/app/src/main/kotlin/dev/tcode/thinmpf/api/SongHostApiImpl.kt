@@ -1,6 +1,6 @@
 package dev.tcode.thinmpf.api
 
-import Song
+import SongDTO
 import SongHostApi
 import android.content.Context
 import dev.tcode.thinmpf.model.valueObject.AlbumId
@@ -12,32 +12,32 @@ import dev.tcode.thinmpf.model.valueObject.SongId
 class SongHostApiImpl(context: Context) : SongHostApi {
     private val repository = SongRepository(context)
 
-    override fun getAllSongs(): List<Song> {
+    override fun getAllSongs(): List<SongDTO> {
         val songs = repository.findAll()
 
         return songs.map { it.toPigeon() }
     }
 
-    override fun getSongsByArtistId(artistId: String): List<Song> {
+    override fun getSongsByArtistId(artistId: String): List<SongDTO> {
         val songs = repository.findByArtistId(ArtistId(artistId))
 
         return songs.map { it.toPigeon() }
     }
 
-    override fun getSongsByIds(ids: List<String>): List<Song> {
+    override fun getSongsByIds(ids: List<String>): List<SongDTO> {
         val songIds = ids.map { SongId(it) }
         val songs = repository.findByIds(songIds)
 
         return songs.map { it.toPigeon() }
     }
 
-    override fun getSongsByAlbumId(albumId: String): List<Song> {
+    override fun getSongsByAlbumId(albumId: String): List<SongDTO> {
         val songs = repository.findByAlbumId(AlbumId(albumId))
 
         return songs.map { it.toPigeon() }
     }
 
-    override fun getSongById(id: String): Song? {
+    override fun getSongById(id: String): SongDTO? {
         val songId = SongId(id)
         val song = repository.findById(songId) ?: return null
 

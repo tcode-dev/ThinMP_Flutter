@@ -10,8 +10,8 @@ import 'package:pigeon/pigeon.dart';
   swiftOut: 'ios/Runner/PigeonOutput/Audio.g.swift',
   swiftOptions: SwiftOptions(),
 ))
-class Song {
-  Song({required this.id, required this.name, required this.albumId, required this.albumName, required this.artistId, required this.artistName, required this.imageId, required this.duration, required this.trackNumber});
+class SongDTO {
+  SongDTO({required this.id, required this.name, required this.albumId, required this.albumName, required this.artistId, required this.artistName, required this.imageId, required this.duration, required this.trackNumber});
 
   final String id;
   final String name;
@@ -24,8 +24,8 @@ class Song {
   final double trackNumber;
 }
 
-class Album {
-  Album({required this.id, required this.name, required this.artistId, required this.artistName, required this.imageId});
+class AlbumDTO {
+  AlbumDTO({required this.id, required this.name, required this.artistId, required this.artistName, required this.imageId});
 
   final String id;
   final String name;
@@ -34,15 +34,15 @@ class Album {
   final String imageId;
 }
 
-class Artist {
-  Artist(this.id, this.name);
+class ArtistDTO {
+  ArtistDTO(this.id, this.name);
 
   final String id;
   final String name;
 }
 
-class ArtistDetail {
-  ArtistDetail(this.id, this.name, this.imageId);
+class ArtistDetailDTO {
+  ArtistDetailDTO(this.id, this.name, this.imageId);
 
   final String id;
   final String name;
@@ -58,26 +58,26 @@ enum ShuffleMode { off, on }
 ///
 @HostApi()
 abstract class SongHostApi {
-  List<Song> getAllSongs();
-  List<Song> getSongsByAlbumId(String albumId);
-  List<Song> getSongsByArtistId(String artistId);
-  List<Song> getSongsByIds(List<String> ids);
-  Song? getSongById(String id);
+  List<SongDTO> getAllSongs();
+  List<SongDTO> getSongsByAlbumId(String albumId);
+  List<SongDTO> getSongsByArtistId(String artistId);
+  List<SongDTO> getSongsByIds(List<String> ids);
+  SongDTO? getSongById(String id);
 }
 
 @HostApi()
 abstract class AlbumHostApi {
-  List<Album> getAllAlbums();
-  List<Album> getAlbumsByArtistId(String artistId);
-  List<Album> getRecentAlbums(int count);
-  Album? getAlbumById(String id);
+  List<AlbumDTO> getAllAlbums();
+  List<AlbumDTO> getAlbumsByArtistId(String artistId);
+  List<AlbumDTO> getRecentAlbums(int count);
+  AlbumDTO? getAlbumById(String id);
 }
 
 @HostApi()
 abstract class ArtistHostApi {
-  List<Artist> getAllArtists();
-  ArtistDetail? getArtistDetailById(String id);
-  List<Artist> getArtistsByIds(List<String> ids);
+  List<ArtistDTO> getAllArtists();
+  ArtistDetailDTO? getArtistDetailById(String id);
+  List<ArtistDTO> getArtistsByIds(List<String> ids);
 }
 
 @HostApi()
@@ -108,5 +108,5 @@ abstract class PlayerHostApi {
 @FlutterApi()
 abstract class PlayerFlutterApi {
   void onIsPlayingChange(bool isPlaying);
-  void onPlaybackSongChange(Song song);
+  void onPlaybackSongChange(SongDTO song);
 }

@@ -1,10 +1,10 @@
 package dev.tcode.thinmpf.extension
 
-import Artist
+import ArtistDTO
 import dev.tcode.thinmpf.model.ArtistModel
 
-fun ArtistModel.toPigeon(): Artist {
-    return Artist(
+fun ArtistModel.toPigeon(): ArtistDTO {
+    return ArtistDTO(
         id = this.id.raw,
         name = this.name,
     )

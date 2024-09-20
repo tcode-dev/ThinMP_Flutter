@@ -36,8 +36,8 @@ enum ShuffleMode {
   on,
 }
 
-class Song {
-  Song({
+class SongDTO {
+  SongDTO({
     required this.id,
     required this.name,
     required this.albumId,
@@ -81,9 +81,9 @@ class Song {
     ];
   }
 
-  static Song decode(Object result) {
+  static SongDTO decode(Object result) {
     result as List<Object?>;
-    return Song(
+    return SongDTO(
       id: result[0]! as String,
       name: result[1]! as String,
       albumId: result[2]! as String,
@@ -97,8 +97,8 @@ class Song {
   }
 }
 
-class Album {
-  Album({
+class AlbumDTO {
+  AlbumDTO({
     required this.id,
     required this.name,
     required this.artistId,
@@ -126,9 +126,9 @@ class Album {
     ];
   }
 
-  static Album decode(Object result) {
+  static AlbumDTO decode(Object result) {
     result as List<Object?>;
-    return Album(
+    return AlbumDTO(
       id: result[0]! as String,
       name: result[1]! as String,
       artistId: result[2]! as String,
@@ -138,8 +138,8 @@ class Album {
   }
 }
 
-class Artist {
-  Artist({
+class ArtistDTO {
+  ArtistDTO({
     required this.id,
     required this.name,
   });
@@ -155,17 +155,17 @@ class Artist {
     ];
   }
 
-  static Artist decode(Object result) {
+  static ArtistDTO decode(Object result) {
     result as List<Object?>;
-    return Artist(
+    return ArtistDTO(
       id: result[0]! as String,
       name: result[1]! as String,
     );
   }
 }
 
-class ArtistDetail {
-  ArtistDetail({
+class ArtistDetailDTO {
+  ArtistDetailDTO({
     required this.id,
     required this.name,
     required this.imageId,
@@ -185,9 +185,9 @@ class ArtistDetail {
     ];
   }
 
-  static ArtistDetail decode(Object result) {
+  static ArtistDetailDTO decode(Object result) {
     result as List<Object?>;
-    return ArtistDetail(
+    return ArtistDetailDTO(
       id: result[0]! as String,
       name: result[1]! as String,
       imageId: result[2]! as String,
@@ -200,16 +200,16 @@ class _PigeonCodec extends StandardMessageCodec {
   const _PigeonCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is Song) {
+    if (value is SongDTO) {
       buffer.putUint8(129);
       writeValue(buffer, value.encode());
-    } else     if (value is Album) {
+    } else     if (value is AlbumDTO) {
       buffer.putUint8(130);
       writeValue(buffer, value.encode());
-    } else     if (value is Artist) {
+    } else     if (value is ArtistDTO) {
       buffer.putUint8(131);
       writeValue(buffer, value.encode());
-    } else     if (value is ArtistDetail) {
+    } else     if (value is ArtistDetailDTO) {
       buffer.putUint8(132);
       writeValue(buffer, value.encode());
     } else     if (value is RepeatMode) {
@@ -227,13 +227,13 @@ class _PigeonCodec extends StandardMessageCodec {
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
       case 129: 
-        return Song.decode(readValue(buffer)!);
+        return SongDTO.decode(readValue(buffer)!);
       case 130: 
-        return Album.decode(readValue(buffer)!);
+        return AlbumDTO.decode(readValue(buffer)!);
       case 131: 
-        return Artist.decode(readValue(buffer)!);
+        return ArtistDTO.decode(readValue(buffer)!);
       case 132: 
-        return ArtistDetail.decode(readValue(buffer)!);
+        return ArtistDetailDTO.decode(readValue(buffer)!);
       case 133: 
         final int? value = readValue(buffer) as int?;
         return value == null ? null : RepeatMode.values[value];
@@ -262,7 +262,7 @@ class SongHostApi {
 
   final String __pigeon_messageChannelSuffix;
 
-  Future<List<Song?>> getAllSongs() async {
+  Future<List<SongDTO?>> getAllSongs() async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.SongHostApi.getAllSongs$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -285,11 +285,11 @@ class SongHostApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (__pigeon_replyList[0] as List<Object?>?)!.cast<Song?>();
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<SongDTO?>();
     }
   }
 
-  Future<List<Song?>> getSongsByAlbumId(String albumId) async {
+  Future<List<SongDTO?>> getSongsByAlbumId(String albumId) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.SongHostApi.getSongsByAlbumId$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -312,11 +312,11 @@ class SongHostApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (__pigeon_replyList[0] as List<Object?>?)!.cast<Song?>();
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<SongDTO?>();
     }
   }
 
-  Future<List<Song?>> getSongsByArtistId(String artistId) async {
+  Future<List<SongDTO?>> getSongsByArtistId(String artistId) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.SongHostApi.getSongsByArtistId$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -339,11 +339,11 @@ class SongHostApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (__pigeon_replyList[0] as List<Object?>?)!.cast<Song?>();
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<SongDTO?>();
     }
   }
 
-  Future<List<Song?>> getSongsByIds(List<String?> ids) async {
+  Future<List<SongDTO?>> getSongsByIds(List<String?> ids) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.SongHostApi.getSongsByIds$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -366,11 +366,11 @@ class SongHostApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (__pigeon_replyList[0] as List<Object?>?)!.cast<Song?>();
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<SongDTO?>();
     }
   }
 
-  Future<Song?> getSongById(String id) async {
+  Future<SongDTO?> getSongById(String id) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.SongHostApi.getSongById$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -388,7 +388,7 @@ class SongHostApi {
         details: __pigeon_replyList[2],
       );
     } else {
-      return (__pigeon_replyList[0] as Song?);
+      return (__pigeon_replyList[0] as SongDTO?);
     }
   }
 }
@@ -406,7 +406,7 @@ class AlbumHostApi {
 
   final String __pigeon_messageChannelSuffix;
 
-  Future<List<Album?>> getAllAlbums() async {
+  Future<List<AlbumDTO?>> getAllAlbums() async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.AlbumHostApi.getAllAlbums$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -429,11 +429,11 @@ class AlbumHostApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (__pigeon_replyList[0] as List<Object?>?)!.cast<Album?>();
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<AlbumDTO?>();
     }
   }
 
-  Future<List<Album?>> getAlbumsByArtistId(String artistId) async {
+  Future<List<AlbumDTO?>> getAlbumsByArtistId(String artistId) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.AlbumHostApi.getAlbumsByArtistId$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -456,11 +456,11 @@ class AlbumHostApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (__pigeon_replyList[0] as List<Object?>?)!.cast<Album?>();
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<AlbumDTO?>();
     }
   }
 
-  Future<List<Album?>> getRecentAlbums(int count) async {
+  Future<List<AlbumDTO?>> getRecentAlbums(int count) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.AlbumHostApi.getRecentAlbums$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -483,11 +483,11 @@ class AlbumHostApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (__pigeon_replyList[0] as List<Object?>?)!.cast<Album?>();
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<AlbumDTO?>();
     }
   }
 
-  Future<Album?> getAlbumById(String id) async {
+  Future<AlbumDTO?> getAlbumById(String id) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.AlbumHostApi.getAlbumById$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -505,7 +505,7 @@ class AlbumHostApi {
         details: __pigeon_replyList[2],
       );
     } else {
-      return (__pigeon_replyList[0] as Album?);
+      return (__pigeon_replyList[0] as AlbumDTO?);
     }
   }
 }
@@ -523,7 +523,7 @@ class ArtistHostApi {
 
   final String __pigeon_messageChannelSuffix;
 
-  Future<List<Artist?>> getAllArtists() async {
+  Future<List<ArtistDTO?>> getAllArtists() async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.ArtistHostApi.getAllArtists$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -546,11 +546,11 @@ class ArtistHostApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (__pigeon_replyList[0] as List<Object?>?)!.cast<Artist?>();
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<ArtistDTO?>();
     }
   }
 
-  Future<ArtistDetail?> getArtistDetailById(String id) async {
+  Future<ArtistDetailDTO?> getArtistDetailById(String id) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.ArtistHostApi.getArtistDetailById$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -568,11 +568,11 @@ class ArtistHostApi {
         details: __pigeon_replyList[2],
       );
     } else {
-      return (__pigeon_replyList[0] as ArtistDetail?);
+      return (__pigeon_replyList[0] as ArtistDetailDTO?);
     }
   }
 
-  Future<List<Artist?>> getArtistsByIds(List<String?> ids) async {
+  Future<List<ArtistDTO?>> getArtistsByIds(List<String?> ids) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.thinmpf.ArtistHostApi.getArtistsByIds$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -595,7 +595,7 @@ class ArtistHostApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (__pigeon_replyList[0] as List<Object?>?)!.cast<Artist?>();
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<ArtistDTO?>();
     }
   }
 }
@@ -927,7 +927,7 @@ abstract class PlayerFlutterApi {
 
   void onIsPlayingChange(bool isPlaying);
 
-  void onPlaybackSongChange(Song song);
+  void onPlaybackSongChange(SongDTO song);
 
   static void setUp(PlayerFlutterApi? api, {BinaryMessenger? binaryMessenger, String messageChannelSuffix = '',}) {
     messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
@@ -967,9 +967,9 @@ abstract class PlayerFlutterApi {
           assert(message != null,
           'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange was null.');
           final List<Object?> args = (message as List<Object?>?)!;
-          final Song? arg_song = (args[0] as Song?);
+          final SongDTO? arg_song = (args[0] as SongDTO?);
           assert(arg_song != null,
-              'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange was null, expected non-null Song.');
+              'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange was null, expected non-null SongDTO.');
           try {
             api.onPlaybackSongChange(arg_song!);
             return wrapResponse(empty: true);

@@ -80,7 +80,7 @@ enum ShuffleMode: Int {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct Song {
+struct SongDTO {
   var id: String
   var name: String
   var albumId: String
@@ -92,7 +92,7 @@ struct Song {
   var trackNumber: Double
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ __pigeon_list: [Any?]) -> Song? {
+  static func fromList(_ __pigeon_list: [Any?]) -> SongDTO? {
     let id = __pigeon_list[0] as! String
     let name = __pigeon_list[1] as! String
     let albumId = __pigeon_list[2] as! String
@@ -103,7 +103,7 @@ struct Song {
     let duration = __pigeon_list[7] as! Double
     let trackNumber = __pigeon_list[8] as! Double
 
-    return Song(
+    return SongDTO(
       id: id,
       name: name,
       albumId: albumId,
@@ -131,7 +131,7 @@ struct Song {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct Album {
+struct AlbumDTO {
   var id: String
   var name: String
   var artistId: String
@@ -139,14 +139,14 @@ struct Album {
   var imageId: String
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ __pigeon_list: [Any?]) -> Album? {
+  static func fromList(_ __pigeon_list: [Any?]) -> AlbumDTO? {
     let id = __pigeon_list[0] as! String
     let name = __pigeon_list[1] as! String
     let artistId = __pigeon_list[2] as! String
     let artistName = __pigeon_list[3] as! String
     let imageId = __pigeon_list[4] as! String
 
-    return Album(
+    return AlbumDTO(
       id: id,
       name: name,
       artistId: artistId,
@@ -166,16 +166,16 @@ struct Album {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct Artist {
+struct ArtistDTO {
   var id: String
   var name: String
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ __pigeon_list: [Any?]) -> Artist? {
+  static func fromList(_ __pigeon_list: [Any?]) -> ArtistDTO? {
     let id = __pigeon_list[0] as! String
     let name = __pigeon_list[1] as! String
 
-    return Artist(
+    return ArtistDTO(
       id: id,
       name: name
     )
@@ -189,18 +189,18 @@ struct Artist {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct ArtistDetail {
+struct ArtistDetailDTO {
   var id: String
   var name: String
   var imageId: String
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ __pigeon_list: [Any?]) -> ArtistDetail? {
+  static func fromList(_ __pigeon_list: [Any?]) -> ArtistDetailDTO? {
     let id = __pigeon_list[0] as! String
     let name = __pigeon_list[1] as! String
     let imageId = __pigeon_list[2] as! String
 
-    return ArtistDetail(
+    return ArtistDetailDTO(
       id: id,
       name: name,
       imageId: imageId
@@ -218,13 +218,13 @@ private class AudioPigeonCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
     case 129:
-      return Song.fromList(self.readValue() as! [Any?])
+      return SongDTO.fromList(self.readValue() as! [Any?])
     case 130:
-      return Album.fromList(self.readValue() as! [Any?])
+      return AlbumDTO.fromList(self.readValue() as! [Any?])
     case 131:
-      return Artist.fromList(self.readValue() as! [Any?])
+      return ArtistDTO.fromList(self.readValue() as! [Any?])
     case 132:
-      return ArtistDetail.fromList(self.readValue() as! [Any?])
+      return ArtistDetailDTO.fromList(self.readValue() as! [Any?])
     case 133:
       var enumResult: RepeatMode? = nil
       let enumResultAsInt: Int? = nilOrValue(self.readValue() as? Int)
@@ -247,16 +247,16 @@ private class AudioPigeonCodecReader: FlutterStandardReader {
 
 private class AudioPigeonCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
-    if let value = value as? Song {
+    if let value = value as? SongDTO {
       super.writeByte(129)
       super.writeValue(value.toList())
-    } else if let value = value as? Album {
+    } else if let value = value as? AlbumDTO {
       super.writeByte(130)
       super.writeValue(value.toList())
-    } else if let value = value as? Artist {
+    } else if let value = value as? ArtistDTO {
       super.writeByte(131)
       super.writeValue(value.toList())
-    } else if let value = value as? ArtistDetail {
+    } else if let value = value as? ArtistDetailDTO {
       super.writeByte(132)
       super.writeValue(value.toList())
     } else if let value = value as? RepeatMode {
@@ -292,11 +292,11 @@ class AudioPigeonCodec: FlutterStandardMessageCodec, @unchecked Sendable {
 ///
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol SongHostApi {
-  func getAllSongs() throws -> [Song]
-  func getSongsByAlbumId(albumId: String) throws -> [Song]
-  func getSongsByArtistId(artistId: String) throws -> [Song]
-  func getSongsByIds(ids: [String]) throws -> [Song]
-  func getSongById(id: String) throws -> Song?
+  func getAllSongs() throws -> [SongDTO]
+  func getSongsByAlbumId(albumId: String) throws -> [SongDTO]
+  func getSongsByArtistId(artistId: String) throws -> [SongDTO]
+  func getSongsByIds(ids: [String]) throws -> [SongDTO]
+  func getSongById(id: String) throws -> SongDTO?
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -382,10 +382,10 @@ class SongHostApiSetup {
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol AlbumHostApi {
-  func getAllAlbums() throws -> [Album]
-  func getAlbumsByArtistId(artistId: String) throws -> [Album]
-  func getRecentAlbums(count: Int64) throws -> [Album]
-  func getAlbumById(id: String) throws -> Album?
+  func getAllAlbums() throws -> [AlbumDTO]
+  func getAlbumsByArtistId(artistId: String) throws -> [AlbumDTO]
+  func getRecentAlbums(count: Int64) throws -> [AlbumDTO]
+  func getAlbumById(id: String) throws -> AlbumDTO?
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -456,9 +456,9 @@ class AlbumHostApiSetup {
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol ArtistHostApi {
-  func getAllArtists() throws -> [Artist]
-  func getArtistDetailById(id: String) throws -> ArtistDetail?
-  func getArtistsByIds(ids: [String]) throws -> [Artist]
+  func getAllArtists() throws -> [ArtistDTO]
+  func getArtistDetailById(id: String) throws -> ArtistDetailDTO?
+  func getArtistsByIds(ids: [String]) throws -> [ArtistDTO]
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -746,7 +746,7 @@ class PlayerHostApiSetup {
 /// Generated protocol from Pigeon that represents Flutter messages that can be called from Swift.
 protocol PlayerFlutterApiProtocol {
   func onIsPlayingChange(isPlaying isPlayingArg: Bool, completion: @escaping (Result<Void, PigeonError>) -> Void)
-  func onPlaybackSongChange(song songArg: Song, completion: @escaping (Result<Void, PigeonError>) -> Void)
+  func onPlaybackSongChange(song songArg: SongDTO, completion: @escaping (Result<Void, PigeonError>) -> Void)
 }
 class PlayerFlutterApi: PlayerFlutterApiProtocol {
   private let binaryMessenger: FlutterBinaryMessenger
@@ -776,7 +776,7 @@ class PlayerFlutterApi: PlayerFlutterApiProtocol {
       }
     }
   }
-  func onPlaybackSongChange(song songArg: Song, completion: @escaping (Result<Void, PigeonError>) -> Void) {
+  func onPlaybackSongChange(song songArg: SongDTO, completion: @escaping (Result<Void, PigeonError>) -> Void) {
     let channelName: String = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange\(messageChannelSuffix)"
     let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger, codec: codec)
     channel.sendMessage([songArg] as [Any?]) { response in

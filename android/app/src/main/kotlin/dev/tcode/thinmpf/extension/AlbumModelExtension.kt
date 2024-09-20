@@ -1,10 +1,10 @@
 package dev.tcode.thinmpf.extension
 
-import Album
+import AlbumDTO
 import dev.tcode.thinmpf.model.AlbumModel
 
-fun AlbumModel.toPigeon(): Album {
-    return Album(
+fun AlbumModel.toPigeon(): AlbumDTO {
+    return AlbumDTO(
         id = this.id.raw,
         name = this.name,
         artistId = this.artistId.raw,

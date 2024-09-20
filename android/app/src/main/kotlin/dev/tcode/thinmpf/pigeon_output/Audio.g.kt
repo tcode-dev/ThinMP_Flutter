@@ -70,7 +70,7 @@ enum class ShuffleMode(val raw: Int) {
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class Song (
+data class SongDTO (
   val id: String,
   val name: String,
   val albumId: String,
@@ -84,7 +84,7 @@ data class Song (
 ) {
   companion object {
     @Suppress("LocalVariableName")
-    fun fromList(__pigeon_list: List<Any?>): Song {
+    fun fromList(__pigeon_list: List<Any?>): SongDTO {
       val id = __pigeon_list[0] as String
       val name = __pigeon_list[1] as String
       val albumId = __pigeon_list[2] as String
@@ -94,7 +94,7 @@ data class Song (
       val imageId = __pigeon_list[6] as String
       val duration = __pigeon_list[7] as Double
       val trackNumber = __pigeon_list[8] as Double
-      return Song(id, name, albumId, albumName, artistId, artistName, imageId, duration, trackNumber)
+      return SongDTO(id, name, albumId, albumName, artistId, artistName, imageId, duration, trackNumber)
     }
   }
   fun toList(): List<Any?> {
@@ -113,7 +113,7 @@ data class Song (
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class Album (
+data class AlbumDTO (
   val id: String,
   val name: String,
   val artistId: String,
@@ -123,13 +123,13 @@ data class Album (
 ) {
   companion object {
     @Suppress("LocalVariableName")
-    fun fromList(__pigeon_list: List<Any?>): Album {
+    fun fromList(__pigeon_list: List<Any?>): AlbumDTO {
       val id = __pigeon_list[0] as String
       val name = __pigeon_list[1] as String
       val artistId = __pigeon_list[2] as String
       val artistName = __pigeon_list[3] as String
       val imageId = __pigeon_list[4] as String
-      return Album(id, name, artistId, artistName, imageId)
+      return AlbumDTO(id, name, artistId, artistName, imageId)
     }
   }
   fun toList(): List<Any?> {
@@ -144,17 +144,17 @@ data class Album (
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class Artist (
+data class ArtistDTO (
   val id: String,
   val name: String
 
 ) {
   companion object {
     @Suppress("LocalVariableName")
-    fun fromList(__pigeon_list: List<Any?>): Artist {
+    fun fromList(__pigeon_list: List<Any?>): ArtistDTO {
       val id = __pigeon_list[0] as String
       val name = __pigeon_list[1] as String
-      return Artist(id, name)
+      return ArtistDTO(id, name)
     }
   }
   fun toList(): List<Any?> {
@@ -166,7 +166,7 @@ data class Artist (
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class ArtistDetail (
+data class ArtistDetailDTO (
   val id: String,
   val name: String,
   val imageId: String
@@ -174,11 +174,11 @@ data class ArtistDetail (
 ) {
   companion object {
     @Suppress("LocalVariableName")
-    fun fromList(__pigeon_list: List<Any?>): ArtistDetail {
+    fun fromList(__pigeon_list: List<Any?>): ArtistDetailDTO {
       val id = __pigeon_list[0] as String
       val name = __pigeon_list[1] as String
       val imageId = __pigeon_list[2] as String
-      return ArtistDetail(id, name, imageId)
+      return ArtistDetailDTO(id, name, imageId)
     }
   }
   fun toList(): List<Any?> {
@@ -194,22 +194,22 @@ private object AudioPigeonCodec : StandardMessageCodec() {
     return when (type) {
       129.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          Song.fromList(it)
+          SongDTO.fromList(it)
         }
       }
       130.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          Album.fromList(it)
+          AlbumDTO.fromList(it)
         }
       }
       131.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          Artist.fromList(it)
+          ArtistDTO.fromList(it)
         }
       }
       132.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          ArtistDetail.fromList(it)
+          ArtistDetailDTO.fromList(it)
         }
       }
       133.toByte() -> {
@@ -227,19 +227,19 @@ private object AudioPigeonCodec : StandardMessageCodec() {
   }
   override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
     when (value) {
-      is Song -> {
+      is SongDTO -> {
         stream.write(129)
         writeValue(stream, value.toList())
       }
-      is Album -> {
+      is AlbumDTO -> {
         stream.write(130)
         writeValue(stream, value.toList())
       }
-      is Artist -> {
+      is ArtistDTO -> {
         stream.write(131)
         writeValue(stream, value.toList())
       }
-      is ArtistDetail -> {
+      is ArtistDetailDTO -> {
         stream.write(132)
         writeValue(stream, value.toList())
       }
@@ -265,11 +265,11 @@ private object AudioPigeonCodec : StandardMessageCodec() {
  * Generated interface from Pigeon that represents a handler of messages from Flutter.
  */
 interface SongHostApi {
-  fun getAllSongs(): List<Song>
-  fun getSongsByAlbumId(albumId: String): List<Song>
-  fun getSongsByArtistId(artistId: String): List<Song>
-  fun getSongsByIds(ids: List<String>): List<Song>
-  fun getSongById(id: String): Song?
+  fun getAllSongs(): List<SongDTO>
+  fun getSongsByAlbumId(albumId: String): List<SongDTO>
+  fun getSongsByArtistId(artistId: String): List<SongDTO>
+  fun getSongsByIds(ids: List<String>): List<SongDTO>
+  fun getSongById(id: String): SongDTO?
 
   companion object {
     /** The codec used by SongHostApi. */
@@ -368,10 +368,10 @@ interface SongHostApi {
 }
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface AlbumHostApi {
-  fun getAllAlbums(): List<Album>
-  fun getAlbumsByArtistId(artistId: String): List<Album>
-  fun getRecentAlbums(count: Long): List<Album>
-  fun getAlbumById(id: String): Album?
+  fun getAllAlbums(): List<AlbumDTO>
+  fun getAlbumsByArtistId(artistId: String): List<AlbumDTO>
+  fun getRecentAlbums(count: Long): List<AlbumDTO>
+  fun getAlbumById(id: String): AlbumDTO?
 
   companion object {
     /** The codec used by AlbumHostApi. */
@@ -453,9 +453,9 @@ interface AlbumHostApi {
 }
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface ArtistHostApi {
-  fun getAllArtists(): List<Artist>
-  fun getArtistDetailById(id: String): ArtistDetail?
-  fun getArtistsByIds(ids: List<String>): List<Artist>
+  fun getAllArtists(): List<ArtistDTO>
+  fun getArtistDetailById(id: String): ArtistDetailDTO?
+  fun getArtistsByIds(ids: List<String>): List<ArtistDTO>
 
   companion object {
     /** The codec used by ArtistHostApi. */
@@ -820,7 +820,7 @@ class PlayerFlutterApi(private val binaryMessenger: BinaryMessenger, private val
       } 
     }
   }
-  fun onPlaybackSongChange(songArg: Song, callback: (Result<Unit>) -> Unit)
+  fun onPlaybackSongChange(songArg: SongDTO, callback: (Result<Unit>) -> Unit)
 {
     val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
     val channelName = "dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange$separatedMessageChannelSuffix"

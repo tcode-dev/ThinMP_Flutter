@@ -1,7 +1,7 @@
 import 'package:thinmpf/model/song_model.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 
-extension SongExtension on Song? {
+extension SongExtension on SongDTO? {
   SongModel fromPigeon() {
     return SongModel(
       id: this!.id,

@@ -1,10 +1,10 @@
 package dev.tcode.thinmpf.extension
 
-import Song
+import SongDTO
 import dev.tcode.thinmpf.model.SongModel
 
-fun SongModel.toPigeon(): Song {
-    return Song(
+fun SongModel.toPigeon(): SongDTO {
+    return SongDTO(
         id = this.id.raw,
         name = this.name,
         albumId = this.albumId.raw,

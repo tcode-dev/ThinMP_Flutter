@@ -5,7 +5,7 @@ import 'package:thinmpf/model/shortcut_model.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 
 extension ShortcutRealmModelExtension on ShortcutRealmModel {
-  ShortcutModel? toShortcutArtist(ArtistDetail? artist) {
+  ShortcutModel? toShortcutArtist(ArtistDetailDTO? artist) {
     if (artist == null) {
       return null;
     }
@@ -19,7 +19,7 @@ extension ShortcutRealmModelExtension on ShortcutRealmModel {
     );
   }
 
-  ShortcutModel? toShortcutAlbum(Album? album) {
+  ShortcutModel? toShortcutAlbum(AlbumDTO? album) {
     if (album == null) {
       return null;
     }
@@ -33,7 +33,7 @@ extension ShortcutRealmModelExtension on ShortcutRealmModel {
     );
   }
 
-  ShortcutModel? toShortcutPlaylist(PlaylistRealmModel? playlist, Song? song) {
+  ShortcutModel? toShortcutPlaylist(PlaylistRealmModel? playlist, SongDTO? song) {
     if (playlist == null || song == null) {
       return null;
     }

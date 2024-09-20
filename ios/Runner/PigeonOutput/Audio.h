@@ -33,12 +33,12 @@ typedef NS_ENUM(NSUInteger, ShuffleMode) {
 - (instancetype)initWithValue:(ShuffleMode)value;
 @end
 
-@class Song;
-@class Album;
-@class Artist;
-@class ArtistDetail;
+@class SongDTO;
+@class AlbumDTO;
+@class ArtistDTO;
+@class ArtistDetailDTO;
 
-@interface Song : NSObject
+@interface SongDTO : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithId:(NSString *)id
@@ -61,7 +61,7 @@ typedef NS_ENUM(NSUInteger, ShuffleMode) {
 @property(nonatomic, assign) double  trackNumber;
 @end
 
-@interface Album : NSObject
+@interface AlbumDTO : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithId:(NSString *)id
@@ -76,7 +76,7 @@ typedef NS_ENUM(NSUInteger, ShuffleMode) {
 @property(nonatomic, copy) NSString * imageId;
 @end
 
-@interface Artist : NSObject
+@interface ArtistDTO : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithId:(NSString *)id
@@ -85,7 +85,7 @@ typedef NS_ENUM(NSUInteger, ShuffleMode) {
 @property(nonatomic, copy) NSString * name;
 @end
 
-@interface ArtistDetail : NSObject
+@interface ArtistDetailDTO : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithId:(NSString *)id
@@ -104,14 +104,14 @@ NSObject<FlutterMessageCodec> *nullGetAudioCodec(void);
 ///
 @protocol SongHostApi
 /// @return `nil` only when `error != nil`.
-- (nullable NSArray<Song *> *)getAllSongsWithError:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable NSArray<SongDTO *> *)getAllSongsWithError:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
-- (nullable NSArray<Song *> *)getSongsByAlbumIdAlbumId:(NSString *)albumId error:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable NSArray<SongDTO *> *)getSongsByAlbumIdAlbumId:(NSString *)albumId error:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
-- (nullable NSArray<Song *> *)getSongsByArtistIdArtistId:(NSString *)artistId error:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable NSArray<SongDTO *> *)getSongsByArtistIdArtistId:(NSString *)artistId error:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
-- (nullable NSArray<Song *> *)getSongsByIdsIds:(NSArray<NSString *> *)ids error:(FlutterError *_Nullable *_Nonnull)error;
-- (nullable Song *)getSongByIdId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable NSArray<SongDTO *> *)getSongsByIdsIds:(NSArray<NSString *> *)ids error:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable SongDTO *)getSongByIdId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void SetUpSongHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<SongHostApi> *_Nullable api);
@@ -121,12 +121,12 @@ extern void SetUpSongHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenge
 
 @protocol AlbumHostApi
 /// @return `nil` only when `error != nil`.
-- (nullable NSArray<Album *> *)getAllAlbumsWithError:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable NSArray<AlbumDTO *> *)getAllAlbumsWithError:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
-- (nullable NSArray<Album *> *)getAlbumsByArtistIdArtistId:(NSString *)artistId error:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable NSArray<AlbumDTO *> *)getAlbumsByArtistIdArtistId:(NSString *)artistId error:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
-- (nullable NSArray<Album *> *)getRecentAlbumsCount:(NSInteger)count error:(FlutterError *_Nullable *_Nonnull)error;
-- (nullable Album *)getAlbumByIdId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable NSArray<AlbumDTO *> *)getRecentAlbumsCount:(NSInteger)count error:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable AlbumDTO *)getAlbumByIdId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void SetUpAlbumHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<AlbumHostApi> *_Nullable api);
@@ -136,10 +136,10 @@ extern void SetUpAlbumHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMesseng
 
 @protocol ArtistHostApi
 /// @return `nil` only when `error != nil`.
-- (nullable NSArray<Artist *> *)getAllArtistsWithError:(FlutterError *_Nullable *_Nonnull)error;
-- (nullable ArtistDetail *)getArtistDetailByIdId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable NSArray<ArtistDTO *> *)getAllArtistsWithError:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable ArtistDetailDTO *)getArtistDetailByIdId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.
-- (nullable NSArray<Artist *> *)getArtistsByIdsIds:(NSArray<NSString *> *)ids error:(FlutterError *_Nullable *_Nonnull)error;
+- (nullable NSArray<ArtistDTO *> *)getArtistsByIdsIds:(NSArray<NSString *> *)ids error:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void SetUpArtistHostApi(id<FlutterBinaryMessenger> binaryMessenger, NSObject<ArtistHostApi> *_Nullable api);
@@ -184,7 +184,7 @@ extern void SetUpPlayerHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessen
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger;
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger messageChannelSuffix:(nullable NSString *)messageChannelSuffix;
 - (void)onIsPlayingChangeIsPlaying:(BOOL)isPlaying completion:(void (^)(FlutterError *_Nullable))completion;
-- (void)onPlaybackSongChangeSong:(Song *)song completion:(void (^)(FlutterError *_Nullable))completion;
+- (void)onPlaybackSongChangeSong:(SongDTO *)song completion:(void (^)(FlutterError *_Nullable))completion;
 @end
 
 NS_ASSUME_NONNULL_END
