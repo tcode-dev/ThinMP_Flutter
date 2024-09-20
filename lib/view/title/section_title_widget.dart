@@ -11,7 +11,7 @@ class SectionTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Container(
-        padding: EdgeInsets.only(top: StyleConstant.padding.large, left: StyleConstant.padding.large),
+        padding: EdgeInsets.all(StyleConstant.padding.large),
         child: TextWidget(text: title, style: Theme.of(context).textTheme.headlineMedium),
       ),
     );

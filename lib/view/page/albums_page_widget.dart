@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/page/albums_provider.dart';
 import 'package:thinmpf/view/grid/album_grid_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
@@ -37,7 +38,10 @@ class AlbumsPageWidgetState extends ConsumerState<AlbumsPageWidget> {
         children: [
           CustomScrollView(
             slivers: [
-              AlbumGridWidget(callback: _load),
+              SliverPadding(
+                padding: EdgeInsets.only(top: StyleConstant.padding.large),
+                sliver: AlbumGridWidget(callback: _load),
+              ),
               const EmptyRowWidget(),
             ],
           ),

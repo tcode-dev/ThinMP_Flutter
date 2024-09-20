@@ -15,7 +15,7 @@ class GridWidget extends StatelessWidget {
     final gridAspectRatio = calcGridAspectRatio(screenSize.width, gridCount);
 
     return SliverPadding(
-      padding: EdgeInsets.all(StyleConstant.padding.large),
+      padding: EdgeInsets.only(right: StyleConstant.padding.large, left: StyleConstant.padding.large),
       sliver: SliverGrid(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           childAspectRatio: gridAspectRatio,
