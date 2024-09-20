@@ -32,9 +32,9 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
     _load();
   }
 
-  Future<void> _load() async {
-    await ref.read(albumsProvider.notifier).fetchArtistAlbums(widget.id);
-    await ref.read(songsProvider.notifier).fetchArtistSongs(widget.id);
+  void _load() {
+    ref.read(albumsProvider.notifier).fetchArtistAlbums(widget.id);
+    ref.read(songsProvider.notifier).fetchArtistSongs(widget.id);
   }
 
   void _play(int index) {
