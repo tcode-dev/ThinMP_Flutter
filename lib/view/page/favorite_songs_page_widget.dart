@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
-import 'package:thinmpf/provider/page/favorite_songs_provider.dart';
-import 'package:thinmpf/view/loading/loading_widget.dart';
+import 'package:thinmpf/provider/page/songs_provider.dart';
+import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/page/favorite_songs_edit_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
-import 'package:thinmpf/view/row/media_action_row_widget.dart';
 
 final PlayerHostApi _player = PlayerHostApi();
 
@@ -20,18 +18,24 @@ class FavoriteSongsPageWidget extends ConsumerStatefulWidget {
 }
 
 class FavoriteSongsPageWidgetState extends ConsumerState<FavoriteSongsPageWidget> {
-  void _reload() {
-    ref.read(favoriteSongsProvider.notifier).reload();
+  @override
+  void initState() {
+    super.initState();
+    _load();
   }
 
-  void _play(int index, List<String?> ids) {
-    _player.start(index, ids);
+  void _load() {
+    ref.read(songsProvider.notifier).fetchFavoriteSongs();
+  }
+
+  void _play(int index) {
+    final songs = ref.watch(songsProvider);
+
+    _player.start(index, songs.map((song) => song.id).toList());
   }
 
   @override
   Widget build(BuildContext context) {
-    final asyncValue = ref.watch(favoriteSongsProvider);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -47,7 +51,7 @@ class FavoriteSongsPageWidgetState extends ConsumerState<FavoriteSongsPageWidget
                   MaterialPageRoute(builder: (context) => const FavoriteSongsEditPageWidget()),
                 );
 
-                _reload();
+                _load();
               }
             },
             itemBuilder: (BuildContext context) => [
@@ -61,28 +65,11 @@ class FavoriteSongsPageWidgetState extends ConsumerState<FavoriteSongsPageWidget
       ),
       body: Stack(
         children: [
-          asyncValue.when(
-            loading: () => const LoadingWidget(),
-            error: (Object error, StackTrace stackTrace) {
-              return ErrorWidget(error);
-            },
-            data: (vm) {
-              return CustomScrollView(
-                slivers: [
-                  SliverFixedExtentList(
-                    itemExtent: StyleConstant.row.borderBoxHeight,
-                    delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                      return MediaActionRowWidget(
-                        song: vm.songs[index],
-                        onTap: () => _play(index, vm.songIds),
-                        onLongPress: _reload,
-                      );
-                    }, childCount: vm.songs.length),
-                  ),
-                  const EmptyRowWidget(),
-                ],
-              );
-            },
+          CustomScrollView(
+            slivers: [
+              SongListWidget(onLongPress: _load, onTap: _play),
+              const EmptyRowWidget(),
+            ],
           ),
           const MiniPlayerWidget(),
         ],
