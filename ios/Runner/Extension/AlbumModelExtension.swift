@@ -6,8 +6,8 @@
 //
 
 extension AlbumModel {
-    func toPigeon() -> Album {
-        return Album(
+    func toPigeon() -> AlbumDTO {
+        return AlbumDTO(
             id: String(self.id.raw),
             name: self.name,
             artistId: String(self.artistId.raw),

@@ -6,8 +6,8 @@
 //
 
 extension SongModel {
-    func toPigeon() -> Song {
-        return Song(
+    func toPigeon() -> SongDTO {
+        return SongDTO(
             id: String(self.id.raw),
             name: self.name,
             albumId: String(self.albumId.raw),

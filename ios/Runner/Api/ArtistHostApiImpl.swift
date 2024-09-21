@@ -8,13 +8,13 @@
 class ArtistHostApiImpl: ArtistHostApi {
     private let repository = ArtistRepository()
 
-    func getAllArtists() throws -> [Artist] {
+    func getAllArtists() throws -> [ArtistDTO] {
         let artists = repository.findAll()
 
         return artists.map { $0.toPigeon() }
     }
     
-    func getArtistDetailById(id: String) throws -> ArtistDetail? {
+    func getArtistDetailById(id: String) throws -> ArtistDetailDTO? {
         let artistId = ArtistId(id: id)
         let albumRepository = AlbumRepository()
         let artist = repository.findById(artistId: artistId)
@@ -27,10 +27,10 @@ class ArtistHostApiImpl: ArtistHostApi {
         let name = artist?.name ?? ""
         let imageId = album?.imageId ?? ""
 
-        return ArtistDetail(id: id, name: name, imageId: imageId)
+        return ArtistDetailDTO(id: id, name: name, imageId: imageId)
     }
     
-    func getArtistsByIds(ids: [String]) throws -> [Artist] {
+    func getArtistsByIds(ids: [String]) throws -> [ArtistDTO] {
         let artistIds = ids.map { ArtistId(id: $0) }
         let artists = repository.findByIds(artistIds: artistIds )
 
