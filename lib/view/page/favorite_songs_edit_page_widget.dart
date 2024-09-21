@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/model/song_model.dart';
-import 'package:thinmpf/provider/page/favorite_songs_provider.dart';
+import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/view/row/list_item_row_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';
 
@@ -15,24 +15,22 @@ class FavoriteSongsEditPageWidget extends ConsumerStatefulWidget {
 }
 
 class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPageWidget> {
-  late List<SongModel> _list;
+  List<SongModel> _list = [];
 
   @override
   void initState() {
     super.initState();
+    _load();
+  }
 
-    final asyncValue = ref.read(favoriteSongsProvider);
-    asyncValue.when(
-      data: (vm) {
-        _list = List.from(vm.songs);
-      },
-      loading: () {
-        _list = [];
-      },
-      error: (error, stackTrace) {
-        _list = [];
-      },
-    );
+  Future<void> _load() async {
+    await ref.read(songsProvider.notifier).fetchFavoriteSongs();
+
+    final songs = ref.read(songsProvider);
+
+    setState(() {
+      _list = List.from(songs);
+    });
   }
 
   @override
