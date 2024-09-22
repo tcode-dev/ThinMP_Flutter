@@ -11,12 +11,15 @@ class PlaylistDetail extends _$PlaylistDetail {
   @override
   PlaylistModel? build() => null;
 
-  Future<void> fetchPlaylist(String id) async {
+  void fetchPlaylist(String id) {
     final playlistRepository = PlaylistRepository();
-    final playlist = playlistRepository.findById(ObjectId.fromHexString(id));
 
-    if (playlist != null) {
-      state = playlist.fromRealm();
+    try {
+      final playlist = playlistRepository.findById(ObjectId.fromHexString(id));
+
+      state = playlist?.fromRealm();
+    } finally {
+      playlistRepository.destroy();
     }
   }
 }
