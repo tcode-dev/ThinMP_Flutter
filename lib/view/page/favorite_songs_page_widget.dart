@@ -29,9 +29,10 @@ class FavoriteSongsPageWidgetState extends ConsumerState<FavoriteSongsPageWidget
   }
 
   void _play(int index) {
-    final songs = ref.watch(songsProvider);
+    final songs = ref.read(songsProvider);
+    final songIds = songs.map((song) => song.id).toList();
 
-    _player.start(index, songs.map((song) => song.id).toList());
+    _player.start(index, songIds);
   }
 
   @override
