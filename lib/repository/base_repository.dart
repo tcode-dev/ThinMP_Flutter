@@ -3,7 +3,7 @@ import 'package:realm/realm.dart';
 abstract class BaseRepository<T extends RealmObject> {
   Realm get realm;
 
-  void destroy() {
+  void dispose() {
     realm.close();
   }
 

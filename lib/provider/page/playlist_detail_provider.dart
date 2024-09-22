@@ -1,4 +1,3 @@
-import 'package:realm/realm.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/extension/playlist_extension.dart';
 import 'package:thinmpf/model/playlist_model.dart';
@@ -15,11 +14,11 @@ class PlaylistDetail extends _$PlaylistDetail {
     final playlistRepository = PlaylistRepository();
 
     try {
-      final playlist = playlistRepository.findById(ObjectId.fromHexString(id));
+      final playlist = playlistRepository.findById(id);
 
       state = playlist?.fromRealm();
     } finally {
-      playlistRepository.destroy();
+      playlistRepository.dispose();
     }
   }
 }

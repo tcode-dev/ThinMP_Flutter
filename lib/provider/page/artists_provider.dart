@@ -20,7 +20,7 @@ class Artists extends _$Artists {
   }
 
   Future<void> fetchFavoriteArtists() async {
-    final favoriteArtistRepository = ref.read(favoriteArtistRepositoryFactoryProvider);
+    final favoriteArtistRepository = ref.watch(favoriteArtistRepositoryFactoryProvider);
     final favoriteArtists = favoriteArtistRepository.findAll();
     final favoriteArtistIds = favoriteArtists.map((artist) => artist.artistId).toList();
     final artists = await _artistHostApi.getArtistsByIds(favoriteArtistIds);

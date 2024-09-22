@@ -18,7 +18,7 @@ class FavoriteArtist extends _$FavoriteArtist {
       return false;
     }
 
-    final favoriteArtistRepository = ref.read(favoriteArtistRepositoryFactoryProvider);
+    final favoriteArtistRepository = ref.watch(favoriteArtistRepositoryFactoryProvider);
 
     return favoriteArtistRepository.exists(song.artistId);
   }
@@ -30,7 +30,7 @@ class FavoriteArtist extends _$FavoriteArtist {
       return;
     }
 
-    final favoriteArtistRepository = ref.read(favoriteArtistRepositoryFactoryProvider);
+    final favoriteArtistRepository = ref.watch(favoriteArtistRepositoryFactoryProvider);
 
     if (favoriteArtistRepository.exists(song.artistId)) {
       favoriteArtistRepository.delete(song.artistId);

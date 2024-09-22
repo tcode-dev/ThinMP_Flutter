@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
-import 'package:thinmpf/repository/shortcut_repository.dart';
+import 'package:thinmpf/provider/repository/shortcut_repository_factory_provider.dart';
 import 'package:thinmpf/view/menu/list_context_menu.dart';
 
-final _shortcutRepository = ShortcutRepository();
-
-class PlaylistListContextMenuWidget extends StatelessWidget {
+class PlaylistListContextMenuWidget extends ConsumerWidget {
   final String playlistId;
   final Function() callback;
   final Widget child;
@@ -14,16 +13,18 @@ class PlaylistListContextMenuWidget extends StatelessWidget {
   const PlaylistListContextMenuWidget({super.key, required this.playlistId, required this.callback, required this.child});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
+
     return ListContextMenuWidget(
       widgetBuilder: () => [
         PopupMenuItem(
           value: 'shortcut',
-          child: Text(_shortcutRepository.exists(playlistId, ShortcutConstant.playlist) ? AppLocalizations.of(context)!.shortcutRemove : AppLocalizations.of(context)!.shortcutAdd),
+          child: Text(shortcutRepository.exists(playlistId, ShortcutConstant.playlist) ? AppLocalizations.of(context)!.shortcutRemove : AppLocalizations.of(context)!.shortcutAdd),
         ),
       ],
       onSelected: (String value) {
-        _shortcutRepository.toggleShortcut(playlistId, ShortcutConstant.playlist);
+        shortcutRepository.toggleShortcut(playlistId, ShortcutConstant.playlist);
         callback();
       },
       child: child,

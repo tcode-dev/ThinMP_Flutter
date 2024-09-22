@@ -1,4 +1,3 @@
-import 'package:realm/realm.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/extension/album_extension.dart';
@@ -38,7 +37,7 @@ class Main extends _$Main {
 
         return shortcut.toShortcutAlbum(album);
       } else if (shortcut.type == ShortcutConstant.playlist.index) {
-        final playlist = _playlistRepository.findById(ObjectId.fromHexString(shortcut.itemId));
+        final playlist = _playlistRepository.findById(shortcut.itemId);
         final song = await _songHostApi.getSongById(playlist!.songIds.first);
 
         return shortcut.toShortcutPlaylist(playlist, song);

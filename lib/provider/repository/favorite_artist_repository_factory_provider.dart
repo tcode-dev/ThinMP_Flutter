@@ -9,7 +9,7 @@ class FavoriteArtistRepositoryFactory extends _$FavoriteArtistRepositoryFactory 
   FavoriteArtistRepository build() {
     final favoriteArtistRepository = FavoriteArtistRepository();
     ref.onDispose(() {
-      favoriteArtistRepository.destroy();
+      favoriteArtistRepository.dispose();
     });
     return favoriteArtistRepository;
   }

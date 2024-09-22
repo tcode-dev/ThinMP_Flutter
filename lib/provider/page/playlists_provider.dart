@@ -21,7 +21,7 @@ class Playlists extends _$Playlists {
 
       return PlaylistsViewModel(playlists: playlistModels);
     } finally {
-      playlistRepository.destroy();
+      playlistRepository.dispose();
     }
   }
 
@@ -31,7 +31,7 @@ class Playlists extends _$Playlists {
     try {
       repository.create(name, songId);
     } finally {
-      repository.destroy();
+      repository.dispose();
     }
   }
 
@@ -41,7 +41,7 @@ class Playlists extends _$Playlists {
     try {
       repository.add(playlistId, songId);
     } finally {
-      repository.destroy();
+      repository.dispose();
     }
   }
 
