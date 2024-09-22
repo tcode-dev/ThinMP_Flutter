@@ -1,7 +1,8 @@
 import 'package:realm/realm.dart';
 import 'package:thinmpf/repository/base_repository.dart';
+import 'package:thinmpf/repository/mixin_repository.dart';
 
-abstract class FavoriteRepository<T extends RealmObject> extends BaseRepository<T> {
+abstract class FavoriteRepository<T extends RealmObject> extends BaseRepository<T> with MixinRepository<T> {
   T createModel(String id);
 
   bool exists(Object primaryKey) {

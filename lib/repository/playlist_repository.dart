@@ -6,6 +6,11 @@ class PlaylistRepository extends BaseRepository<PlaylistRealmModel> {
   @override
   Realm realm = Realm(Configuration.local([PlaylistRealmModel.schema]));
 
+  @override
+  PlaylistRealmModel? findById(Object primaryKey) {
+    return super.findById(ObjectId.fromHexString(primaryKey as String));
+  }
+
   void create(String name, String songId) {
     final model = PlaylistRealmModel(ObjectId(), name, increment());
 
@@ -27,15 +32,5 @@ class PlaylistRepository extends BaseRepository<PlaylistRealmModel> {
       model.songIds.add(songId);
       realm.add(model);
     });
-  }
-
-  int increment() {
-    final latest = findLatest();
-
-    if (latest != null) {
-      return latest.order + 1;
-    } else {
-      return 1;
-    }
   }
 }

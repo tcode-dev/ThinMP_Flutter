@@ -21,13 +21,18 @@ abstract class BaseRepository<T extends RealmObject> {
     return result.isNotEmpty ? result.first : null;
   }
 
-  void delete(Object primaryKey) {
-    final model = findById(primaryKey);
+  int increment() {
+    final latest = findLatest();
 
-    if (model != null) {
-      realm.write(() {
-        realm.delete(model);
-      });
+    if (latest != null) {
+      final json = latest.toEJson();
+      if (json != null && json is Map<String, dynamic>) {
+        final fieldValue = json['order'];
+        if (fieldValue != null) {
+          return fieldValue + 1;
+        }
+      }
     }
+    return 1;
   }
 }

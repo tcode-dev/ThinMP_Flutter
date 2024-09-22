@@ -1,23 +1,11 @@
 import 'package:realm/realm.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/model/realm/shortcut_realm_model.dart';
+import 'package:thinmpf/repository/base_repository.dart';
 
-class ShortcutRepository {
+class ShortcutRepository extends BaseRepository<ShortcutRealmModel> {
+  @override
   Realm realm = Realm(Configuration.local([ShortcutRealmModel.schema]));
-
-  void destroy() {
-    realm.close();
-  }
-
-  List<ShortcutRealmModel> findAll() {
-    return realm.all<ShortcutRealmModel>().toList();
-  }
-
-  ShortcutRealmModel? findLatest() {
-    final result = realm.query<ShortcutRealmModel>('TRUEPREDICATE SORT(order DESC) LIMIT(1)');
-
-    return result.isNotEmpty ? result.first : null;
-  }
 
   bool exists(String id, ShortcutConstant type) {
     return realm.query<ShortcutRealmModel>(
@@ -56,16 +44,6 @@ class ShortcutRepository {
       realm.write(() {
         realm.delete(models.first);
       });
-    }
-  }
-
-  int increment() {
-    final latest = findLatest();
-
-    if (latest != null) {
-      return latest.order + 1;
-    } else {
-      return 1;
     }
   }
 }

@@ -10,14 +10,4 @@ class FavoriteArtistRepository extends FavoriteRepository<FavoriteArtistRealmMod
   FavoriteArtistRealmModel createModel(String id) {
     return FavoriteArtistRealmModel(id, increment());
   }
-
-  int increment() {
-    final latest = findLatest();
-
-    if (latest != null) {
-      return latest.order + 1;
-    } else {
-      return 1;
-    }
-  }
 }
