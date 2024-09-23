@@ -37,7 +37,7 @@ class FavoriteArtistsPageWidgetState extends ConsumerState<FavoriteArtistsPageWi
         children: [
           CustomScrollView(
             slivers: [
-              ArtistListWidget(onLongPress: _load),
+              ArtistListWidget(onContextMenuAction: _load, onNavigateBack: _load),
               const EmptyRowWidget(),
             ],
           ),
