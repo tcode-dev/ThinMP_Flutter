@@ -4,11 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/provider/repository/favorite_artist_repository_factory_provider.dart';
 import 'package:thinmpf/provider/repository/shortcut_repository_factory_provider.dart';
-import 'package:thinmpf/provider/repository/using.dart';
-import 'package:thinmpf/repository/base_repository.dart';
-import 'package:thinmpf/repository/favorite_artist_repository.dart';
 import 'package:thinmpf/view/menu/grid_context_menu.dart';
-
 
 class ArtistGridContextMenuWidget extends ConsumerWidget {
   final String artistId;
@@ -20,10 +16,6 @@ class ArtistGridContextMenuWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // using(ref.watch(favoriteArtistRepositoryFactoryProvider), (favoriteArtistRepository) {
-
-    // });
-
     final favoriteArtistRepository = ref.watch(favoriteArtistRepositoryFactoryProvider);
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
 
