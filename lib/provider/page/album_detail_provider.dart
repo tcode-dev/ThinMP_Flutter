@@ -1,11 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/extension/album_extension.dart';
 import 'package:thinmpf/model/album_model.dart';
-import 'package:thinmpf/pigeon_output/audio.g.dart';
+import 'package:thinmpf/provider/api/album_host_api_factory_provider.dart';
 
 part 'album_detail_provider.g.dart';
-
-final _albumHostApi = AlbumHostApi();
 
 @riverpod
 class AlbumDetail extends _$AlbumDetail {
@@ -13,7 +11,8 @@ class AlbumDetail extends _$AlbumDetail {
   AlbumModel? build() => null;
 
   Future<void> fetchAlbumDetail(String id) async {
-    final album = await _albumHostApi.getAlbumById(id);
+    final albumHostApi = ref.read(albumHostApiFactoryProvider);
+    final album = await albumHostApi.getAlbumById(id);
     
     state = album?.fromPigeon();
   }

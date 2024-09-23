@@ -6,7 +6,7 @@ part of 'album_detail_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$albumDetailHash() => r'1ed3afbd30f0d918c89c24f5b502e81de12fe169';
+String _$albumDetailHash() => r'edd02cdf3e56f93cfb801d6cfc282bc76b8c190d';
 
 /// See also [AlbumDetail].
 @ProviderFor(AlbumDetail)

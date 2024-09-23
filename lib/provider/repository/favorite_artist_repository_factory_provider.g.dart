@@ -7,13 +7,13 @@ part of 'favorite_artist_repository_factory_provider.dart';
 // **************************************************************************
 
 String _$favoriteArtistRepositoryFactoryHash() =>
-    r'77528268e8ccea03d458a99a51d5c0d77f951864';
+    r'2d5165d7b6c7fe445f99cb4979e48851172b5d0c';
 
-/// See also [FavoriteArtistRepositoryFactory].
-@ProviderFor(FavoriteArtistRepositoryFactory)
-final favoriteArtistRepositoryFactoryProvider = AutoDisposeNotifierProvider<
-    FavoriteArtistRepositoryFactory, FavoriteArtistRepository>.internal(
-  FavoriteArtistRepositoryFactory.new,
+/// See also [favoriteArtistRepositoryFactory].
+@ProviderFor(favoriteArtistRepositoryFactory)
+final favoriteArtistRepositoryFactoryProvider =
+    AutoDisposeProvider<FavoriteArtistRepository>.internal(
+  favoriteArtistRepositoryFactory,
   name: r'favoriteArtistRepositoryFactoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
@@ -22,7 +22,7 @@ final favoriteArtistRepositoryFactoryProvider = AutoDisposeNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$FavoriteArtistRepositoryFactory
-    = AutoDisposeNotifier<FavoriteArtistRepository>;
+typedef FavoriteArtistRepositoryFactoryRef
+    = AutoDisposeProviderRef<FavoriteArtistRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
