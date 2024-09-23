@@ -7,7 +7,7 @@ part of 'shortcut_repository_factory_provider.dart';
 // **************************************************************************
 
 String _$shortcutRepositoryFactoryHash() =>
-    r'3ee30275f65d2dcf78bdffe1b83b9c30023f109c';
+    r'161685f301839a5d752197b385a2545606ad3415';
 
 /// See also [shortcutRepositoryFactory].
 @ProviderFor(shortcutRepositoryFactory)

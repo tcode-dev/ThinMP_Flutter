@@ -6,12 +6,12 @@ part of 'playlists_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$playlistsHash() => r'f978225ef36c89936e65b1a6afa9f6e66f728869';
+String _$playlistsHash() => r'f902df399b4b1728f621c4bdf6da84493c842076';
 
 /// See also [Playlists].
 @ProviderFor(Playlists)
 final playlistsProvider =
-    AutoDisposeAsyncNotifierProvider<Playlists, PlaylistsViewModel>.internal(
+    AutoDisposeNotifierProvider<Playlists, List<PlaylistModel>>.internal(
   Playlists.new,
   name: r'playlistsProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final playlistsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$Playlists = AutoDisposeAsyncNotifier<PlaylistsViewModel>;
+typedef _$Playlists = AutoDisposeNotifier<List<PlaylistModel>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
