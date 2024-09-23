@@ -17,10 +17,8 @@ class PlaylistListWidget extends ConsumerWidget {
     return SliverFixedExtentList(
       itemExtent: StyleConstant.row.borderBoxHeight,
       delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-        final playlist = playlists[index];
-
         return PlaylistActionRowWidget(
-          playlist: playlist,
+          playlist: playlists[index],
           onContextMenuAction: onContextMenuAction,
           onNavigateBack: () => ref.refresh(playlistsProvider),
         );
