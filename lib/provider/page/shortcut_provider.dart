@@ -4,13 +4,13 @@ import 'package:thinmpf/extension/shortcut_extension.dart';
 import 'package:thinmpf/model/shortcut_model.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/api/album_host_api_factory_provider.dart';
+import 'package:thinmpf/provider/api/artist_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/repository/shortcut_repository_factory_provider.dart';
 import 'package:thinmpf/repository/playlist_repository.dart';
 
 part 'shortcut_provider.g.dart';
 
 final _songHostApi = SongHostApi();
-final _artistHostApi = ArtistHostApi();
 final _playlistRepository = PlaylistRepository();
 
 @riverpod
@@ -21,10 +21,11 @@ class Shortcut extends _$Shortcut {
   Future<void> fetch() async {
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
     final albumHostApi = ref.read(albumHostApiFactoryProvider);
+    final artistHostApi = ref.read(artistHostApiFactoryProvider);
     final shortcuts = shortcutRepository.findAllSortedByDesc();
     final shortcutFutures = shortcuts.map((shortcut) async {
       if (shortcut.type == ShortcutConstant.artist.index) {
-        final artist = await _artistHostApi.getArtistDetailById(shortcut.itemId);
+        final artist = await artistHostApi.getArtistDetailById(shortcut.itemId);
 
         return shortcut.toShortcutArtist(artist);
       } else if (shortcut.type == ShortcutConstant.album.index) {

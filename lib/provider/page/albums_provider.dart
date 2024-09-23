@@ -1,11 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/extension/album_extension.dart';
 import 'package:thinmpf/model/album_model.dart';
-import 'package:thinmpf/pigeon_output/audio.g.dart';
+import 'package:thinmpf/provider/api/album_host_api_factory_provider.dart';
 
 part 'albums_provider.g.dart';
-
-final _api = AlbumHostApi();
 
 @riverpod
 class Albums extends _$Albums {
@@ -13,19 +11,22 @@ class Albums extends _$Albums {
   List<AlbumModel> build() => [];
 
   Future<void> fetchAll() async {
-    final albums = await _api.getAllAlbums();
+    final albumHostApi = ref.read(albumHostApiFactoryProvider);
+    final albums = await albumHostApi.getAllAlbums();
 
     state = albums.map((album) => album.fromPigeon()).toList();
   }
 
   Future<void> fetchRecent() async {
-    final albums = await _api.getRecentAlbums(20);
+    final albumHostApi = ref.read(albumHostApiFactoryProvider);
+    final albums = await albumHostApi.getRecentAlbums(20);
 
     state = albums.map((album) => album.fromPigeon()).toList();
   }
 
   Future<void> fetchArtistAlbums(String id) async {
-    final albums = await _api.getAlbumsByArtistId(id);
+    final albumHostApi = ref.read(albumHostApiFactoryProvider);
+    final albums = await albumHostApi.getAlbumsByArtistId(id);
 
     state = albums.map((album) => album.fromPigeon()).toList();
   }
