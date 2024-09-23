@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/pigeon_output/audio.g.dart';
+import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/playlist_detail_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
@@ -10,8 +10,6 @@ import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
-
-final PlayerHostApi _player = PlayerHostApi();
 
 class PlaylistDetailPageWidget extends ConsumerStatefulWidget {
   final String id;
@@ -37,10 +35,11 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
   }
 
   void _play(int index) {
+    final playerHostApi = ref.read(playerHostApiFactoryProvider);
     final songs = ref.read(songsProvider);
     final songIds = songs.map((song) => song.id).toList();
 
-    _player.start(index, songIds);
+    playerHostApi.start(index, songIds);
   }
 
   @override

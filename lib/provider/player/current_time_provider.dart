@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:thinmpf/pigeon_output/audio.g.dart';
+import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
 
 part 'current_time_provider.g.dart';
 
@@ -9,9 +9,9 @@ class CurrentTime extends _$CurrentTime {
   double build() => 0;
 
   void updateCurrentTime() async {
-    final api = PlayerHostApi();
+    final playerHostApi = ref.read(playerHostApiFactoryProvider);
 
-    state = await api.getCurrentTime();
+    state = await playerHostApi.getCurrentTime();
   }
 
   void seek(double time) {

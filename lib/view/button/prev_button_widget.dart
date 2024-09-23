@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
-import 'package:thinmpf/pigeon_output/audio.g.dart';
+import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 
-final PlayerHostApi _player = PlayerHostApi();
+class PrevButtonWidget extends ConsumerStatefulWidget {
+  const PrevButtonWidget({super.key});
 
-class PrevButtonWidget extends StatelessWidget {
-  const PrevButtonWidget({Key? key}) : super(key: key);
+  @override
+  PrevButtonWidgetState createState() => PrevButtonWidgetState();
+}
 
+class PrevButtonWidgetState extends ConsumerState<PrevButtonWidget> {
   void _prev() {
-    _player.prev();
+    final playerHostApi = ref.read(playerHostApiFactoryProvider);
+
+    playerHostApi.prev();
   }
 
   @override

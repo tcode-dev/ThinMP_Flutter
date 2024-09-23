@@ -2,7 +2,7 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/pigeon_output/audio.g.dart';
+import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/albums_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
@@ -13,8 +13,6 @@ import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/title/section_title_widget.dart';
-
-final PlayerHostApi _player = PlayerHostApi();
 
 class ArtistDetailPageWidget extends ConsumerStatefulWidget {
   final String id;
@@ -38,7 +36,9 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
   }
 
   void _play(int index) {
-    _player.startArtistSongs(index, widget.id);
+    final playerHostApi = ref.read(playerHostApiFactoryProvider);
+
+    playerHostApi.startArtistSongs(index, widget.id);
   }
 
   @override

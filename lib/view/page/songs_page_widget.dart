@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/pigeon_output/audio.g.dart';
+import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
-
-final PlayerHostApi _player = PlayerHostApi();
 
 class SongsPageWidget extends ConsumerStatefulWidget {
   const SongsPageWidget({super.key});
@@ -28,7 +26,9 @@ class SongsPageWidgetState extends ConsumerState<SongsPageWidget> {
   }
 
   void _play(int index) {
-    _player.startAllSongs(index);
+    final playerHostApi = ref.read(playerHostApiFactoryProvider);
+
+    playerHostApi.startAllSongs(index);
   }
 
   @override

@@ -1,10 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/config/player_config.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
+import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
 
 part 'repeat_provider.g.dart';
-
-final PlayerHostApi _player = PlayerHostApi();
 
 @riverpod
 class Repeat extends _$Repeat {
@@ -14,6 +13,8 @@ class Repeat extends _$Repeat {
   }
 
   Future<void> changeRepeat() async {
+    final playerHostApi = ref.read(playerHostApiFactoryProvider);
+
     final repeat = switch (state.value) {
       RepeatMode.off => RepeatMode.one,
       RepeatMode.one => RepeatMode.all,
@@ -22,7 +23,7 @@ class Repeat extends _$Repeat {
     };
 
     state = AsyncValue.data(repeat);
-    await _player.setRepeat(repeat);
+    await playerHostApi.setRepeat(repeat);
     await _saveRepeat(repeat);
   }
 

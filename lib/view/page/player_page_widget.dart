@@ -2,7 +2,6 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
-import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/player/playback_song_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/view/button/favorite_artist_button_widget.dart';
@@ -25,8 +24,6 @@ class PlayerPageWidget extends ConsumerStatefulWidget {
 }
 
 class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
-  final PlayerHostApi player = PlayerHostApi();
-
   @override
   Widget build(BuildContext context) {
     final playbackSong = ref.watch(playbackSongProvider);

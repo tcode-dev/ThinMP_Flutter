@@ -1,10 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/config/player_config.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
+import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
 
 part 'shuffle_provider.g.dart';
-
-final PlayerHostApi _player = PlayerHostApi();
 
 @riverpod
 class Shuffle extends _$Shuffle {
@@ -14,9 +13,10 @@ class Shuffle extends _$Shuffle {
   }
 
   Future<void> changeShuffle() async {
+    final playerHostApi = ref.read(playerHostApiFactoryProvider);
     final shuffle = state.value == ShuffleMode.off ? ShuffleMode.on : ShuffleMode.off;
     state = AsyncValue.data(shuffle);
-    await _player.setShuffle(shuffle);
+    await playerHostApi.setShuffle(shuffle);
     await _saveShuffle(shuffle);
   }
 
