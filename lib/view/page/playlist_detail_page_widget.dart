@@ -7,7 +7,6 @@ import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
-import 'package:thinmpf/view/loading/loading_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 
@@ -46,13 +45,10 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
   Widget build(BuildContext context) {
     final playlistDetail = ref.watch(playlistDetailProvider);
     final songs = ref.watch(songsProvider);
-    final imageId = songs.isNotEmpty ? songs.first.imageId : '';
+    final name = playlistDetail != null ? playlistDetail.name : '';
+    final imageId = songs.isNotEmpty ? songs.first.imageId : '0';
     final screenSize = MediaQuery.sizeOf(context);
     final top = MediaQuery.of(context).padding.top;
-
-    if (playlistDetail == null) {
-      return const LoadingWidget();
-    }
 
     return Scaffold(
       body: Stack(
@@ -64,7 +60,7 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
                 expandedHeight: screenSize.width - top,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: Text(playlistDetail.name),
+                  title: Text(name),
                   background: Stack(
                     children: [
                       Positioned(

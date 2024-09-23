@@ -45,8 +45,8 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
   Widget build(BuildContext context) {
     final albums = ref.watch(albumsProvider);
     final songs = ref.watch(songsProvider);
-    final artistName = albums.first.artistName;
-    final imageId = albums.first.imageId;
+    final name = albums.isNotEmpty ? albums.first.artistName : '';
+    final imageId = albums.isNotEmpty ? albums.first.imageId : '0';
     final description = '${albums.length} albums, ${songs.length} songs';
     final screenSize = MediaQuery.sizeOf(context);
     final top = MediaQuery.of(context).padding.top;
@@ -61,7 +61,7 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
                 expandedHeight: screenSize.width - top,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: Text(artistName),
+                  title: Text(name),
                   background: Stack(
                     children: [
                       Positioned(
