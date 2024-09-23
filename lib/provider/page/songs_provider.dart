@@ -4,7 +4,6 @@ import 'package:thinmpf/model/song_model.dart';
 import 'package:thinmpf/provider/api/song_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/repository/favorite_song_repository_factory_provider.dart';
 import 'package:thinmpf/provider/repository/playlist_repository_factory_provider.dart';
-import 'package:thinmpf/repository/playlist_repository.dart';
 
 part 'songs_provider.g.dart';
 
