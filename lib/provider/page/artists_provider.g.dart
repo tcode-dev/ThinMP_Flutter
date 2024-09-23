@@ -6,7 +6,7 @@ part of 'artists_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$artistsHash() => r'e97843388cc99d512b0b9e47ff062320bc0b8697';
+String _$artistsHash() => r'f5458888880e172cbf40fd7a43bff1a0496d669f';
 
 /// See also [Artists].
 @ProviderFor(Artists)
