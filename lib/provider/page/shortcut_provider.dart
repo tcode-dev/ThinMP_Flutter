@@ -5,12 +5,10 @@ import 'package:thinmpf/model/shortcut_model.dart';
 import 'package:thinmpf/provider/api/album_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/api/artist_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/api/song_host_api_factory_provider.dart';
+import 'package:thinmpf/provider/repository/playlist_repository_factory_provider.dart';
 import 'package:thinmpf/provider/repository/shortcut_repository_factory_provider.dart';
-import 'package:thinmpf/repository/playlist_repository.dart';
 
 part 'shortcut_provider.g.dart';
-
-final _playlistRepository = PlaylistRepository();
 
 @riverpod
 class Shortcut extends _$Shortcut {
@@ -18,6 +16,7 @@ class Shortcut extends _$Shortcut {
   List<ShortcutModel> build() => [];
 
   Future<void> fetch() async {
+    final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
     final artistHostApi = ref.read(artistHostApiFactoryProvider);
     final albumHostApi = ref.read(albumHostApiFactoryProvider);
@@ -33,7 +32,7 @@ class Shortcut extends _$Shortcut {
 
         return shortcut.toShortcutAlbum(album);
       } else if (shortcut.type == ShortcutConstant.playlist.index) {
-        final playlist = _playlistRepository.findById(shortcut.itemId);
+        final playlist = playlistRepository.findById(shortcut.itemId);
         final song = await songHostApi.getSongById(playlist!.songIds.first);
 
         return shortcut.toShortcutPlaylist(playlist, song);

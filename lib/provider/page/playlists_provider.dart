@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/extension/playlist_extension.dart';
 import 'package:thinmpf/model/playlist_model.dart';
-import 'package:thinmpf/repository/playlist_repository.dart';
+import 'package:thinmpf/provider/repository/playlist_repository_factory_provider.dart';
 
 part 'playlists_provider.g.dart';
 
@@ -11,34 +11,21 @@ class Playlists extends _$Playlists {
   List<PlaylistModel> build() => [];
 
   void fetchPlaylists() {
-    final playlistRepository = PlaylistRepository();
+    final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
+    final playlists = playlistRepository.findAll();
 
-    try {
-      final playlists = playlistRepository.findAll();
-
-      state = playlists.map((playlist) => playlist.fromRealm()).toList();
-    } finally {
-      playlistRepository.dispose();
-    }
+    state = playlists.map((playlist) => playlist.fromRealm()).toList();
   }
 
   void create(String name, String songId) {
-    final repository = PlaylistRepository();
+    final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
 
-    try {
-      repository.create(name, songId);
-    } finally {
-      repository.dispose();
-    }
+    playlistRepository.create(name, songId);
   }
 
   void add(String playlistId, String songId) {
-    final repository = PlaylistRepository();
+    final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
 
-    try {
-      repository.add(playlistId, songId);
-    } finally {
-      repository.dispose();
-    }
+    playlistRepository.add(playlistId, songId);
   }
 }

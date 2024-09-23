@@ -6,7 +6,7 @@ part of 'current_time_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentTimeHash() => r'2340090c311d52272f9bf79afc2dc0dddfcde991';
+String _$currentTimeHash() => r'b6b71054c4e51db35160616810e1bab447ac0d55';
 
 /// See also [CurrentTime].
 @ProviderFor(CurrentTime)

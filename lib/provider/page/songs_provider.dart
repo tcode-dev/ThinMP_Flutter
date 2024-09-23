@@ -3,6 +3,7 @@ import 'package:thinmpf/extension/song_extension.dart';
 import 'package:thinmpf/model/song_model.dart';
 import 'package:thinmpf/provider/api/song_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/repository/favorite_song_repository_factory_provider.dart';
+import 'package:thinmpf/provider/repository/playlist_repository_factory_provider.dart';
 import 'package:thinmpf/repository/playlist_repository.dart';
 
 part 'songs_provider.g.dart';
@@ -44,8 +45,8 @@ class Songs extends _$Songs {
   }
 
   Future<void> fetchPlaylistSongs(String id) async {
+    final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
     final songHostApi = ref.read(songHostApiFactoryProvider);
-    final playlistRepository = PlaylistRepository();
     final playlist = playlistRepository.findById(id);
 
     if (playlist == null) {
