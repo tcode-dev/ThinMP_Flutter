@@ -6,9 +6,9 @@ import 'package:thinmpf/view/row/media_action_row_widget.dart';
 
 class SongListWidget extends ConsumerWidget {
   final void Function(int index) onTap;
-  final VoidCallback callback;
+  final VoidCallback? callback;
 
-  const SongListWidget({super.key, required this.onTap, required this.callback});
+  const SongListWidget({super.key, required this.onTap, this.callback});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

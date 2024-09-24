@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
-import 'package:thinmpf/model/song_model.dart';
-import 'package:thinmpf/provider/page/songs_provider.dart';
-import 'package:thinmpf/provider/repository/favorite_song_repository_factory_provider.dart';
+import 'package:thinmpf/model/artist_model.dart';
+import 'package:thinmpf/provider/page/artists_provider.dart';
+import 'package:thinmpf/provider/repository/favorite_artist_repository_factory_provider.dart';
 import 'package:thinmpf/view/row/list_item_row_widget.dart';
-import 'package:thinmpf/view/row/media_row_widget.dart';
+import 'package:thinmpf/view/row/plain_row_widget.dart';
 
-class FavoriteSongsEditPageWidget extends ConsumerStatefulWidget {
-  const FavoriteSongsEditPageWidget({super.key});
+class FavoriteArtistsEditPageWidget extends ConsumerStatefulWidget {
+  const FavoriteArtistsEditPageWidget({super.key});
 
   @override
-  FavoriteSongsEditPageWidgetState createState() => FavoriteSongsEditPageWidgetState();
+  FavoriteArtistsEditPageWidgetState createState() => FavoriteArtistsEditPageWidgetState();
 }
 
-class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPageWidget> {
-  List<SongModel> _list = [];
+class FavoriteArtistsEditPageWidgetState extends ConsumerState<FavoriteArtistsEditPageWidget> {
+  List<ArtistModel> _list = [];
 
   @override
   void initState() {
@@ -25,18 +25,18 @@ class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPa
   }
 
   Future<void> _load() async {
-    await ref.read(songsProvider.notifier).fetchFavoriteSongs();
+    await ref.read(artistsProvider.notifier).fetchFavoriteArtists();
 
-    final songs = ref.read(songsProvider);
+    final artists = ref.read(artistsProvider);
 
     setState(() {
-      _list = List.from(songs);
+      _list = List.from(artists);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final favoriteSongRepository = ref.watch(favoriteSongRepositoryFactoryProvider);
+    final favoriteArtistRepository = ref.watch(favoriteArtistRepositoryFactoryProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +57,7 @@ class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPa
         actions: [
           TextButton(
             onPressed: () {
-              favoriteSongRepository.update(_list.map((model) => model.id).toList());
+              favoriteArtistRepository.update(_list.map((model) => model.id).toList());
               Navigator.of(context).pop();
             },
             child: Text(AppLocalizations.of(context)!.done),
@@ -79,7 +79,7 @@ class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPa
                   minVerticalPadding: 0.0,
                   contentPadding: EdgeInsets.only(right: StyleConstant.padding.large),
                   title: Center(
-                    child: MediaRowWidget(song: _list[index]),
+                    child: PlainRowWidget(title: _list[index].name),
                   ),
                   trailing: const ReorderableDragStartListener(
                     index: 0,

@@ -44,7 +44,7 @@ class SongsPageWidgetState extends ConsumerState<SongsPageWidget> {
         children: [
           CustomScrollView(
             slivers: [
-              SongListWidget(callback: _load, onTap: _play),
+              SongListWidget(onTap: _play),
               const EmptyRowWidget(),
             ],
           ),

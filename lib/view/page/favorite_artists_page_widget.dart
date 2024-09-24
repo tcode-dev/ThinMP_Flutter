@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/provider/page/artists_provider.dart';
 import 'package:thinmpf/view/list/artist_list_widget.dart';
+import 'package:thinmpf/view/page/favorite_artists_edit_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 
@@ -32,6 +33,26 @@ class FavoriteArtistsPageWidgetState extends ConsumerState<FavoriteArtistsPageWi
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
         title: Text(AppLocalizations.of(context)!.favoriteArtist),
+        actions: [
+          PopupMenuButton(
+            onSelected: (item) async {
+              if (item == 'edit') {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FavoriteArtistsEditPageWidget()),
+                );
+
+                _load();
+              }
+            },
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                value: 'edit',
+                child: Text(AppLocalizations.of(context)!.edit),
+              ),
+            ],
+          )
+        ],
       ),
       body: Stack(
         children: [
