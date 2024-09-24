@@ -15,24 +15,24 @@ abstract class BaseRepository<T extends RealmObject> {
     return realm.all<T>().toList();
   }
 
-  T? findLatest() {
-    final result = realm.query<T>('TRUEPREDICATE SORT(order DESC) LIMIT(1)');
-
-    return result.isNotEmpty ? result.first : null;
-  }
-
   int increment() {
-    final latest = findLatest();
+    final results = realm.query<T>('TRUEPREDICATE SORT(order DESC) LIMIT(1)');
 
-    if (latest != null) {
-      final json = latest.toEJson();
+    if (results.isNotEmpty) {
+      final result = results.first;
+      final json = result.toEJson();
+
       if (json != null && json is Map<String, dynamic>) {
         final fieldValue = json['order'];
-        if (fieldValue != null) {
-          return fieldValue + 1;
+
+        if (fieldValue != null && fieldValue.containsKey('\$numberInt')) {
+          final intValue = int.parse(fieldValue['\$numberInt']);
+
+          return intValue + 1;
         }
       }
     }
+
     return 1;
   }
 }
