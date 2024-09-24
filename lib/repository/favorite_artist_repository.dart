@@ -7,7 +7,7 @@ class FavoriteArtistRepository extends FavoriteRepository<FavoriteArtistRealmMod
   Realm realm = Realm(Configuration.local([FavoriteArtistRealmModel.schema]));
 
   @override
-  FavoriteArtistRealmModel createModel(String id) {
-    return FavoriteArtistRealmModel(id, increment());
+  FavoriteArtistRealmModel createModel(String id, int order) {
+    return FavoriteArtistRealmModel(id, order);
   }
 }

@@ -15,6 +15,12 @@ abstract class BaseRepository<T extends RealmObject> {
     return realm.all<T>().toList();
   }
 
+  void truncate() {
+    realm.write(() {
+      realm.deleteAll<T>();
+    });
+  }
+
   int increment() {
     final results = realm.query<T>('TRUEPREDICATE SORT(order DESC) LIMIT(1)');
 

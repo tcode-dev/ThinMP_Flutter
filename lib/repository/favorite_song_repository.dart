@@ -7,7 +7,7 @@ class FavoriteSongRepository extends FavoriteRepository<FavoriteSongRealmModel> 
   Realm realm = Realm(Configuration.local([FavoriteSongRealmModel.schema]));
 
   @override
-  FavoriteSongRealmModel createModel(String id) {
-    return FavoriteSongRealmModel(id, increment());
+  FavoriteSongRealmModel createModel(String id, int order) {
+    return FavoriteSongRealmModel(id, order);
   }
 }
