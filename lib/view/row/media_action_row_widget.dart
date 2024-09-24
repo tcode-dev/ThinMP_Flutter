@@ -7,13 +7,13 @@ import 'package:thinmpf/view/row/media_row_widget.dart';
 class MediaActionRowWidget extends StatelessWidget {
   final SongModel song;
   final VoidCallback? onTap;
-  final VoidCallback? onLongPress;
+  final VoidCallback? callback;
 
   const MediaActionRowWidget({
     super.key,
     required this.song,
     this.onTap,
-    this.onLongPress,
+    this.callback,
   });
 
   @override
@@ -22,7 +22,7 @@ class MediaActionRowWidget extends StatelessWidget {
       onTap: onTap,
       child: SongContextMenuWidget(
         songId: song.id,
-        callback: onLongPress,
+        callback: callback,
         child: ListItemRowWidget(child: MediaRowWidget(song: song)),
       ),
     );

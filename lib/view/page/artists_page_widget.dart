@@ -36,7 +36,7 @@ class ArtistsPageWidgetState extends ConsumerState<ArtistsPageWidget> {
       body: Stack(children: [
         CustomScrollView(
           slivers: [
-            ArtistListWidget(onContextMenuAction: _load, onNavigateBack: _load),
+            ArtistListWidget(callback: _load),
             const EmptyRowWidget(),
           ],
         ),

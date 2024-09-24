@@ -5,10 +5,9 @@ import 'package:thinmpf/provider/page/artists_provider.dart';
 import 'package:thinmpf/view/row/artist_action_row_widget.dart';
 
 class ArtistListWidget extends ConsumerWidget {
-  final VoidCallback onContextMenuAction;
-  final VoidCallback onNavigateBack;
+  final VoidCallback? callback;
 
-  const ArtistListWidget({super.key, required this.onContextMenuAction, required this.onNavigateBack});
+  const ArtistListWidget({super.key, this.callback});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,8 +18,7 @@ class ArtistListWidget extends ConsumerWidget {
       delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
         return ArtistActionRowWidget(
           artist: artists[index],
-          onContextMenuAction: onContextMenuAction,
-          onNavigateBack: onNavigateBack,
+          callback: callback,
         );
       }, childCount: artists.length),
     );

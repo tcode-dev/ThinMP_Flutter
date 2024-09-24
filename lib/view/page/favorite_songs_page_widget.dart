@@ -67,7 +67,7 @@ class FavoriteSongsPageWidgetState extends ConsumerState<FavoriteSongsPageWidget
         children: [
           CustomScrollView(
             slivers: [
-              SongListWidget(onLongPress: _load, onTap: _play),
+              SongListWidget(callback: _load, onTap: _play),
               const EmptyRowWidget(),
             ],
           ),

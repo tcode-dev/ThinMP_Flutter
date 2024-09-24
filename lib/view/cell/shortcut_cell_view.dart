@@ -9,13 +9,13 @@ import 'package:thinmpf/view/text/text_widget.dart';
 class ShortcutCellWidget extends StatelessWidget {
   final ShortcutModel shortcut;
   final Widget Function() widgetBuilder;
-  final void Function() onTap;
+  final VoidCallback? callback;
 
   const ShortcutCellWidget({
     super.key,
     required this.shortcut,
     required this.widgetBuilder,
-    required this.onTap,
+    this.callback,
   });
 
   @override
@@ -34,7 +34,7 @@ class ShortcutCellWidget extends StatelessWidget {
               context,
               MaterialPageRoute(builder: (context) => widgetBuilder()),
             );
-            onTap();
+            callback?.call();
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

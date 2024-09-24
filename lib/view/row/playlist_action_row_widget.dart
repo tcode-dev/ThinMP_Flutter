@@ -6,14 +6,12 @@ import 'package:thinmpf/view/row/plain_row_widget.dart';
 
 class PlaylistActionRowWidget extends StatelessWidget {
   final PlaylistModel playlist;
-  final VoidCallback? onContextMenuAction;
-  final VoidCallback? onNavigateBack;
+  final VoidCallback? callback;
 
   const PlaylistActionRowWidget({
     super.key,
     required this.playlist,
-    this.onContextMenuAction,
-    this.onNavigateBack,
+    this.callback,
   });
 
   @override
@@ -24,9 +22,9 @@ class PlaylistActionRowWidget extends StatelessWidget {
           context,
           MaterialPageRoute(builder: (context) => PlaylistDetailPageWidget(id: playlist.id)),
         );
-        onNavigateBack?.call();
+        callback?.call();
       },
-      onLongPress: onContextMenuAction,
+      onLongPress: callback,
       child: ListItemRowWidget(child: PlainRowWidget(title: playlist.name)),
     );
   }

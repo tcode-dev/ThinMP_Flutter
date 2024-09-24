@@ -8,10 +8,10 @@ import 'package:thinmpf/view/menu/grid_context_menu.dart';
 class PlaylistGridContextMenuWidget extends ConsumerWidget {
   final String playlistId;
   final int index;
-  final Function() callback;
+  final VoidCallback? callback;
   final Widget child;
 
-  const PlaylistGridContextMenuWidget({super.key, required this.playlistId, required this.index, required this.callback, required this.child});
+  const PlaylistGridContextMenuWidget({super.key, required this.playlistId, required this.index, this.callback, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,7 +26,7 @@ class PlaylistGridContextMenuWidget extends ConsumerWidget {
       ],
       onSelected: (String value) {
         shortcutRepository.toggleShortcut(playlistId, ShortcutConstant.playlist);
-        callback();
+        callback?.call();
       },
       index: index,
       child: child,

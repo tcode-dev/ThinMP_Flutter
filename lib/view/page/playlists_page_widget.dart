@@ -39,7 +39,7 @@ class PlaylistsPageWidgetState extends ConsumerState<PlaylistsPageWidget> {
         children: [
           CustomScrollView(
             slivers: [
-              PlaylistListWidget(onContextMenuAction: _load),
+              PlaylistListWidget(callback: _load),
               const EmptyRowWidget(),
             ],
           ),

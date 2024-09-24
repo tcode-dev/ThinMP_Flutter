@@ -12,7 +12,7 @@ class ArtistGridContextMenuWidget extends ConsumerWidget {
   final VoidCallback? callback;
   final Widget child;
 
-  const ArtistGridContextMenuWidget({super.key, required this.artistId, required this.index, required this.callback, required this.child});
+  const ArtistGridContextMenuWidget({super.key, required this.artistId, required this.index, this.callback, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -5,10 +5,9 @@ import 'package:thinmpf/provider/page/playlists_provider.dart';
 import 'package:thinmpf/view/row/playlist_action_row_widget.dart';
 
 class PlaylistListWidget extends ConsumerWidget {
-  final VoidCallback? onContextMenuAction;
-  final VoidCallback? onNavigateBack;
+  final VoidCallback? callback;
 
-  const PlaylistListWidget({super.key, this.onContextMenuAction, this.onNavigateBack});
+  const PlaylistListWidget({super.key, this.callback});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,8 +18,7 @@ class PlaylistListWidget extends ConsumerWidget {
       delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
         return PlaylistActionRowWidget(
           playlist: playlists[index],
-          onContextMenuAction: onContextMenuAction,
-          onNavigateBack: () => ref.refresh(playlistsProvider),
+          callback: callback,
         );
       }, childCount: playlists.length),
     );

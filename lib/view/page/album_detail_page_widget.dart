@@ -90,7 +90,7 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
                   ),
                 ),
               ),
-              SongListWidget(onLongPress: _load, onTap: _play),
+              SongListWidget(callback: _load, onTap: _play),
               const EmptyRowWidget(),
             ],
           ),

@@ -7,14 +7,12 @@ import 'package:thinmpf/view/row/plain_row_widget.dart';
 
 class ArtistActionRowWidget extends StatelessWidget {
   final ArtistModel artist;
-  final VoidCallback? onContextMenuAction;
-  final VoidCallback? onNavigateBack;
+  final VoidCallback? callback;
 
   const ArtistActionRowWidget({
     super.key,
     required this.artist,
-    this.onContextMenuAction,
-    this.onNavigateBack,
+    this.callback,
   });
 
   @override
@@ -25,11 +23,11 @@ class ArtistActionRowWidget extends StatelessWidget {
           context,
           MaterialPageRoute(builder: (context) => ArtistDetailPageWidget(id: artist.id)),
         );
-        onNavigateBack?.call();
+        callback?.call();
       },
       child: ArtistListContextMenuWidget(
         artistId: artist.id,
-        callback: onContextMenuAction,
+        callback: callback,
         child: ListItemRowWidget(
           child: PlainRowWidget(title: artist.name),
         ),
