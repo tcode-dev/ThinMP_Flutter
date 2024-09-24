@@ -37,15 +37,15 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_riverpod: ^2.4.9
   riverpod_annotation: ^2.3.3
-  pigeon: ^21.1.0
+  pigeon: ^22.4.0
   permission_handler: ^11.3.1
   blur: ^4.0.0
   flutter_localizations:
     sdk: flutter
   intl: any
   shared_preferences: ^2.3.2
-  flutter_launcher_icons: ^0.13.1
-  realm: ^3.4.1
+  flutter_launcher_icons: ^0.14.0
+  realm: ^20.0.0
 
 dev_dependencies:
   flutter_test:
