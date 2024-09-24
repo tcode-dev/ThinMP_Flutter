@@ -8,10 +8,7 @@ class ShortcutRepository extends BaseRepository<ShortcutRealmModel> {
   Realm realm = Realm(Configuration.local([ShortcutRealmModel.schema]));
 
   bool exists(String id, ShortcutConstant type) {
-    return realm.query<ShortcutRealmModel>(
-      'itemId == \$0 AND type == \$1',
-      [id, type.index],
-    ).isNotEmpty;
+    return _find(id, type) != null;
   }
 
   void add(String id, ShortcutConstant type) {
@@ -35,15 +32,19 @@ class ShortcutRepository extends BaseRepository<ShortcutRealmModel> {
   }
 
   void delete(String id, ShortcutConstant type) {
-    final models = realm.query<ShortcutRealmModel>(
-      'itemId == \$0 AND type == \$1',
-      [id, type.index],
-    );
+    final model = _find(id, type);
 
-    if (models.isNotEmpty) {
+    if (model != null) {
       realm.write(() {
-        realm.delete(models.first);
+        realm.delete(model);
       });
     }
+  }
+
+  ShortcutRealmModel? _find(String id, ShortcutConstant type) {
+    return realm.query<ShortcutRealmModel>(
+      'itemId == \$0 AND type == \$1',
+      [id, type.index],
+    ).firstOrNull;
   }
 }
