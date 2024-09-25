@@ -6,7 +6,7 @@ part of 'shuffle_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$shuffleHash() => r'320d3e5ee96c09ca5b692b4e1b3221e9df2378c3';
+String _$shuffleHash() => r'a0efec47bf25897f6e9ac777354658b168b0e066';
 
 /// See also [Shuffle].
 @ProviderFor(Shuffle)

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
+import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/page/favorite_songs_edit_page_widget.dart';
@@ -27,11 +27,11 @@ class FavoriteSongsPageWidgetState extends ConsumerState<FavoriteSongsPageWidget
   }
 
   void _play(int index) {
-    final playerHostApi = ref.read(playerHostApiFactoryProvider);
+    final playerApi = ref.read(playerApiFactoryProvider);
     final songs = ref.read(songsProvider);
     final songIds = songs.map((song) => song.id).toList();
 
-    playerHostApi.start(index, songIds);
+    playerApi.start(index, songIds);
   }
 
   @override

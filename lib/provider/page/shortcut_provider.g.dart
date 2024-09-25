@@ -6,7 +6,7 @@ part of 'shortcut_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$shortcutHash() => r'd0bc0bb5115e26829931061038ca18f3a60d14ee';
+String _$shortcutHash() => r'14a67733f97d6d2ac537158c0b68828303e13265';
 
 /// See also [Shortcut].
 @ProviderFor(Shortcut)

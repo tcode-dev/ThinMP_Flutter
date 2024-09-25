@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
+import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/player/is_playing_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 
@@ -16,15 +16,15 @@ class PlayPauseButtonWidget extends ConsumerStatefulWidget {
 
 class PlayPauseButtonWidgetState extends ConsumerState<PlayPauseButtonWidget> {
   void _play() {
-    final playerHostApi = ref.read(playerHostApiFactoryProvider);
+    final playerApi = ref.read(playerApiFactoryProvider);
 
-    playerHostApi.play();
+    playerApi.play();
   }
 
   void _pause() {
-    final playerHostApi = ref.read(playerHostApiFactoryProvider);
+    final playerApi = ref.read(playerApiFactoryProvider);
 
-    playerHostApi.pause();
+    playerApi.pause();
   }
 
   @override

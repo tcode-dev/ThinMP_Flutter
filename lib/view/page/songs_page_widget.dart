@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
+import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
@@ -26,9 +26,9 @@ class SongsPageWidgetState extends ConsumerState<SongsPageWidget> {
   }
 
   void _play(int index) {
-    final playerHostApi = ref.read(playerHostApiFactoryProvider);
+    final playerApi = ref.read(playerApiFactoryProvider);
 
-    playerHostApi.startAllSongs(index);
+    playerApi.startAllSongs(index);
   }
 
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
+import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/view/button/button_widget.dart';
 
 class NextButtonWidget extends ConsumerStatefulWidget {
@@ -15,9 +15,9 @@ class NextButtonWidget extends ConsumerStatefulWidget {
 
 class NextButtonWidgetState extends ConsumerState<NextButtonWidget> {
   void _next() {
-    final playerHostApi = ref.read(playerHostApiFactoryProvider);
+    final playerApi = ref.read(playerApiFactoryProvider);
 
-    playerHostApi.next();
+    playerApi.next();
   }
 
   @override

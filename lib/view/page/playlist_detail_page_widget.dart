@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
+import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/playlist_detail_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
@@ -34,11 +34,11 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
   }
 
   void _play(int index) {
-    final playerHostApi = ref.read(playerHostApiFactoryProvider);
+    final playerApi = ref.read(playerApiFactoryProvider);
     final songs = ref.read(songsProvider);
     final songIds = songs.map((song) => song.id).toList();
 
-    playerHostApi.start(index, songIds);
+    playerApi.start(index, songIds);
   }
 
   @override

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
-import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
+import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/player/current_time_provider.dart';
 import 'package:thinmpf/provider/player/is_playing_provider.dart';
 import 'package:thinmpf/provider/player/playback_song_provider.dart';
@@ -87,10 +87,10 @@ class SliderWidgetState extends ConsumerState<SliderWidget> {
   }
 
   void _onChanged(double sliderValue) {
-    final playerHostApi = ref.read(playerHostApiFactoryProvider);
+    final playerApi = ref.read(playerApiFactoryProvider);
     final time = _toCurrentTime(sliderValue);
 
-    playerHostApi.seek(time);
+    playerApi.seek(time);
     ref.read(currentTimeProvider.notifier).seek(time);
   }
 

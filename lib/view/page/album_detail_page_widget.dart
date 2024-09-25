@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thinmpf/provider/api/player_host_api_factory_provider.dart';
+import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/album_detail_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
@@ -31,9 +31,9 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
   }
 
   void _play(int index) {
-    final playerHostApi = ref.read(playerHostApiFactoryProvider);
+    final playerApi = ref.read(playerApiFactoryProvider);
 
-    playerHostApi.startAlbumSongs(index, widget.id);
+    playerApi.startAlbumSongs(index, widget.id);
   }
 
   @override
