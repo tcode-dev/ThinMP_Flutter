@@ -48,8 +48,4 @@ class PlaylistRepository extends BaseRepository<PlaylistRealmModel> {
       });
     });
   }
-
-  List<PlaylistRealmModel> findAllSortedByAsc() {
-    return realm.query<PlaylistRealmModel>('TRUEPREDICATE SORT(order ASC)').toList();
-  }
 }

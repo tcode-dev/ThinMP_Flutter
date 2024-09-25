@@ -15,6 +15,14 @@ abstract class BaseRepository<T extends RealmObject> {
     return realm.all<T>().toList();
   }
 
+  List<T> findAllSortedByAsc() {
+    return realm.query<T>('TRUEPREDICATE SORT(order ASC)').toList();
+  }
+
+  List<T> findAllSortedByDesc() {
+    return realm.query<T>('TRUEPREDICATE SORT(order DESC)').toList();
+  }
+
   void truncate() {
     realm.write(() {
       realm.deleteAll<T>();
