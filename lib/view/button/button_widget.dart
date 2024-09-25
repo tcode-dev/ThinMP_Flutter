@@ -6,7 +6,7 @@ class ButtonWidget extends StatelessWidget {
   final double? imageSize;
   final VoidCallback callback;
 
-  const ButtonWidget({Key? key, required this.icon, required this.size, required this.callback, this.imageSize}) : super(key: key);
+  const ButtonWidget({super.key, required this.icon, required this.size, required this.callback, this.imageSize});
 
   @override
   Widget build(BuildContext context) {
