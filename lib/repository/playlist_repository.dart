@@ -14,7 +14,10 @@ class PlaylistRepository extends BaseRepository<PlaylistRealmModel> {
   void create(String name, String songId) {
     final model = PlaylistRealmModel(ObjectId(), name, increment());
 
-    _write(model, songId);
+    realm.write(() {
+      model.songIds.add(songId);
+      realm.add(model);
+    });
   }
 
   void add(String playlistId, String songId) {
@@ -24,7 +27,9 @@ class PlaylistRepository extends BaseRepository<PlaylistRealmModel> {
       return;
     }
 
-    _write(model, songId);
+    realm.write(() {
+      model.songIds.add(songId);
+    });
   }
 
   void update(List<String> ids) {
@@ -46,12 +51,5 @@ class PlaylistRepository extends BaseRepository<PlaylistRealmModel> {
 
   List<PlaylistRealmModel> findAllSortedByAsc() {
     return realm.query<PlaylistRealmModel>('TRUEPREDICATE SORT(order ASC)').toList();
-  }
-
-  void _write(PlaylistRealmModel model, String songId) {
-    realm.write(() {
-      model.songIds.add(songId);
-      realm.add(model);
-    });
   }
 }
