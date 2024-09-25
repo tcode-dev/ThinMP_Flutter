@@ -27,6 +27,27 @@ class PlaylistRepository extends BaseRepository<PlaylistRealmModel> {
     _write(model, songId);
   }
 
+  void update(List<String> ids) {
+    final models = findAll();
+    final deleteModels = models.where((model) => !ids.contains(model.id.toString())).toList();
+    final updateModels = models.where((model) => ids.contains(model.id.toString())).toList();
+    final sortModels = ids.map((id) => updateModels.firstWhere((model) => model.id.toString() == id)).toList();
+
+    realm.write(() {
+      for (var model in deleteModels) {
+        realm.delete(model);
+      }
+
+      sortModels.asMap().forEach((index, model) {
+        model.order = index + 1;
+      });
+    });
+  }
+
+  List<PlaylistRealmModel> findAllSortedByAsc() {
+    return realm.query<PlaylistRealmModel>('TRUEPREDICATE SORT(order ASC)').toList();
+  }
+
   void _write(PlaylistRealmModel model, String songId) {
     realm.write(() {
       model.songIds.add(songId);

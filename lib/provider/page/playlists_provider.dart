@@ -12,7 +12,7 @@ class Playlists extends _$Playlists {
 
   void fetchPlaylists() {
     final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
-    final playlists = playlistRepository.findAll();
+    final playlists = playlistRepository.findAllSortedByAsc();
 
     state = playlists.map((playlist) => playlist.fromRealm()).toList();
   }
