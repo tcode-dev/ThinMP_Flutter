@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:thinmpf/config/player_config.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
+import 'package:thinmpf/provider/config/player_config_factory_provider.dart';
 
 part 'shuffle_provider.g.dart';
 
@@ -22,13 +22,13 @@ class Shuffle extends _$Shuffle {
   }
 
   Future<ShuffleMode> _loadShuffle() async {
-    final playerConfig = PlayerConfig();
+    final playerConfig = ref.read(playerConfigFactoryProvider);
 
     return playerConfig.loadShuffle();
   }
 
   Future<void> _saveShuffle(ShuffleMode shuffle) async {
-    final playerConfig = PlayerConfig();
+    final playerConfig = ref.read(playerConfigFactoryProvider);
 
     await playerConfig.saveShuffle(shuffle);
   }

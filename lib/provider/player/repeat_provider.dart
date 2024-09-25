@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:thinmpf/config/player_config.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
+import 'package:thinmpf/provider/config/player_config_factory_provider.dart';
 
 part 'repeat_provider.g.dart';
 
@@ -27,12 +27,14 @@ class Repeat extends _$Repeat {
   }
 
   Future<RepeatMode> _loadRepeat() async {
-    final playerConfig = PlayerConfig();
+    final playerConfig = ref.read(playerConfigFactoryProvider);
+
     return playerConfig.loadRepeat();
   }
 
   Future<void> _saveRepeat(RepeatMode repeat) async {
-    final playerConfig = PlayerConfig();
+    final playerConfig = ref.read(playerConfigFactoryProvider);
+
     await playerConfig.saveRepeat(repeat);
   }
 }
