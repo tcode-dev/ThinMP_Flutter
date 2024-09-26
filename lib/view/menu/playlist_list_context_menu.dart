@@ -24,7 +24,7 @@ class PlaylistListContextMenuWidget extends ConsumerWidget {
         ),
       ],
       onSelected: (String value) {
-        shortcutRepository.toggleShortcut(playlistId, ShortcutConstant.playlist);
+        shortcutRepository.toggle(playlistId, ShortcutConstant.playlist);
         callback();
       },
       child: child,

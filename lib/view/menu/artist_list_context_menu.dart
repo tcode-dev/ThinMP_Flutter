@@ -31,7 +31,7 @@ class ArtistListContextMenuWidget extends ConsumerWidget {
       ],
       onSelected: (String value) {
         if (value == 'shortcut') {
-          shortcutRepository.toggleShortcut(artistId, ShortcutConstant.artist);
+          shortcutRepository.toggle(artistId, ShortcutConstant.artist);
         } else if (value == 'favorite') {
           favoriteArtistRepository.toggle(artistId);
         }

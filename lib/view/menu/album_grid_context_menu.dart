@@ -31,7 +31,7 @@ class AlbumGridContextMenuWidget extends ConsumerWidget {
         ),
       ],
       onSelected: (String value) {
-        shortcutRepository.toggleShortcut(albumId, ShortcutConstant.album);
+        shortcutRepository.toggle(albumId, ShortcutConstant.album);
         callback?.call();
       },
       index: index,

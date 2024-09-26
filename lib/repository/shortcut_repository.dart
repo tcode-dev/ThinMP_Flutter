@@ -19,7 +19,7 @@ class ShortcutRepository extends BaseRepository<ShortcutRealmModel> {
     });
   }
 
-  void toggleShortcut(String id, ShortcutConstant type) {
+  void toggle(String id, ShortcutConstant type) {
     if (exists(id, type)) {
       delete(id, type);
     } else {
