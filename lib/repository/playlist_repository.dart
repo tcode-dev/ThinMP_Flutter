@@ -32,7 +32,7 @@ class PlaylistRepository extends BaseRepository<PlaylistRealmModel> {
     });
   }
 
-  void update(List<String> ids) {
+  void updatePlaylists(List<String> ids) {
     final models = findAll();
     final deleteModels = models.where((model) => !ids.contains(model.id.toString())).toList();
     final updateModels = models.where((model) => ids.contains(model.id.toString())).toList();

@@ -59,7 +59,7 @@ class PlaylistsEditPageWidgetState extends ConsumerState<PlaylistsEditPageWidget
         actions: [
           TextButton(
             onPressed: () {
-              playlistRepository.update(_list.map((model) => model.id).toList());
+              playlistRepository.updatePlaylists(_list.map((model) => model.id).toList());
               Navigator.of(context).pop();
             },
             child: Text(AppLocalizations.of(context)!.done),
