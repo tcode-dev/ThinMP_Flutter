@@ -8,6 +8,7 @@ import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
+import 'package:thinmpf/view/page/playlist_detail_edit_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
@@ -91,6 +92,26 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
                     ],
                   ),
                 ),
+                actions: [
+                  PopupMenuButton(
+                    onSelected: (item) async {
+                      if (item == 'edit') {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => PlaylistDetailEditPageWidget(id: widget.id)),
+                        );
+
+                        _load();
+                      }
+                    },
+                    itemBuilder: (BuildContext context) => [
+                      PopupMenuItem(
+                        value: 'edit',
+                        child: Text(AppLocalizations.of(context)!.edit),
+                      ),
+                    ],
+                  )
+                ],
               ),
               SliverToBoxAdapter(
                 child: SizedBox(
