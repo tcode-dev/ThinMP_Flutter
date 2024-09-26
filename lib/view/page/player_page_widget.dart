@@ -15,6 +15,7 @@ import 'package:thinmpf/view/button/shuffle_button_widget.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/image/square_image_widget.dart';
 import 'package:thinmpf/view/slider/slider_widget.dart';
+import 'package:thinmpf/view/text/text_widget.dart';
 
 class PlayerPageWidget extends ConsumerStatefulWidget {
   const PlayerPageWidget({super.key});
@@ -87,8 +88,8 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
                   Center(child: SquareImageWidget(id: playbackSong.imageId, size: screenSize.width * 0.65)),
                   const Spacer(),
                   Column(children: [
-                    Text(playbackSong.name, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineMedium),
-                    Text(playbackSong.artistName, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
+                    TextWidget(text: playbackSong.name, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineMedium),
+                    TextWidget(text: playbackSong.artistName, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
                   ]),
                   const Spacer(),
                   const SliderWidget(),
