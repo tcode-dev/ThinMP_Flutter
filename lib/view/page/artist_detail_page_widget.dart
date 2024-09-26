@@ -2,6 +2,7 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/albums_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
@@ -12,6 +13,7 @@ import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
+import 'package:thinmpf/view/text/text_widget.dart';
 import 'package:thinmpf/view/title/section_title_widget.dart';
 
 class ArtistDetailPageWidget extends ConsumerStatefulWidget {
@@ -61,7 +63,7 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
                 expandedHeight: screenSize.width - top,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: Text(name),
+                  title: TextWidget(text: name),
                   background: Stack(
                     children: [
                       Positioned(
@@ -100,9 +102,9 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
               ),
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 20,
+                  height: StyleConstant.row.contentBoxHeight,
                   child: Center(
-                    child: Text(description),
+                    child: TextWidget(text: description),
                   ),
                 ),
               ),

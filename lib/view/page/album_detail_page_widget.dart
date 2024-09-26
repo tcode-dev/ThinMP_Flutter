@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/album_detail_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
@@ -8,6 +9,7 @@ import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
+import 'package:thinmpf/view/text/text_widget.dart';
 
 class AlbumDetailPageWidget extends ConsumerStatefulWidget {
   final String id;
@@ -52,7 +54,7 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
                 expandedHeight: screenSize.width - top,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: Text(albumDetail?.name ?? ''),
+                  title: TextWidget(text: albumDetail?.name ?? ''),
                   background: Stack(
                     children: [
                       Positioned(
@@ -84,9 +86,9 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
               ),
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 20,
+                  height: StyleConstant.row.contentBoxHeight,
                   child: Center(
-                    child: Text(albumDetail?.artistName ?? ''),
+                    child: TextWidget(text: albumDetail?.artistName ?? ''),
                   ),
                 ),
               ),
