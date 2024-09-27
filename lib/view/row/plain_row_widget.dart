@@ -13,7 +13,7 @@ class PlainRowWidget extends StatelessWidget {
       width: double.infinity,
       height: StyleConstant.row.contentBoxHeight,
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(top: StyleConstant.padding.tiny, right: StyleConstant.padding.small, bottom: StyleConstant.padding.tiny),
+      padding: EdgeInsets.only(right: StyleConstant.padding.small),
       child: TextWidget(text: title),
     );
   }
