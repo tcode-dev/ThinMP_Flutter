@@ -39,8 +39,9 @@ class Songs extends _$Songs {
     final favoriteSongs = favoriteSongRepository.findAll();
     final favoriteSongIds = favoriteSongs.map((song) => song.songId).toList();
     final songs = await songHostApi.getSongsByIds(favoriteSongIds);
+    final songModels = songs.map((song) => song.fromPigeon()).toList();
 
-    state = songs.map((song) => song.fromPigeon()).toList();
+    state = favoriteSongIds.map((id) => songModels.firstWhere((song) => song.id == id)).toList();
   }
 
   Future<void> fetchPlaylistSongs(String id) async {
