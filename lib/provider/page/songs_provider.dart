@@ -54,7 +54,8 @@ class Songs extends _$Songs {
 
     final songIds = playlist.songIds.toList();
     final songs = await songHostApi.getSongsByIds(songIds);
+    final songModels = songs.map((song) => song.fromPigeon()).toList();
 
-    state = songs.map((song) => song.fromPigeon()).toList();
+    state = songIds.map((id) => songModels.firstWhere((song) => song.id == id)).toList();
   }
 }
