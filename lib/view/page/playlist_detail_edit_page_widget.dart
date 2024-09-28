@@ -44,10 +44,14 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
     });
   }
 
+  void _updatePlaylistDetail() {
+    final playlistRepository = ref.read(playlistRepositoryFactoryProvider);
+_widgetList.forEach((model) => print(model.song.id));
+    playlistRepository.updatePlaylistDetail(widget.id, _controller.text, _widgetList.map((model) => model.song.id).toList());
+  }
+
   @override
   Widget build(BuildContext context) {
-    // final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -67,7 +71,7 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
         actions: [
           TextButton(
             onPressed: () {
-              // playlistRepository.update(_list.map((model) => model.id).toList());
+              _updatePlaylistDetail();
               Navigator.of(context).pop();
             },
             child: Text(AppLocalizations.of(context)!.done),
@@ -118,15 +122,13 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
             ),
             itemCount: _widgetList.length,
             onReorder: (int oldIndex, int newIndex) {
-              setState(
-                () {
-                  if (oldIndex < newIndex) {
-                    newIndex -= 1;
-                  }
-                  final item = _widgetList.removeAt(oldIndex);
-                  _widgetList.insert(newIndex, item);
-                },
-              );
+              setState(() {
+                if (oldIndex < newIndex) {
+                  newIndex -= 1;
+                }
+                final item = _widgetList.removeAt(oldIndex);
+                _widgetList.insert(newIndex, item);
+              });
             },
           ),
         ],

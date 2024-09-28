@@ -48,4 +48,18 @@ class PlaylistRepository extends BaseRepository<PlaylistRealmModel> {
       });
     });
   }
+
+  void updatePlaylistDetail(String playlistId, String name, List<String> songIds) {
+    final model = findById(playlistId);
+
+    if (model == null) {
+      return;
+    }
+
+    realm.write(() {
+      model.name = name;
+      model.songIds.clear();
+      model.songIds.addAll(songIds);
+    });
+  }
 }
