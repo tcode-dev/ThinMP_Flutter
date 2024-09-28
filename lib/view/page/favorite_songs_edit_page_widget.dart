@@ -34,10 +34,14 @@ class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPa
     });
   }
 
+  void _update() {
+    final favoriteSongRepository = ref.read(favoriteSongRepositoryFactoryProvider);
+
+    favoriteSongRepository.update(_list.map((model) => model.id).toList());
+  }
+
   @override
   Widget build(BuildContext context) {
-    final favoriteSongRepository = ref.watch(favoriteSongRepositoryFactoryProvider);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -57,7 +61,7 @@ class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPa
         actions: [
           TextButton(
             onPressed: () {
-              favoriteSongRepository.update(_list.map((model) => model.id).toList());
+              _update();
               Navigator.of(context).pop();
             },
             child: Text(AppLocalizations.of(context)!.done),

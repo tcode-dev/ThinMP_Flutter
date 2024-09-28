@@ -36,10 +36,14 @@ class PlaylistsEditPageWidgetState extends ConsumerState<PlaylistsEditPageWidget
     });
   }
 
+  void _updatePlaylists() {
+    final playlistRepository = ref.read(playlistRepositoryFactoryProvider);
+
+    playlistRepository.updatePlaylists(_list.map((model) => model.id).toList());
+  }
+
   @override
   Widget build(BuildContext context) {
-    final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -59,7 +63,7 @@ class PlaylistsEditPageWidgetState extends ConsumerState<PlaylistsEditPageWidget
         actions: [
           TextButton(
             onPressed: () {
-              playlistRepository.updatePlaylists(_list.map((model) => model.id).toList());
+              _updatePlaylists();
               Navigator.of(context).pop();
             },
             child: Text(AppLocalizations.of(context)!.done),

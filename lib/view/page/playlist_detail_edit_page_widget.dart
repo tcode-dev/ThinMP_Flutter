@@ -46,7 +46,7 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
 
   void _updatePlaylistDetail() {
     final playlistRepository = ref.read(playlistRepositoryFactoryProvider);
-_widgetList.forEach((model) => print(model.song.id));
+
     playlistRepository.updatePlaylistDetail(widget.id, _controller.text, _widgetList.map((model) => model.song.id).toList());
   }
 

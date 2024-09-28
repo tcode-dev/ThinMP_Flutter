@@ -34,10 +34,14 @@ class FavoriteArtistsEditPageWidgetState extends ConsumerState<FavoriteArtistsEd
     });
   }
 
+  void _update() {
+    final favoriteArtistRepository = ref.read(favoriteArtistRepositoryFactoryProvider);
+
+    favoriteArtistRepository.update(_list.map((model) => model.id).toList());
+  }
+
   @override
   Widget build(BuildContext context) {
-    final favoriteArtistRepository = ref.watch(favoriteArtistRepositoryFactoryProvider);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -57,7 +61,7 @@ class FavoriteArtistsEditPageWidgetState extends ConsumerState<FavoriteArtistsEd
         actions: [
           TextButton(
             onPressed: () {
-              favoriteArtistRepository.update(_list.map((model) => model.id).toList());
+              _update();
               Navigator.of(context).pop();
             },
             child: Text(AppLocalizations.of(context)!.done),
