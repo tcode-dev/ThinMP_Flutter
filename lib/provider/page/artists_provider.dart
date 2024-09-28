@@ -24,7 +24,8 @@ class Artists extends _$Artists {
     final favoriteArtists = favoriteArtistRepository.findAll();
     final favoriteArtistIds = favoriteArtists.map((artist) => artist.artistId).toList();
     final artists = await artistHostApi.getArtistsByIds(favoriteArtistIds);
+    final artistModels = artists.map((artist) => artist.fromPigeon()).toList();
 
-    state = artists.map((artist) => artist.fromPigeon()).toList();
+    state = favoriteArtistIds.map((id) => artistModels.firstWhere((artist) => artist.id == id)).toList();
   }
 }
