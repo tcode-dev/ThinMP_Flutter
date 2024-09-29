@@ -1,42 +1,32 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thinmpf/constant/main_menu_constant.dart';
 
-enum MainMenuItemConstant {
-  artists,
-  albums,
-  songs,
-  favoriteSong,
-  favoriteArtist,
-  playlists,
-  shortcut,
-  recent,
-}
-
-const List<MainMenuItemConstant> _defaultSortList = [
-  MainMenuItemConstant.artists,
-  MainMenuItemConstant.albums,
-  MainMenuItemConstant.songs,
-  MainMenuItemConstant.favoriteArtist,
-  MainMenuItemConstant.favoriteSong,
-  MainMenuItemConstant.playlists,
+const List<MainMenuConstant> _defaultSortList = [
+  MainMenuConstant.artists,
+  MainMenuConstant.albums,
+  MainMenuConstant.songs,
+  MainMenuConstant.favoriteArtist,
+  MainMenuConstant.favoriteSong,
+  MainMenuConstant.playlists,
 ];
 
-const Map<MainMenuItemConstant, bool> _defaultVisibilityMap = {
-  MainMenuItemConstant.artists: true,
-  MainMenuItemConstant.albums: true,
-  MainMenuItemConstant.songs: true,
-  MainMenuItemConstant.favoriteSong: true,
-  MainMenuItemConstant.favoriteArtist: true,
-  MainMenuItemConstant.playlists: true,
-  MainMenuItemConstant.shortcut: true,
-  MainMenuItemConstant.recent: true,
+const Map<MainMenuConstant, bool> _defaultVisibilityMap = {
+  MainMenuConstant.artists: true,
+  MainMenuConstant.albums: true,
+  MainMenuConstant.songs: true,
+  MainMenuConstant.favoriteSong: true,
+  MainMenuConstant.favoriteArtist: true,
+  MainMenuConstant.playlists: true,
+  MainMenuConstant.shortcut: true,
+  MainMenuConstant.recent: true,
 };
 
 class MainMenuConfig {
   static const String _sortKey = 'sort';
   static const String _visibilityKey = 'visibility';
 
-  Future<List<MainMenuItemConstant>> loadSort() async {
+  Future<List<MainMenuConstant>> loadSort() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = prefs.getString(_sortKey);
 
@@ -44,17 +34,17 @@ class MainMenuConfig {
       return _defaultSortList;
     }
 
-    return jsonDecode(jsonString) as List<MainMenuItemConstant>;
+    return jsonDecode(jsonString) as List<MainMenuConstant>;
   }
 
-  Future<void> saveSort(List<MainMenuItemConstant> list) async {
+  Future<void> saveSort(List<MainMenuConstant> list) async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = jsonEncode(list);
 
     await prefs.setString(_sortKey, jsonString);
   }
 
-  Future<Map<MainMenuItemConstant, bool>> loadVisibility() async {
+  Future<Map<MainMenuConstant, bool>> loadVisibility() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = prefs.getString(_visibilityKey);
 
@@ -62,10 +52,10 @@ class MainMenuConfig {
       return _defaultVisibilityMap;
     }
 
-    return jsonDecode(jsonString) as Map<MainMenuItemConstant, bool>;
+    return jsonDecode(jsonString) as Map<MainMenuConstant, bool>;
   }
 
-  Future<void> saveVisibility(Map<MainMenuItemConstant, bool> map) async {
+  Future<void> saveVisibility(Map<MainMenuConstant, bool> map) async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = jsonEncode(map);
 

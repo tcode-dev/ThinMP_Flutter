@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/provider/page/albums_provider.dart';
+import 'package:thinmpf/provider/page/main_menu_provider.dart';
 import 'package:thinmpf/provider/page/shortcut_provider.dart';
 import 'package:thinmpf/view/grid/album_grid_widget.dart';
 import 'package:thinmpf/view/grid/shortcut_grid_widget.dart';
-import 'package:thinmpf/view/list/navigation_list_widget.dart';
+import 'package:thinmpf/view/menu/main_menu_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/title/main_title_widget.dart';
@@ -28,6 +29,7 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
   void _load() {
     ref.read(shortcutProvider.notifier).fetch();
     ref.read(albumsProvider.notifier).fetchRecent();
+    ref.read(mainMenuProvider.notifier).load();
   }
 
   @override
@@ -38,7 +40,7 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
           CustomScrollView(
             slivers: [
               MainTitleWidget(title: AppLocalizations.of(context)!.library),
-              NavigationListWidget(callback: _load),
+              MainMenuWidget(callback: _load),
               SectionTitleWidget(title: AppLocalizations.of(context)!.shortcut),
               ShortcutGridWidget(callback: _load),
               SectionTitleWidget(title: AppLocalizations.of(context)!.recentlyAdded),

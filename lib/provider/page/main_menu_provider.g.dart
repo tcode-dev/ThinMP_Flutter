@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'songs_provider.dart';
+part of 'main_menu_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$songsHash() => r'71c7847faad677239b0541bc45a766c978d91089';
+String _$mainMenuHash() => r'9fe594c50ef1b66aad9d3b0a1cd52a16e47261c2';
 
-/// See also [Songs].
-@ProviderFor(Songs)
-final songsProvider =
-    AutoDisposeNotifierProvider<Songs, List<SongModel>>.internal(
-  Songs.new,
-  name: r'songsProvider',
+/// See also [MainMenu].
+@ProviderFor(MainMenu)
+final mainMenuProvider =
+    AutoDisposeNotifierProvider<MainMenu, List<MainMenuModel>>.internal(
+  MainMenu.new,
+  name: r'mainMenuProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$songsHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$mainMenuHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Songs = AutoDisposeNotifier<List<SongModel>>;
+typedef _$MainMenu = AutoDisposeNotifier<List<MainMenuModel>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
