@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/main_menu_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
+import 'package:thinmpf/provider/config/main_menu_config_factory_provider.dart';
 import 'package:thinmpf/provider/page/main_menu_provider.dart';
 import 'package:thinmpf/view/row/checkbox_row_widget.dart';
 import 'package:thinmpf/view/row/list_item_row_widget.dart';
@@ -39,14 +40,31 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
 
     setState(() {
       final localizations = AppLocalizations.of(context)!;
-      _menuList = mainMenu.map((menu) => CheckboxRowWidget(title: _mainMenuTextMap[menu.item]!(localizations), initialChecked: menu.visibility)).toList();
+      _menuList = mainMenu.map((menu) => CheckboxRowWidget(key: Key(menu.item.index.toString()), title: _mainMenuTextMap[menu.item]!(localizations), initialChecked: menu.visibility)).toList();
     });
   }
 
   void _update() {
-    // final playlistRepository = ref.read(playlistRepositoryFactoryProvider);
+    final mainMenuConfig = ref.read(mainMenuConfigFactoryProvider);
 
-    // playlistRepository.updatePlaylistDetail(widget.id, _controller.text, _widgetList.map((model) => model.song.id).toList());
+    final sorted = _menuList
+        .map((menu) {
+          final String menuKeyString = menu.key is ValueKey ? (menu.key as ValueKey).value : menu.key.toString();
+
+          return MainMenuConstant.values[int.parse(menuKeyString)];
+        })
+        .cast<MainMenuConstant>()
+        .toList();
+
+    mainMenuConfig.saveSort(sorted);
+
+    // final Map<MainMenuConstant, bool> visibilityMap = Map.fromIterable(
+    //   _menuList,
+    //   key: (value) => MainMenuConstant.values[int.parse((value.key as ValueKey).toString())],
+    //   value: (entry) => entry.value.checked,
+    // );
+
+    // mainMenuConfig.saveVisibility(visibilityMap);
   }
 
   @override

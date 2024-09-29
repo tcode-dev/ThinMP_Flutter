@@ -34,12 +34,13 @@ class MainMenuConfig {
       return _defaultSortList;
     }
 
-    return jsonDecode(jsonString) as List<MainMenuConstant>;
+    return jsonDecode(jsonString).map<MainMenuConstant>((index) => MainMenuConstant.values[index]).toList();
   }
 
   Future<void> saveSort(List<MainMenuConstant> list) async {
+    final formatted = list.map((item) => item.index).toList();
     final prefs = await SharedPreferences.getInstance();
-    final jsonString = jsonEncode(list);
+    final jsonString = jsonEncode(formatted);
 
     await prefs.setString(_sortKey, jsonString);
   }
