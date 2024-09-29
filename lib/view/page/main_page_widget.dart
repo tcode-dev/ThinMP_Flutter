@@ -39,7 +39,7 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
         children: [
           CustomScrollView(
             slivers: [
-              MainTitleWidget(title: AppLocalizations.of(context)!.library),
+              MainTitleWidget(title: AppLocalizations.of(context)!.library, callback: _load),
               MainMenuWidget(callback: _load),
               SectionTitleWidget(title: AppLocalizations.of(context)!.shortcut),
               ShortcutGridWidget(callback: _load),

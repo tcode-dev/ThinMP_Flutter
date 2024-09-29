@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:thinmpf/constant/style_constant.dart';
+import 'package:thinmpf/view/page/main_page_edit_page_widget.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
 
 class MainTitleWidget extends StatelessWidget {
   final String title;
+  final void Function() callback;
 
-  const MainTitleWidget({super.key, required this.title});
+  const MainTitleWidget({super.key, required this.title, required this.callback});
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +23,14 @@ class MainTitleWidget extends StatelessWidget {
             TextWidget(text: title, style: Theme.of(context).textTheme.headlineLarge),
             PopupMenuButton(
               onSelected: (item) async {
-                // if (item == 'edit') {
-                //   await Navigator.push(
-                //     context,
-                //     MaterialPageRoute(builder: (context) => PlaylistDetailEditPageWidget(id: widget.id)),
-                //   );
+                if (item == 'edit') {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MainPageEditPageWidget()),
+                  );
 
-                //   _load();
-                // }
+                  callback();
+                }
               },
               itemBuilder: (BuildContext context) => [
                 PopupMenuItem(
