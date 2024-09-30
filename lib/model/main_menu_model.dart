@@ -7,5 +7,5 @@ class MainMenuModel {
   });
 
   final MainMenuConstant item;
-  final bool visibility;
+  bool visibility;
 }

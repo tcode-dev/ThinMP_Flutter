@@ -53,12 +53,13 @@ class MainMenuConfig {
       return _defaultVisibilityMap;
     }
 
-    return jsonDecode(jsonString) as Map<MainMenuConstant, bool>;
+    return jsonDecode(jsonString).map<MainMenuConstant, bool>((key, value) => MapEntry(MainMenuConstant.values[int.parse(key)], value as bool));
   }
 
   Future<void> saveVisibility(Map<MainMenuConstant, bool> map) async {
+    final formatted = map.map((key, value) => MapEntry(key.index.toString(), value));
     final prefs = await SharedPreferences.getInstance();
-    final jsonString = jsonEncode(map);
+    final jsonString = jsonEncode(formatted);
 
     await prefs.setString(_visibilityKey, jsonString);
   }

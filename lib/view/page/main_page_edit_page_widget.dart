@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/main_menu_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
+import 'package:thinmpf/model/main_menu_model.dart';
 import 'package:thinmpf/provider/config/main_menu_config_factory_provider.dart';
 import 'package:thinmpf/provider/page/main_menu_provider.dart';
 import 'package:thinmpf/view/row/checkbox_row_widget.dart';
@@ -25,7 +26,8 @@ class MainPageEditPageWidget extends ConsumerStatefulWidget {
 }
 
 class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> {
-  List<Widget> _menuList = [];
+  List<MainMenuModel> _menuList = [];
+  List<Widget> _menuWidgetList = [];
 
   @override
   void initState() {
@@ -39,15 +41,24 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
     final mainMenu = ref.read(mainMenuProvider);
 
     setState(() {
+      _menuList = List.from(mainMenu);
       final localizations = AppLocalizations.of(context)!;
-      _menuList = mainMenu.map((menu) => CheckboxRowWidget(key: Key(menu.item.index.toString()), title: _mainMenuTextMap[menu.item]!(localizations), initialChecked: menu.visibility)).toList();
+      _menuWidgetList = mainMenu
+          .asMap()
+          .entries
+          .map((menu) => CheckboxRowWidget(
+                key: Key(menu.value.item.index.toString()),
+                text: _mainMenuTextMap[menu.value.item]!(localizations),
+                initialChecked: menu.value.visibility,
+                onChanged: (bool checked) => _onChanged(menu.key, checked),
+              ))
+          .toList();
     });
   }
 
-  void _update() {
+  Future<void> _update() async {
     final mainMenuConfig = ref.read(mainMenuConfigFactoryProvider);
-
-    final sorted = _menuList
+    final sorted = _menuWidgetList
         .map((menu) {
           final String menuKeyString = menu.key is ValueKey ? (menu.key as ValueKey).value : menu.key.toString();
 
@@ -55,16 +66,20 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
         })
         .cast<MainMenuConstant>()
         .toList();
+    final visibilityMap = Map.fromEntries(
+      _menuList.map((entry) {
+        return MapEntry(entry.item, entry.visibility);
+      }),
+    );
 
-    mainMenuConfig.saveSort(sorted);
+    await mainMenuConfig.saveSort(sorted);
+    await mainMenuConfig.saveVisibility(visibilityMap);
+  }
 
-    // final Map<MainMenuConstant, bool> visibilityMap = Map.fromIterable(
-    //   _menuList,
-    //   key: (value) => MainMenuConstant.values[int.parse((value.key as ValueKey).toString())],
-    //   value: (entry) => entry.value.checked,
-    // );
-
-    // mainMenuConfig.saveVisibility(visibilityMap);
+  void _onChanged(int index, bool value) {
+    setState(() {
+      _menuList[index].visibility = value;
+    });
   }
 
   @override
@@ -107,7 +122,7 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
                     minVerticalPadding: 0.0,
                     contentPadding: EdgeInsets.only(right: StyleConstant.padding.large),
                     title: Center(
-                      child: _menuList[index],
+                      child: _menuWidgetList[index],
                     ),
                     trailing: const ReorderableDragStartListener(
                       index: 0,
@@ -117,14 +132,14 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
                 ),
               ),
             ),
-            itemCount: _menuList.length,
+            itemCount: _menuWidgetList.length,
             onReorder: (int oldIndex, int newIndex) {
               setState(() {
                 if (oldIndex < newIndex) {
                   newIndex -= 1;
                 }
-                final item = _menuList.removeAt(oldIndex);
-                _menuList.insert(newIndex, item);
+                final item = _menuWidgetList.removeAt(oldIndex);
+                _menuWidgetList.insert(newIndex, item);
               });
             },
           ),
