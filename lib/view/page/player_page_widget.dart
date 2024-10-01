@@ -39,6 +39,7 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
     final appBarHeight = AppBar().preferredSize.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Positioned(
