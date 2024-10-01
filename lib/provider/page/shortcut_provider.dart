@@ -44,4 +44,8 @@ class Shortcut extends _$Shortcut {
 
     state = filteredShortcutModels;
   }
+
+  void clear() {
+    state = [];
+  }
 }

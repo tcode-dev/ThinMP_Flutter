@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/main_menu_constant.dart';
 import 'package:thinmpf/provider/page/albums_provider.dart';
 import 'package:thinmpf/provider/page/main_menu_provider.dart';
 import 'package:thinmpf/provider/page/main_menu_visibility_provider.dart';
@@ -27,15 +28,24 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
     _load();
   }
 
-  void _load() {
-    ref.read(mainMenuVisibilityProvider.notifier).load();
-    ref.read(mainMenuProvider.notifier).loadMain();
-    ref.read(shortcutProvider.notifier).fetch();
+  void _load() async{
+    await ref.read(mainMenuVisibilityProvider.notifier).load();
+    await ref.read(mainMenuProvider.notifier).loadMain();
+    final mainMenuVisibility = ref.watch(mainMenuVisibilityProvider);
+
+    if (mainMenuVisibility[MainMenuConstant.shortcut]!) {
+      ref.read(shortcutProvider.notifier).fetch();
+    } else {
+      ref.read(shortcutProvider.notifier).clear();
+    }
+
     ref.read(albumsProvider.notifier).fetchRecent();
   }
 
   @override
   Widget build(BuildContext context) {
+    final shortcuts = ref.watch(shortcutProvider);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -43,8 +53,10 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
             slivers: [
               MainTitleWidget(title: AppLocalizations.of(context)!.library, callback: _load),
               MainMenuWidget(callback: _load),
-              SectionTitleWidget(title: AppLocalizations.of(context)!.shortcut),
-              ShortcutGridWidget(callback: _load),
+              if (shortcuts.isNotEmpty) ...[
+                SectionTitleWidget(title: AppLocalizations.of(context)!.shortcut),
+                ShortcutGridWidget(callback: _load),
+              ],
               SectionTitleWidget(title: AppLocalizations.of(context)!.recentlyAdded),
               AlbumGridWidget(callback: _load),
               const EmptyRowWidget(),
