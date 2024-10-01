@@ -30,4 +30,8 @@ class Albums extends _$Albums {
 
     state = albums.map((album) => album.fromPigeon()).toList();
   }
+
+  void clear() {
+    state = [];
+  }
 }

@@ -28,7 +28,7 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
     _load();
   }
 
-  void _load() async{
+  void _load() async {
     await ref.read(mainMenuVisibilityProvider.notifier).load();
     await ref.read(mainMenuProvider.notifier).loadMain();
     final mainMenuVisibility = ref.watch(mainMenuVisibilityProvider);
@@ -39,12 +39,17 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
       ref.read(shortcutProvider.notifier).clear();
     }
 
-    ref.read(albumsProvider.notifier).fetchRecent();
+    if (mainMenuVisibility[MainMenuConstant.recent]!) {
+      ref.read(albumsProvider.notifier).fetchRecent();
+    } else {
+      ref.read(albumsProvider.notifier).clear();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final shortcuts = ref.watch(shortcutProvider);
+    final albums = ref.watch(albumsProvider);
 
     return Scaffold(
       body: Stack(
@@ -57,8 +62,10 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
                 SectionTitleWidget(title: AppLocalizations.of(context)!.shortcut),
                 ShortcutGridWidget(callback: _load),
               ],
-              SectionTitleWidget(title: AppLocalizations.of(context)!.recentlyAdded),
-              AlbumGridWidget(callback: _load),
+              if (albums.isNotEmpty) ...[
+                SectionTitleWidget(title: AppLocalizations.of(context)!.recentlyAdded),
+                AlbumGridWidget(callback: _load),
+              ],
               const EmptyRowWidget(),
             ],
           ),
