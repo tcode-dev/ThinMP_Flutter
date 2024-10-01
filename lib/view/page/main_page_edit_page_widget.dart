@@ -40,7 +40,7 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
   }
 
   Future<void> _load() async {
-    await ref.read(mainMenuProvider.notifier).load();
+    await ref.read(mainMenuProvider.notifier).loadEdit();
     await ref.read(mainMenuVisibilityProvider.notifier).load();
 
     final mainMenu = ref.watch(mainMenuProvider);
@@ -62,6 +62,9 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
 
     await mainMenuConfig.saveSort(sorted);
     await mainMenuConfig.saveVisibility(visibilityMap);
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   void _onChangedMenu(int index, bool value) {
@@ -106,7 +109,6 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
           TextButton(
             onPressed: () {
               _update();
-              Navigator.of(context).pop();
             },
             child: Text(localizations.done),
           )

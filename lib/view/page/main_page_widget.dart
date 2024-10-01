@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/provider/page/albums_provider.dart';
 import 'package:thinmpf/provider/page/main_menu_provider.dart';
+import 'package:thinmpf/provider/page/main_menu_visibility_provider.dart';
 import 'package:thinmpf/provider/page/shortcut_provider.dart';
 import 'package:thinmpf/view/grid/album_grid_widget.dart';
 import 'package:thinmpf/view/grid/shortcut_grid_widget.dart';
@@ -27,9 +28,10 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
   }
 
   void _load() {
+    ref.read(mainMenuVisibilityProvider.notifier).load();
+    ref.read(mainMenuProvider.notifier).loadMain();
     ref.read(shortcutProvider.notifier).fetch();
     ref.read(albumsProvider.notifier).fetchRecent();
-    ref.read(mainMenuProvider.notifier).load();
   }
 
   @override

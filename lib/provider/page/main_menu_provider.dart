@@ -9,7 +9,16 @@ class MainMenu extends _$MainMenu {
   @override
   List<MainMenuModel> build() => [];
 
-  Future<void> load() async {
+  Future<void> loadMain() async {
+    final mainMenuConfig = ref.read(mainMenuConfigFactoryProvider);
+    final sortList = await mainMenuConfig.loadSort();
+    final visibilityList = await mainMenuConfig.loadVisibility();
+    final list = sortList.map((item) => MainMenuModel(item: item, visibility: visibilityList[item] ?? true)).toList();
+
+    state = list.where((item) => item.visibility).toList();
+  }
+
+  Future<void> loadEdit() async {
     final mainMenuConfig = ref.read(mainMenuConfigFactoryProvider);
     final sortList = await mainMenuConfig.loadSort();
     final visibilityList = await mainMenuConfig.loadVisibility();
