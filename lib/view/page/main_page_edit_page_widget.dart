@@ -6,8 +6,11 @@ import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/model/main_menu_model.dart';
 import 'package:thinmpf/provider/config/main_menu_config_factory_provider.dart';
 import 'package:thinmpf/provider/page/main_menu_provider.dart';
+import 'package:thinmpf/provider/page/main_menu_visibility_provider.dart';
 import 'package:thinmpf/view/row/checkbox_row_widget.dart';
 import 'package:thinmpf/view/row/list_item_row_widget.dart';
+
+const double _listTileDefaultHeight = 56.0;
 
 final Map<MainMenuConstant, Function(AppLocalizations localizations)> _mainMenuTextMap = {
   MainMenuConstant.artists: (AppLocalizations localizations) => localizations.artists,
@@ -27,7 +30,8 @@ class MainPageEditPageWidget extends ConsumerStatefulWidget {
 
 class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> {
   List<MainMenuModel> _menuList = [];
-  List<Widget> _menuWidgetList = [];
+  bool _shortcutChecked = false;
+  bool _recentChecked = false;
 
   @override
   void initState() {
@@ -37,59 +41,57 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
 
   Future<void> _load() async {
     await ref.read(mainMenuProvider.notifier).load();
+    await ref.read(mainMenuVisibilityProvider.notifier).load();
 
-    final mainMenu = ref.read(mainMenuProvider);
+    final mainMenu = ref.watch(mainMenuProvider);
+    final mainMenuVisibility = ref.watch(mainMenuVisibilityProvider);
 
     setState(() {
       _menuList = List.from(mainMenu);
-      final localizations = AppLocalizations.of(context)!;
-      _menuWidgetList = mainMenu
-          .asMap()
-          .entries
-          .map((menu) => CheckboxRowWidget(
-                key: Key(menu.value.item.index.toString()),
-                text: _mainMenuTextMap[menu.value.item]!(localizations),
-                initialChecked: menu.value.visibility,
-                onChanged: (bool checked) => _onChanged(menu.key, checked),
-              ))
-          .toList();
+      _shortcutChecked = mainMenuVisibility[MainMenuConstant.shortcut]!;
+      _recentChecked = mainMenuVisibility[MainMenuConstant.recent]!;
     });
   }
 
   Future<void> _update() async {
     final mainMenuConfig = ref.read(mainMenuConfigFactoryProvider);
-    final sorted = _menuWidgetList
-        .map((menu) {
-          final String menuKeyString = menu.key is ValueKey ? (menu.key as ValueKey).value : menu.key.toString();
-
-          return MainMenuConstant.values[int.parse(menuKeyString)];
-        })
-        .cast<MainMenuConstant>()
-        .toList();
-    final visibilityMap = Map.fromEntries(
-      _menuList.map((entry) {
-        return MapEntry(entry.item, entry.visibility);
-      }),
-    );
+    final sorted = _menuList.map((menu) => menu.item).cast<MainMenuConstant>().toList();
+    final visibilityMap = Map.fromEntries(_menuList.map((entry) => MapEntry(entry.item, entry.visibility)));
+    visibilityMap[MainMenuConstant.shortcut] = _shortcutChecked;
+    visibilityMap[MainMenuConstant.recent] = _recentChecked;
 
     await mainMenuConfig.saveSort(sorted);
     await mainMenuConfig.saveVisibility(visibilityMap);
   }
 
-  void _onChanged(int index, bool value) {
+  void _onChangedMenu(int index, bool value) {
     setState(() {
       _menuList[index].visibility = value;
     });
   }
 
+  void _onChangedShortcut(bool value) {
+    setState(() {
+      _shortcutChecked = value!;
+    });
+  }
+
+  void _onChangedRecent(bool value) {
+    setState(() {
+      _recentChecked = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: Text(AppLocalizations.of(context)!.edit),
+        title: Text(localizations.edit),
         leadingWidth: 100,
         leading: TextButton(
           style: TextButton.styleFrom(
@@ -98,7 +100,7 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(AppLocalizations.of(context)!.cancel),
+          child: Text(localizations.cancel),
         ),
         actions: [
           TextButton(
@@ -106,7 +108,7 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
               _update();
               Navigator.of(context).pop();
             },
-            child: Text(AppLocalizations.of(context)!.done),
+            child: Text(localizations.done),
           )
         ],
       ),
@@ -119,10 +121,14 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
               child: Material(
                 child: ListItemRowWidget(
                   child: ListTile(
+                    dense: false,
                     minVerticalPadding: 0.0,
                     contentPadding: EdgeInsets.only(right: StyleConstant.padding.large),
-                    title: Center(
-                      child: _menuWidgetList[index],
+                    title: CheckboxRowWidget(
+                      key: Key(_menuList[index].item.index.toString()),
+                      text: _mainMenuTextMap[_menuList[index].item]!(localizations),
+                      checked: _menuList[index].visibility,
+                      onChanged: (bool checked) => _onChangedMenu(index, checked),
                     ),
                     trailing: const ReorderableDragStartListener(
                       index: 0,
@@ -132,16 +138,40 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
                 ),
               ),
             ),
-            itemCount: _menuWidgetList.length,
+            itemCount: _menuList.length,
             onReorder: (int oldIndex, int newIndex) {
               setState(() {
                 if (oldIndex < newIndex) {
                   newIndex -= 1;
                 }
-                final item = _menuWidgetList.removeAt(oldIndex);
-                _menuWidgetList.insert(newIndex, item);
+                final item = _menuList.removeAt(oldIndex);
+                _menuList.insert(newIndex, item);
               });
             },
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: _listTileDefaultHeight,
+              child: ListItemRowWidget(
+                child: CheckboxRowWidget(
+                  text: localizations.shortcut,
+                  checked: _shortcutChecked,
+                  onChanged: _onChangedShortcut,
+                ),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: _listTileDefaultHeight,
+              child: ListItemRowWidget(
+                child: CheckboxRowWidget(
+                  text: localizations.recentlyAdded,
+                  checked: _recentChecked,
+                  onChanged: _onChangedRecent,
+                ),
+              ),
+            ),
           ),
         ],
       ),

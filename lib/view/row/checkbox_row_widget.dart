@@ -4,30 +4,18 @@ import 'package:thinmpf/view/text/text_widget.dart';
 
 class CheckboxRowWidget extends StatefulWidget {
   final String text;
-  final bool initialChecked;
+  final bool checked;
   final ValueChanged<bool> onChanged;
 
-  const CheckboxRowWidget({super.key, required this.text, required this.initialChecked, required this.onChanged});
+  const CheckboxRowWidget({super.key, required this.text, required this.checked, required this.onChanged});
 
   @override
   CheckboxRowWidgetState createState() => CheckboxRowWidgetState();
 }
 
 class CheckboxRowWidgetState extends State<CheckboxRowWidget> {
-  late bool checked;
-
-  @override
-  void initState() {
-    super.initState();
-    checked = widget.initialChecked;
-  }
-
   void _onChanged(bool? value) {
     if (value == null) return;
- 
-    setState(() {
-      checked = value;
-    });
  
     widget.onChanged(value);
   }
@@ -41,7 +29,7 @@ class CheckboxRowWidgetState extends State<CheckboxRowWidget> {
       padding: EdgeInsets.only(right: StyleConstant.padding.small),
       child: Row(
         children: [
-          Checkbox(value: checked, onChanged: _onChanged),
+          Checkbox(value: widget.checked, onChanged: _onChanged),
           TextWidget(text: widget.text),
         ],
       ),
