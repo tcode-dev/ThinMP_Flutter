@@ -20,12 +20,6 @@ class ShortcutCellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final secondaryText = shortcut.type == ShortcutConstant.artist
-        ? 'Artist'
-        : shortcut.type == ShortcutConstant.album
-            ? 'Album'
-            : 'Playlist';
-
     return LayoutBuilder(
       builder: (context, constraints) {
         return GestureDetector(
@@ -47,7 +41,7 @@ class ShortcutCellWidget extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextWidget(text: shortcut.name, textAlign: TextAlign.center),
-                      TextWidget(text: secondaryText, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall),
+                      TextWidget(text: shortcut.dedcription, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall),
                     ],
                   ),
                 ),
