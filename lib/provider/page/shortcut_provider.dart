@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/extension/shortcut_extension.dart';
-import 'package:thinmpf/model/shortcut_model.dart';
+import 'package:thinmpf/model/media/shortcut_model.dart';
 import 'package:thinmpf/provider/api/album_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/api/artist_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/api/song_host_api_factory_provider.dart';

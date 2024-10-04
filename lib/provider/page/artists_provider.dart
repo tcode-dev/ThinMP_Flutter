@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/extension/artist_extension.dart';
-import 'package:thinmpf/model/artist_model.dart';
+import 'package:thinmpf/model/media/artist_model.dart';
 import 'package:thinmpf/provider/api/artist_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/repository/favorite_artist_repository_factory_provider.dart';
 

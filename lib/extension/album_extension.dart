@@ -1,4 +1,4 @@
-import 'package:thinmpf/model/album_model.dart';
+import 'package:thinmpf/model/media/album_model.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 
 extension AlbumExtension on AlbumDTO? {

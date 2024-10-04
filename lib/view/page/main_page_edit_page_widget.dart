@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/main_menu_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
-import 'package:thinmpf/model/main_menu_model.dart';
+import 'package:thinmpf/model/media/main_menu_model.dart';
 import 'package:thinmpf/provider/config/main_menu_config_factory_provider.dart';
 import 'package:thinmpf/provider/page/main_menu_provider.dart';
 import 'package:thinmpf/provider/page/main_menu_visibility_provider.dart';

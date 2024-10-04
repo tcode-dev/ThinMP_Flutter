@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
-import 'package:thinmpf/model/shortcut_model.dart';
+import 'package:thinmpf/model/media/shortcut_model.dart';
 import 'package:thinmpf/provider/page/shortcut_provider.dart';
 import 'package:thinmpf/view/cell/shortcut_cell_view.dart';
 import 'package:thinmpf/view/grid/grid_widget.dart';

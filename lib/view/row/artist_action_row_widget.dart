@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thinmpf/model/artist_model.dart';
+import 'package:thinmpf/model/media/artist_model.dart';
 import 'package:thinmpf/view/menu/artist_list_context_menu.dart';
 import 'package:thinmpf/view/page/artist_detail_page_widget.dart';
 import 'package:thinmpf/view/row/list_item_row_widget.dart';

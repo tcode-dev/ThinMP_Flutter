@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/extension/album_extension.dart';
-import 'package:thinmpf/model/album_model.dart';
+import 'package:thinmpf/model/media/album_model.dart';
 import 'package:thinmpf/provider/api/album_host_api_factory_provider.dart';
 
 part 'albums_provider.g.dart';

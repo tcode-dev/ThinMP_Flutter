@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thinmpf/constant/style_constant.dart';
-import 'package:thinmpf/model/album_model.dart';
+import 'package:thinmpf/model/media/album_model.dart';
 import 'package:thinmpf/view/image/square_image_widget.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
 

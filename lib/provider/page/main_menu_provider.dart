@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:thinmpf/model/main_menu_model.dart';
+import 'package:thinmpf/model/media/main_menu_model.dart';
 import 'package:thinmpf/provider/config/main_menu_config_factory_provider.dart';
 
 part 'main_menu_provider.g.dart';

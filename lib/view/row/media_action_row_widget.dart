@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thinmpf/model/song_model.dart';
+import 'package:thinmpf/model/media/song_model.dart';
 import 'package:thinmpf/view/menu/song_context_menu.dart';
 import 'package:thinmpf/view/row/list_item_row_widget.dart';
 import 'package:thinmpf/view/row/media_row_widget.dart';

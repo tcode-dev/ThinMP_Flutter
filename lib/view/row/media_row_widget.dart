@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:thinmpf/constant/style_constant.dart';
-import 'package:thinmpf/model/song_model.dart';
+import 'package:thinmpf/model/media/song_model.dart';
 import 'package:thinmpf/view/image/square_image_widget.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
 
