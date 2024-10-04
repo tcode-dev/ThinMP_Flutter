@@ -4,6 +4,7 @@ import 'package:thinmpf/model/media/song_model.dart';
 import 'package:thinmpf/provider/api/song_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/repository/favorite_song_repository_factory_provider.dart';
 import 'package:thinmpf/provider/repository/playlist_repository_factory_provider.dart';
+import 'package:thinmpf/validation/validate_entities.dart';
 
 part 'songs_provider.g.dart';
 
@@ -40,6 +41,12 @@ class Songs extends _$Songs {
     final favoriteSongIds = favoriteSongs.map((song) => song.songId).toList();
     final songs = await songHostApi.getSongsByIds(favoriteSongIds);
     final songModels = songs.map((song) => song.fromPigeon()).toList();
+
+    if (!validateEntities(favoriteSongs.length, songs.length)) {
+      favoriteSongRepository.update(songs.map((song) => song.id).toList());
+
+      return fetchFavoriteSongs();
+    }
 
     state = favoriteSongIds.map((id) => songModels.firstWhere((song) => song.id == id)).toList();
   }
