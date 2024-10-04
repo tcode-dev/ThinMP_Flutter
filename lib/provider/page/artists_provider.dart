@@ -3,6 +3,7 @@ import 'package:thinmpf/extension/artist_extension.dart';
 import 'package:thinmpf/model/media/artist_model.dart';
 import 'package:thinmpf/provider/api/artist_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/repository/favorite_artist_repository_factory_provider.dart';
+import 'package:thinmpf/validation/validate_entities.dart';
 
 part 'artists_provider.g.dart';
 
@@ -25,6 +26,12 @@ class Artists extends _$Artists {
     final favoriteArtistIds = favoriteArtists.map((artist) => artist.artistId).toList();
     final artists = await artistHostApi.getArtistsByIds(favoriteArtistIds);
     final artistModels = artists.map((artist) => artist.fromPigeon()).toList();
+
+    if (!validateEntities(favoriteArtists.length, artists.length)) {
+      favoriteArtistRepository.update(artists.map((artist) => artist.id).toList());
+
+      return fetchFavoriteArtists();
+    }
 
     state = favoriteArtistIds.map((id) => artistModels.firstWhere((artist) => artist.id == id)).toList();
   }
