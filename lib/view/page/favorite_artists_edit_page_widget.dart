@@ -6,6 +6,7 @@ import 'package:thinmpf/model/artist_model.dart';
 import 'package:thinmpf/provider/page/artists_provider.dart';
 import 'package:thinmpf/provider/repository/favorite_artist_repository_factory_provider.dart';
 import 'package:thinmpf/view/row/list_item_row_widget.dart';
+import 'package:thinmpf/view/row/list_tile_row_widget.dart';
 import 'package:thinmpf/view/row/plain_row_widget.dart';
 
 class FavoriteArtistsEditPageWidget extends ConsumerStatefulWidget {
@@ -78,18 +79,8 @@ class FavoriteArtistsEditPageWidgetState extends ConsumerState<FavoriteArtistsEd
                   _list.removeAt(index);
                 });
               },
-              child: ListItemRowWidget(
-                child: ListTile(
-                  minVerticalPadding: 0.0,
-                  contentPadding: EdgeInsets.only(right: StyleConstant.padding.large),
-                  title: Center(
-                    child: PlainRowWidget(title: _list[index].name),
-                  ),
-                  trailing: const ReorderableDragStartListener(
-                    index: 0,
-                    child: Icon(Icons.drag_handle),
-                  ),
-                ),
+              child: ListTileRowWidget(
+                child: PlainRowWidget(title: _list[index].name),
               ),
             )
         ],

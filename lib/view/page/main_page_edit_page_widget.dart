@@ -10,6 +10,7 @@ import 'package:thinmpf/provider/page/main_menu_visibility_provider.dart';
 import 'package:thinmpf/provider/page/shortcut_provider.dart';
 import 'package:thinmpf/view/row/checkbox_row_widget.dart';
 import 'package:thinmpf/view/row/list_item_row_widget.dart';
+import 'package:thinmpf/view/row/list_tile_row_widget.dart';
 import 'package:thinmpf/view/row/shortcut_row_widget.dart';
 import 'package:thinmpf/view/title/section_title_widget.dart';
 
@@ -126,21 +127,12 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
               key: Key(index.toString()),
               index: index,
               child: Material(
-                child: ListItemRowWidget(
-                  child: ListTile(
-                    dense: false,
-                    minVerticalPadding: 0.0,
-                    contentPadding: EdgeInsets.only(right: StyleConstant.padding.large),
-                    title: CheckboxRowWidget(
-                      key: Key(_menuList[index].item.index.toString()),
-                      text: _mainMenuTextMap[_menuList[index].item]!(localizations),
-                      checked: _menuList[index].visibility,
-                      onChanged: (bool checked) => _onChangedMenu(index, checked),
-                    ),
-                    trailing: const ReorderableDragStartListener(
-                      index: 0,
-                      child: Icon(Icons.drag_handle),
-                    ),
+                child: ListTileRowWidget(
+                  child: CheckboxRowWidget(
+                    key: Key(_menuList[index].item.index.toString()),
+                    text: _mainMenuTextMap[_menuList[index].item]!(localizations),
+                    checked: _menuList[index].visibility,
+                    onChanged: (bool checked) => _onChangedMenu(index, checked),
                   ),
                 ),
               ),
@@ -193,17 +185,9 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
                       _shortcutWidgetList.removeAt(index);
                     });
                   },
-                  child: ListItemRowWidget(
-                    child: ListTile(
-                      minVerticalPadding: 0.0,
-                      contentPadding: EdgeInsets.only(right: StyleConstant.padding.large),
-                      title: Center(
-                        child: _shortcutWidgetList[index],
-                      ),
-                      trailing: const ReorderableDragStartListener(
-                        index: 0,
-                        child: Icon(Icons.drag_handle),
-                      ),
+                  child: ListTileRowWidget(
+                    child: Center(
+                      child: _shortcutWidgetList[index],
                     ),
                   ),
                 ),
