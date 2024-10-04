@@ -13,8 +13,6 @@ import 'package:thinmpf/view/row/list_item_row_widget.dart';
 import 'package:thinmpf/view/row/shortcut_row_widget.dart';
 import 'package:thinmpf/view/title/section_title_widget.dart';
 
-const double _listTileDefaultHeight = 56.0;
-
 final Map<MainMenuConstant, Function(AppLocalizations localizations)> _mainMenuTextMap = {
   MainMenuConstant.artists: (AppLocalizations localizations) => localizations.artists,
   MainMenuConstant.albums: (AppLocalizations localizations) => localizations.albums,
@@ -160,7 +158,7 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
           ),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: _listTileDefaultHeight,
+              height: StyleConstant.row.listTileHeight,
               child: ListItemRowWidget(
                 child: CheckboxRowWidget(
                   text: localizations.shortcut,
@@ -172,7 +170,7 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
           ),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: _listTileDefaultHeight,
+              height: StyleConstant.row.listTileHeight,
               child: ListItemRowWidget(
                 child: CheckboxRowWidget(
                   text: localizations.recentlyAdded,

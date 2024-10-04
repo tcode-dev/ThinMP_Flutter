@@ -45,4 +45,5 @@ class RadiusValue {
 class RowValue {
   final double borderBoxHeight = 51.0;
   final double contentBoxHeight = 50.0;
+  final double listTileHeight = 56.0;
 }
