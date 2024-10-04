@@ -64,6 +64,12 @@ class Songs extends _$Songs {
     final songs = await songHostApi.getSongsByIds(songIds);
     final songModels = songs.map((song) => song.fromPigeon()).toList();
 
+    if (!validateEntities(songIds.length, songs.length)) {
+      playlistRepository.updatePlaylistDetail(id, playlist.name, songs.map((song) => song.id).toList());
+
+      return fetchPlaylistSongs(id);
+    }
+
     state = songIds.map((id) => songModels.firstWhere((song) => song.id == id)).toList();
   }
 }
