@@ -32,7 +32,7 @@ class ShortcutRepository extends BaseRepository<ShortcutRealmModel> {
     final models = findAll();
     final deleteModels = models.where((model) => !idSet.contains(model.id.toString())).toList();
     final updateModels = models.where((model) => idSet.contains(model.id.toString())).toList();
-    final sortModels = ids.map((id) => updateModels.firstWhere((model) => model.id.toString() == id)).toList();
+    final sortModels = ids.map((id) => updateModels.firstWhere((model) => model.id.toString() == id)).toList().reversed.toList();
 
     realm.write(() {
       for (var model in deleteModels) {
