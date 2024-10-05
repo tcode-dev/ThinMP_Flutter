@@ -64,11 +64,12 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
     final mainMenuConfig = ref.read(mainMenuConfigFactoryProvider);
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
     final sorted = _menuList.map((menu) => menu.item).cast<MainMenuConstant>().toList();
+    final shortcutIds = _shortcutWidgetList.map((model) => model.shortcut.id).toList().reversed.toList();
     final visibilityMap = Map.fromEntries(_menuList.map((entry) => MapEntry(entry.item, entry.visibility)));
     visibilityMap[MainMenuConstant.shortcut] = _shortcutChecked;
     visibilityMap[MainMenuConstant.recent] = _recentChecked;
-    shortcutRepository.update(_shortcutWidgetList.map((model) => model.shortcut.id).toList());
 
+    shortcutRepository.update(shortcutIds);
     await mainMenuConfig.saveSort(sorted);
     await mainMenuConfig.saveVisibility(visibilityMap);
     if (mounted) {

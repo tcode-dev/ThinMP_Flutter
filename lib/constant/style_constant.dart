@@ -3,6 +3,7 @@ class StyleConstant {
   static GridValue grid = GridValue();
   static ImageValue image = ImageValue();
   static OpacityValue opacity = OpacityValue();
+  static OrientationValue orientation = OrientationValue();
   static PaddingValue padding = PaddingValue();
   static RadiusValue radius = RadiusValue();
   static RowValue row = RowValue();
@@ -29,6 +30,10 @@ class ImageValue {
 class OpacityValue {
   final double off = 0.5;
   final double on = 1.0;
+}
+
+class OrientationValue {
+  final double tabletBreakpoint = 600.0;
 }
 
 class PaddingValue {
