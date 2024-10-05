@@ -28,7 +28,12 @@ class AlbumGridWidget extends ConsumerWidget {
               );
               callback?.call();
             },
-            child: AlbumGridContextMenuWidget(albumId: album.id, index: index, child: AlbumCellWidget(album: albums[index])),
+            child: AlbumGridContextMenuWidget(
+              albumId: album.id,
+              index: index,
+              callback: callback,
+              child: AlbumCellWidget(album: albums[index]),
+            ),
           );
         },
         childCount: albums.length,
