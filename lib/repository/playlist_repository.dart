@@ -33,9 +33,10 @@ class PlaylistRepository extends BaseRepository<PlaylistRealmModel> {
   }
 
   void updatePlaylists(List<String> ids) {
+    final idSet = ids.toSet();
     final models = findAll();
-    final deleteModels = models.where((model) => !ids.contains(model.id.toString())).toList();
-    final updateModels = models.where((model) => ids.contains(model.id.toString())).toList();
+    final deleteModels = models.where((model) => !idSet.contains(model.id.toString())).toList();
+    final updateModels = models.where((model) => idSet.contains(model.id.toString())).toList();
     final sortModels = ids.map((id) => updateModels.firstWhere((model) => model.id.toString() == id)).toList();
 
     realm.write(() {
