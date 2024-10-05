@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/model/media/shortcut_model.dart';
@@ -16,6 +17,8 @@ class ShortcutRowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Container(
       width: double.infinity,
       height: StyleConstant.row.contentBoxHeight,
@@ -33,7 +36,7 @@ class ShortcutRowWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextWidget(text: shortcut.name),
-                TextWidget(text: shortcut.dedcription, style: Theme.of(context).textTheme.bodySmall),
+                TextWidget(text: shortcut.getDescription(localizations), style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
           ),

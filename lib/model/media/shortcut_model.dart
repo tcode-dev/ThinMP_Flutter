@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 
 class ShortcutModel {
@@ -7,16 +8,23 @@ class ShortcutModel {
     required this.name,
     required this.imageId,
     required this.type,
-  }): dedcription = type == ShortcutConstant.artist
-        ? 'Artist'
-        : type == ShortcutConstant.album
-            ? 'Album'
-            : 'Playlist';
+  });
 
   final String id;
   final String itemId;
   final String name;
-  final String dedcription;
   final String imageId;
   final ShortcutConstant type;
+  String getDescription(AppLocalizations localizations) {
+    switch (type) {
+      case ShortcutConstant.artist:
+        return localizations.artist;
+      case ShortcutConstant.album:
+        return localizations.album;
+      case ShortcutConstant.playlist:
+        return localizations.playlist;
+      default:
+        throw UnsupportedError('Unsupported shortcut type: $type');
+    }
+  }
 }

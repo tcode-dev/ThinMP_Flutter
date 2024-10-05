@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/model/media/shortcut_model.dart';
@@ -20,6 +21,8 @@ class ShortcutCellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return GestureDetector(
@@ -41,7 +44,7 @@ class ShortcutCellWidget extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextWidget(text: shortcut.name, textAlign: TextAlign.center),
-                      TextWidget(text: shortcut.dedcription, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall),
+                      TextWidget(text: shortcut.getDescription(localizations), textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall),
                     ],
                   ),
                 ),
