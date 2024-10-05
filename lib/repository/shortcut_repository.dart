@@ -1,5 +1,6 @@
 import 'package:realm/realm.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
+import 'package:thinmpf/model/media/shortcut_model.dart';
 import 'package:thinmpf/model/realm/shortcut_realm_model.dart';
 import 'package:thinmpf/repository/base_repository.dart';
 
@@ -35,6 +36,17 @@ class ShortcutRepository extends BaseRepository<ShortcutRealmModel> {
         realm.delete(model);
       });
     }
+  }
+
+  void deleteByIds(List<ObjectId> ids) {
+    final models = ids.map((id) => findById(id));
+    final filteredModels = models.where((model) => model != null).cast<ShortcutRealmModel>().toList();
+
+    realm.write(() {
+      for (var model in filteredModels) {
+        realm.delete(model);
+      }
+    });
   }
 
   ShortcutRealmModel? _find(String id, ShortcutConstant type) {
