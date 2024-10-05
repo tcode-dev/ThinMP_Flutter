@@ -25,7 +25,6 @@ class Artists extends _$Artists {
     final favoriteArtists = favoriteArtistRepository.findAll();
     final favoriteArtistIds = favoriteArtists.map((artist) => artist.artistId).toList();
     final artists = await artistHostApi.getArtistsByIds(favoriteArtistIds);
-    final artistModels = artists.map((artist) => artist.fromPigeon()).toList();
 
     if (!validateEntities(favoriteArtists.length, artists.length)) {
       favoriteArtistRepository.update(artists.map((artist) => artist.id).toList());
@@ -33,6 +32,7 @@ class Artists extends _$Artists {
       return fetchFavoriteArtists();
     }
 
+    final artistModels = artists.map((artist) => artist.fromPigeon()).toList();
     state = favoriteArtistIds.map((id) => artistModels.firstWhere((artist) => artist.id == id)).toList();
   }
 }

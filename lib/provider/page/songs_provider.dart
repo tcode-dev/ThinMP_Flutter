@@ -40,7 +40,6 @@ class Songs extends _$Songs {
     final favoriteSongs = favoriteSongRepository.findAll();
     final favoriteSongIds = favoriteSongs.map((song) => song.songId).toList();
     final songs = await songHostApi.getSongsByIds(favoriteSongIds);
-    final songModels = songs.map((song) => song.fromPigeon()).toList();
 
     if (!validateEntities(favoriteSongs.length, songs.length)) {
       favoriteSongRepository.update(songs.map((song) => song.id).toList());
@@ -48,6 +47,7 @@ class Songs extends _$Songs {
       return fetchFavoriteSongs();
     }
 
+    final songModels = songs.map((song) => song.fromPigeon()).toList();
     state = favoriteSongIds.map((id) => songModels.firstWhere((song) => song.id == id)).toList();
   }
 
@@ -62,7 +62,6 @@ class Songs extends _$Songs {
 
     final songIds = playlist.songIds.toList();
     final songs = await songHostApi.getSongsByIds(songIds);
-    final songModels = songs.map((song) => song.fromPigeon()).toList();
 
     if (!validateEntities(songIds.length, songs.length)) {
       playlistRepository.updatePlaylistDetail(id, playlist.name, songs.map((song) => song.id).toList());
@@ -70,6 +69,7 @@ class Songs extends _$Songs {
       return fetchPlaylistSongs(id);
     }
 
+    final songModels = songs.map((song) => song.fromPigeon()).toList();
     state = songIds.map((id) => songModels.firstWhere((song) => song.id == id)).toList();
   }
 }
