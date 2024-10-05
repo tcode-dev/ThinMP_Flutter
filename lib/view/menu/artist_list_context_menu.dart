@@ -15,6 +15,7 @@ class ArtistListContextMenuWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final favoriteArtistRepository = ref.watch(favoriteArtistRepositoryFactoryProvider);
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
 
@@ -22,11 +23,11 @@ class ArtistListContextMenuWidget extends ConsumerWidget {
       widgetBuilder: () => [
         PopupMenuItem(
           value: 'shortcut',
-          child: Text(shortcutRepository.exists(artistId, ShortcutConstant.artist) ? AppLocalizations.of(context)!.shortcutRemove : AppLocalizations.of(context)!.shortcutAdd),
+          child: Text(shortcutRepository.exists(artistId, ShortcutConstant.artist) ? localizations.shortcutRemove : localizations.shortcutAdd),
         ),
         PopupMenuItem(
           value: 'favorite',
-          child: Text(favoriteArtistRepository.exists(artistId) ? AppLocalizations.of(context)!.favoriteRemove : AppLocalizations.of(context)!.favoriteAdd),
+          child: Text(favoriteArtistRepository.exists(artistId) ? localizations.favoriteRemove : localizations.favoriteAdd),
         ),
       ],
       onSelected: (String value) {

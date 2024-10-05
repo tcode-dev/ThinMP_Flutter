@@ -14,19 +14,19 @@ import 'package:thinmpf/view/row/list_item_row_widget.dart';
 import 'package:thinmpf/view/row/plain_row_widget.dart';
 
 class MainMenuItem {
-  final String Function(BuildContext context) text;
+  final String Function(AppLocalizations localizations) text;
   final Widget Function() widgetBuilder;
 
   MainMenuItem({required this.text, required this.widgetBuilder});
 }
 
 final Map<MainMenuConstant, MainMenuItem> _mainMenuMap = {
-  MainMenuConstant.artists: MainMenuItem(text: (BuildContext context) => AppLocalizations.of(context)!.artists, widgetBuilder: () => const ArtistsPageWidget()),
-  MainMenuConstant.albums: MainMenuItem(text: (BuildContext context) => AppLocalizations.of(context)!.albums, widgetBuilder: () => const AlbumsPageWidget()),
-  MainMenuConstant.songs: MainMenuItem(text: (BuildContext context) => AppLocalizations.of(context)!.songs, widgetBuilder: () => const SongsPageWidget()),
-  MainMenuConstant.favoriteSong: MainMenuItem(text: (BuildContext context) => AppLocalizations.of(context)!.favoriteSong, widgetBuilder: () => const FavoriteSongsPageWidget()),
-  MainMenuConstant.favoriteArtist: MainMenuItem(text: (BuildContext context) => AppLocalizations.of(context)!.favoriteArtist, widgetBuilder: () => const FavoriteArtistsPageWidget()),
-  MainMenuConstant.playlists: MainMenuItem(text: (BuildContext context) => AppLocalizations.of(context)!.playlists, widgetBuilder: () => const PlaylistsPageWidget()),
+  MainMenuConstant.artists: MainMenuItem(text: (AppLocalizations localizations) => localizations.artists, widgetBuilder: () => const ArtistsPageWidget()),
+  MainMenuConstant.albums: MainMenuItem(text: (AppLocalizations localizations) => localizations.albums, widgetBuilder: () => const AlbumsPageWidget()),
+  MainMenuConstant.songs: MainMenuItem(text: (AppLocalizations localizations) => localizations.songs, widgetBuilder: () => const SongsPageWidget()),
+  MainMenuConstant.favoriteSong: MainMenuItem(text: (AppLocalizations localizations) => localizations.favoriteSong, widgetBuilder: () => const FavoriteSongsPageWidget()),
+  MainMenuConstant.favoriteArtist: MainMenuItem(text: (AppLocalizations localizations) => localizations.favoriteArtist, widgetBuilder: () => const FavoriteArtistsPageWidget()),
+  MainMenuConstant.playlists: MainMenuItem(text: (AppLocalizations localizations) => localizations.playlists, widgetBuilder: () => const PlaylistsPageWidget()),
 };
 
 class MainMenuWidget extends ConsumerWidget {
@@ -36,6 +36,7 @@ class MainMenuWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final mainMenu = ref.watch(mainMenuProvider);
 
     return SliverFixedExtentList(
@@ -51,7 +52,7 @@ class MainMenuWidget extends ConsumerWidget {
             );
             callback();
           },
-          child: ListItemRowWidget(child: PlainRowWidget(title: mainMenuItem.text(context))),
+          child: ListItemRowWidget(child: PlainRowWidget(title: mainMenuItem.text(localizations))),
         );
       }, childCount: mainMenu.length),
     );

@@ -21,13 +21,14 @@ class AlbumGridContextMenuWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
 
     return GridContextMenuWidget(
       widgetBuilder: () => [
         PopupMenuItem(
           value: 'shortcut',
-          child: Text(shortcutRepository.exists(albumId, ShortcutConstant.album) ? AppLocalizations.of(context)!.shortcutRemove : AppLocalizations.of(context)!.shortcutAdd),
+          child: Text(shortcutRepository.exists(albumId, ShortcutConstant.album) ? localizations.shortcutRemove : localizations.shortcutAdd),
         ),
       ],
       onSelected: (String value) {
