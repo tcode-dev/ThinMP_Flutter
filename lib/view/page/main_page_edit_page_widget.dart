@@ -8,6 +8,7 @@ import 'package:thinmpf/provider/config/main_menu_config_factory_provider.dart';
 import 'package:thinmpf/provider/page/main_menu_provider.dart';
 import 'package:thinmpf/provider/page/main_menu_visibility_provider.dart';
 import 'package:thinmpf/provider/page/shortcut_provider.dart';
+import 'package:thinmpf/provider/repository/shortcut_repository_factory_provider.dart';
 import 'package:thinmpf/view/row/checkbox_row_widget.dart';
 import 'package:thinmpf/view/row/list_item_row_widget.dart';
 import 'package:thinmpf/view/row/list_tile_row_widget.dart';
@@ -61,10 +62,12 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
 
   Future<void> _update() async {
     final mainMenuConfig = ref.read(mainMenuConfigFactoryProvider);
+    final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
     final sorted = _menuList.map((menu) => menu.item).cast<MainMenuConstant>().toList();
     final visibilityMap = Map.fromEntries(_menuList.map((entry) => MapEntry(entry.item, entry.visibility)));
     visibilityMap[MainMenuConstant.shortcut] = _shortcutChecked;
     visibilityMap[MainMenuConstant.recent] = _recentChecked;
+    shortcutRepository.update(_shortcutWidgetList.map((model) => model.shortcut.id).toList());
 
     await mainMenuConfig.saveSort(sorted);
     await mainMenuConfig.saveVisibility(visibilityMap);
