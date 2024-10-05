@@ -7,7 +7,7 @@ import 'package:thinmpf/view/menu/list_context_menu.dart';
 
 class PlaylistListContextMenuWidget extends ConsumerWidget {
   final String playlistId;
-  final Function() callback;
+  final VoidCallback? callback;
   final Widget child;
 
   const PlaylistListContextMenuWidget({super.key, required this.playlistId, required this.callback, required this.child});
@@ -25,7 +25,7 @@ class PlaylistListContextMenuWidget extends ConsumerWidget {
       ],
       onSelected: (String value) {
         shortcutRepository.toggle(playlistId, ShortcutConstant.playlist);
-        callback();
+        callback?.call();
       },
       child: child,
     );
