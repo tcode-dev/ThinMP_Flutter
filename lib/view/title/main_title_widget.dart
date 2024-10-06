@@ -6,7 +6,7 @@ import 'package:thinmpf/view/text/text_widget.dart';
 
 class MainTitleWidget extends StatelessWidget {
   final String title;
-  final void Function() callback;
+  final VoidCallback? callback;
 
   const MainTitleWidget({super.key, required this.title, required this.callback});
 
@@ -29,7 +29,7 @@ class MainTitleWidget extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const MainPageEditPageWidget()),
                   );
 
-                  callback();
+                  callback?.call();
                 }
               },
               itemBuilder: (BuildContext context) => [

@@ -30,7 +30,7 @@ final Map<MainMenuConstant, MainMenuItem> _mainMenuMap = {
 };
 
 class MainMenuWidget extends ConsumerWidget {
-  final void Function() callback;
+  final VoidCallback? callback;
 
   const MainMenuWidget({super.key, required this.callback});
 
@@ -50,7 +50,7 @@ class MainMenuWidget extends ConsumerWidget {
               context,
               MaterialPageRoute(builder: (context) => mainMenuItem.widgetBuilder()),
             );
-            callback();
+            callback?.call();
           },
           child: ListItemRowWidget(child: PlainRowWidget(title: mainMenuItem.text(localizations))),
         );
