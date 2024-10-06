@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/api/player_flutter_api_impl.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
-import 'package:thinmpf/util/set_orientation.dart';
+import 'package:thinmpf/util/device_util.dart';
 import 'package:thinmpf/view/page/main_page_widget.dart';
 import 'package:thinmpf/view/permission/permission_widget.dart';
 
