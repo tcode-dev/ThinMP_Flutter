@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/player/playback_song_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
+import 'package:thinmpf/util/device_util.dart';
 import 'package:thinmpf/view/button/favorite_artist_button_widget.dart';
 import 'package:thinmpf/view/button/favorite_song_button_widget.dart';
 import 'package:thinmpf/view/button/next_button_widget.dart';
@@ -37,6 +38,16 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
     final top = MediaQuery.of(context).padding.top;
     final bottom = MediaQuery.of(context).padding.bottom;
     final appBarHeight = AppBar().preferredSize.height;
+    final containerWidth = isTabletDevice(context)
+        ? isPortrait(context)
+            ? screenSize.width * 0.7
+            : screenSize.width * 0.5
+        : screenSize.width;
+    final containerHeight = isTabletDevice(context)
+        ? isPortrait(context)
+            ? screenSize.height * 0.7
+            : screenSize.height * 0.5
+        : screenSize.height;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -51,7 +62,7 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
                   left: 0.0,
                   child: Blur(
                     blur: 10,
-                    blurColor: Colors.white,
+                    blurColor: Theme.of(context).scaffoldBackgroundColor,
                     child: ImageWidget(id: playbackSong.imageId, size: screenSize.width),
                   ),
                 ),
@@ -81,47 +92,66 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
             child: const BackButton(),
           ),
           Positioned(
-            child: Container(
-              padding: EdgeInsets.only(top: top, bottom: bottom),
-              child: Column(
-                children: [
-                  const Spacer(),
-                  Center(child: SquareImageWidget(id: playbackSong.imageId, size: screenSize.width * 0.65)),
-                  const Spacer(),
-                  Column(children: [
-                    TextWidget(text: playbackSong.name, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineMedium),
-                    TextWidget(text: playbackSong.artistName, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
-                  ]),
-                  const Spacer(),
-                  const SliderWidget(),
-                  const Spacer(),
-                  Row(children: [
-                    const Spacer(),
-                    const PrevButtonWidget(),
-                    const Spacer(),
-                    PlayPauseButtonWidget(size: StyleConstant.button.large),
-                    const Spacer(),
-                    NextButtonWidget(size: StyleConstant.button.medium),
-                    const Spacer(),
-                  ]),
-                  const Spacer(),
-                  const Row(
-                    children: [
-                      Spacer(),
-                      RepeatButtonWidget(),
-                      Spacer(),
-                      ShuffleButtonWidget(),
-                      Spacer(),
-                      FavoriteArtistButtonWidget(),
-                      Spacer(),
-                      FavoriteSongButtonWidget(),
-                      Spacer(),
-                      PlaylistButtonWidget(),
-                      Spacer(),
+            child: Center(
+              child: Container(
+                width: containerWidth,
+                height: containerHeight,
+                padding: EdgeInsets.only(top: top, bottom: bottom),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      Theme.of(context).scaffoldBackgroundColor,
+                      Theme.of(context).transparent,
                     ],
                   ),
-                  const Spacer(),
-                ],
+                ),
+                child: Column(
+                  children: [
+                    const Spacer(),
+                    Center(child: SquareImageWidget(id: playbackSong.imageId, size: screenSize.height * 0.3)),
+                    const Spacer(),
+                    Column(
+                      children: [
+                        TextWidget(text: playbackSong.name, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineMedium),
+                        SizedBox(height: StyleConstant.padding.tiny),
+                        TextWidget(text: playbackSong.artistName, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
+                      ],
+                    ),
+                    const Spacer(),
+                    const SliderWidget(),
+                    const Spacer(),
+                    Row(
+                      children: [
+                        const Spacer(),
+                        const PrevButtonWidget(),
+                        const Spacer(),
+                        PlayPauseButtonWidget(size: StyleConstant.button.large),
+                        const Spacer(),
+                        NextButtonWidget(size: StyleConstant.button.medium),
+                        const Spacer(),
+                      ],
+                    ),
+                    const Spacer(),
+                    const Row(
+                      children: [
+                        Spacer(),
+                        RepeatButtonWidget(),
+                        Spacer(),
+                        ShuffleButtonWidget(),
+                        Spacer(),
+                        FavoriteArtistButtonWidget(),
+                        Spacer(),
+                        FavoriteSongButtonWidget(),
+                        Spacer(),
+                        PlaylistButtonWidget(),
+                        Spacer(),
+                      ],
+                    ),
+                    const Spacer(),
+                  ],
+                ),
               ),
             ),
           )
