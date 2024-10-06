@@ -10,6 +10,7 @@ import 'package:thinmpf/provider/page/main_menu_visibility_provider.dart';
 import 'package:thinmpf/provider/page/shortcut_provider.dart';
 import 'package:thinmpf/provider/repository/shortcut_repository_factory_provider.dart';
 import 'package:thinmpf/view/row/checkbox_row_widget.dart';
+import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/row/list_item_row_widget.dart';
 import 'package:thinmpf/view/row/list_tile_row_widget.dart';
 import 'package:thinmpf/view/row/shortcut_row_widget.dart';
@@ -208,6 +209,7 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
               });
             },
           ),
+          const EmptyRowWidget(),
         ],
       ),
     );
