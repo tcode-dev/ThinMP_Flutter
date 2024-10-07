@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/playlist_detail_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
+import 'package:thinmpf/provider/repository/shortcut_repository_factory_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/page/playlist_detail_edit_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
+import 'package:thinmpf/view/text/shortcut_text_widget.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
 
 class PlaylistDetailPageWidget extends ConsumerStatefulWidget {
@@ -46,6 +49,7 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
 
   @override
   Widget build(BuildContext context) {
+    final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
     final playlistDetail = ref.watch(playlistDetailProvider);
     final songs = ref.watch(songsProvider);
     final name = playlistDetail != null ? playlistDetail.name : '';
@@ -102,12 +106,18 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
                         );
 
                         _load();
+                      } else if (item == 'shortcut') {
+                        shortcutRepository.toggle(widget.id, ShortcutConstant.playlist);
                       }
                     },
                     itemBuilder: (BuildContext context) => [
                       PopupMenuItem(
                         value: 'edit',
                         child: Text(AppLocalizations.of(context)!.edit),
+                      ),
+                      PopupMenuItem(
+                        value: 'shortcut',
+                        child: ShortcutTextWidget(id: widget.id, type: ShortcutConstant.playlist),
                       ),
                     ],
                   )
