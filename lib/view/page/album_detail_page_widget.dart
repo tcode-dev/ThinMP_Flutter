@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/label_constant.dart';
+import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/album_detail_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
+import 'package:thinmpf/provider/repository/shortcut_repository_factory_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
+import 'package:thinmpf/view/text/shortcut_text_widget.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
 
 class AlbumDetailPageWidget extends ConsumerStatefulWidget {
@@ -40,6 +44,7 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
     final albumDetail = ref.watch(albumDetailProvider);
     final screenSize = MediaQuery.sizeOf(context);
     final top = MediaQuery.of(context).padding.top;
@@ -83,6 +88,21 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
                     ],
                   ),
                 ),
+                actions: [
+                  PopupMenuButton(
+                    onSelected: (item) async {
+                      if (item == shortcutLabel) {
+                        shortcutRepository.toggle(widget.id, ShortcutConstant.album);
+                      }
+                    },
+                    itemBuilder: (BuildContext context) => [
+                      PopupMenuItem(
+                        value: shortcutLabel,
+                        child: ShortcutTextWidget(id: widget.id, type: ShortcutConstant.album),
+                      ),
+                    ],
+                  )
+                ],
               ),
               SliverToBoxAdapter(
                 child: SizedBox(
