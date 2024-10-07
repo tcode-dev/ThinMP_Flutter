@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:thinmpf/constant/label_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/view/page/main_page_edit_page_widget.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
@@ -23,7 +24,7 @@ class MainTitleWidget extends StatelessWidget {
             TextWidget(text: title, style: Theme.of(context).textTheme.headlineLarge),
             PopupMenuButton(
               onSelected: (item) async {
-                if (item == 'edit') {
+                if (item == editLabel) {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const MainPageEditPageWidget()),
@@ -34,7 +35,7 @@ class MainTitleWidget extends StatelessWidget {
               },
               itemBuilder: (BuildContext context) => [
                 PopupMenuItem(
-                  value: 'edit',
+                  value: editLabel,
                   child: Text(AppLocalizations.of(context)!.edit),
                 ),
               ],

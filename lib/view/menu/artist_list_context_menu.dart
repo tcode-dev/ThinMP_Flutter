@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/label_constant.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/provider/repository/favorite_artist_repository_factory_provider.dart';
 import 'package:thinmpf/provider/repository/shortcut_repository_factory_provider.dart';
@@ -22,18 +23,18 @@ class ArtistListContextMenuWidget extends ConsumerWidget {
     return ListContextMenuWidget(
       widgetBuilder: () => [
         PopupMenuItem(
-          value: 'shortcut',
+          value: shortcutLabel,
           child: Text(shortcutRepository.exists(artistId, ShortcutConstant.artist) ? localizations.shortcutRemove : localizations.shortcutAdd),
         ),
         PopupMenuItem(
-          value: 'favorite',
+          value: favoriteLabel,
           child: Text(favoriteArtistRepository.exists(artistId) ? localizations.favoriteRemove : localizations.favoriteAdd),
         ),
       ],
       onSelected: (String value) {
-        if (value == 'shortcut') {
+        if (value == shortcutLabel) {
           shortcutRepository.toggle(artistId, ShortcutConstant.artist);
-        } else if (value == 'favorite') {
+        } else if (value == favoriteLabel) {
           favoriteArtistRepository.toggle(artistId);
         }
         callback?.call();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/label_constant.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
@@ -45,7 +46,7 @@ class FavoriteSongsPageWidgetState extends ConsumerState<FavoriteSongsPageWidget
         actions: [
           PopupMenuButton(
             onSelected: (item) async {
-              if (item == 'edit') {
+              if (item == editLabel) {
                 await Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const FavoriteSongsEditPageWidget()),
@@ -56,7 +57,7 @@ class FavoriteSongsPageWidgetState extends ConsumerState<FavoriteSongsPageWidget
             },
             itemBuilder: (BuildContext context) => [
               PopupMenuItem(
-                value: 'edit',
+                value: editLabel,
                 child: Text(AppLocalizations.of(context)!.edit),
               ),
             ],

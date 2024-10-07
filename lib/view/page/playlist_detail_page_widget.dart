@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/label_constant.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
@@ -99,24 +100,24 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
                 actions: [
                   PopupMenuButton(
                     onSelected: (item) async {
-                      if (item == 'edit') {
+                      if (item == editLabel) {
                         await Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => PlaylistDetailEditPageWidget(id: widget.id)),
                         );
 
                         _load();
-                      } else if (item == 'shortcut') {
+                      } else if (item == shortcutLabel) {
                         shortcutRepository.toggle(widget.id, ShortcutConstant.playlist);
                       }
                     },
                     itemBuilder: (BuildContext context) => [
                       PopupMenuItem(
-                        value: 'edit',
+                        value: editLabel,
                         child: Text(AppLocalizations.of(context)!.edit),
                       ),
                       PopupMenuItem(
-                        value: 'shortcut',
+                        value: shortcutLabel,
                         child: ShortcutTextWidget(id: widget.id, type: ShortcutConstant.playlist),
                       ),
                     ],
