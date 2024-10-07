@@ -45,6 +45,7 @@ class PaddingValue {
 
 class RadiusValue {
   final double small = 4.0;
+  final double medium = 10.0;
 }
 
 class RowValue {

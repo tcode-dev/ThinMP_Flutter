@@ -34,20 +34,23 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
       return Container();
     }
 
+    final mediaQuery = MediaQuery.of(context);
     final screenSize = MediaQuery.sizeOf(context);
-    final top = MediaQuery.of(context).padding.top;
-    final bottom = MediaQuery.of(context).padding.bottom;
-    final appBarHeight = AppBar().preferredSize.height;
-    final containerWidth = isTabletDevice(context)
+    final isTablet = isTabletDevice(context);
+    final width = screenSize.width;
+    final height = screenSize.height;
+    final containerWidth = isTablet
         ? isPortrait(context)
-            ? screenSize.width * 0.7
-            : screenSize.width * 0.5
-        : screenSize.width;
-    final containerHeight = isTabletDevice(context)
+            ? width * 0.7
+            : (width - (width - height)) * 0.7
+        : width;
+    final containerHeight = isTablet
         ? isPortrait(context)
-            ? screenSize.height * 0.7
-            : screenSize.height * 0.5
-        : screenSize.height;
+            ? height * 0.7
+            : (height - (height - width)) * 0.7
+        : height;
+    final containerRadius = isTablet ? StyleConstant.radius.medium : 0.0;
+    final containerAlpha = isTablet ? 100 : 0;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -87,7 +90,7 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
             ),
           ),
           Positioned(
-            top: appBarHeight,
+            top: AppBar().preferredSize.height,
             left: 0.0,
             child: const BackButton(),
           ),
@@ -96,16 +99,10 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
               child: Container(
                 width: containerWidth,
                 height: containerHeight,
-                padding: EdgeInsets.only(top: top, bottom: bottom),
+                padding: EdgeInsets.only(top: mediaQuery.padding.top, bottom: mediaQuery.padding.bottom),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      Theme.of(context).scaffoldBackgroundColor,
-                      Theme.of(context).transparent,
-                    ],
-                  ),
+                  color: Theme.of(context).scaffoldBackgroundColor.withAlpha(containerAlpha),
+                  borderRadius: BorderRadius.circular(containerRadius),
                 ),
                 child: Column(
                   children: [
