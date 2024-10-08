@@ -6,6 +6,7 @@ import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/player/current_time_provider.dart';
 import 'package:thinmpf/provider/player/is_playing_provider.dart';
 import 'package:thinmpf/provider/player/playback_song_provider.dart';
+import 'package:thinmpf/util/device_util.dart';
 
 class SliderWidget extends ConsumerStatefulWidget {
   const SliderWidget({super.key});
@@ -113,27 +114,32 @@ class SliderWidgetState extends ConsumerState<SliderWidget> {
     }
 
     Color primaryColor = Theme.of(context).textTheme.bodyLarge?.color! ?? Colors.black;
+    final isTablet = isTabletDevice(context);
+    final padding = isTablet ? StyleConstant.padding.large : StyleConstant.padding.medium;
 
-    return Column(
-      children: [
-        Slider(
-          value: _toSliderValue(currentTime, playbackSong.duration),
-          max: scale,
-          activeColor: primaryColor,
-          divisions: scale.toInt(),
-          onChanged: _onChanged,
-        ),
-        Container(
-          padding: EdgeInsets.only(right: StyleConstant.padding.large, left: StyleConstant.padding.large),
-          child: Row(
-            children: [
-              Text(_formatDuration(currentTime)),
-              const Spacer(),
-              Text(_formatDuration(playbackSong.duration)),
-            ],
+    return Container(
+      padding: EdgeInsets.only(right: padding, left: padding),
+      child: Column(
+        children: [
+          Slider(
+            value: _toSliderValue(currentTime, playbackSong.duration),
+            max: scale,
+            activeColor: primaryColor,
+            divisions: scale.toInt(),
+            onChanged: _onChanged,
           ),
-        )
-      ],
+          Container(
+            padding: EdgeInsets.only(right: StyleConstant.padding.large, left: StyleConstant.padding.large),
+            child: Row(
+              children: [
+                Text(_formatDuration(currentTime)),
+                const Spacer(),
+                Text(_formatDuration(playbackSong.duration)),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

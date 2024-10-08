@@ -37,20 +37,21 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
     final mediaQuery = MediaQuery.of(context);
     final screenSize = MediaQuery.sizeOf(context);
     final isTablet = isTabletDevice(context);
+    final shortestSide = mediaQuery.size.shortestSide;
+    final longestSide = mediaQuery.size.longestSide;
+    final ratio = shortestSide / longestSide;
     final width = screenSize.width;
     final height = screenSize.height;
-    final containerWidth = isTablet
-        ? isPortrait(context)
-            ? width * 0.7
-            : (width - (width - height)) * 0.7
-        : width;
     final containerHeight = isTablet
         ? isPortrait(context)
-            ? height * 0.7
-            : (height - (height - width)) * 0.7
+            ? height * 0.8
+            : height * 0.9
         : height;
+    final containerWidth = isTablet ? containerHeight * ratio : width;
     final containerRadius = isTablet ? StyleConstant.radius.medium : 0.0;
     final containerAlpha = isTablet ? 100 : 0;
+    final backgroundImageSize = isTablet ? longestSide : shortestSide;
+    final imageSize = isTablet ? containerHeight * 0.4 : height * 0.3;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -62,37 +63,35 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
                 Positioned(
                   top: 0.0,
                   right: 0.0,
+                  bottom: isTablet ? 0 : null,
                   left: 0.0,
                   child: Blur(
                     blur: 10,
                     blurColor: Theme.of(context).scaffoldBackgroundColor,
-                    child: ImageWidget(id: playbackSong.imageId, size: screenSize.width),
+                    child: ImageWidget(id: playbackSong.imageId, size: backgroundImageSize),
                   ),
                 ),
-                Positioned(
-                  top: screenSize.width - 200,
-                  width: screenSize.width,
-                  child: Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        colors: [
-                          Theme.of(context).scaffoldBackgroundColor,
-                          Theme.of(context).transparent,
-                        ],
+                isTablet
+                    ? Container()
+                    : Positioned(
+                        top: screenSize.width - 200,
+                        width: screenSize.width,
+                        child: Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                              colors: [
+                                Theme.of(context).scaffoldBackgroundColor,
+                                Theme.of(context).transparent,
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
               ],
             ),
-          ),
-          Positioned(
-            top: AppBar().preferredSize.height,
-            left: 0.0,
-            child: const BackButton(),
           ),
           Positioned(
             child: Center(
@@ -107,7 +106,7 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
                 child: Column(
                   children: [
                     const Spacer(),
-                    Center(child: SquareImageWidget(id: playbackSong.imageId, size: screenSize.height * 0.3)),
+                    Center(child: SquareImageWidget(id: playbackSong.imageId, size: imageSize)),
                     const Spacer(),
                     Column(
                       children: [
@@ -151,7 +150,12 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
                 ),
               ),
             ),
-          )
+          ),
+          Positioned(
+            top: AppBar().preferredSize.height,
+            left: 0.0,
+            child: const BackButton(),
+          ),
         ],
       ),
     );
