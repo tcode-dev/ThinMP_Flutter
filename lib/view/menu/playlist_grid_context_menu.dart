@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/label_constant.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/provider/repository/shortcut_repository_factory_provider.dart';
 import 'package:thinmpf/view/menu/grid_context_menu.dart';
+import 'package:thinmpf/view/text/shortcut_text_widget.dart';
 
 class PlaylistGridContextMenuWidget extends ConsumerWidget {
   final String playlistId;
@@ -22,7 +22,7 @@ class PlaylistGridContextMenuWidget extends ConsumerWidget {
       widgetBuilder: () => [
         PopupMenuItem(
           value: shortcutLabel,
-          child: Text(shortcutRepository.exists(playlistId, ShortcutConstant.playlist) ? AppLocalizations.of(context)!.shortcutRemove : AppLocalizations.of(context)!.shortcutAdd),
+          child: ShortcutTextWidget(id: playlistId, type: ShortcutConstant.playlist),
         ),
       ],
       onSelected: (String value) {
