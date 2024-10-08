@@ -2,10 +2,14 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/constant/label_constant.dart';
+import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/albums_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
+import 'package:thinmpf/provider/repository/favorite_artist_repository_factory_provider.dart';
+import 'package:thinmpf/provider/repository/shortcut_repository_factory_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/view/grid/album_grid_widget.dart';
 import 'package:thinmpf/view/image/circle_image_widget.dart';
@@ -13,6 +17,8 @@ import 'package:thinmpf/view/image/image_widget.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
+import 'package:thinmpf/view/text/favorite_artist_text_widget.dart';
+import 'package:thinmpf/view/text/shortcut_text_widget.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
 import 'package:thinmpf/view/title/section_title_widget.dart';
 
@@ -45,6 +51,8 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
 
   @override
   Widget build(BuildContext context) {
+    final favoriteArtistRepository = ref.watch(favoriteArtistRepositoryFactoryProvider);
+    final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
     final albums = ref.watch(albumsProvider);
     final songs = ref.watch(songsProvider);
     final name = albums.isNotEmpty ? albums.first.artistName : '';
@@ -99,6 +107,27 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
                     ],
                   ),
                 ),
+                actions: [
+                  PopupMenuButton(
+                    itemBuilder: (BuildContext context) => [
+                      PopupMenuItem(
+                        value: shortcutLabel,
+                        child: ShortcutTextWidget(id: widget.id, type: ShortcutConstant.artist),
+                      ),
+                      PopupMenuItem(
+                        value: favoriteLabel,
+                        child: FavoriteArtistTextWidget(artistId: widget.id),
+                      ),
+                    ],
+                    onSelected: (value) async {
+                      if (value == shortcutLabel) {
+                        shortcutRepository.toggle(widget.id, ShortcutConstant.artist);
+                      } else if (value == favoriteLabel) {
+                        favoriteArtistRepository.toggle(widget.id);
+                      }
+                    },
+                  )
+                ],
               ),
               SliverToBoxAdapter(
                 child: SizedBox(
