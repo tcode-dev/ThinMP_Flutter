@@ -68,7 +68,7 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
                   child: Blur(
                     blur: 10,
                     blurColor: Theme.of(context).scaffoldBackgroundColor,
-                    child: ImageWidget(id: playbackSong.imageId, size: backgroundImageSize),
+                    child: ImageWidget(id: playbackSong.imageId, size: backgroundImageSize, useFallbackImage: false),
                   ),
                 ),
                 isTablet

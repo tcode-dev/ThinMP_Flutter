@@ -81,7 +81,7 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
                         child: Blur(
                           blur: 10,
                           blurColor: Theme.of(context).transparent,
-                          child: ImageWidget(id: imageId, size: screenSize.width),
+                          child: ImageWidget(id: imageId, size: screenSize.width, useFallbackImage: false),
                         ),
                       ),
                       Positioned(
