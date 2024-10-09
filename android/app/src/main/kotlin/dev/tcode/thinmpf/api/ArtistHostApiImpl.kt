@@ -1,11 +1,11 @@
 package dev.tcode.thinmpf.api
 
-import ArtistDTO
-import ArtistDetailDTO
-import ArtistHostApi
 import android.content.Context
 import dev.tcode.thinmpf.extension.toPigeon
 import dev.tcode.thinmpf.model.valueObject.ArtistId
+import dev.tcode.thinmpf.pigeon_output.ArtistDTO
+import dev.tcode.thinmpf.pigeon_output.ArtistDetailDTO
+import dev.tcode.thinmpf.pigeon_output.ArtistHostApi
 import dev.tcode.thinmpf.repository.AlbumRepository
 import dev.tcode.thinmpf.repository.ArtistRepository
 

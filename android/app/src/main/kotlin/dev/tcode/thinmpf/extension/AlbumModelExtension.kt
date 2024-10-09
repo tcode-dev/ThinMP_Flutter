@@ -1,7 +1,7 @@
 package dev.tcode.thinmpf.extension
 
-import AlbumDTO
 import dev.tcode.thinmpf.model.AlbumModel
+import dev.tcode.thinmpf.pigeon_output.AlbumDTO
 
 fun AlbumModel.toPigeon(): AlbumDTO {
     return AlbumDTO(

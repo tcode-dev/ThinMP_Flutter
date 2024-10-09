@@ -1,12 +1,12 @@
 package dev.tcode.thinmpf.api
 
-import PlayerHostApi
-import RepeatMode
-import ShuffleMode
 import android.content.Context
 import dev.tcode.thinmpf.model.valueObject.AlbumId
 import dev.tcode.thinmpf.model.valueObject.ArtistId
 import dev.tcode.thinmpf.model.valueObject.SongId
+import dev.tcode.thinmpf.pigeon_output.PlayerHostApi
+import dev.tcode.thinmpf.pigeon_output.RepeatMode
+import dev.tcode.thinmpf.pigeon_output.ShuffleMode
 import dev.tcode.thinmpf.player.MusicPlayer
 import dev.tcode.thinmpf.repository.SongRepository
 

@@ -4,7 +4,10 @@ import 'package:pigeon/pigeon.dart';
   dartOut: 'lib/pigeon_output/audio.g.dart',
   dartOptions: DartOptions(),
   kotlinOut: 'android/app/src/main/kotlin/dev/tcode/thinmpf/pigeon_output/Audio.g.kt',
-  kotlinOptions: KotlinOptions(errorClassName: 'FlutterError'),
+  kotlinOptions: KotlinOptions(
+    package: 'dev.tcode.thinmpf.pigeon_output',
+    errorClassName: 'FlutterError',
+  ),
   objcHeaderOut: 'ios/Runner/PigeonOutput/Audio.h',
   objcSourceOut: 'ios/Runner/PigeonOutput/Audio.m',
   swiftOut: 'ios/Runner/PigeonOutput/Audio.g.swift',

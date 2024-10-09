@@ -1,13 +1,13 @@
 package dev.tcode.thinmpf.api
 
-import SongDTO
-import SongHostApi
 import android.content.Context
 import dev.tcode.thinmpf.model.valueObject.AlbumId
 import dev.tcode.thinmpf.model.valueObject.ArtistId
 import dev.tcode.thinmpf.repository.SongRepository
 import dev.tcode.thinmpf.extension.toPigeon
 import dev.tcode.thinmpf.model.valueObject.SongId
+import dev.tcode.thinmpf.pigeon_output.SongDTO
+import dev.tcode.thinmpf.pigeon_output.SongHostApi
 
 class SongHostApiImpl(context: Context) : SongHostApi {
     private val repository = SongRepository(context)

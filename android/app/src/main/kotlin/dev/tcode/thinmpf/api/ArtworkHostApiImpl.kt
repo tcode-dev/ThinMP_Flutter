@@ -1,11 +1,11 @@
 package dev.tcode.thinmpf.api
 
-import ArtworkHostApi
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import dev.tcode.thinmpf.constant.MediaConstant
+import dev.tcode.thinmpf.pigeon_output.ArtworkHostApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

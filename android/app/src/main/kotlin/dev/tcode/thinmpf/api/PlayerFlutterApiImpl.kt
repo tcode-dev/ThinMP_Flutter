@@ -1,8 +1,8 @@
 package dev.tcode.thinmpf.api
 
-import PlayerFlutterApi
 import dev.tcode.thinmpf.extension.toPigeon
 import dev.tcode.thinmpf.model.SongModel
+import dev.tcode.thinmpf.pigeon_output.PlayerFlutterApi
 import io.flutter.plugin.common.BinaryMessenger
 
 class PlayerFlutterApiImpl {

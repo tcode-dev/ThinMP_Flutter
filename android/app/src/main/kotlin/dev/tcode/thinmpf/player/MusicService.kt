@@ -1,7 +1,5 @@
 package dev.tcode.thinmpf.player
 
-import RepeatMode
-import ShuffleMode
 import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.Service
@@ -23,6 +21,8 @@ import dev.tcode.thinmpf.api.PlayerFlutterApiImpl
 import dev.tcode.thinmpf.constant.NotificationConstant
 import dev.tcode.thinmpf.model.SongModel
 import dev.tcode.thinmpf.notification.LocalNotificationHelper
+import dev.tcode.thinmpf.pigeon_output.RepeatMode
+import dev.tcode.thinmpf.pigeon_output.ShuffleMode
 import dev.tcode.thinmpf.receiver.HeadsetEventReceiver
 import java.io.IOException
 

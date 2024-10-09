@@ -1,7 +1,5 @@
 package dev.tcode.thinmpf.player
 
-import RepeatMode
-import ShuffleMode
 import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
@@ -9,6 +7,8 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import dev.tcode.thinmpf.model.SongModel
+import dev.tcode.thinmpf.pigeon_output.RepeatMode
+import dev.tcode.thinmpf.pigeon_output.ShuffleMode
 
 @SuppressLint("StaticFieldLeak")
 object MusicPlayer{

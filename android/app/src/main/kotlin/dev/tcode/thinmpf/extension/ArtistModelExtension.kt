@@ -1,7 +1,7 @@
 package dev.tcode.thinmpf.extension
 
-import ArtistDTO
 import dev.tcode.thinmpf.model.ArtistModel
+import dev.tcode.thinmpf.pigeon_output.ArtistDTO
 
 fun ArtistModel.toPigeon(): ArtistDTO {
     return ArtistDTO(

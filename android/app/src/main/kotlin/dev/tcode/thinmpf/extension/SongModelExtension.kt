@@ -1,7 +1,7 @@
 package dev.tcode.thinmpf.extension
 
-import SongDTO
 import dev.tcode.thinmpf.model.SongModel
+import dev.tcode.thinmpf.pigeon_output.SongDTO
 
 fun SongModel.toPigeon(): SongDTO {
     return SongDTO(

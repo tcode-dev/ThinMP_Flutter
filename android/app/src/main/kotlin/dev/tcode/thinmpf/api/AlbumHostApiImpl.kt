@@ -1,12 +1,12 @@
 package dev.tcode.thinmpf.api
 
-import AlbumDTO
-import AlbumHostApi
 import android.content.Context
 import dev.tcode.thinmpf.model.valueObject.AlbumId
 import dev.tcode.thinmpf.model.valueObject.ArtistId
 import dev.tcode.thinmpf.repository.AlbumRepository
 import dev.tcode.thinmpf.extension.toPigeon
+import dev.tcode.thinmpf.pigeon_output.AlbumDTO
+import dev.tcode.thinmpf.pigeon_output.AlbumHostApi
 
 class AlbumHostApiImpl(context: Context) : AlbumHostApi {
     private val repository = AlbumRepository(context)
