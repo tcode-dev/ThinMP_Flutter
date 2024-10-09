@@ -86,7 +86,7 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
 
   void _onChangedShortcut(bool value) {
     setState(() {
-      _shortcutChecked = value!;
+      _shortcutChecked = value;
     });
   }
 
