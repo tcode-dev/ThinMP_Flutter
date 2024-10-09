@@ -56,7 +56,9 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
     final name = playlistDetail != null ? playlistDetail.name : '';
     final imageId = songs.isNotEmpty ? songs.first.imageId : '0';
     final screenSize = MediaQuery.sizeOf(context);
-    final top = MediaQuery.of(context).padding.top;
+    final mediaQuery = MediaQuery.of(context);
+    final shortestSide = mediaQuery.size.shortestSide;
+    final expandedHeight = shortestSide - mediaQuery.padding.top;
 
     return Scaffold(
       body: Stack(
@@ -65,7 +67,7 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
             slivers: [
               SliverAppBar(
                 pinned: true,
-                expandedHeight: screenSize.width - top,
+                expandedHeight: expandedHeight,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
                   title: TextWidget(text: name),
@@ -75,10 +77,10 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
                         top: 0.0,
                         right: 0.0,
                         left: 0.0,
-                        child: ImageWidget(id: imageId, size: screenSize.width),
+                        child: Center(child: ImageWidget(id: imageId, size: shortestSide)),
                       ),
                       Positioned(
-                        top: screenSize.width - 200,
+                        top: shortestSide - 200,
                         width: screenSize.width,
                         child: Container(
                           height: 200,
