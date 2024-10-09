@@ -47,16 +47,6 @@ class SongRepository: SongRepositoryContract {
             .map { SongModel(media: $0) }
     }
 
-//    func findByArtistId(artistId: ArtistId) -> [SongModel] {
-//        let property = MPMediaPropertyPredicate(value: artistId.raw, forProperty: MPMediaItemPropertyAlbumArtistPersistentID)
-//        let query = MPMediaQuery.songs()
-//
-//        query.addFilterPredicate(property)
-//
-//        return query.collections!.sorted(by: { String($0.representativeItem?.albumTitle ?? "") < String($1.representativeItem?.albumTitle ?? "") })
-//            .map { SongModel(media: $0) }
-//    }
-
     func findByAlbumId(albumId: AlbumId) -> [SongModel] {
         let property = MPMediaPropertyPredicate(value: albumId.raw, forProperty: MPMediaItemPropertyAlbumPersistentID)
         let query = MPMediaQuery.songs()
