@@ -2,7 +2,6 @@ package dev.tcode.thinmpf.repository
 
 import android.content.Context
 import android.provider.MediaStore
-import android.util.Log
 import dev.tcode.thinmpf.model.SongModel
 import dev.tcode.thinmpf.model.valueObject.AlbumId
 import dev.tcode.thinmpf.model.valueObject.ArtistId
@@ -36,7 +35,7 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
         return getList()
     }
 
-    fun findById(songId: SongId): SongModel? {
+    override fun findById(songId: SongId): SongModel? {
         selection = MediaStore.Audio.Media._ID + " = ?"
         selectionArgs = arrayOf(songId.raw)
         sortOrder = null
@@ -44,7 +43,7 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
         return get()
     }
 
-    fun findByIds(songIds: List<SongId>): List<SongModel> {
+    override fun findByIds(songIds: List<SongId>): List<SongModel> {
         val ids = songIds.map { it.raw }
 
         selection = MediaStore.Audio.Media._ID + " IN (" + makePlaceholders(ids.size) + ") " + "AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
