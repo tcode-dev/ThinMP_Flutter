@@ -50,6 +50,7 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
     final playlistDetail = ref.watch(playlistDetailProvider);
     final songs = ref.watch(songsProvider);
@@ -116,7 +117,7 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
                     itemBuilder: (BuildContext context) => [
                       PopupMenuItem(
                         value: editLabel,
-                        child: Text(AppLocalizations.of(context)!.edit),
+                        child: Text(localizations.edit),
                       ),
                       PopupMenuItem(
                         value: shortcutLabel,
@@ -130,7 +131,7 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
                 child: SizedBox(
                   height: StyleConstant.row.contentBoxHeight,
                   child: Center(
-                    child: TextWidget(text: AppLocalizations.of(context)!.playlist),
+                    child: TextWidget(text: localizations.playlist),
                   ),
                 ),
               ),

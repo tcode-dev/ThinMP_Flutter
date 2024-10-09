@@ -38,16 +38,17 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final playlists = ref.watch(playlistsProvider);
 
     return AlertDialog(
-      title: Text(AppLocalizations.of(context)!.playlist, textAlign: TextAlign.center),
+      title: Text(localizations.playlist, textAlign: TextAlign.center),
       content: playlists.isEmpty || _isNewPlaylist
           ? TextField(
               controller: controller,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
-                hintText: AppLocalizations.of(context)!.playlistName,
+                hintText: localizations.playlistName,
               ),
             )
           : SingleChildScrollView(
@@ -70,7 +71,7 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
                 style: TextButton.styleFrom(
                   textStyle: Theme.of(context).textTheme.labelLarge,
                 ),
-                child: Text(AppLocalizations.of(context)!.done),
+                child: Text(localizations.done),
                 onPressed: () {
                   _create();
                   Navigator.of(context).pop();
@@ -80,7 +81,7 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
                 style: TextButton.styleFrom(
                   textStyle: Theme.of(context).textTheme.labelLarge,
                 ),
-                child: Text(AppLocalizations.of(context)!.playlistCreate),
+                child: Text(localizations.playlistCreate),
                 onPressed: () {
                   setState(() {
                     _isNewPlaylist = true;
@@ -91,7 +92,7 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
           style: TextButton.styleFrom(
             textStyle: Theme.of(context).textTheme.labelLarge,
           ),
-          child: Text(AppLocalizations.of(context)!.cancel),
+          child: Text(localizations.cancel),
           onPressed: () {
             if (_isNewPlaylist) {
               setState(() {

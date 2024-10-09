@@ -13,8 +13,9 @@ class ShortcutTextWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
 
-    return TextWidget(text: shortcutRepository.exists(id, type) ? AppLocalizations.of(context)!.shortcutRemove : AppLocalizations.of(context)!.shortcutAdd);
+    return TextWidget(text: shortcutRepository.exists(id, type) ? localizations.shortcutRemove : localizations.shortcutAdd);
   }
 }

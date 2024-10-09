@@ -21,6 +21,8 @@ class PermissionWidget extends StatefulWidget {
 class _PermissionWidgetState extends State<PermissionWidget> {
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return FutureBuilder<Map<Permission, PermissionStatus>>(
       future: platformSelect(permissionConstant).request(),
       builder: (context, snapshot) {
@@ -39,13 +41,13 @@ class _PermissionWidgetState extends State<PermissionWidget> {
               children: [
                 Padding(
                   padding: EdgeInsets.only(right: StyleConstant.padding.large, bottom: StyleConstant.row.contentBoxHeight, left: StyleConstant.button.large),
-                  child: Text(AppLocalizations.of(context)!.permissionDenied),
+                  child: Text(localizations.permissionDenied),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     openAppSettings();
                   },
-                  child: Text(AppLocalizations.of(context)!.openAppSettings),
+                  child: Text(localizations.openAppSettings),
                 ),
               ],
             ),

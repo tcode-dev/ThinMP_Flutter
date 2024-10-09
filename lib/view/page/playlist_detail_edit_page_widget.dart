@@ -52,12 +52,14 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: Text(AppLocalizations.of(context)!.edit),
+        title: Text(localizations.edit),
         leadingWidth: 100,
         leading: TextButton(
           style: TextButton.styleFrom(
@@ -66,7 +68,7 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(AppLocalizations.of(context)!.cancel),
+          child: Text(localizations.cancel),
         ),
         actions: [
           TextButton(
@@ -74,7 +76,7 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
               _updatePlaylistDetail();
               Navigator.of(context).pop();
             },
-            child: Text(AppLocalizations.of(context)!.done),
+            child: Text(localizations.done),
           )
         ],
       ),
@@ -87,7 +89,7 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
                 controller: _controller,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  hintText: AppLocalizations.of(context)!.playlistName,
+                  hintText: localizations.playlistName,
                 ),
               ),
             ),

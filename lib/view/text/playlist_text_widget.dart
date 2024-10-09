@@ -7,6 +7,8 @@ class PlaylistTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextWidget(text: AppLocalizations.of(context)!.playlistAdd);
+    final localizations = AppLocalizations.of(context)!;
+
+    return TextWidget(text: localizations.playlistAdd);
   }
 }

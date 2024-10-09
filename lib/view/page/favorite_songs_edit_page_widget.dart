@@ -42,12 +42,14 @@ class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPa
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: Text(AppLocalizations.of(context)!.edit),
+        title: Text(localizations.edit),
         leadingWidth: 100,
         leading: TextButton(
           style: TextButton.styleFrom(
@@ -56,7 +58,7 @@ class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPa
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(AppLocalizations.of(context)!.cancel),
+          child: Text(localizations.cancel),
         ),
         actions: [
           TextButton(
@@ -64,7 +66,7 @@ class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPa
               _update();
               Navigator.of(context).pop();
             },
-            child: Text(AppLocalizations.of(context)!.done),
+            child: Text(localizations.done),
           )
         ],
       ),

@@ -28,12 +28,14 @@ class FavoriteArtistsPageWidgetState extends ConsumerState<FavoriteArtistsPageWi
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: Text(AppLocalizations.of(context)!.favoriteArtist),
+        title: Text(localizations.favoriteArtist),
         actions: [
           PopupMenuButton(
             onSelected: (item) async {
@@ -49,7 +51,7 @@ class FavoriteArtistsPageWidgetState extends ConsumerState<FavoriteArtistsPageWi
             itemBuilder: (BuildContext context) => [
               PopupMenuItem(
                 value: editLabel,
-                child: Text(AppLocalizations.of(context)!.edit),
+                child: Text(localizations.edit),
               ),
             ],
           )

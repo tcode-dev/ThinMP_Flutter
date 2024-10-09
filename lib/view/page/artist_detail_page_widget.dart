@@ -51,6 +51,7 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final favoriteArtistRepository = ref.watch(favoriteArtistRepositoryFactoryProvider);
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
     final albums = ref.watch(albumsProvider);
@@ -141,9 +142,9 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
                   ),
                 ),
               ),
-              SectionTitleWidget(title: AppLocalizations.of(context)!.albums),
+              SectionTitleWidget(title: localizations.albums),
               AlbumGridWidget(callback: _load),
-              SectionTitleWidget(title: AppLocalizations.of(context)!.songs),
+              SectionTitleWidget(title: localizations.songs),
               SongListWidget(onTap: _play),
               const EmptyRowWidget(),
             ],

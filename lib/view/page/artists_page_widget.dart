@@ -26,12 +26,14 @@ class ArtistsPageWidgetState extends ConsumerState<ArtistsPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: Text(AppLocalizations.of(context)!.artists),
+        title: Text(localizations.artists),
       ),
       body: Stack(children: [
         CustomScrollView(

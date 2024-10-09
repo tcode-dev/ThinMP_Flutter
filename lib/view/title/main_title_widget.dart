@@ -13,6 +13,7 @@ class MainTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final top = MediaQuery.of(context).padding.top;
 
     return SliverToBoxAdapter(
@@ -36,7 +37,7 @@ class MainTitleWidget extends StatelessWidget {
               itemBuilder: (BuildContext context) => [
                 PopupMenuItem(
                   value: editLabel,
-                  child: Text(AppLocalizations.of(context)!.edit),
+                  child: Text(localizations.edit),
                 ),
               ],
             )

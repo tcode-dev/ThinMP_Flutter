@@ -30,12 +30,14 @@ class PlaylistsPageWidgetState extends ConsumerState<PlaylistsPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: Text(AppLocalizations.of(context)!.playlists),
+        title: Text(localizations.playlists),
         actions: [
           PopupMenuButton(
             onSelected: (item) async {
@@ -51,7 +53,7 @@ class PlaylistsPageWidgetState extends ConsumerState<PlaylistsPageWidget> {
             itemBuilder: (BuildContext context) => [
               PopupMenuItem(
                 value: editLabel,
-                child: Text(AppLocalizations.of(context)!.edit),
+                child: Text(localizations.edit),
               ),
             ],
           )

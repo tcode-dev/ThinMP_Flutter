@@ -27,12 +27,14 @@ class AlbumsPageWidgetState extends ConsumerState<AlbumsPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         surfaceTintColor: Colors.transparent,
-        title: Text(AppLocalizations.of(context)!.albums),
+        title: Text(localizations.albums),
       ),
       body: Stack(
         children: [

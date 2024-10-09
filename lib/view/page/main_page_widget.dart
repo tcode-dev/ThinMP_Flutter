@@ -48,6 +48,7 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final shortcuts = ref.watch(shortcutProvider);
     final albums = ref.watch(albumsProvider);
 
@@ -56,14 +57,14 @@ class MainPageWidgetState extends ConsumerState<MainPageWidget> {
         children: [
           CustomScrollView(
             slivers: [
-              MainTitleWidget(title: AppLocalizations.of(context)!.library, callback: _load),
+              MainTitleWidget(title: localizations.library, callback: _load),
               MainMenuWidget(callback: _load),
               if (shortcuts.isNotEmpty) ...[
-                SectionTitleWidget(title: AppLocalizations.of(context)!.shortcut),
+                SectionTitleWidget(title: localizations.shortcut),
                 ShortcutGridWidget(callback: _load),
               ],
               if (albums.isNotEmpty) ...[
-                SectionTitleWidget(title: AppLocalizations.of(context)!.recentlyAdded),
+                SectionTitleWidget(title: localizations.recentlyAdded),
                 AlbumGridWidget(callback: _load),
               ],
               const EmptyRowWidget(),
