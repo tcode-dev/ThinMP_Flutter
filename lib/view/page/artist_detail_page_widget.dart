@@ -144,7 +144,7 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
               SectionTitleWidget(title: AppLocalizations.of(context)!.albums),
               AlbumGridWidget(callback: _load),
               SectionTitleWidget(title: AppLocalizations.of(context)!.songs),
-              SongListWidget(callback: _load, onTap: _play),
+              SongListWidget(onTap: _play),
               const EmptyRowWidget(),
             ],
           ),

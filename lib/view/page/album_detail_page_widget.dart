@@ -114,7 +114,7 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
                   ),
                 ),
               ),
-              SongListWidget(callback: _load, onTap: _play),
+              SongListWidget(onTap: _play),
               const EmptyRowWidget(),
             ],
           ),
