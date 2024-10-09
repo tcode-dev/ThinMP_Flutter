@@ -47,7 +47,9 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
     final albumDetail = ref.watch(albumDetailProvider);
     final screenSize = MediaQuery.sizeOf(context);
-    final top = MediaQuery.of(context).padding.top;
+    final mediaQuery = MediaQuery.of(context);
+    final shortestSide = mediaQuery.size.shortestSide;
+    final expandedHeight = shortestSide - mediaQuery.padding.top;
 
     return Scaffold(
       body: Stack(
@@ -56,7 +58,7 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
             slivers: [
               SliverAppBar(
                 pinned: true,
-                expandedHeight: screenSize.width - top,
+                expandedHeight: expandedHeight,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
                   title: TextWidget(text: albumDetail?.name ?? ''),
@@ -66,10 +68,10 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
                         top: 0.0,
                         right: 0.0,
                         left: 0.0,
-                        child: ImageWidget(id: albumDetail?.imageId ?? '0', size: screenSize.width),
+                        child: Center(child: ImageWidget(id: albumDetail?.imageId ?? '0', size: shortestSide)),
                       ),
                       Positioned(
-                        top: screenSize.width - 200,
+                        top: shortestSide - 200,
                         width: screenSize.width,
                         child: Container(
                           height: 200,
