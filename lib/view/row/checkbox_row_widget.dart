@@ -16,7 +16,7 @@ class CheckboxRowWidget extends StatefulWidget {
 class CheckboxRowWidgetState extends State<CheckboxRowWidget> {
   void _onChanged(bool? value) {
     if (value == null) return;
- 
+
     widget.onChanged(value);
   }
 

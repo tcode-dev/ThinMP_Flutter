@@ -4,7 +4,7 @@ import 'package:thinmpf/util/calc_grid_count.dart';
 class GridContextMenuWidget extends StatelessWidget {
   final List<PopupMenuEntry<String>> Function() widgetBuilder;
   final void Function(String) onSelected;
-  final int index;  
+  final int index;
   final Widget child;
 
   const GridContextMenuWidget({super.key, required this.widgetBuilder, required this.onSelected, required this.index, required this.child});

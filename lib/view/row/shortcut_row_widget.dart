@@ -28,7 +28,9 @@ class ShortcutRowWidget extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(right: StyleConstant.padding.small),
-            child: shortcut.type == ShortcutConstant.artist ? CircleImageWidget(id: shortcut.imageId, size: StyleConstant.image.tiny) : SquareImageWidget(id: shortcut.imageId, size: StyleConstant.image.tiny),
+            child: shortcut.type == ShortcutConstant.artist
+                ? CircleImageWidget(id: shortcut.imageId, size: StyleConstant.image.tiny)
+                : SquareImageWidget(id: shortcut.imageId, size: StyleConstant.image.tiny),
           ),
           Flexible(
             child: Column(

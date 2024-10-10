@@ -14,7 +14,17 @@ import 'package:pigeon/pigeon.dart';
   swiftOptions: SwiftOptions(),
 ))
 class SongDTO {
-  SongDTO({required this.id, required this.name, required this.albumId, required this.albumName, required this.artistId, required this.artistName, required this.imageId, required this.duration, required this.trackNumber});
+  SongDTO({
+    required this.id,
+    required this.name,
+    required this.albumId,
+    required this.albumName,
+    required this.artistId,
+    required this.artistName,
+    required this.imageId,
+    required this.duration,
+    required this.trackNumber,
+  });
 
   final String id;
   final String name;

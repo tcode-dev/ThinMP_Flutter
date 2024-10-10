@@ -13,7 +13,7 @@ class AlbumDetail extends _$AlbumDetail {
   Future<void> fetchAlbumDetail(String id) async {
     final albumHostApi = ref.read(albumHostApiFactoryProvider);
     final album = await albumHostApi.getAlbumById(id);
-    
+
     state = album?.fromPigeon();
   }
 }
