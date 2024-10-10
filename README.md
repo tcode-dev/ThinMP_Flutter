@@ -1,6 +1,6 @@
 # ThinMP_Flutter
 
-This is a simple music player for Android and iOS.
+This app is a simple music player for Android and iOS.
 
 ## Demo
 
@@ -84,5 +84,10 @@ flutter pub run flutter_launcher_icons:main
 
 ### realm
 ```
-dart run realm generate   
+dart run realm generate
+```
+
+### format
+```
+dart format $(find ./lib/* -name "*.dart" -not -path "*.g.dart" -not -path "*.realm.dart") -l 200
 ```
