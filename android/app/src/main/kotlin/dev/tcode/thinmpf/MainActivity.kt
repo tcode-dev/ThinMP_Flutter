@@ -6,6 +6,11 @@ import dev.tcode.thinmpf.api.ArtworkHostApiImpl
 import dev.tcode.thinmpf.api.PlayerFlutterApiImpl
 import dev.tcode.thinmpf.api.PlayerHostApiImpl
 import dev.tcode.thinmpf.api.SongHostApiImpl
+import dev.tcode.thinmpf.pigeon_output.AlbumHostApi
+import dev.tcode.thinmpf.pigeon_output.ArtistHostApi
+import dev.tcode.thinmpf.pigeon_output.ArtworkHostApi
+import dev.tcode.thinmpf.pigeon_output.PlayerHostApi
+import dev.tcode.thinmpf.pigeon_output.SongHostApi
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 
