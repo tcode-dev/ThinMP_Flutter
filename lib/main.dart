@@ -28,12 +28,11 @@ class MainAppState extends ConsumerState<MainApp> {
   void initState() {
     super.initState();
     PlayerFlutterApi.setUp(PlayerFlutterApiImpl(ref));
+    setOrientation(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    setOrientation(context);
-
     return MaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
