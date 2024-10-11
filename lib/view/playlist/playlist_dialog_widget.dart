@@ -66,7 +66,7 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
               ),
             ),
       actions: [
-        _isNewPlaylist
+        playlists.isEmpty || _isNewPlaylist
             ? TextButton(
                 style: TextButton.styleFrom(
                   textStyle: Theme.of(context).textTheme.labelLarge,
