@@ -20,6 +20,7 @@
   "playlistName": "プレイリスト名",
   "playlistRemove": "プレイリストを削除",
   "playlistRemoveConfirm": "プレイリストを削除しますか?",
+  "playlistExistConfirm": "登録済みですが追加しますか?",
   "playlists": "プレイリスト",
   "recentlyAdded": "最近追加した項目",
   "shortcut": "ショートカット",

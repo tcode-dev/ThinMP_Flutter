@@ -20,6 +20,7 @@
   "playlistName": "Playlist name",
   "playlistRemove": "Remove playlist",
   "playlistRemoveConfirm": "Remove the playlist?",
+  "playlistExistConfirm": "Already registered. Add anyway?",
   "playlists": "Playlists",
   "recentlyAdded": "Recently Added",
   "shortcut": "Shortcut",

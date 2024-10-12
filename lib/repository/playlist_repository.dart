@@ -11,6 +11,16 @@ class PlaylistRepository extends BaseRepository<PlaylistRealmModel> {
     return super.findById(ObjectId.fromHexString(primaryKey as String));
   }
 
+  bool exists(String playlistId, String songId) {
+    final model = findById(playlistId);
+
+    if (model == null) {
+      return false;
+    }
+
+    return model.songIds.contains(songId);
+  }
+
   void create(String name, String songId) {
     final model = PlaylistRealmModel(ObjectId(), name, increment());
 

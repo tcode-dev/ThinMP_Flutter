@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/provider/page/playlists_provider.dart';
+import 'package:thinmpf/provider/repository/playlist_repository_factory_provider.dart';
 
 class PlaylistDialogWidget extends ConsumerStatefulWidget {
   final String songId;
@@ -15,6 +16,8 @@ class PlaylistDialogWidget extends ConsumerStatefulWidget {
 class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
   final controller = TextEditingController();
   bool _isNewPlaylist = false;
+  bool _isExist = false;
+  String _playlistId = '';
 
   @override
   void initState() {
@@ -36,74 +39,126 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
     ref.read(playlistsProvider.notifier).add(playlistId, widget.songId);
   }
 
+  bool _exist(String playlistId) {
+    final playlistRepository = ref.read(playlistRepositoryFactoryProvider);
+
+    return playlistRepository.exists(playlistId, widget.songId);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final playlists = ref.watch(playlistsProvider);
 
-    return AlertDialog(
-      title: Text(localizations.playlist, textAlign: TextAlign.center),
-      content: playlists.isEmpty || _isNewPlaylist
-          ? TextField(
-              controller: controller,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                hintText: localizations.playlistName,
-              ),
-            )
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  for (final playlist in playlists)
-                    ListTile(
-                      title: Text(playlist.name),
-                      onTap: () {
-                        _add(playlist.id);
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                ],
-              ),
+    if (_isExist) {
+      return AlertDialog(
+        title: Text(localizations.playlist, textAlign: TextAlign.center),
+        content: SingleChildScrollView(
+          child: Text(localizations.playlistExistConfirm),
+        ),
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
             ),
-      actions: [
-        playlists.isEmpty || _isNewPlaylist
-            ? TextButton(
-                style: TextButton.styleFrom(
-                  textStyle: Theme.of(context).textTheme.labelLarge,
-                ),
-                child: Text(localizations.done),
-                onPressed: () {
-                  _create();
-                  Navigator.of(context).pop();
-                },
-              )
-            : TextButton(
-                style: TextButton.styleFrom(
-                  textStyle: Theme.of(context).textTheme.labelLarge,
-                ),
-                child: Text(localizations.playlistCreate),
-                onPressed: () {
-                  setState(() {
-                    _isNewPlaylist = true;
-                  });
-                },
-              ),
-        TextButton(
-          style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
+            child: Text(localizations.playlistAdd),
+            onPressed: () {
+              _add(_playlistId);
+              Navigator.of(context).pop();
+            },
           ),
-          child: Text(localizations.cancel),
-          onPressed: () {
-            if (_isNewPlaylist) {
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: Text(localizations.cancel),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    } else if (playlists.isEmpty || _isNewPlaylist) {
+      return AlertDialog(
+        title: Text(localizations.playlist, textAlign: TextAlign.center),
+        content: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            hintText: localizations.playlistName,
+          ),
+        ),
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: Text(localizations.done),
+            onPressed: () {
+              _create();
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: Text(localizations.cancel),
+            onPressed: () {
               setState(() {
                 _isNewPlaylist = false;
               });
-            } else {
-              Navigator.of(context).pop();
-            }
-          },
+            },
+          ),
+        ],
+      );
+    } else {
+      return AlertDialog(
+        title: Text(localizations.playlist, textAlign: TextAlign.center),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              for (final playlist in playlists)
+                ListTile(
+                  title: Text(playlist.name),
+                  onTap: () {
+                    if (!_exist(playlist.id)) {
+                      _add(playlist.id);
+                      Navigator.of(context).pop();
+                    } else {
+                    setState(() {
+                      _playlistId = playlist.id;
+                      _isExist = true;
+                    });
+                    }
+                  },
+                ),
+            ],
+          ),
         ),
-      ],
-    );
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: Text(localizations.playlistCreate),
+            onPressed: () {
+              setState(() {
+                _isNewPlaylist = true;
+              });
+            },
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: Text(localizations.cancel),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    }
   }
 }
