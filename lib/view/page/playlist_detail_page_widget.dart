@@ -35,8 +35,12 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
     });
   }
 
-  void _load() {
-    ref.read(playlistDetailProvider.notifier).fetchPlaylist(widget.id);
+  void _load() async {
+    ref.read(songsProvider.notifier).fetchPlaylistSongs(widget.id);
+  }
+
+  void _reload() async {
+    ref.read(playlistDetailProvider(widget.id).notifier).refetch(widget.id);
     ref.read(songsProvider.notifier).fetchPlaylistSongs(widget.id);
   }
 
@@ -51,8 +55,8 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final playlistDetail = ref.watch(playlistDetailProvider(widget.id));
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
-    final playlistDetail = ref.watch(playlistDetailProvider);
     final songs = ref.watch(songsProvider);
     final name = playlistDetail != null ? playlistDetail.name : '';
     final imageId = songs.isNotEmpty ? songs.first.imageId : '0';
@@ -60,7 +64,11 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
     final mediaQuery = MediaQuery.of(context);
     final shortestSide = mediaQuery.size.shortestSide;
     final expandedHeight = shortestSide - mediaQuery.padding.top;
-
+    if (playlistDetail == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(context).pop();
+      });
+    }
     return Scaffold(
       body: Stack(
         children: [
@@ -109,7 +117,7 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
                           MaterialPageRoute(builder: (context) => PlaylistDetailEditPageWidget(id: widget.id)),
                         );
 
-                        _load();
+                        _reload();
                       } else if (item == shortcutLabel) {
                         shortcutRepository.toggle(widget.id, ShortcutConstant.playlist);
                       }
@@ -135,7 +143,7 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
                   ),
                 ),
               ),
-              SongListWidget(callback: _load, onTap: _play),
+              SongListWidget(callback: _reload, onTap: _play),
               const EmptyRowWidget(),
             ],
           ),

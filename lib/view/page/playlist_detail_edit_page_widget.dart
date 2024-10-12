@@ -30,10 +30,9 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
   }
 
   Future<void> _load() async {
-    ref.read(playlistDetailProvider.notifier).fetchPlaylist(widget.id);
     await ref.read(songsProvider.notifier).fetchPlaylistSongs(widget.id);
 
-    final playlist = ref.read(playlistDetailProvider);
+    final playlist = ref.read(playlistDetailProvider(widget.id));
     final songs = ref.read(songsProvider);
 
     _controller.text = playlist?.name ?? '';
@@ -44,10 +43,16 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
     });
   }
 
-  void _updatePlaylistDetail() {
+  void _update() {
     final playlistRepository = ref.read(playlistRepositoryFactoryProvider);
 
     playlistRepository.updatePlaylistDetail(widget.id, _controller.text, _widgetList.map((model) => model.song.id).toList());
+  }
+
+  void _delete() {
+    final playlistRepository = ref.read(playlistRepositoryFactoryProvider);
+
+    playlistRepository.delete(widget.id);
   }
 
   @override
@@ -73,7 +78,7 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
         actions: [
           TextButton(
             onPressed: () {
-              _updatePlaylistDetail();
+              _update();
               Navigator.of(context).pop();
             },
             child: Text(localizations.done),
@@ -132,6 +137,46 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
                 _widgetList.insert(newIndex, item);
               });
             },
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.all(StyleConstant.button.small),
+              child: TextButton(
+                onPressed: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        content: Text(localizations.playlistRemoveConfirm, textAlign: TextAlign.center),
+                        actions: [
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                            ),
+                            child: Text(localizations.playlistRemove),
+                            onPressed: () {
+                              _delete();
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                            ),
+                            child: Text(localizations.cancel),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Text(localizations.playlistRemove),
+              ),
+            ),
           ),
         ],
       ),

@@ -63,4 +63,14 @@ class PlaylistRepository extends BaseRepository<PlaylistRealmModel> {
       model.songIds.addAll(songIds);
     });
   }
+
+  void delete(String playlistId) {
+    final model = findById(playlistId);
+
+    if (model != null) {
+      realm.write(() {
+        realm.delete(model);
+      });
+    }
+  }
 }

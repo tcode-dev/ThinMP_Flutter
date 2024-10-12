@@ -6,7 +6,7 @@ part of 'songs_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$songsHash() => r'71c7847faad677239b0541bc45a766c978d91089';
+String _$songsHash() => r'4e4b902807fc626d40303dc0fd1966e01734cbe2';
 
 /// See also [Songs].
 @ProviderFor(Songs)

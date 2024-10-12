@@ -19,6 +19,7 @@
   "playlistEnter": "プレイリスト名を入力",
   "playlistName": "プレイリスト名",
   "playlistRemove": "プレイリストを削除",
+  "playlistRemoveConfirm": "プレイリストを削除しますか?",
   "playlists": "プレイリスト",
   "recentlyAdded": "最近追加した項目",
   "shortcut": "ショートカット",

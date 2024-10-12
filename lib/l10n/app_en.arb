@@ -19,6 +19,7 @@
   "playlistEnter": "Enter the playlist name",
   "playlistName": "Playlist name",
   "playlistRemove": "Remove playlist",
+  "playlistRemoveConfirm": "Remove the playlist?",
   "playlists": "Playlists",
   "recentlyAdded": "Recently Added",
   "shortcut": "Shortcut",

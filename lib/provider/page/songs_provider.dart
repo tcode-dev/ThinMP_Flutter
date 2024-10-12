@@ -57,6 +57,7 @@ class Songs extends _$Songs {
     final playlist = playlistRepository.findById(id);
 
     if (playlist == null) {
+      state = [];
       return;
     }
 
