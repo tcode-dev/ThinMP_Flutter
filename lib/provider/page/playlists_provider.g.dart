@@ -6,7 +6,7 @@ part of 'playlists_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$playlistsHash() => r'f3401d8c7101424419f6aa77a59745c20264b595';
+String _$playlistsHash() => r'd8864bc73b055dc4ceaadf023211a896479b2b90';
 
 /// See also [Playlists].
 @ProviderFor(Playlists)

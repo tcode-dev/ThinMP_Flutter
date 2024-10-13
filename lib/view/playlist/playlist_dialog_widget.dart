@@ -32,11 +32,15 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
   }
 
   void _create() {
-    ref.read(playlistsProvider.notifier).create(controller.text, widget.songId);
+    final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
+
+    playlistRepository.create(controller.text, widget.songId);
   }
 
   void _add(String playlistId) {
-    ref.read(playlistsProvider.notifier).add(playlistId, widget.songId);
+    final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
+
+    playlistRepository.add(playlistId, widget.songId);
   }
 
   bool _exist(String playlistId) {
@@ -126,10 +130,10 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
                       _add(playlist.id);
                       Navigator.of(context).pop();
                     } else {
-                    setState(() {
-                      _playlistId = playlist.id;
-                      _isExist = true;
-                    });
+                      setState(() {
+                        _playlistId = playlist.id;
+                        _isExist = true;
+                      });
                     }
                   },
                 ),

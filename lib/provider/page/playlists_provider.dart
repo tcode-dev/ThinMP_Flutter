@@ -16,16 +16,4 @@ class Playlists extends _$Playlists {
 
     state = playlists.map((playlist) => playlist.fromRealm()).toList();
   }
-
-  void create(String name, String songId) {
-    final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
-
-    playlistRepository.create(name, songId);
-  }
-
-  void add(String playlistId, String songId) {
-    final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
-
-    playlistRepository.add(playlistId, songId);
-  }
 }
