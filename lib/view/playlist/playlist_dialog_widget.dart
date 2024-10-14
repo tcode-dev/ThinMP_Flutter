@@ -57,9 +57,7 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
     if (_isExist) {
       return AlertDialog(
         title: Text(localizations.playlist, textAlign: TextAlign.center),
-        content: SingleChildScrollView(
-          child: Text(localizations.playlistExistConfirm),
-        ),
+        content: Text(localizations.playlistExistConfirm),
         actions: [
           TextButton(
             style: TextButton.styleFrom(
