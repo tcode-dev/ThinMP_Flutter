@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/label_constant.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
-import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/playlist_detail_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
@@ -15,7 +14,8 @@ import 'package:thinmpf/view/page/playlist_detail_edit_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/text/shortcut_text_widget.dart';
-import 'package:thinmpf/view/text/text_widget.dart';
+import 'package:thinmpf/view/title/collapsing_primary_title_widget.dart';
+import 'package:thinmpf/view/title/collapsing_secondary_title_widget.dart';
 
 class PlaylistDetailPageWidget extends ConsumerStatefulWidget {
   final String id;
@@ -79,7 +79,7 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
                 expandedHeight: expandedHeight,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: TextWidget(text: name),
+                  title: CollapsingPrimaryTitleWidget(title: name),
                   background: Stack(
                     children: [
                       Positioned(
@@ -135,14 +135,7 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
                   )
                 ],
               ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: StyleConstant.row.contentBoxHeight,
-                  child: Center(
-                    child: TextWidget(text: localizations.playlist),
-                  ),
-                ),
-              ),
+              CollapsingSecondaryTitleWidget(title: localizations.playlist),
               SongListWidget(callback: _reload, onTap: _play),
               const EmptyRowWidget(),
             ],
