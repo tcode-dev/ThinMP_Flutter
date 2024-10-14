@@ -118,7 +118,7 @@ class SliderWidgetState extends ConsumerState<SliderWidget> {
     final padding = isTablet ? StyleConstant.padding.large : StyleConstant.padding.medium;
 
     return Container(
-      padding: EdgeInsets.only(right: padding, left: padding),
+      padding: EdgeInsets.symmetric(horizontal: padding),
       child: Column(
         children: [
           Slider(
@@ -129,7 +129,7 @@ class SliderWidgetState extends ConsumerState<SliderWidget> {
             onChanged: _onChanged,
           ),
           Container(
-            padding: EdgeInsets.only(right: StyleConstant.padding.large, left: StyleConstant.padding.large),
+            padding: EdgeInsets.symmetric(horizontal: StyleConstant.padding.large),
             child: Row(
               children: [
                 Text(_formatDuration(currentTime)),
