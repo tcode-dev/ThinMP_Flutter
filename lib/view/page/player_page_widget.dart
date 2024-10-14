@@ -108,12 +108,15 @@ class PlayerPageWidgetState extends ConsumerState<PlayerPageWidget> {
                     const Spacer(),
                     Center(child: SquareImageWidget(id: playbackSong.imageId, size: imageSize)),
                     const Spacer(),
-                    Column(
-                      children: [
-                        TextWidget(text: playbackSong.name, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineMedium),
-                        SizedBox(height: StyleConstant.padding.tiny),
-                        TextWidget(text: playbackSong.artistName, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
-                      ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: StyleConstant.padding.large),
+                      child: Column(
+                        children: [
+                          TextWidget(text: playbackSong.name, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineMedium),
+                          SizedBox(height: StyleConstant.padding.tiny),
+                          TextWidget(text: playbackSong.artistName, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
+                        ],
+                      ),
                     ),
                     const Spacer(),
                     const SliderWidget(),
