@@ -20,6 +20,8 @@ import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/text/favorite_artist_text_widget.dart';
 import 'package:thinmpf/view/text/shortcut_text_widget.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
+import 'package:thinmpf/view/title/collapsing_primary_title_widget.dart';
+import 'package:thinmpf/view/title/collapsing_secondary_title_widget.dart';
 import 'package:thinmpf/view/title/section_title_widget.dart';
 
 class ArtistDetailPageWidget extends ConsumerStatefulWidget {
@@ -74,7 +76,7 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
                 expandedHeight: expandedHeight,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: TextWidget(text: name),
+                  title: CollapsingPrimaryTitleWidget(title: name),
                   background: Stack(
                     children: [
                       Positioned(
@@ -134,14 +136,7 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
                   )
                 ],
               ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: StyleConstant.row.contentBoxHeight,
-                  child: Center(
-                    child: TextWidget(text: description),
-                  ),
-                ),
-              ),
+              CollapsingSecondaryTitleWidget(title: description),
               SectionTitleWidget(title: localizations.albums),
               AlbumGridWidget(callback: _load),
               SectionTitleWidget(title: localizations.songs),
