@@ -14,6 +14,8 @@ import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/text/shortcut_text_widget.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
+import 'package:thinmpf/view/title/collapsing_primary_title_widget.dart';
+import 'package:thinmpf/view/title/collapsing_secondary_title_widget.dart';
 
 class AlbumDetailPageWidget extends ConsumerStatefulWidget {
   final String id;
@@ -61,7 +63,7 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
                 expandedHeight: expandedHeight,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: TextWidget(text: albumDetail?.name ?? ''),
+                  title: CollapsingPrimaryTitleWidget(title: albumDetail?.name),
                   background: Stack(
                     children: [
                       Positioned(
@@ -106,14 +108,7 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
                   )
                 ],
               ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: StyleConstant.row.contentBoxHeight,
-                  child: Center(
-                    child: TextWidget(text: albumDetail?.artistName ?? ''),
-                  ),
-                ),
-              ),
+              CollapsingSecondaryTitleWidget(title: albumDetail?.artistName),
               SongListWidget(onTap: _play),
               const EmptyRowWidget(),
             ],
