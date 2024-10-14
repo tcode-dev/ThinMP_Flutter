@@ -34,7 +34,7 @@ extension ShortcutRealmModelExtension on ShortcutRealmModel {
   }
 
   ShortcutModel? toShortcutPlaylist(PlaylistRealmModel? playlist, SongDTO? song) {
-    if (playlist == null || song == null) {
+    if (playlist == null) {
       return null;
     }
 
@@ -43,7 +43,7 @@ extension ShortcutRealmModelExtension on ShortcutRealmModel {
       itemId: itemId,
       name: playlist.name,
       type: ShortcutConstant.values[type],
-      imageId: song.imageId,
+      imageId: song?.imageId ?? '0',
     );
   }
 }

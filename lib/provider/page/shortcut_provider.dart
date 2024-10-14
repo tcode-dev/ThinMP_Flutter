@@ -35,7 +35,12 @@ class Shortcut extends _$Shortcut {
         return shortcut.toShortcutAlbum(album);
       } else if (shortcut.type == ShortcutConstant.playlist.index) {
         final playlist = playlistRepository.findById(shortcut.itemId);
-        final song = await songHostApi.getSongById(playlist!.songIds.first);
+
+        if (playlist == null) {
+          return null;
+        }
+
+        final song = playlist.songIds.isNotEmpty ? await songHostApi.getSongById(playlist.songIds.first) : null;
 
         return shortcut.toShortcutPlaylist(playlist, song);
       }
