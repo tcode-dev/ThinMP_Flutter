@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/label_constant.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
-import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/album_detail_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
@@ -13,7 +12,6 @@ import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
 import 'package:thinmpf/view/text/shortcut_text_widget.dart';
-import 'package:thinmpf/view/text/text_widget.dart';
 import 'package:thinmpf/view/title/collapsing_primary_title_widget.dart';
 import 'package:thinmpf/view/title/collapsing_secondary_title_widget.dart';
 
