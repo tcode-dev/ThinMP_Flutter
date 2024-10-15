@@ -6,9 +6,9 @@
 //
 
 protocol ArtistRepositoryContract {
-    func findAll() -> [ArtistModel]
+    func findAll() -> [ArtistModelContract]
 
-    func findById(artistId: ArtistId) -> ArtistModel?
+    func findById(artistId: ArtistId) -> ArtistModelContract?
     
-    func findByIds(artistIds: [ArtistId]) -> [ArtistModel]
+    func findByIds(artistIds: [ArtistId]) -> [ArtistModelContract]
 }

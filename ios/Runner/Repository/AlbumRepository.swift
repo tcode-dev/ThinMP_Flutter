@@ -8,7 +8,7 @@
 import MediaPlayer
 
 class AlbumRepository: AlbumRepositoryContract {
-    func findAll() -> [AlbumModel] {
+    func findAll() -> [AlbumModelContract] {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.albums()
 
@@ -17,7 +17,7 @@ class AlbumRepository: AlbumRepositoryContract {
         return query.collections!.map { AlbumModel(media: $0) }
     }
 
-    func findByAlbumId(albumId: AlbumId) -> AlbumModel? {
+    func findByAlbumId(albumId: AlbumId) -> AlbumModelContract? {
         let property = MPMediaPropertyPredicate(value: albumId.raw, forProperty: MPMediaItemPropertyAlbumPersistentID)
         let query = MPMediaQuery.albums()
 
@@ -26,7 +26,7 @@ class AlbumRepository: AlbumRepositoryContract {
         return query.collections!.map { AlbumModel(media: $0) }.first
     }
 
-    func findByArtistId(artistId: ArtistId) -> [AlbumModel] {
+    func findByArtistId(artistId: ArtistId) -> [AlbumModelContract] {
         let property = MPMediaPropertyPredicate(value: artistId.raw, forProperty: MPMediaItemPropertyArtistPersistentID)
         let query = MPMediaQuery.albums()
 
@@ -36,7 +36,7 @@ class AlbumRepository: AlbumRepositoryContract {
             .map { AlbumModel(media: $0) }
     }
 
-    func findFirstByArtistId(artistId: ArtistId) -> AlbumModel? {
+    func findFirstByArtistId(artistId: ArtistId) -> AlbumModelContract? {
         let property = MPMediaPropertyPredicate(value: artistId.raw, forProperty: MPMediaItemPropertyArtistPersistentID)
         let query = MPMediaQuery.albums()
 
@@ -51,7 +51,7 @@ class AlbumRepository: AlbumRepositoryContract {
         return AlbumModel(media: album!)
     }
 
-    func findRecentAlbums(count: Int) -> [AlbumModel] {
+    func findRecentAlbums(count: Int) -> [AlbumModelContract] {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.albums()
 

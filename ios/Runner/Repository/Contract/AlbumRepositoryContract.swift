@@ -6,13 +6,13 @@
 //
 
 protocol AlbumRepositoryContract {
-    func findAll() -> [AlbumModel]
+    func findAll() -> [AlbumModelContract]
 
-    func findByAlbumId(albumId: AlbumId) -> AlbumModel?
+    func findByAlbumId(albumId: AlbumId) -> AlbumModelContract?
 
-    func findByArtistId(artistId: ArtistId) -> [AlbumModel]
+    func findByArtistId(artistId: ArtistId) -> [AlbumModelContract]
 
-    func findFirstByArtistId(artistId: ArtistId) -> AlbumModel?
+    func findFirstByArtistId(artistId: ArtistId) -> AlbumModelContract?
 
-    func findRecentAlbums(count: Int) -> [AlbumModel]
+    func findRecentAlbums(count: Int) -> [AlbumModelContract]
 }

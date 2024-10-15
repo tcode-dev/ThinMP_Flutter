@@ -5,7 +5,7 @@
 //  Created by t k on 2024/08/14.
 //
 
-extension ArtistModel {
+extension ArtistModelContract {
     func toPigeon() -> ArtistDTO {
         return ArtistDTO(
             id: String(self.id.raw),

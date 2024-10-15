@@ -8,7 +8,7 @@
 import MediaPlayer
 
 class ArtistRepository: ArtistRepositoryContract {
-    func findAll() -> [ArtistModel] {
+    func findAll() -> [ArtistModelContract] {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.artists()
 
@@ -17,7 +17,7 @@ class ArtistRepository: ArtistRepositoryContract {
         return query.collections!.map { ArtistModel(media: $0)}
     }
 
-    func findById(artistId: ArtistId) -> ArtistModel? {
+    func findById(artistId: ArtistId) -> ArtistModelContract? {
         let property = MPMediaPropertyPredicate(value: artistId.raw, forProperty: MPMediaItemPropertyArtistPersistentID)
         let query = MPMediaQuery.artists()
 
@@ -30,7 +30,7 @@ class ArtistRepository: ArtistRepositoryContract {
         return ArtistModel(media: artist)
     }
     
-    func findByIds(artistIds: [ArtistId]) -> [ArtistModel] {
+    func findByIds(artistIds: [ArtistId]) -> [ArtistModelContract] {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.artists()
         let ids = artistIds.map { $0.raw }

@@ -6,7 +6,7 @@
 //
 
 protocol MusicPlayerContract {
-    func start(list: [SongModel], currentIndex: Int)
+    func start(list: [SongModelContract], currentIndex: Int)
 
     func play()
 
@@ -17,6 +17,12 @@ protocol MusicPlayerContract {
     func next()
 
     func seek(time: TimeInterval)
+    
+    func getCurrentSong() -> SongModelContract?
+    
+    func getDuration() -> Double
+    
+    func getCurrentTime() -> Double
 
     func setRepeat(repeatMode: RepeatMode)
 

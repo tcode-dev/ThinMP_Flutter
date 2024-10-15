@@ -5,7 +5,7 @@
 //  Created by t k on 2024/08/14.
 //
 
-extension SongModel {
+extension SongModelContract {
     func toPigeon() -> SongDTO {
         return SongDTO(
             id: String(self.id.raw),

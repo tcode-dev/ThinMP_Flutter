@@ -20,14 +20,7 @@ class MusicPlayer: MusicPlayerContract {
         player.beginGeneratingPlaybackNotifications()
     }
     
-    func getCurrentSong() -> SongModel? {
-        if (player.nowPlayingItem == nil) {
-            return nil
-        }
-        return SongModel(media: MPMediaItemCollection(items: [player.nowPlayingItem! as MPMediaItem]))
-    }
-    
-    func start(list: [SongModel], currentIndex: Int) {
+    func start(list: [SongModelContract], currentIndex: Int) {
         if (player.playbackState == MPMusicPlaybackState.playing) {
             player.stop()
         }
@@ -63,7 +56,14 @@ class MusicPlayer: MusicPlayerContract {
     func seek(time: TimeInterval) {
         player.currentPlaybackTime = time
     }
-    
+
+    func getCurrentSong() -> SongModelContract? {
+        if (player.nowPlayingItem == nil) {
+            return nil
+        }
+        return SongModel(media: MPMediaItemCollection(items: [player.nowPlayingItem! as MPMediaItem]))
+    }
+
     func getDuration() -> Double {
         return player.nowPlayingItem?.playbackDuration ?? 0
     }
