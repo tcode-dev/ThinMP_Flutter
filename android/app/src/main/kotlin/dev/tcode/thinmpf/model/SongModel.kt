@@ -17,7 +17,7 @@ class SongModel(
     artistName: String,
     duration: Int,
     trackNumber: String
-): SongModelContract, Music() {
+): SongModelContract {
     private val trackNumberRaw: String = trackNumber
     override val id: SongId = SongId(id)
     override val name: String = name

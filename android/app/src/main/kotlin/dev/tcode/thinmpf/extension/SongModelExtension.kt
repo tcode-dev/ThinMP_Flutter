@@ -1,9 +1,9 @@
 package dev.tcode.thinmpf.extension
 
-import dev.tcode.thinmpf.model.SongModel
+import dev.tcode.thinmpf.model.contract.SongModelContract
 import dev.tcode.thinmpf.pigeon_output.SongDTO
 
-fun SongModel.toPigeon(): SongDTO {
+fun SongModelContract.toPigeon(): SongDTO {
     return SongDTO(
         id = this.id.raw,
         name = this.name,

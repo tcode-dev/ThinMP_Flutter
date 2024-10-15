@@ -1,7 +1,7 @@
 package dev.tcode.thinmpf.api
 
 import dev.tcode.thinmpf.extension.toPigeon
-import dev.tcode.thinmpf.model.SongModel
+import dev.tcode.thinmpf.model.contract.SongModelContract
 import dev.tcode.thinmpf.pigeon_output.PlayerFlutterApi
 import io.flutter.plugin.common.BinaryMessenger
 
@@ -17,7 +17,7 @@ class PlayerFlutterApiImpl {
         api.onIsPlayingChange(isPlaying) { }
     }
 
-    fun onPlaybackSongChange(song: SongModel) {
+    fun onPlaybackSongChange(song: SongModelContract) {
         api.onPlaybackSongChange(song.toPigeon()) { }
     }
 }

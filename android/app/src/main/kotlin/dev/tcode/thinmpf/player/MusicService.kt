@@ -20,6 +20,7 @@ import androidx.media3.session.MediaStyleNotificationHelper
 import dev.tcode.thinmpf.api.PlayerFlutterApiImpl
 import dev.tcode.thinmpf.constant.NotificationConstant
 import dev.tcode.thinmpf.model.SongModel
+import dev.tcode.thinmpf.model.contract.SongModelContract
 import dev.tcode.thinmpf.notification.LocalNotificationHelper
 import dev.tcode.thinmpf.pigeon_output.RepeatMode
 import dev.tcode.thinmpf.pigeon_output.ShuffleMode
@@ -35,7 +36,7 @@ class MusicService : Service() {
     private lateinit var mediaStyle: MediaStyleNotificationHelper.MediaStyle
     private lateinit var headsetEventReceiver: HeadsetEventReceiver
     private lateinit var playerEventListener: PlayerEventListener
-    private var playingList: List<SongModel> = emptyList()
+    private var playingList: List<SongModelContract> = emptyList()
     private var initialized: Boolean = false
     private var isPlaying = false
     private var isStarting = false
@@ -57,7 +58,7 @@ class MusicService : Service() {
         registerReceiver(headsetEventReceiver, IntentFilter(Intent.ACTION_HEADSET_PLUG))
     }
 
-    fun start(songs: List<SongModel>, index: Int) {
+    fun start(songs: List<SongModelContract>, index: Int) {
         if (isStarting) return
 
         isStarting = true
@@ -105,7 +106,7 @@ class MusicService : Service() {
         return player.currentPosition
     }
 
-    private fun getCurrentSong(): SongModel? {
+    private fun getCurrentSong(): SongModelContract? {
         if (player.currentMediaItem == null) return null
 
         return playingList.first { MediaItem.fromUri(it.mediaUri) == player.currentMediaItem }

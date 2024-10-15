@@ -11,7 +11,7 @@ class AlbumModel(
     name: String,
     artistId: String,
     artistName: String
-): AlbumModelContract, Music() {
+): AlbumModelContract {
     override val id: AlbumId = AlbumId(id)
     override val name: String = name
     override val artistId: ArtistId = ArtistId(artistId)

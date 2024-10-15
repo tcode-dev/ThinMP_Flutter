@@ -3,12 +3,13 @@ package dev.tcode.thinmpf.repository
 import android.content.Context
 import android.provider.MediaStore
 import dev.tcode.thinmpf.model.SongModel
+import dev.tcode.thinmpf.model.contract.SongModelContract
 import dev.tcode.thinmpf.model.valueObject.AlbumId
 import dev.tcode.thinmpf.model.valueObject.ArtistId
 import dev.tcode.thinmpf.model.valueObject.SongId
 import dev.tcode.thinmpf.repository.contract.SongRepositoryContract
 
-class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepository<SongModel>(
+class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepository<SongModelContract>(
     context, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, arrayOf(
         MediaStore.Audio.Media._ID,
         MediaStore.Audio.Media.TITLE,
@@ -27,7 +28,7 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
             "CAST(${MediaStore.Audio.Media.CD_TRACK_NUMBER} AS INTEGER) " +
             "END ASC"
 
-    override fun findAll(): List<SongModel> {
+    override fun findAll(): List<SongModelContract> {
         selection = MediaStore.Audio.Media.IS_MUSIC + " = 1"
         selectionArgs = null
         sortOrder = MediaStore.Audio.Media.TITLE + " ASC"
@@ -35,7 +36,7 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
         return getList()
     }
 
-    override fun findById(songId: SongId): SongModel? {
+    override fun findById(songId: SongId): SongModelContract? {
         selection = MediaStore.Audio.Media._ID + " = ?"
         selectionArgs = arrayOf(songId.raw)
         sortOrder = null
@@ -43,7 +44,7 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
         return get()
     }
 
-    override fun findByIds(songIds: List<SongId>): List<SongModel> {
+    override fun findByIds(songIds: List<SongId>): List<SongModelContract> {
         val ids = songIds.map { it.raw }
 
         selection = MediaStore.Audio.Media._ID + " IN (" + makePlaceholders(ids.size) + ") " + "AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
@@ -53,7 +54,7 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
         return getList()
     }
 
-    override fun findByAlbumId(albumId: AlbumId): List<SongModel> {
+    override fun findByAlbumId(albumId: AlbumId): List<SongModelContract> {
         selection = MediaStore.Audio.Media.ALBUM_ID + " = ? AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
         selectionArgs = arrayOf(albumId.raw)
         sortOrder = trackNumberSortOrder
@@ -61,7 +62,7 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
         return getList()
     }
 
-    override fun findByArtistId(artistId: ArtistId): List<SongModel> {
+    override fun findByArtistId(artistId: ArtistId): List<SongModelContract> {
         selection = MediaStore.Audio.Media.ARTIST_ID + " = ? AND " + MediaStore.Audio.Media.IS_MUSIC + " = 1"
         selectionArgs = arrayOf(artistId.raw)
         sortOrder = "${MediaStore.Audio.Media.ALBUM} ASC, $trackNumberSortOrder"
@@ -101,7 +102,7 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
         return cursor?.getColumnIndex(MediaStore.Audio.Media.CD_TRACK_NUMBER)?.let { cursor?.getString(it) } ?: ""
     }
 
-    private fun getSong(): SongModel {
+    private fun getSong(): SongModelContract {
         return SongModel(
             id = getId(),
             name = getTitle(),
@@ -114,7 +115,7 @@ class SongRepository(context: Context) : SongRepositoryContract, MediaStoreRepos
         )
     }
 
-    override fun fetch(): SongModel {
+    override fun fetch(): SongModelContract {
         return getSong()
     }
 }

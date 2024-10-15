@@ -5,11 +5,12 @@ import android.content.Context
 import android.os.Bundle
 import android.provider.MediaStore
 import dev.tcode.thinmpf.model.AlbumModel
+import dev.tcode.thinmpf.model.contract.AlbumModelContract
 import dev.tcode.thinmpf.model.valueObject.AlbumId
 import dev.tcode.thinmpf.model.valueObject.ArtistId
 import dev.tcode.thinmpf.repository.contract.AlbumRepositoryContract
 
-class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRepository<AlbumModel>(
+class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRepository<AlbumModelContract>(
     context,
     MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
     arrayOf(
@@ -19,7 +20,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         MediaStore.Audio.Albums.ARTIST
     )
 ) {
-    override fun findAll(): List<AlbumModel> {
+    override fun findAll(): List<AlbumModelContract> {
         selection = null
         selectionArgs = null
         sortOrder = MediaStore.Audio.Albums.ALBUM + " ASC"
@@ -28,7 +29,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         return getList();
     }
 
-    override fun findByAlbumId(albumId: AlbumId): AlbumModel? {
+    override fun findByAlbumId(albumId: AlbumId): AlbumModelContract? {
         selection = MediaStore.Audio.Albums._ID + " = ?"
         selectionArgs = arrayOf(albumId.raw)
         sortOrder = null
@@ -37,7 +38,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         return get()
     }
 
-    override fun findByArtistId(artistId: ArtistId): List<AlbumModel> {
+    override fun findByArtistId(artistId: ArtistId): List<AlbumModelContract> {
         selection = MediaStore.Audio.Media.ARTIST_ID + " = ?"
         selectionArgs = arrayOf(artistId.raw)
         sortOrder = "${MediaStore.Audio.Media.ALBUM} ASC"
@@ -46,7 +47,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         return getList()
     }
 
-    override fun findFirstByArtistId(artistId: ArtistId): AlbumModel? {
+    override fun findFirstByArtistId(artistId: ArtistId): AlbumModelContract? {
         selection = null
         selectionArgs = null
         sortOrder = null
@@ -61,7 +62,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         return get()
     }
 
-    override fun findRecentAlbums(limit: Int): List<AlbumModel> {
+    override fun findRecentAlbums(limit: Int): List<AlbumModelContract> {
         selection = null
         selectionArgs = null
         sortOrder = null
@@ -90,7 +91,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         return cursor?.getColumnIndex(MediaStore.Audio.Media.ALBUM)?.let { cursor?.getString(it) } ?: ""
     }
 
-    private fun getAlbum(): AlbumModel {
+    private fun getAlbum(): AlbumModelContract {
         return AlbumModel(
             id = getId(),
             name = getAlbumName(),
@@ -99,7 +100,7 @@ class AlbumRepository(context: Context) : AlbumRepositoryContract, MediaStoreRep
         )
     }
 
-    override fun fetch(): AlbumModel {
+    override fun fetch(): AlbumModelContract {
         return getAlbum()
     }
 }

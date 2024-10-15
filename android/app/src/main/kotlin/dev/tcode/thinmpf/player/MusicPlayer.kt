@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import dev.tcode.thinmpf.model.SongModel
+import dev.tcode.thinmpf.model.contract.SongModelContract
 import dev.tcode.thinmpf.pigeon_output.RepeatMode
 import dev.tcode.thinmpf.pigeon_output.ShuffleMode
 
@@ -22,7 +22,7 @@ object MusicPlayer{
         this.context = context.applicationContext
     }
 
-    fun start(songs: List<SongModel>, index: Int) {
+    fun start(songs: List<SongModelContract>, index: Int) {
         if (!isServiceRunning()) {
             if (isServiceBinding) return
 

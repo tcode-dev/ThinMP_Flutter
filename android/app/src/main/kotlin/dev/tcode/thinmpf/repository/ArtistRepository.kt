@@ -3,10 +3,11 @@ package dev.tcode.thinmpf.repository
 import android.content.Context
 import android.provider.MediaStore
 import dev.tcode.thinmpf.model.ArtistModel
+import dev.tcode.thinmpf.model.contract.ArtistModelContract
 import dev.tcode.thinmpf.model.valueObject.ArtistId
 import dev.tcode.thinmpf.repository.contract.ArtistRepositoryContract
 
-class ArtistRepository(context: Context) : ArtistRepositoryContract, MediaStoreRepository<ArtistModel>(
+class ArtistRepository(context: Context) : ArtistRepositoryContract, MediaStoreRepository<ArtistModelContract>(
     context, MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI, arrayOf(
         MediaStore.Audio.Artists._ID,
         MediaStore.Audio.Artists.ARTIST,
@@ -14,7 +15,7 @@ class ArtistRepository(context: Context) : ArtistRepositoryContract, MediaStoreR
         MediaStore.Audio.Artists.NUMBER_OF_TRACKS
     )
 ) {
-    override fun findAll(): List<ArtistModel> {
+    override fun findAll(): List<ArtistModelContract> {
         selection = null
         selectionArgs = null
         sortOrder = MediaStore.Audio.Artists.ARTIST + " ASC"
@@ -22,7 +23,7 @@ class ArtistRepository(context: Context) : ArtistRepositoryContract, MediaStoreR
         return getList();
     }
 
-    override fun findById(artistId: ArtistId): ArtistModel? {
+    override fun findById(artistId: ArtistId): ArtistModelContract? {
         selection = MediaStore.Audio.Media._ID + " = ?"
         selectionArgs = arrayOf(artistId.raw)
         sortOrder = null
@@ -30,7 +31,7 @@ class ArtistRepository(context: Context) : ArtistRepositoryContract, MediaStoreR
         return get()
     }
 
-    override fun findByIds(artistIds: List<ArtistId>): List<ArtistModel> {
+    override fun findByIds(artistIds: List<ArtistId>): List<ArtistModelContract> {
         val ids = artistIds.map { it.raw }
 
         selection = MediaStore.Audio.Media._ID + " IN (" + makePlaceholders(ids.size) + ")"
@@ -56,14 +57,14 @@ class ArtistRepository(context: Context) : ArtistRepositoryContract, MediaStoreR
         return cursor?.getColumnIndex(MediaStore.Audio.Artists.NUMBER_OF_TRACKS)?.let { cursor?.getString(it) } ?: ""
     }
 
-    private fun getArtist(): ArtistModel {
+    private fun getArtist(): ArtistModelContract {
         return ArtistModel(
             id = getId(),
             name = getArtistName(),
         )
     }
 
-    override fun fetch(): ArtistModel {
+    override fun fetch(): ArtistModelContract {
         return getArtist()
     }
 }
