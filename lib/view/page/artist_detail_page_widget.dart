@@ -7,6 +7,7 @@ import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/albums_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
+import 'package:thinmpf/provider/player/playback_error_provider.dart';
 import 'package:thinmpf/provider/repository/favorite_artist_repository_factory_provider.dart';
 import 'package:thinmpf/provider/repository/shortcut_repository_factory_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
@@ -63,6 +64,10 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
     final mediaQuery = MediaQuery.of(context);
     final shortestSide = mediaQuery.size.shortestSide;
     final expandedHeight = shortestSide - mediaQuery.padding.top;
+
+    ref.listen(playbackErrorProvider, (_, __) {
+      _load();
+    });
 
     return Scaffold(
       body: Stack(

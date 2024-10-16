@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
+import 'package:thinmpf/provider/player/playback_error_provider.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
 import 'package:thinmpf/view/row/empty_row_widget.dart';
@@ -34,6 +35,10 @@ class SongsPageWidgetState extends ConsumerState<SongsPageWidget> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+
+    ref.listen(playbackErrorProvider, (_, __) {
+      _load();
+    });
 
     return Scaffold(
       appBar: AppBar(

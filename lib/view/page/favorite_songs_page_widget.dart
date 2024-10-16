@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/label_constant.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
+import 'package:thinmpf/provider/player/playback_error_provider.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
 import 'package:thinmpf/view/page/favorite_songs_edit_page_widget.dart';
 import 'package:thinmpf/view/player/mini_player_widget.dart';
@@ -38,6 +39,10 @@ class FavoriteSongsPageWidgetState extends ConsumerState<FavoriteSongsPageWidget
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+
+    ref.listen(playbackErrorProvider, (_, __) {
+      _load();
+    });
 
     return Scaffold(
       appBar: AppBar(

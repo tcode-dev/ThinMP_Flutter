@@ -6,6 +6,7 @@ import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/page/playlist_detail_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
+import 'package:thinmpf/provider/player/playback_error_provider.dart';
 import 'package:thinmpf/provider/repository/shortcut_repository_factory_provider.dart';
 import 'package:thinmpf/theme/custom_theme_data.dart';
 import 'package:thinmpf/view/image/image_widget.dart';
@@ -54,8 +55,15 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
     final playlistDetail = ref.watch(playlistDetailProvider(widget.id));
+
+    if (playlistDetail == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(context).pop();
+      });
+    }
+
+    final localizations = AppLocalizations.of(context)!;
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
     final songs = ref.watch(songsProvider);
     final name = playlistDetail != null ? playlistDetail.name : '';
@@ -64,11 +72,11 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
     final mediaQuery = MediaQuery.of(context);
     final shortestSide = mediaQuery.size.shortestSide;
     final expandedHeight = shortestSide - mediaQuery.padding.top;
-    if (playlistDetail == null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(context).pop();
-      });
-    }
+
+    ref.listen(playbackErrorProvider, (_, __) {
+      _load();
+    });
+
     return Scaffold(
       body: Stack(
         children: [
