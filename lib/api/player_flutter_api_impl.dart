@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/player/is_playing_provider.dart';
+import 'package:thinmpf/provider/player/playback_error_provider.dart';
 import 'package:thinmpf/provider/player/playback_song_provider.dart';
 
 class PlayerFlutterApiImpl implements PlayerFlutterApi {
@@ -20,5 +21,10 @@ class PlayerFlutterApiImpl implements PlayerFlutterApi {
     if (ref.read(playbackSongProvider)?.id != song.id) {
       ref.read(playbackSongProvider.notifier).setPlaybackSong(song);
     }
+  }
+
+  @override
+  void onError(String message) {
+    ref.read(playbackErrorProvider.notifier).notify(message);
   }
 }

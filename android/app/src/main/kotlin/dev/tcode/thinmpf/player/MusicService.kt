@@ -93,7 +93,7 @@ class MusicService : Service() {
         try {
             player.seekTo(ms)
         } catch (e: Exception) {
-            onError()
+            onError(e.message)
         }
     }
 
@@ -182,12 +182,12 @@ class MusicService : Service() {
         playerFlutterApi.onPlaybackSongChange(song)
     }
 
-    private fun onError() {
+    private fun onError(message: String?) {
         retry()
 
-//        val playerFlutterApi = PlayerFlutterApiImpl()
-//
-//        playerFlutterApi.onError()
+        val playerFlutterApi = PlayerFlutterApiImpl()
+
+        playerFlutterApi.onError(message ?: "")
     }
 
     private fun retry() {
@@ -265,7 +265,7 @@ class MusicService : Service() {
         override fun onPlayerError(error: PlaybackException) {
             // 曲が削除されている場合
             if (error.errorCode == PlaybackException.ERROR_CODE_IO_FILE_NOT_FOUND) {
-                onError()
+                onError(error.message)
             } else {
                 isStarting = false
             }

@@ -185,6 +185,7 @@ extern void SetUpPlayerHostApiWithSuffix(id<FlutterBinaryMessenger> binaryMessen
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger messageChannelSuffix:(nullable NSString *)messageChannelSuffix;
 - (void)onIsPlayingChangeIsPlaying:(BOOL)isPlaying completion:(void (^)(FlutterError *_Nullable))completion;
 - (void)onPlaybackSongChangeSong:(SongDTO *)song completion:(void (^)(FlutterError *_Nullable))completion;
+- (void)onErrorMessage:(NSString *)message completion:(void (^)(FlutterError *_Nullable))completion;
 @end
 
 NS_ASSUME_NONNULL_END

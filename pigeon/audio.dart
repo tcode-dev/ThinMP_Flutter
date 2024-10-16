@@ -122,4 +122,5 @@ abstract class PlayerHostApi {
 abstract class PlayerFlutterApi {
   void onIsPlayingChange(bool isPlaying);
   void onPlaybackSongChange(SongDTO song);
+  void onError(String message);
 }

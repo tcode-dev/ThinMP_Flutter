@@ -932,6 +932,8 @@ abstract class PlayerFlutterApi {
 
   void onPlaybackSongChange(SongDTO song);
 
+  void onError(String message);
+
   static void setUp(PlayerFlutterApi? api, {BinaryMessenger? binaryMessenger, String messageChannelSuffix = '',}) {
     messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
     {
@@ -975,6 +977,31 @@ abstract class PlayerFlutterApi {
               'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onPlaybackSongChange was null, expected non-null SongDTO.');
           try {
             api.onPlaybackSongChange(arg_song!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onError$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        pigeonVar_channel.setMessageHandler(null);
+      } else {
+        pigeonVar_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onError was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final String? arg_message = (args[0] as String?);
+          assert(arg_message != null,
+              'Argument for dev.flutter.pigeon.thinmpf.PlayerFlutterApi.onError was null, expected non-null String.');
+          try {
+            api.onError(arg_message!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);

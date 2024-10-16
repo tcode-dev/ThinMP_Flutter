@@ -20,4 +20,8 @@ class PlayerFlutterApiImpl {
     fun onPlaybackSongChange(song: SongModelContract) {
         api.onPlaybackSongChange(song.toPigeon()) { }
     }
+
+    fun onError(message: String) {
+        api.onError(message) { }
+    }
 }
