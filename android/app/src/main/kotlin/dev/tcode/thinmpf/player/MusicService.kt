@@ -19,7 +19,6 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaStyleNotificationHelper
 import dev.tcode.thinmpf.api.PlayerFlutterApiImpl
 import dev.tcode.thinmpf.constant.NotificationConstant
-import dev.tcode.thinmpf.model.SongModel
 import dev.tcode.thinmpf.model.contract.SongModelContract
 import dev.tcode.thinmpf.notification.LocalNotificationHelper
 import dev.tcode.thinmpf.pigeon_output.RepeatMode
@@ -91,7 +90,11 @@ class MusicService : Service() {
     }
 
     fun seek(ms: Long) {
-        player.seekTo(ms)
+        try {
+            player.seekTo(ms)
+        } catch (e: Exception) {
+            onError()
+        }
     }
 
     fun setRepeat(repeatMode: RepeatMode) {
@@ -180,6 +183,8 @@ class MusicService : Service() {
     }
 
     private fun onError() {
+        retry()
+
 //        val playerFlutterApi = PlayerFlutterApiImpl()
 //
 //        playerFlutterApi.onError()
@@ -260,7 +265,6 @@ class MusicService : Service() {
         override fun onPlayerError(error: PlaybackException) {
             // 曲が削除されている場合
             if (error.errorCode == PlaybackException.ERROR_CODE_IO_FILE_NOT_FOUND) {
-                retry()
                 onError()
             } else {
                 isStarting = false
