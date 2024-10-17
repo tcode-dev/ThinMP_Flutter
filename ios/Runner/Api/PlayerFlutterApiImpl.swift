@@ -19,4 +19,8 @@ class PlayerFlutterApiImpl {
     func onPlaybackSongChange(song: SongModelContract, completion: @escaping (Result<Void, PigeonError>) -> Void = { _ in }) {
         PlayerFlutterApiImpl.api.onPlaybackSongChange(song: song.toPigeon(), completion: completion)
     }
+    
+    func onError(message: String, completion: @escaping (Result<Void, PigeonError>) -> Void = { _ in }) {
+        PlayerFlutterApiImpl.api.onError(message: message, completion: completion)
+    }
 }
