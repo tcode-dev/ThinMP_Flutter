@@ -21,7 +21,6 @@ This app is a simple music player for Android and iOS.
 * playlists
 * shortcuts
 
-
 ## Environments
 
 ### Flutter
@@ -46,6 +45,7 @@ This app is a simple music player for Android and iOS.
 * iOS Deployment Target 16
 * iPhone 12 mini (iOS 16)
 * iPhone 14 Plus (iOS 18)
+* iPad Pro (6th generation, iPadOS 18, 12.9-inch)
 
 ## Libraries
 
