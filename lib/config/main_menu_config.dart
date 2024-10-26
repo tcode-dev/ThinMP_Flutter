@@ -49,7 +49,8 @@ class MainMenuConfig {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = prefs.getString(_visibilityKey);
 
-    if (jsonString == null) {
+    // データがない場合ios,android13はnull、android14は空の{}が返る
+    if (jsonString == null || jsonString.isEmpty) {
       return _defaultVisibilityMap;
     }
 
