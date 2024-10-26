@@ -51,8 +51,9 @@ class Shortcut extends _$Shortcut {
 
     if (!validateEntities(shortcuts.length, filteredShortcutModels.length)) {
       fix(shortcuts, filteredShortcutModels);
+      fetch();
 
-      return fetch();
+      return;
     }
 
     state = filteredShortcutModels;
