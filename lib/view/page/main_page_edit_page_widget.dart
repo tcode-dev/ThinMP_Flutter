@@ -48,8 +48,10 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
 
   Future<void> _load() async {
     await ref.read(mainMenuProvider.notifier).loadEdit();
-    await ref.read(mainMenuVisibilityProvider.notifier).load();
+    // 以下の2つを入れ替えるとAndroid14でmainMenuVisibilityが{}になりエラーになる
+    // readをwatchにすると順番を入れ替えても動作する
     await ref.read(shortcutProvider.notifier).fetch();
+    await ref.read(mainMenuVisibilityProvider.notifier).load();
 
     final mainMenu = ref.watch(mainMenuProvider);
     final mainMenuVisibility = ref.watch(mainMenuVisibilityProvider);
