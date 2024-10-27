@@ -19,30 +19,16 @@ class Shortcut extends _$Shortcut {
 
   Future<void> fetch() async {
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
-    final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
-    final artistHostApi = ref.read(artistHostApiFactoryProvider);
-    final albumHostApi = ref.read(albumHostApiFactoryProvider);
-    final songHostApi = ref.read(songHostApiFactoryProvider);
     final shortcuts = shortcutRepository.findAllSortedByDesc();
-    final shortcutFutures = shortcuts.map((shortcut) async {
+    final shortcutFutures = shortcuts.map((shortcut) {
       if (shortcut.type == ShortcutConstant.artist.index) {
-        final artist = await artistHostApi.getArtistDetailById(shortcut.itemId);
-
-        return shortcut.toShortcutArtist(artist);
+        return _getArtist(shortcut);
       } else if (shortcut.type == ShortcutConstant.album.index) {
-        final album = await albumHostApi.getAlbumById(shortcut.itemId);
-
-        return shortcut.toShortcutAlbum(album);
+        return _getAlbum(shortcut);
       } else if (shortcut.type == ShortcutConstant.playlist.index) {
-        final playlist = playlistRepository.findById(shortcut.itemId);
-
-        if (playlist == null) {
-          return null;
-        }
-
-        final song = playlist.songIds.isNotEmpty ? await songHostApi.getSongById(playlist.songIds.first) : null;
-
-        return shortcut.toShortcutPlaylist(playlist, song);
+        return _getPlaylist(shortcut);
+      } else {
+        return Future(() => null);
       }
     }).toList();
 
@@ -68,5 +54,33 @@ class Shortcut extends _$Shortcut {
     final missingShortcuts = expectedShortcuts.where((shortcut) => !actualShortcutIds.contains(shortcut.id.toString())).toList();
 
     shortcutRepository.deleteByIds(missingShortcuts.map((shortcut) => shortcut.id).toList());
+  }
+
+  Future<ShortcutModel?> _getArtist(ShortcutRealmModel shortcut) async {
+    final artistHostApi = ref.read(artistHostApiFactoryProvider);
+    final artist = await artistHostApi.getArtistDetailById(shortcut.itemId);
+
+    return shortcut.toShortcutArtist(artist);
+  }
+
+  Future<ShortcutModel?> _getAlbum(ShortcutRealmModel shortcut) async {
+    final albumHostApi = ref.read(albumHostApiFactoryProvider);
+    final album = await albumHostApi.getAlbumById(shortcut.itemId);
+
+    return shortcut.toShortcutAlbum(album);
+  }
+
+  Future<ShortcutModel?> _getPlaylist(ShortcutRealmModel shortcut) async {
+    final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
+    final songHostApi = ref.read(songHostApiFactoryProvider);
+    final playlist = playlistRepository.findById(shortcut.itemId);
+
+    if (playlist == null) {
+      return null;
+    }
+
+    final song = playlist.songIds.isNotEmpty ? await songHostApi.getSongById(playlist.songIds.first) : null;
+
+    return shortcut.toShortcutPlaylist(playlist, song);
   }
 }
