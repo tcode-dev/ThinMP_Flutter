@@ -28,12 +28,6 @@ class MainApplication : Application(), Application.ActivityLifecycleCallbacks {
     override fun onActivitySaveInstanceState(p0: Activity, p1: Bundle) {}
 
     override fun onActivityDestroyed(p0: Activity) {
-        if (!MusicService.isServiceRunning) return
-
         MusicPlayer.dispose()
-
-        val musicServiceIntent = Intent(applicationContext, MusicService::class.java)
-
-        applicationContext.stopService(musicServiceIntent)
     }
 }
