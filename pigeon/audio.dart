@@ -101,10 +101,10 @@ abstract class ArtworkHostApi {
 
 @HostApi()
 abstract class PlayerHostApi {
-  void start(int index, List<String> ids);
-  void startAllSongs(int index);
-  void startAlbumSongs(int index, String albumId);
-  void startArtistSongs(int index, String artistId);
+  void start(int index, List<String> ids, RepeatMode repeatMode, ShuffleMode shuffleMode);
+  void startAllSongs(int index, RepeatMode repeatMode, ShuffleMode shuffleMode);
+  void startAlbumSongs(int index, String albumId, RepeatMode repeatMode, ShuffleMode shuffleMode);
+  void startArtistSongs(int index, String artistId, RepeatMode repeatMode, ShuffleMode shuffleMode);
   void play();
   void pause();
   void prev();
