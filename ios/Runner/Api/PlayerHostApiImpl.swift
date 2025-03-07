@@ -9,31 +9,31 @@ class PlayerHostApiImpl: PlayerHostApi {
     private let albumRepository = AlbumRepository()
     private let songRepository = SongRepository()
 
-    func start(index: Int64, ids: [String]) throws {
+    func start(index: Int64, ids: [String], repeatMode: RepeatMode, shuffleMode: ShuffleMode) throws {
         let songIds = ids.map { SongId(id: $0) }
         let songs = songRepository.findBySongIds(songIds: songIds)
 
-        MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
+        MusicPlayer.shared.start(list: songs, currentIndex: Int(index), repeatMode: repeatMode, shuffleMode: shuffleMode)
     }
 
-    func startAllSongs(index: Int64) throws {
+    func startAllSongs(index: Int64, repeatMode: RepeatMode, shuffleMode: ShuffleMode) throws {
         let songs = songRepository.findAll()
 
-        MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
+        MusicPlayer.shared.start(list: songs, currentIndex: Int(index), repeatMode: repeatMode, shuffleMode: shuffleMode)
     }
 
-    func startAlbumSongs(index: Int64, albumId: String) throws {
+    func startAlbumSongs(index: Int64, albumId: String, repeatMode: RepeatMode, shuffleMode: ShuffleMode) throws {
         let songs = songRepository.findByAlbumId(albumId: AlbumId(id: albumId))
 
-        MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
+        MusicPlayer.shared.start(list: songs, currentIndex: Int(index), repeatMode: repeatMode, shuffleMode: shuffleMode)
     }
 
-    func startArtistSongs(index: Int64, artistId: String) throws {
+    func startArtistSongs(index: Int64, artistId: String, repeatMode: RepeatMode, shuffleMode: ShuffleMode) throws {
         let albums = albumRepository.findByArtistId(artistId: ArtistId(id: artistId))
         let albumIds = albums.map { $0.id }
         let songs = songRepository.findByAlbumIds(albumIds: albumIds)
 
-        MusicPlayer.shared.start(list: songs, currentIndex: Int(index))
+        MusicPlayer.shared.start(list: songs, currentIndex: Int(index), repeatMode: repeatMode, shuffleMode: shuffleMode)
     }
 
     func play() throws {

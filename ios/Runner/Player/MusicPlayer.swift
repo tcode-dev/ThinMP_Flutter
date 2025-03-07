@@ -20,11 +20,14 @@ class MusicPlayer: MusicPlayerContract {
         player.beginGeneratingPlaybackNotifications()
     }
     
-    func start(list: [SongModelContract], currentIndex: Int) {
+    func start(list: [SongModelContract], currentIndex: Int, repeatMode: RepeatMode, shuffleMode: ShuffleMode) {
         if (player.playbackState == MPMusicPlaybackState.playing) {
             player.stop()
         }
-        
+
+        setRepeat(repeatMode: repeatMode)
+        setShuffle(shuffleMode: shuffleMode)
+
         let items = MPMediaItemCollection(items: list.map { $0.media.representativeItem! as MPMediaItem })
         let descriptor = MPMusicPlayerMediaItemQueueDescriptor(itemCollection: items)
         

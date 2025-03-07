@@ -6,7 +6,7 @@
 //
 
 protocol MusicPlayerContract {
-    func start(list: [SongModelContract], currentIndex: Int)
+    func start(list: [SongModelContract], currentIndex: Int, repeatMode: RepeatMode, shuffleMode: ShuffleMode)
 
     func play()
 
