@@ -22,17 +22,17 @@ object MusicPlayer{
         this.context = context.applicationContext
     }
 
-    fun start(songs: List<SongModelContract>, index: Int) {
+    fun start(songs: List<SongModelContract>, index: Int, repeatMode: RepeatMode, shuffleMode: ShuffleMode) {
         if (!isServiceRunning()) {
             if (isServiceBinding) return
 
             context.startForegroundService(Intent(context, MusicService::class.java))
-            bindService(context) { musicService?.start(songs, index) }
+            bindService(context) { musicService?.start(songs, index, repeatMode, shuffleMode) }
 
             return
         }
 
-        musicService?.start(songs, index)
+        musicService?.start(songs, index, repeatMode, shuffleMode)
     }
 
     fun play() {

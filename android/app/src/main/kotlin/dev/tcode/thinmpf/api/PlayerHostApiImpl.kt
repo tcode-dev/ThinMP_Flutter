@@ -11,33 +11,33 @@ import dev.tcode.thinmpf.player.MusicPlayer
 import dev.tcode.thinmpf.repository.SongRepository
 
 class PlayerHostApiImpl(private val context: Context): PlayerHostApi {
-    override fun start(index: Long, ids: List<String>) {
+    override fun start(index: Long, ids: List<String>, repeatMode: RepeatMode, shuffleMode: ShuffleMode) {
         val repository = SongRepository(context)
         val songIds = ids.map { SongId(it) }
         val songs = repository.findByIds(songIds)
 
-        MusicPlayer.start(songs, index.toInt())
+        MusicPlayer.start(songs, index.toInt(), repeatMode, shuffleMode)
     }
 
-    override fun startAllSongs(index: Long) {
+    override fun startAllSongs(index: Long, repeatMode: RepeatMode, shuffleMode: ShuffleMode) {
         val repository = SongRepository(context)
         val songs = repository.findAll()
 
-        MusicPlayer.start(songs, index.toInt())
+        MusicPlayer.start(songs, index.toInt(), repeatMode, shuffleMode)
     }
 
-    override fun startAlbumSongs(index: Long, albumId: String) {
+    override fun startAlbumSongs(index: Long, albumId: String, repeatMode: RepeatMode, shuffleMode: ShuffleMode) {
         val repository = SongRepository(context)
         val songs = repository.findByAlbumId(AlbumId(albumId))
 
-        MusicPlayer.start(songs, index.toInt())
+        MusicPlayer.start(songs, index.toInt(), repeatMode, shuffleMode)
     }
 
-    override fun startArtistSongs(index: Long, artistId: String) {
+    override fun startArtistSongs(index: Long, artistId: String, repeatMode: RepeatMode, shuffleMode: ShuffleMode) {
         val repository = SongRepository(context)
         val songs = repository.findByArtistId(ArtistId(artistId))
 
-        MusicPlayer.start(songs, index.toInt())
+        MusicPlayer.start(songs, index.toInt(), repeatMode, shuffleMode)
     }
 
     override fun play() {
