@@ -8,32 +8,23 @@ class PlayerApi extends PlayerHostApi {
   PlayerApi(this.ref);
 
   @override
-  Future<void> start(int index, List<String> ids) async {
-    await super.start(index, ids);
-    await setMode();
+  Future<void> start(int index, List<String> ids, RepeatMode repeatMode, ShuffleMode shuffleMode) async {
+    await super.start(index, ids, repeatMode, shuffleMode);
   }
 
   @override
-  Future<void> startAlbumSongs(int index, String albumId) async {
-    await super.startAlbumSongs(index, albumId);
-    await setMode();
+  Future<void> startAlbumSongs(int index, String albumId, RepeatMode repeatMode, ShuffleMode shuffleMode) async {
+    await super.startAlbumSongs(index, albumId, repeatMode, shuffleMode);
   }
 
   @override
-  Future<void> startAllSongs(int index) async {
-    await super.startAllSongs(index);
-    await setMode();
+  Future<void> startAllSongs(int index, RepeatMode repeatMode, ShuffleMode shuffleMode) async {
+    await super.startAllSongs(index, repeatMode, shuffleMode);
   }
 
   @override
-  Future<void> startArtistSongs(int index, String artistId) async {
-    await super.startArtistSongs(index, artistId);
-    await setMode();
-  }
-
-  Future<void> setMode() async {
-    await repeat();
-    await shuffle();
+  Future<void> startArtistSongs(int index, String artistId, RepeatMode repeatMode, ShuffleMode shuffleMode) async {
+    await super.startArtistSongs(index, artistId, repeatMode, shuffleMode);
   }
 
   Future<void> repeat() async {

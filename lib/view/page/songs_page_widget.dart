@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
+import 'package:thinmpf/provider/config/player_config_factory_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/provider/player/playback_error_provider.dart';
 import 'package:thinmpf/view/list/song_list_widget.dart';
@@ -26,10 +27,13 @@ class SongsPageWidgetState extends ConsumerState<SongsPageWidget> {
     ref.read(songsProvider.notifier).fetchAllSongs();
   }
 
-  void _play(int index) {
+  void _play(int index) async {
     final playerApi = ref.read(playerApiFactoryProvider);
+    final playerConfig = ref.read(playerConfigFactoryProvider);
+    final repeat = await playerConfig.loadRepeat();
+    final shuffle = await playerConfig.loadShuffle();
 
-    playerApi.startAllSongs(index);
+    playerApi.startAllSongs(index, repeat, shuffle);
   }
 
   @override

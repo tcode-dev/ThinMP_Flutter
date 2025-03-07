@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thinmpf/constant/label_constant.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
+import 'package:thinmpf/provider/config/player_config_factory_provider.dart';
 import 'package:thinmpf/provider/page/album_detail_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';
 import 'package:thinmpf/provider/player/playback_error_provider.dart';
@@ -37,10 +38,13 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
     ref.read(albumDetailProvider.notifier).fetchAlbumDetail(widget.id);
   }
 
-  void _play(int index) {
+  void _play(int index) async {
     final playerApi = ref.read(playerApiFactoryProvider);
+    final playerConfig = ref.read(playerConfigFactoryProvider);
+    final repeat = await playerConfig.loadRepeat();
+    final shuffle = await playerConfig.loadShuffle();
 
-    playerApi.startAlbumSongs(index, widget.id);
+    playerApi.startAlbumSongs(index, widget.id, repeat, shuffle);
   }
 
   @override
