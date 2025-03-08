@@ -7,26 +7,6 @@ class PlayerApi extends PlayerHostApi {
 
   PlayerApi(this.ref);
 
-  @override
-  Future<void> start(int index, List<String> ids, RepeatMode repeatMode, ShuffleMode shuffleMode) async {
-    await super.start(index, ids, repeatMode, shuffleMode);
-  }
-
-  @override
-  Future<void> startAlbumSongs(int index, String albumId, RepeatMode repeatMode, ShuffleMode shuffleMode) async {
-    await super.startAlbumSongs(index, albumId, repeatMode, shuffleMode);
-  }
-
-  @override
-  Future<void> startAllSongs(int index, RepeatMode repeatMode, ShuffleMode shuffleMode) async {
-    await super.startAllSongs(index, repeatMode, shuffleMode);
-  }
-
-  @override
-  Future<void> startArtistSongs(int index, String artistId, RepeatMode repeatMode, ShuffleMode shuffleMode) async {
-    await super.startArtistSongs(index, artistId, repeatMode, shuffleMode);
-  }
-
   Future<void> repeat() async {
     final playerConfig = ref.read(playerConfigFactoryProvider);
     final repeat = await playerConfig.loadRepeat();
