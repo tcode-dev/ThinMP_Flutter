@@ -13,7 +13,7 @@ class ListItemRowWidget extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Theme.of(context).colorScheme.onInverseSurface,
+            color: Theme.of(context).colorScheme.outlineVariant,
             width: 1.0,
           ),
         ),
