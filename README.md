@@ -49,7 +49,7 @@ This app is a simple music player for Android and iOS.
 * targetSdkVersion 34
 * Google Pixel 4a (Android Version 13)
 * Google Pixel 7 Pro (Android Version 14)
-- Google Pixel Tablet (Android Version 15)
+* Google Pixel Tablet (Android Version 15)
 
 ### iOS
 
