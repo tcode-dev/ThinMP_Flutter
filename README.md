@@ -91,16 +91,19 @@ flutter pub get
 ```
 
 ### app icon
+
 ```
 flutter pub run flutter_launcher_icons:main
 ```
 
 ### realm
+
 ```
 dart run realm generate
 ```
 
 ### format
+
 ```
 dart format $(find ./lib/* -name "*.dart" -not -path "*.g.dart" -not -path "*.realm.dart") -l 200
 ```
