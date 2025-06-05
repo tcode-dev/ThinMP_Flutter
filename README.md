@@ -46,7 +46,7 @@ This app is a simple music player for Android and iOS.
 * Android Studio Koala | 2024.1.1
 * Kotlin
 * minSdkVersion 33
-* targetSdkVersion 34
+* targetSdkVersion 35
 * Google Pixel 4a (Android Version 13)
 * Google Pixel 7 Pro (Android Version 14)
 * Google Pixel Tablet (Android Version 15)
