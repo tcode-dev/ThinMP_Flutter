@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+// Project imports:
 import 'package:thinmpf/provider/player/playback_song_provider.dart';
 import 'package:thinmpf/provider/repository/favorite_song_repository_factory_provider.dart';
 

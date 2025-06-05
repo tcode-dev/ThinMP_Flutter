@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:thinmpf/util/calc_grid_count.dart';
 
 class GridContextMenuWidget extends StatelessWidget {

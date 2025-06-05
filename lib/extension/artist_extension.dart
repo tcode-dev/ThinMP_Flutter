@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:thinmpf/model/media/artist_model.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 

@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:thinmpf/l10n/app_localizations.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
+import 'package:thinmpf/l10n/app_localizations.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/config/player_config_factory_provider.dart';
 import 'package:thinmpf/provider/page/songs_provider.dart';

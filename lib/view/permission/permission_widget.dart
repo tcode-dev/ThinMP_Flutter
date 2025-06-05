@@ -1,8 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:thinmpf/l10n/app_localizations.dart';
+
+// Package imports:
 import 'package:permission_handler/permission_handler.dart';
+
+// Project imports:
 import 'package:thinmpf/constant/permission_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
+import 'package:thinmpf/l10n/app_localizations.dart';
 import 'package:thinmpf/util/platform_select.dart';
 import 'package:thinmpf/view/loading/loading_widget.dart';
 

@@ -1,7 +1,8 @@
+// Project imports:
 import 'package:thinmpf/constant/shortcut_constant.dart';
+import 'package:thinmpf/model/media/shortcut_model.dart';
 import 'package:thinmpf/model/realm/playlist_realm_model.dart';
 import 'package:thinmpf/model/realm/shortcut_realm_model.dart';
-import 'package:thinmpf/model/media/shortcut_model.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 
 extension ShortcutRealmModelExtension on ShortcutRealmModel {

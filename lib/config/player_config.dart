@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:shared_preferences/shared_preferences.dart';
+
+// Project imports:
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 
 class PlayerConfig {

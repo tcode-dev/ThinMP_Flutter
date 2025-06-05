@@ -1,8 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:thinmpf/l10n/app_localizations.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import 'package:thinmpf/constant/main_menu_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
+import 'package:thinmpf/l10n/app_localizations.dart';
 import 'package:thinmpf/provider/page/main_menu_provider.dart';
 import 'package:thinmpf/view/page/albums_page_widget.dart';
 import 'package:thinmpf/view/page/artists_page_widget.dart';

@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/config/player_config_factory_provider.dart';

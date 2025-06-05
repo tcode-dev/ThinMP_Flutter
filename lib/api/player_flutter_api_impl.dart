@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/provider/player/is_playing_provider.dart';
 import 'package:thinmpf/provider/player/playback_error_provider.dart';

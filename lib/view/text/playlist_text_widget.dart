@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:thinmpf/l10n/app_localizations.dart';
 import 'package:thinmpf/view/text/text_widget.dart';
 

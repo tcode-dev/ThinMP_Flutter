@@ -1,3 +1,4 @@
+// Package imports:
 import 'package:realm/realm.dart';
 
 part 'shortcut_realm_model.realm.dart';

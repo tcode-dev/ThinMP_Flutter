@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import 'package:thinmpf/l10n/app_localizations.dart';
 import 'package:thinmpf/model/media/artist_model.dart';
 import 'package:thinmpf/provider/page/artists_provider.dart';

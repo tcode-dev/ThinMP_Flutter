@@ -1,5 +1,6 @@
-import 'package:thinmpf/l10n/app_localizations.dart';
+// Project imports:
 import 'package:thinmpf/constant/shortcut_constant.dart';
+import 'package:thinmpf/l10n/app_localizations.dart';
 
 class ShortcutModel {
   ShortcutModel({

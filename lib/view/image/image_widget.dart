@@ -1,5 +1,10 @@
+// Dart imports:
 import 'dart:typed_data';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 
 final _api = ArtworkHostApi();

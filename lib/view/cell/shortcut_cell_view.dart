@@ -1,7 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:thinmpf/l10n/app_localizations.dart';
+
+// Project imports:
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
+import 'package:thinmpf/l10n/app_localizations.dart';
 import 'package:thinmpf/model/media/shortcut_model.dart';
 import 'package:thinmpf/view/image/circle_image_widget.dart';
 import 'package:thinmpf/view/image/square_image_widget.dart';

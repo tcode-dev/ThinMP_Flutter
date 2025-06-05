@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+// Project imports:
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/extension/shortcut_extension.dart';
 import 'package:thinmpf/model/media/shortcut_model.dart';

@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:thinmpf/l10n/app_localizations.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import 'package:thinmpf/constant/label_constant.dart';
+import 'package:thinmpf/l10n/app_localizations.dart';
 import 'package:thinmpf/provider/page/playlists_provider.dart';
 import 'package:thinmpf/view/list/playlist_list_widget.dart';
 import 'package:thinmpf/view/page/playlists_edit_page_widget.dart';

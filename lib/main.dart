@@ -1,8 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:thinmpf/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import 'package:thinmpf/api/player_flutter_api_impl.dart';
+import 'package:thinmpf/l10n/app_localizations.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 import 'package:thinmpf/util/device_util.dart';
 import 'package:thinmpf/view/page/main_page_widget.dart';

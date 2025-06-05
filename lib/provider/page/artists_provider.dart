@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+// Project imports:
 import 'package:thinmpf/extension/artist_extension.dart';
 import 'package:thinmpf/model/media/artist_model.dart';
 import 'package:thinmpf/provider/api/artist_host_api_factory_provider.dart';

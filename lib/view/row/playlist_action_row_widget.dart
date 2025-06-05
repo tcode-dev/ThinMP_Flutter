@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:thinmpf/model/media/playlist_model.dart';
 import 'package:thinmpf/view/menu/playlist_list_context_menu.dart';
 import 'package:thinmpf/view/page/playlist_detail_page_widget.dart';
