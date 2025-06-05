@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:thinmpf/l10n/app_localizations.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 
 class ShortcutModel {

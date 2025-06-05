@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thinmpf/l10n/app_localizations.dart';
 import 'package:thinmpf/model/media/artist_model.dart';
 import 'package:thinmpf/provider/page/artists_provider.dart';
 import 'package:thinmpf/provider/repository/favorite_artist_repository_factory_provider.dart';

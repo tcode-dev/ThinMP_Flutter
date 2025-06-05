@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:thinmpf/l10n/app_localizations.dart';
 import 'package:thinmpf/constant/label_constant.dart';
 import 'package:thinmpf/constant/style_constant.dart';
 import 'package:thinmpf/view/page/main_page_edit_page_widget.dart';

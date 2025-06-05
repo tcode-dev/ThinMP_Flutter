@@ -17,7 +17,6 @@ class PlaylistDetail extends _$PlaylistDetail {
     return playlist?.fromRealm();
   }
 
-  
   void refetch(String id) {
     state = fetchPlaylist(id);
   }
