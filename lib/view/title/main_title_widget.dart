@@ -22,29 +22,40 @@ class MainTitleWidget extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Container(
         padding: EdgeInsets.only(top: top, left: StyleConstant.padding.large),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            TextWidget(text: title, style: Theme.of(context).textTheme.headlineLarge),
-            PopupMenuButton(
-              onSelected: (item) async {
-                if (item == editLabel) {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MainPageEditPageWidget()),
-                  );
+        child: Container(
+          padding: EdgeInsets.only(bottom: StyleConstant.padding.medium),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Theme.of(context).colorScheme.outlineVariant,
+                width: 1.0,
+              ),
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextWidget(text: title, style: Theme.of(context).textTheme.headlineLarge),
+              PopupMenuButton(
+                onSelected: (item) async {
+                  if (item == editLabel) {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MainPageEditPageWidget()),
+                    );
 
-                  callback?.call();
-                }
-              },
-              itemBuilder: (BuildContext context) => [
-                PopupMenuItem(
-                  value: editLabel,
-                  child: Text(localizations.edit),
-                ),
-              ],
-            )
-          ],
+                    callback?.call();
+                  }
+                },
+                itemBuilder: (BuildContext context) => [
+                  PopupMenuItem(
+                    value: editLabel,
+                    child: Text(localizations.edit),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
