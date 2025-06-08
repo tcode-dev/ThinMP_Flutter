@@ -43,7 +43,7 @@ This app is a simple music player for Android and iOS.
 
 ### Android
 
-* Android Studio Koala | 2024.1.1
+* Android Studio | 2024.3.2 Patch 1
 * Kotlin
 * minSdkVersion 33
 * targetSdkVersion 35
