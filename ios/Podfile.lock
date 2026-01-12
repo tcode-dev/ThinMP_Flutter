@@ -2,7 +2,7 @@ PODS:
   - Flutter (1.0.0)
   - permission_handler_apple (9.3.0):
     - Flutter
-  - realm (20.0.0):
+  - realm (20.0.1):
     - Flutter
   - shared_preferences_foundation (0.0.1):
     - Flutter
@@ -25,10 +25,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
 
 SPEC CHECKSUMS:
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
-  realm: 6073b27ea561edc6f538e556e1c70b90ba33d867
-  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
+  realm: 7300fc26af580bdced33640e4187a6b1e9f8add7
+  shared_preferences_foundation: 5086985c1d43c5ba4d5e69a4e8083a389e2909e6
 
 PODFILE CHECKSUM: fa0be06638f06a9ef0b3ce243f9fc17af84226a5
 
