@@ -53,7 +53,7 @@ This app is a simple music player for Android and iOS.
 
 ### iOS
 
-* Xcode 16.0
+* Xcode 26.0
 * Swift
 * iOS Deployment Target 16
 * iPhone 12 mini (iOS 16)
