@@ -2,33 +2,34 @@ PODS:
   - Flutter (1.0.0)
   - permission_handler_apple (9.3.0):
     - Flutter
-  - realm (20.0.1):
-    - Flutter
   - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - sqflite_darwin (0.0.4):
     - Flutter
     - FlutterMacOS
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
-  - realm (from `.symlinks/plugins/realm/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
-  realm:
-    :path: ".symlinks/plugins/realm/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  sqflite_darwin:
+    :path: ".symlinks/plugins/sqflite_darwin/darwin"
 
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
-  realm: 7300fc26af580bdced33640e4187a6b1e9f8add7
   shared_preferences_foundation: 5086985c1d43c5ba4d5e69a4e8083a389e2909e6
+  sqflite_darwin: 5a7236e3b501866c1c9befc6771dfd73ffb8702d
 
 PODFILE CHECKSUM: fa0be06638f06a9ef0b3ce243f9fc17af84226a5
 
