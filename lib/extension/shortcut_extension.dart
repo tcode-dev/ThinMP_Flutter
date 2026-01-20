@@ -1,18 +1,18 @@
 // Project imports:
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/model/media/shortcut_model.dart';
-import 'package:thinmpf/model/realm/playlist_realm_model.dart';
-import 'package:thinmpf/model/realm/shortcut_realm_model.dart';
+import 'package:thinmpf/model/playlist_entity.dart';
+import 'package:thinmpf/model/shortcut_entity.dart';
 import 'package:thinmpf/pigeon_output/audio.g.dart';
 
-extension ShortcutRealmModelExtension on ShortcutRealmModel {
+extension ShortcutEntityExtension on ShortcutEntity {
   ShortcutModel? toShortcutArtist(ArtistDetailDTO? artist) {
     if (artist == null) {
       return null;
     }
 
     return ShortcutModel(
-      id: id.toString(),
+      id: id,
       itemId: itemId,
       name: artist.name,
       type: ShortcutConstant.values[type],
@@ -26,7 +26,7 @@ extension ShortcutRealmModelExtension on ShortcutRealmModel {
     }
 
     return ShortcutModel(
-      id: id.toString(),
+      id: id,
       itemId: itemId,
       name: album.name,
       type: ShortcutConstant.values[type],
@@ -34,13 +34,13 @@ extension ShortcutRealmModelExtension on ShortcutRealmModel {
     );
   }
 
-  ShortcutModel? toShortcutPlaylist(PlaylistRealmModel? playlist, SongDTO? song) {
+  ShortcutModel? toShortcutPlaylist(PlaylistEntity? playlist, SongDTO? song) {
     if (playlist == null) {
       return null;
     }
 
     return ShortcutModel(
-      id: id.toString(),
+      id: id,
       itemId: itemId,
       name: playlist.name,
       type: ShortcutConstant.values[type],

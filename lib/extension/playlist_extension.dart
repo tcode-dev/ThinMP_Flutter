@@ -1,11 +1,11 @@
 // Project imports:
 import 'package:thinmpf/model/media/playlist_model.dart';
-import 'package:thinmpf/model/realm/playlist_realm_model.dart';
+import 'package:thinmpf/model/playlist_entity.dart';
 
-extension PlaylistRealmModelExtension on PlaylistRealmModel {
-  PlaylistModel fromRealm() {
+extension PlaylistEntityExtension on PlaylistEntity {
+  PlaylistModel toPlaylistModel() {
     return PlaylistModel(
-      id: id.toString(),
+      id: id,
       name: name,
     );
   }
