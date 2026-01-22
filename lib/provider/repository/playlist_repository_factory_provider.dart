@@ -8,9 +8,5 @@ part 'playlist_repository_factory_provider.g.dart';
 
 @riverpod
 PlaylistRepository playlistRepositoryFactory(PlaylistRepositoryFactoryRef ref) {
-  final playlistRepository = PlaylistRepository();
-  ref.onDispose(() {
-    playlistRepository.dispose();
-  });
-  return playlistRepository;
+  return PlaylistRepository();
 }

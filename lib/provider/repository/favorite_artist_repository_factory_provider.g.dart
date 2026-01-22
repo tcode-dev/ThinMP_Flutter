@@ -7,7 +7,7 @@ part of 'favorite_artist_repository_factory_provider.dart';
 // **************************************************************************
 
 String _$favoriteArtistRepositoryFactoryHash() =>
-    r'2d5165d7b6c7fe445f99cb4979e48851172b5d0c';
+    r'f9d852b6a64cd57a37d1be68371f7b10180279c5';
 
 /// See also [favoriteArtistRepositoryFactory].
 @ProviderFor(favoriteArtistRepositoryFactory)
@@ -22,7 +22,9 @@ final favoriteArtistRepositoryFactoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef FavoriteArtistRepositoryFactoryRef
     = AutoDisposeProviderRef<FavoriteArtistRepository>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

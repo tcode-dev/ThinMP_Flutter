@@ -6,7 +6,7 @@ part of 'shortcut_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$shortcutHash() => r'f810eaaf71785866f8a56d4e51b9f72bfb4a069b';
+String _$shortcutHash() => r'fed48dcfe51a70459fdaecd242ec472085e35c09';
 
 /// See also [Shortcut].
 @ProviderFor(Shortcut)
@@ -22,4 +22,4 @@ final shortcutProvider =
 
 typedef _$Shortcut = AutoDisposeNotifier<List<ShortcutModel>>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

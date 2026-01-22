@@ -11,16 +11,16 @@ part 'playlist_detail_provider.g.dart';
 @riverpod
 class PlaylistDetail extends _$PlaylistDetail {
   @override
-  PlaylistModel? build(String id) => fetchPlaylist(id);
+  PlaylistModel? build(String id) => null;
 
-  PlaylistModel? fetchPlaylist(String id) {
+  Future<void> fetchPlaylist(String id) async {
     final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
-    final playlist = playlistRepository.findById(id);
+    final playlist = await playlistRepository.findById(id);
 
-    return playlist?.fromRealm();
+    state = playlist?.toPlaylistModel();
   }
 
-  void refetch(String id) {
-    state = fetchPlaylist(id);
+  Future<void> refetch(String id) async {
+    await fetchPlaylist(id);
   }
 }

@@ -6,7 +6,7 @@ part of 'playlist_detail_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$playlistDetailHash() => r'0714b24b0120ee45dda0f64be1124456e18e59aa';
+String _$playlistDetailHash() => r'ef23243ed99c38082db20f2dea64ae2097d86153';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -157,6 +157,8 @@ class PlaylistDetailProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin PlaylistDetailRef on AutoDisposeNotifierProviderRef<PlaylistModel?> {
   /// The parameter `id` of this provider.
   String get id;
@@ -171,4 +173,4 @@ class _PlaylistDetailProviderElement
   String get id => (origin as PlaylistDetailProvider).id;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -6,7 +6,7 @@ part of 'favorite_song_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$favoriteSongHash() => r'7885bad55b781b4627b13fe7f7e8c4841eb8bf38';
+String _$favoriteSongHash() => r'649f7905a161c29fb1b450c9094b99901a1a6f8e';
 
 /// See also [FavoriteSong].
 @ProviderFor(FavoriteSong)
@@ -22,4 +22,4 @@ final favoriteSongProvider =
 
 typedef _$FavoriteSong = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:thinmpf/constant/shortcut_constant.dart';
 import 'package:thinmpf/extension/shortcut_extension.dart';
 import 'package:thinmpf/model/media/shortcut_model.dart';
-import 'package:thinmpf/model/realm/shortcut_realm_model.dart';
+import 'package:thinmpf/model/shortcut_entity.dart';
 import 'package:thinmpf/provider/api/album_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/api/artist_host_api_factory_provider.dart';
 import 'package:thinmpf/provider/api/song_host_api_factory_provider.dart';
@@ -22,7 +22,7 @@ class Shortcut extends _$Shortcut {
 
   Future<void> fetch() async {
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
-    final shortcuts = shortcutRepository.findAllSortedByDesc();
+    final shortcuts = await shortcutRepository.findAllSortedByDesc();
     final shortcutFutures = shortcuts.map((shortcut) {
       if (shortcut.type == ShortcutConstant.artist.index) {
         return _getArtist(shortcut);
@@ -39,7 +39,7 @@ class Shortcut extends _$Shortcut {
     final filteredShortcutModels = shortcutModels.where((model) => model != null).cast<ShortcutModel>().toList();
 
     if (!validateEntities(shortcuts.length, filteredShortcutModels.length)) {
-      fix(shortcuts, filteredShortcutModels);
+      await fix(shortcuts, filteredShortcutModels);
 
       return fetch();
     }
@@ -51,32 +51,32 @@ class Shortcut extends _$Shortcut {
     state = [];
   }
 
-  void fix(List<ShortcutRealmModel> expectedShortcuts, List<ShortcutModel> actualShortcut) {
+  Future<void> fix(List<ShortcutEntity> expectedShortcuts, List<ShortcutModel> actualShortcut) async {
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
     final actualShortcutIds = actualShortcut.map((shortcut) => shortcut.id).toSet();
-    final missingShortcuts = expectedShortcuts.where((shortcut) => !actualShortcutIds.contains(shortcut.id.toString())).toList();
+    final missingShortcuts = expectedShortcuts.where((shortcut) => !actualShortcutIds.contains(shortcut.id)).toList();
 
-    shortcutRepository.deleteByIds(missingShortcuts.map((shortcut) => shortcut.id).toList());
+    await shortcutRepository.deleteByIds(missingShortcuts.map((shortcut) => shortcut.id).toList());
   }
 
-  Future<ShortcutModel?> _getArtist(ShortcutRealmModel shortcut) async {
+  Future<ShortcutModel?> _getArtist(ShortcutEntity shortcut) async {
     final artistHostApi = ref.read(artistHostApiFactoryProvider);
     final artist = await artistHostApi.getArtistDetailById(shortcut.itemId);
 
     return shortcut.toShortcutArtist(artist);
   }
 
-  Future<ShortcutModel?> _getAlbum(ShortcutRealmModel shortcut) async {
+  Future<ShortcutModel?> _getAlbum(ShortcutEntity shortcut) async {
     final albumHostApi = ref.read(albumHostApiFactoryProvider);
     final album = await albumHostApi.getAlbumById(shortcut.itemId);
 
     return shortcut.toShortcutAlbum(album);
   }
 
-  Future<ShortcutModel?> _getPlaylist(ShortcutRealmModel shortcut) async {
+  Future<ShortcutModel?> _getPlaylist(ShortcutEntity shortcut) async {
     final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
     final songHostApi = ref.read(songHostApiFactoryProvider);
-    final playlist = playlistRepository.findById(shortcut.itemId);
+    final playlist = await playlistRepository.findById(shortcut.itemId);
 
     if (playlist == null) {
       return null;

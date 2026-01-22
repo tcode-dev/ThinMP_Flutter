@@ -6,7 +6,7 @@ part of 'artists_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$artistsHash() => r'1e1573bd6174f2514f641e37099b8297e7da70ef';
+String _$artistsHash() => r'22ff7f0ffad3767cdcf5f98466fb933e9708fdcf';
 
 /// See also [Artists].
 @ProviderFor(Artists)
@@ -22,4 +22,4 @@ final artistsProvider =
 
 typedef _$Artists = AutoDisposeNotifier<List<ArtistModel>>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

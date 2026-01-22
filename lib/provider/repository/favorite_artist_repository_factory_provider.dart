@@ -8,9 +8,5 @@ part 'favorite_artist_repository_factory_provider.g.dart';
 
 @riverpod
 FavoriteArtistRepository favoriteArtistRepositoryFactory(FavoriteArtistRepositoryFactoryRef ref) {
-  final favoriteArtistRepository = FavoriteArtistRepository();
-  ref.onDispose(() {
-    favoriteArtistRepository.dispose();
-  });
-  return favoriteArtistRepository;
+  return FavoriteArtistRepository();
 }

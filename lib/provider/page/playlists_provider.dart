@@ -13,10 +13,10 @@ class Playlists extends _$Playlists {
   @override
   List<PlaylistModel> build() => [];
 
-  void fetchPlaylists() {
+  Future<void> fetchPlaylists() async {
     final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
-    final playlists = playlistRepository.findAllSortedByAsc();
+    final playlists = await playlistRepository.findAllSortedByAsc();
 
-    state = playlists.map((playlist) => playlist.fromRealm()).toList();
+    state = playlists.map((playlist) => playlist.toPlaylistModel()).toList();
   }
 }

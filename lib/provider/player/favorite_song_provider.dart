@@ -11,22 +11,24 @@ part 'favorite_song_provider.g.dart';
 class FavoriteSong extends _$FavoriteSong {
   @override
   bool build() {
-    return isFavorite();
+    _checkFavorite();
+    return false;
   }
 
-  bool isFavorite() {
+  Future<void> _checkFavorite() async {
     final song = ref.watch(playbackSongProvider);
 
     if (song == null) {
-      return false;
+      state = false;
+      return;
     }
 
     final favoriteSongRepository = ref.watch(favoriteSongRepositoryFactoryProvider);
-
-    return favoriteSongRepository.exists(song.id);
+    final isFavorite = await favoriteSongRepository.exists(song.id);
+    state = isFavorite;
   }
 
-  void toggleFavorite() {
+  Future<void> toggleFavorite() async {
     final song = ref.read(playbackSongProvider);
 
     if (song == null) {
@@ -34,12 +36,13 @@ class FavoriteSong extends _$FavoriteSong {
     }
 
     final favoriteSongRepository = ref.watch(favoriteSongRepositoryFactoryProvider);
+    final isFavorite = await favoriteSongRepository.exists(song.id);
 
-    if (favoriteSongRepository.exists(song.id)) {
-      favoriteSongRepository.delete(song.id);
+    if (isFavorite) {
+      await favoriteSongRepository.delete(song.id);
       state = false;
     } else {
-      favoriteSongRepository.add(song.id);
+      await favoriteSongRepository.add(song.id);
       state = true;
     }
   }

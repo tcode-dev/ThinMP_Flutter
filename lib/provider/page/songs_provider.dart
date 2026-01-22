@@ -40,12 +40,11 @@ class Songs extends _$Songs {
   Future<void> fetchFavoriteSongs() async {
     final favoriteSongRepository = ref.watch(favoriteSongRepositoryFactoryProvider);
     final songHostApi = ref.read(songHostApiFactoryProvider);
-    final favoriteSongs = favoriteSongRepository.findAll();
-    final favoriteSongIds = favoriteSongs.map((song) => song.songId).toList();
+    final favoriteSongIds = await favoriteSongRepository.findAllIds();
     final songs = await songHostApi.getSongsByIds(favoriteSongIds);
 
-    if (!validateEntities(favoriteSongs.length, songs.length)) {
-      favoriteSongRepository.update(songs.map((song) => song.id).toList());
+    if (!validateEntities(favoriteSongIds.length, songs.length)) {
+      await favoriteSongRepository.update(songs.map((song) => song.id).toList());
 
       return fetchFavoriteSongs();
     }
@@ -57,7 +56,7 @@ class Songs extends _$Songs {
   Future<void> fetchPlaylistSongs(String id) async {
     final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
     final songHostApi = ref.read(songHostApiFactoryProvider);
-    final playlist = playlistRepository.findById(id);
+    final playlist = await playlistRepository.findById(id);
 
     if (playlist == null) {
       state = [];
@@ -68,7 +67,7 @@ class Songs extends _$Songs {
     final songs = await songHostApi.getSongsByIds(songIds);
 
     if (!validateEntities(songIds.length, songs.length)) {
-      playlistRepository.updatePlaylistDetail(id, playlist.name, songs.map((song) => song.id).toList());
+      await playlistRepository.updatePlaylistDetail(id, playlist.name, songs.map((song) => song.id).toList());
 
       return fetchPlaylistSongs(id);
     }

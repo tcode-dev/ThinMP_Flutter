@@ -7,7 +7,7 @@ part of 'playlist_repository_factory_provider.dart';
 // **************************************************************************
 
 String _$playlistRepositoryFactoryHash() =>
-    r'1977c97a2f6c01b35501837ac78c9524772217e9';
+    r'51ecc2e0a9b61b25a4f7ab9c1845d86e797bebcf';
 
 /// See also [playlistRepositoryFactory].
 @ProviderFor(playlistRepositoryFactory)
@@ -22,7 +22,9 @@ final playlistRepositoryFactoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef PlaylistRepositoryFactoryRef
     = AutoDisposeProviderRef<PlaylistRepository>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

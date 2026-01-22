@@ -6,7 +6,7 @@ part of 'songs_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$songsHash() => r'4e4b902807fc626d40303dc0fd1966e01734cbe2';
+String _$songsHash() => r'810ce1626297245d8c0085ef9867b472443f1f42';
 
 /// See also [Songs].
 @ProviderFor(Songs)
@@ -22,4 +22,4 @@ final songsProvider =
 
 typedef _$Songs = AutoDisposeNotifier<List<SongModel>>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
