@@ -1,53 +1,25 @@
 // Package imports:
-import 'package:realm/realm.dart';
+import 'package:sqflite/sqflite.dart';
 
-abstract class BaseRepository<T extends RealmObject> {
-  Realm get realm;
+// Project imports:
+import 'package:thinmpf/repository/database_helper.dart';
 
-  void dispose() {
-    realm.close();
+abstract class BaseRepository {
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
+
+  String get tableName;
+
+  Future<Database> get database => _databaseHelper.database;
+
+  Future<int> getNextOrder() async {
+    final db = await database;
+    final result = await db.rawQuery('SELECT MAX(sort_order) as max_order FROM $tableName');
+    final maxOrder = result.first['max_order'] as int?;
+    return (maxOrder ?? 0) + 1;
   }
 
-  T? findById(Object primaryKey) {
-    return realm.find<T>(primaryKey);
-  }
-
-  List<T> findAll() {
-    return realm.all<T>().toList();
-  }
-
-  List<T> findAllSortedByAsc() {
-    return realm.query<T>('TRUEPREDICATE SORT(order ASC)').toList();
-  }
-
-  List<T> findAllSortedByDesc() {
-    return realm.query<T>('TRUEPREDICATE SORT(order DESC)').toList();
-  }
-
-  void truncate() {
-    realm.write(() {
-      realm.deleteAll<T>();
-    });
-  }
-
-  int increment() {
-    final results = realm.query<T>('TRUEPREDICATE SORT(order DESC) LIMIT(1)');
-
-    if (results.isNotEmpty) {
-      final result = results.first;
-      final json = result.toEJson();
-
-      if (json != null && json is Map<String, dynamic>) {
-        final fieldValue = json['order'];
-
-        if (fieldValue != null && fieldValue.containsKey('\$numberInt')) {
-          final intValue = int.parse(fieldValue['\$numberInt']);
-
-          return intValue + 1;
-        }
-      }
-    }
-
-    return 1;
+  Future<void> truncate() async {
+    final db = await database;
+    await db.delete(tableName);
   }
 }
