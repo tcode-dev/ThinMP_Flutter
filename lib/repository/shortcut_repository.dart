@@ -1,78 +1,113 @@
 // Package imports:
-import 'package:realm/realm.dart';
+import 'package:uuid/uuid.dart';
 
 // Project imports:
 import 'package:thinmpf/constant/shortcut_constant.dart';
-import 'package:thinmpf/model/realm/shortcut_realm_model.dart';
+import 'package:thinmpf/model/shortcut_entity.dart';
 import 'package:thinmpf/repository/base_repository.dart';
 
-class ShortcutRepository extends BaseRepository<ShortcutRealmModel> {
+class ShortcutRepository extends BaseRepository {
   @override
-  Realm realm = Realm(Configuration.local([ShortcutRealmModel.schema]));
+  String get tableName => 'shortcuts';
 
-  bool exists(String id, ShortcutConstant type) {
-    return _find(id, type) != null;
+  Future<ShortcutEntity?> findById(String id) async {
+    final db = await database;
+    final result = await db.query(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (result.isEmpty) return null;
+    return ShortcutEntity.fromMap(result.first);
   }
 
-  void add(String id, ShortcutConstant type) {
-    final model = ShortcutRealmModel(ObjectId(), id, type.index, increment());
-
-    realm.write(() {
-      realm.add(model);
-    });
+  Future<List<ShortcutEntity>> findAll() async {
+    final db = await database;
+    final result = await db.query(tableName);
+    return result.map((map) => ShortcutEntity.fromMap(map)).toList();
   }
 
-  void toggle(String id, ShortcutConstant type) {
-    if (exists(id, type)) {
-      delete(id, type);
+  Future<List<ShortcutEntity>> findAllSortedByAsc() async {
+    final db = await database;
+    final result = await db.query(tableName, orderBy: 'sort_order ASC');
+    return result.map((map) => ShortcutEntity.fromMap(map)).toList();
+  }
+
+  Future<List<ShortcutEntity>> findAllSortedByDesc() async {
+    final db = await database;
+    final result = await db.query(tableName, orderBy: 'sort_order DESC');
+    return result.map((map) => ShortcutEntity.fromMap(map)).toList();
+  }
+
+  Future<bool> exists(String itemId, ShortcutConstant type) async {
+    final model = await _find(itemId, type);
+    return model != null;
+  }
+
+  Future<void> add(String itemId, ShortcutConstant type) async {
+    final db = await database;
+    final id = const Uuid().v4();
+    final order = await getNextOrder();
+    final model = ShortcutEntity(id: id, itemId: itemId, type: type.index, order: order);
+    await db.insert(tableName, model.toMap());
+  }
+
+  Future<void> toggle(String itemId, ShortcutConstant type) async {
+    if (await exists(itemId, type)) {
+      await delete(itemId, type);
     } else {
-      add(id, type);
+      await add(itemId, type);
     }
   }
 
-  void update(List<String> ids) {
+  Future<void> update(List<String> ids) async {
+    final db = await database;
     final idSet = ids.toSet();
-    final models = findAll();
-    final deleteModels = models.where((model) => !idSet.contains(model.id.toString())).toList();
-    final updateModels = models.where((model) => idSet.contains(model.id.toString())).toList();
-    final sortModels = ids.map((id) => updateModels.firstWhere((model) => model.id.toString() == id)).toList();
+    final models = await findAll();
+    final deleteIds = models.where((model) => !idSet.contains(model.id)).map((model) => model.id).toList();
 
-    realm.write(() {
-      for (var model in deleteModels) {
-        realm.delete(model);
+    await db.transaction((txn) async {
+      for (final id in deleteIds) {
+        await txn.delete(tableName, where: 'id = ?', whereArgs: [id]);
       }
 
-      sortModels.asMap().forEach((index, model) {
-        model.order = index + 1;
-      });
-    });
-  }
-
-  void delete(String id, ShortcutConstant type) {
-    final model = _find(id, type);
-
-    if (model != null) {
-      realm.write(() {
-        realm.delete(model);
-      });
-    }
-  }
-
-  void deleteByIds(List<ObjectId> ids) {
-    final models = ids.map((id) => findById(id));
-    final filteredModels = models.where((model) => model != null).cast<ShortcutRealmModel>().toList();
-
-    realm.write(() {
-      for (var model in filteredModels) {
-        realm.delete(model);
+      for (var i = 0; i < ids.length; i++) {
+        await txn.update(
+          tableName,
+          {'sort_order': i + 1},
+          where: 'id = ?',
+          whereArgs: [ids[i]],
+        );
       }
     });
   }
 
-  ShortcutRealmModel? _find(String id, ShortcutConstant type) {
-    return realm.query<ShortcutRealmModel>(
-      'itemId == \$0 AND type == \$1',
-      [id, type.index],
-    ).firstOrNull;
+  Future<void> delete(String itemId, ShortcutConstant type) async {
+    final db = await database;
+    await db.delete(
+      tableName,
+      where: 'item_id = ? AND type = ?',
+      whereArgs: [itemId, type.index],
+    );
+  }
+
+  Future<void> deleteByIds(List<String> ids) async {
+    final db = await database;
+    await db.transaction((txn) async {
+      for (final id in ids) {
+        await txn.delete(tableName, where: 'id = ?', whereArgs: [id]);
+      }
+    });
+  }
+
+  Future<ShortcutEntity?> _find(String itemId, ShortcutConstant type) async {
+    final db = await database;
+    final result = await db.query(
+      tableName,
+      where: 'item_id = ? AND type = ?',
+      whereArgs: [itemId, type.index],
+    );
+    if (result.isEmpty) return null;
+    return ShortcutEntity.fromMap(result.first);
   }
 }

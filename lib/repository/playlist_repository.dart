@@ -1,89 +1,172 @@
 // Package imports:
-import 'package:realm/realm.dart';
+import 'package:uuid/uuid.dart';
 
 // Project imports:
-import 'package:thinmpf/model/realm/playlist_realm_model.dart';
+import 'package:thinmpf/model/playlist_entity.dart';
 import 'package:thinmpf/repository/base_repository.dart';
 
-class PlaylistRepository extends BaseRepository<PlaylistRealmModel> {
+class PlaylistRepository extends BaseRepository {
   @override
-  Realm realm = Realm(Configuration.local([PlaylistRealmModel.schema]));
+  String get tableName => 'playlists';
 
-  @override
-  PlaylistRealmModel? findById(Object primaryKey) {
-    return super.findById(ObjectId.fromHexString(primaryKey as String));
+  static const String _songTableName = 'playlist_songs';
+
+  Future<PlaylistEntity?> findById(String playlistId) async {
+    final db = await database;
+    final result = await db.query(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [playlistId],
+    );
+    if (result.isEmpty) return null;
+
+    final songIds = await _getSongIds(playlistId);
+    return PlaylistEntity.fromMap(result.first, songIds);
   }
 
-  bool exists(String playlistId, String songId) {
-    final model = findById(playlistId);
-
-    if (model == null) {
-      return false;
+  Future<List<PlaylistEntity>> findAll() async {
+    final db = await database;
+    final result = await db.query(tableName);
+    final playlists = <PlaylistEntity>[];
+    for (final map in result) {
+      final playlistId = map['id'] as String;
+      final songIds = await _getSongIds(playlistId);
+      playlists.add(PlaylistEntity.fromMap(map, songIds));
     }
+    return playlists;
+  }
 
+  Future<List<PlaylistEntity>> findAllSortedByAsc() async {
+    final db = await database;
+    final result = await db.query(tableName, orderBy: 'sort_order ASC');
+    final playlists = <PlaylistEntity>[];
+    for (final map in result) {
+      final playlistId = map['id'] as String;
+      final songIds = await _getSongIds(playlistId);
+      playlists.add(PlaylistEntity.fromMap(map, songIds));
+    }
+    return playlists;
+  }
+
+  Future<List<PlaylistEntity>> findAllSortedByDesc() async {
+    final db = await database;
+    final result = await db.query(tableName, orderBy: 'sort_order DESC');
+    final playlists = <PlaylistEntity>[];
+    for (final map in result) {
+      final playlistId = map['id'] as String;
+      final songIds = await _getSongIds(playlistId);
+      playlists.add(PlaylistEntity.fromMap(map, songIds));
+    }
+    return playlists;
+  }
+
+  Future<bool> exists(String playlistId, String songId) async {
+    final model = await findById(playlistId);
+    if (model == null) return false;
     return model.songIds.contains(songId);
   }
 
-  void create(String name, String songId) {
-    final model = PlaylistRealmModel(ObjectId(), name, increment());
+  Future<void> create(String name, String songId) async {
+    final db = await database;
+    final id = const Uuid().v4();
+    final order = await getNextOrder();
 
-    realm.write(() {
-      model.songIds.add(songId);
-      realm.add(model);
+    await db.transaction((txn) async {
+      await txn.insert(tableName, {
+        'id': id,
+        'name': name,
+        'sort_order': order,
+      });
+      await txn.insert(_songTableName, {
+        'playlist_id': id,
+        'song_id': songId,
+        'sort_order': 1,
+      });
     });
   }
 
-  void add(String playlistId, String songId) {
-    final model = findById(playlistId);
-
-    if (model == null) {
-      return;
-    }
-
-    realm.write(() {
-      model.songIds.add(songId);
+  Future<void> add(String playlistId, String songId) async {
+    final db = await database;
+    final nextOrder = await _getNextSongOrder(playlistId);
+    await db.insert(_songTableName, {
+      'playlist_id': playlistId,
+      'song_id': songId,
+      'sort_order': nextOrder,
     });
   }
 
-  void updatePlaylists(List<String> ids) {
+  Future<void> updatePlaylists(List<String> ids) async {
+    final db = await database;
     final idSet = ids.toSet();
-    final models = findAll();
-    final deleteModels = models.where((model) => !idSet.contains(model.id.toString())).toList();
-    final updateModels = models.where((model) => idSet.contains(model.id.toString())).toList();
-    final sortModels = ids.map((id) => updateModels.firstWhere((model) => model.id.toString() == id)).toList();
+    final models = await findAll();
+    final deleteIds = models.where((model) => !idSet.contains(model.id)).map((model) => model.id).toList();
 
-    realm.write(() {
-      for (var model in deleteModels) {
-        realm.delete(model);
+    await db.transaction((txn) async {
+      for (final id in deleteIds) {
+        await txn.delete(_songTableName, where: 'playlist_id = ?', whereArgs: [id]);
+        await txn.delete(tableName, where: 'id = ?', whereArgs: [id]);
       }
 
-      sortModels.asMap().forEach((index, model) {
-        model.order = index + 1;
-      });
+      for (var i = 0; i < ids.length; i++) {
+        await txn.update(
+          tableName,
+          {'sort_order': i + 1},
+          where: 'id = ?',
+          whereArgs: [ids[i]],
+        );
+      }
     });
   }
 
-  void updatePlaylistDetail(String playlistId, String name, List<String> songIds) {
-    final model = findById(playlistId);
+  Future<void> updatePlaylistDetail(String playlistId, String name, List<String> songIds) async {
+    final db = await database;
 
-    if (model == null) {
-      return;
-    }
+    await db.transaction((txn) async {
+      await txn.update(
+        tableName,
+        {'name': name},
+        where: 'id = ?',
+        whereArgs: [playlistId],
+      );
 
-    realm.write(() {
-      model.name = name;
-      model.songIds.clear();
-      model.songIds.addAll(songIds);
+      await txn.delete(_songTableName, where: 'playlist_id = ?', whereArgs: [playlistId]);
+
+      for (var i = 0; i < songIds.length; i++) {
+        await txn.insert(_songTableName, {
+          'playlist_id': playlistId,
+          'song_id': songIds[i],
+          'sort_order': i + 1,
+        });
+      }
     });
   }
 
-  void delete(String playlistId) {
-    final model = findById(playlistId);
+  Future<void> delete(String playlistId) async {
+    final db = await database;
+    await db.transaction((txn) async {
+      await txn.delete(_songTableName, where: 'playlist_id = ?', whereArgs: [playlistId]);
+      await txn.delete(tableName, where: 'id = ?', whereArgs: [playlistId]);
+    });
+  }
 
-    if (model != null) {
-      realm.write(() {
-        realm.delete(model);
-      });
-    }
+  Future<List<String>> _getSongIds(String playlistId) async {
+    final db = await database;
+    final result = await db.query(
+      _songTableName,
+      where: 'playlist_id = ?',
+      whereArgs: [playlistId],
+      orderBy: 'sort_order ASC',
+    );
+    return result.map((map) => map['song_id'] as String).toList();
+  }
+
+  Future<int> _getNextSongOrder(String playlistId) async {
+    final db = await database;
+    final result = await db.rawQuery(
+      'SELECT MAX(sort_order) as max_order FROM $_songTableName WHERE playlist_id = ?',
+      [playlistId],
+    );
+    final maxOrder = result.first['max_order'] as int?;
+    return (maxOrder ?? 0) + 1;
   }
 }
