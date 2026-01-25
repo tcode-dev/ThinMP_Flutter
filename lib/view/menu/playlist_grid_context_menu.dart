@@ -30,8 +30,8 @@ class PlaylistGridContextMenuWidget extends ConsumerWidget {
           child: ShortcutTextWidget(id: playlistId, type: ShortcutConstant.playlist),
         ),
       ],
-      onSelected: (String value) {
-        shortcutRepository.toggle(playlistId, ShortcutConstant.playlist);
+      onSelected: (String value) async {
+        await shortcutRepository.toggle(playlistId, ShortcutConstant.playlist);
         callback?.call();
       },
       index: index,

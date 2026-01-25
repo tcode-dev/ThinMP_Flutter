@@ -36,7 +36,7 @@ class SongContextMenuWidget extends ConsumerWidget {
       ],
       onSelected: (String value) async {
         if (value == favoriteLabel) {
-          favoriteSongRepository.toggle(songId);
+          await favoriteSongRepository.toggle(songId);
         } else if (value == playlistLabel) {
           await showDialog(
             context: context,

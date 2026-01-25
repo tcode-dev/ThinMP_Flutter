@@ -36,11 +36,11 @@ class ArtistListContextMenuWidget extends ConsumerWidget {
           child: FavoriteArtistTextWidget(artistId: artistId),
         ),
       ],
-      onSelected: (String value) {
+      onSelected: (String value) async {
         if (value == shortcutLabel) {
-          shortcutRepository.toggle(artistId, ShortcutConstant.artist);
+          await shortcutRepository.toggle(artistId, ShortcutConstant.artist);
         } else if (value == favoriteLabel) {
-          favoriteArtistRepository.toggle(artistId);
+          await favoriteArtistRepository.toggle(artistId);
         }
         callback?.call();
       },
