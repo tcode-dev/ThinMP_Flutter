@@ -21,6 +21,15 @@ class ShortcutTextWidget extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final shortcutRepository = ref.watch(shortcutRepositoryFactoryProvider);
 
-    return TextWidget(text: shortcutRepository.exists(id, type) ? localizations.shortcutRemove : localizations.shortcutAdd);
+    return FutureBuilder<bool>(
+      future: shortcutRepository.exists(id, type),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SizedBox.shrink();
+        }
+        final isShortcut = snapshot.data ?? false;
+        return TextWidget(text: isShortcut ? localizations.shortcutRemove : localizations.shortcutAdd);
+      },
+    );
   }
 }

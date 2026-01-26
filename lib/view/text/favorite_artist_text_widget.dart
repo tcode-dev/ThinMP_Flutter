@@ -19,6 +19,15 @@ class FavoriteArtistTextWidget extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final favoriteArtistRepository = ref.watch(favoriteArtistRepositoryFactoryProvider);
 
-    return TextWidget(text: favoriteArtistRepository.exists(artistId) ? localizations.favoriteRemove : localizations.favoriteAdd);
+    return FutureBuilder<bool>(
+      future: favoriteArtistRepository.exists(artistId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SizedBox.shrink();
+        }
+        final isFavorite = snapshot.data ?? false;
+        return TextWidget(text: isFavorite ? localizations.favoriteRemove : localizations.favoriteAdd);
+      },
+    );
   }
 }

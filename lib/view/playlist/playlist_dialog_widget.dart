@@ -32,26 +32,26 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
     });
   }
 
-  void _load() {
-    ref.read(playlistsProvider.notifier).fetchPlaylists();
+  Future<void> _load() async {
+    await ref.read(playlistsProvider.notifier).fetchPlaylists();
   }
 
-  void _create() {
+  Future<void> _create() async {
     final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
 
-    playlistRepository.create(controller.text, widget.songId);
+    await playlistRepository.create(controller.text, widget.songId);
   }
 
-  void _add(String playlistId) {
+  Future<void> _add(String playlistId) async {
     final playlistRepository = ref.watch(playlistRepositoryFactoryProvider);
 
-    playlistRepository.add(playlistId, widget.songId);
+    await playlistRepository.add(playlistId, widget.songId);
   }
 
-  bool _exist(String playlistId) {
+  Future<bool> _exist(String playlistId) async {
     final playlistRepository = ref.read(playlistRepositoryFactoryProvider);
 
-    return playlistRepository.exists(playlistId, widget.songId);
+    return await playlistRepository.exists(playlistId, widget.songId);
   }
 
   @override
@@ -69,9 +69,11 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
             child: Text(localizations.playlistAdd),
-            onPressed: () {
-              _add(_playlistId);
-              Navigator.of(context).pop();
+            onPressed: () async {
+              await _add(_playlistId);
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
             },
           ),
           TextButton(
@@ -101,9 +103,11 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
             child: Text(localizations.done),
-            onPressed: () {
-              _create();
-              Navigator.of(context).pop();
+            onPressed: () async {
+              await _create();
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
             },
           ),
           TextButton(
@@ -128,10 +132,13 @@ class PlaylistDialogWidgetState extends ConsumerState<PlaylistDialogWidget> {
               for (final playlist in playlists)
                 ListTile(
                   title: Text(playlist.name),
-                  onTap: () {
-                    if (!_exist(playlist.id)) {
-                      _add(playlist.id);
-                      Navigator.of(context).pop();
+                  onTap: () async {
+                    final exists = await _exist(playlist.id);
+                    if (!exists) {
+                      await _add(playlist.id);
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
                     } else {
                       setState(() {
                         _playlistId = playlist.id;
