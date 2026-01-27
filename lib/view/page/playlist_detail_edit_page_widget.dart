@@ -48,16 +48,16 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
     });
   }
 
-  void _update() {
+  Future<void> _update() async {
     final playlistRepository = ref.read(playlistRepositoryFactoryProvider);
 
-    playlistRepository.updatePlaylistDetail(widget.id, _controller.text, _widgetList.map((model) => model.song.id).toList());
+    await playlistRepository.updatePlaylistDetail(widget.id, _controller.text, _widgetList.map((model) => model.song.id).toList());
   }
 
-  void _delete() {
+  Future<void> _delete() async {
     final playlistRepository = ref.read(playlistRepositoryFactoryProvider);
 
-    playlistRepository.delete(widget.id);
+    await playlistRepository.delete(widget.id);
   }
 
   @override
@@ -82,9 +82,11 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
         ),
         actions: [
           TextButton(
-            onPressed: () {
-              _update();
-              Navigator.of(context).pop();
+            onPressed: () async {
+              await _update();
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
             },
             child: Text(localizations.done),
           )
@@ -159,10 +161,12 @@ class PlaylistDetailEditPageWidgetState extends ConsumerState<PlaylistDetailEdit
                               textStyle: Theme.of(context).textTheme.labelLarge,
                             ),
                             child: Text(localizations.playlistRemove),
-                            onPressed: () {
-                              _delete();
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pop();
+                            onPressed: () async {
+                              await _delete();
+                              if (context.mounted) {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                              }
                             },
                           ),
                           TextButton(

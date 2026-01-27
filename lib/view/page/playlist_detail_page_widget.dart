@@ -136,7 +136,7 @@ class PlaylistDetailPageWidgetState extends ConsumerState<PlaylistDetailPageWidg
 
                         _reload();
                       } else if (item == shortcutLabel) {
-                        shortcutRepository.toggle(widget.id, ShortcutConstant.playlist);
+                        await shortcutRepository.toggle(widget.id, ShortcutConstant.playlist);
                       }
                     },
                     itemBuilder: (BuildContext context) => [

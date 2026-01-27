@@ -108,7 +108,7 @@ class AlbumDetailPageWidgetState extends ConsumerState<AlbumDetailPageWidget> {
                   PopupMenuButton(
                     onSelected: (item) async {
                       if (item == shortcutLabel) {
-                        shortcutRepository.toggle(widget.id, ShortcutConstant.album);
+                        await shortcutRepository.toggle(widget.id, ShortcutConstant.album);
                       }
                     },
                     itemBuilder: (BuildContext context) => [

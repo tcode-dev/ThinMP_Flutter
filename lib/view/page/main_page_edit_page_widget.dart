@@ -77,7 +77,7 @@ class MainPageEditPageWidgetState extends ConsumerState<MainPageEditPageWidget> 
     visibilityMap[MainMenuConstant.shortcut] = _shortcutChecked;
     visibilityMap[MainMenuConstant.recent] = _recentChecked;
 
-    shortcutRepository.update(shortcutIds);
+    await shortcutRepository.update(shortcutIds);
     await mainMenuConfig.saveSort(sorted);
     await mainMenuConfig.saveVisibility(visibilityMap);
     if (mounted) {

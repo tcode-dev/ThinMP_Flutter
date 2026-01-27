@@ -39,10 +39,10 @@ class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPa
     });
   }
 
-  void _update() {
+  Future<void> _update() async {
     final favoriteSongRepository = ref.read(favoriteSongRepositoryFactoryProvider);
 
-    favoriteSongRepository.update(_list.map((model) => model.id).toList());
+    await favoriteSongRepository.update(_list.map((model) => model.id).toList());
   }
 
   @override
@@ -67,9 +67,11 @@ class FavoriteSongsEditPageWidgetState extends ConsumerState<FavoriteSongsEditPa
         ),
         actions: [
           TextButton(
-            onPressed: () {
-              _update();
-              Navigator.of(context).pop();
+            onPressed: () async {
+              await _update();
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
             },
             child: Text(localizations.done),
           )

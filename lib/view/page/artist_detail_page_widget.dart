@@ -140,9 +140,9 @@ class ArtistDetailPageWidgetState extends ConsumerState<ArtistDetailPageWidget> 
                     ],
                     onSelected: (value) async {
                       if (value == shortcutLabel) {
-                        shortcutRepository.toggle(widget.id, ShortcutConstant.artist);
+                        await shortcutRepository.toggle(widget.id, ShortcutConstant.artist);
                       } else if (value == favoriteLabel) {
-                        favoriteArtistRepository.toggle(widget.id);
+                        await favoriteArtistRepository.toggle(widget.id);
                       }
                     },
                   )

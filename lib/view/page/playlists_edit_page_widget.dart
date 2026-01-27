@@ -31,7 +31,7 @@ class PlaylistsEditPageWidgetState extends ConsumerState<PlaylistsEditPageWidget
   }
 
   Future<void> _load() async {
-    ref.read(playlistsProvider.notifier).fetchPlaylists();
+    await ref.read(playlistsProvider.notifier).fetchPlaylists();
 
     final playlists = ref.watch(playlistsProvider);
 
@@ -40,10 +40,10 @@ class PlaylistsEditPageWidgetState extends ConsumerState<PlaylistsEditPageWidget
     });
   }
 
-  void _updatePlaylists() {
+  Future<void> _updatePlaylists() async {
     final playlistRepository = ref.read(playlistRepositoryFactoryProvider);
 
-    playlistRepository.updatePlaylists(_list.map((model) => model.id).toList());
+    await playlistRepository.updatePlaylists(_list.map((model) => model.id).toList());
   }
 
   @override
@@ -68,9 +68,11 @@ class PlaylistsEditPageWidgetState extends ConsumerState<PlaylistsEditPageWidget
         ),
         actions: [
           TextButton(
-            onPressed: () {
-              _updatePlaylists();
-              Navigator.of(context).pop();
+            onPressed: () async {
+              await _updatePlaylists();
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
             },
             child: Text(localizations.done),
           )
