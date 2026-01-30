@@ -24,8 +24,6 @@ class ShortcutModel {
         return localizations.album;
       case ShortcutConstant.playlist:
         return localizations.playlist;
-      default:
-        throw UnsupportedError('Unsupported shortcut type: $type');
-    }
+      }
   }
 }
