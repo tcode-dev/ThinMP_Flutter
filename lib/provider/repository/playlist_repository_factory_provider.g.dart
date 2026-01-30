@@ -7,7 +7,7 @@ part of 'playlist_repository_factory_provider.dart';
 // **************************************************************************
 
 String _$playlistRepositoryFactoryHash() =>
-    r'51ecc2e0a9b61b25a4f7ab9c1845d86e797bebcf';
+    r'3b2f6fbf8619db9c53b7b7d30986d4c85d76a910';
 
 /// See also [playlistRepositoryFactory].
 @ProviderFor(playlistRepositoryFactory)

@@ -7,7 +7,7 @@ part of 'favorite_artist_repository_factory_provider.dart';
 // **************************************************************************
 
 String _$favoriteArtistRepositoryFactoryHash() =>
-    r'f9d852b6a64cd57a37d1be68371f7b10180279c5';
+    r'9acf1c1211c0a77daaba92903809b5bfa9c7d611';
 
 /// See also [favoriteArtistRepositoryFactory].
 @ProviderFor(favoriteArtistRepositoryFactory)
