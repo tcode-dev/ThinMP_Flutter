@@ -7,7 +7,7 @@ part of 'song_host_api_factory_provider.dart';
 // **************************************************************************
 
 String _$songHostApiFactoryHash() =>
-    r'1ae52741ad6e45992379e73dbf40147242db0611';
+    r'a277850ece43c55bb017710713e26b619becf7b9';
 
 /// See also [songHostApiFactory].
 @ProviderFor(songHostApiFactory)

@@ -7,7 +7,7 @@ part of 'main_menu_config_factory_provider.dart';
 // **************************************************************************
 
 String _$mainMenuConfigFactoryHash() =>
-    r'7f74cf8b75638503b12d3b1910105f854b8e9e64';
+    r'85943d5f5d443f39c15b1aa36a202826bd0791bf';
 
 /// See also [mainMenuConfigFactory].
 @ProviderFor(mainMenuConfigFactory)

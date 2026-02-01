@@ -1,10 +1,12 @@
+// Package imports:
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 // Project imports:
 import 'package:thinmpf/pigeon_output/audio.g.dart';
-import 'package:thinmpf/provider/api/player_api_factory_provider.dart';
 import 'package:thinmpf/provider/config/player_config_factory_provider.dart';
 
 class PlayerApi extends PlayerHostApi {
-  final PlayerApiFactoryRef ref;
+  final Ref ref;
 
   PlayerApi(this.ref);
 

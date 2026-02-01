@@ -7,7 +7,7 @@ part of 'album_host_api_factory_provider.dart';
 // **************************************************************************
 
 String _$albumHostApiFactoryHash() =>
-    r'ca21891a53560b6cc3f5129cf307ea0700e45b3e';
+    r'8b552f841dd9807815ce3ce1d7d077c9ba10f700';
 
 /// See also [albumHostApiFactory].
 @ProviderFor(albumHostApiFactory)

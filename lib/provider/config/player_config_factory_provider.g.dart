@@ -7,7 +7,7 @@ part of 'player_config_factory_provider.dart';
 // **************************************************************************
 
 String _$playerConfigFactoryHash() =>
-    r'ba94351573a8d4ded68bdd57af2a5299d2b8ffa7';
+    r'953f595bbb5ba236d91793c3b66346deb0712086';
 
 /// See also [playerConfigFactory].
 @ProviderFor(playerConfigFactory)

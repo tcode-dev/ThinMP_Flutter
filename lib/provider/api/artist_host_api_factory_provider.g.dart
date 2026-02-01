@@ -7,7 +7,7 @@ part of 'artist_host_api_factory_provider.dart';
 // **************************************************************************
 
 String _$artistHostApiFactoryHash() =>
-    r'444c50a8fcc5914f7b227f9bcd13147d54968bd1';
+    r'32453aeb45e3f90ec4d2f1ffdb1f46b427939f8e';
 
 /// See also [artistHostApiFactory].
 @ProviderFor(artistHostApiFactory)
